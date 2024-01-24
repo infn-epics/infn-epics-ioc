@@ -1,0 +1,21 @@
+#!/bin/bash
+
+################################################################################
+# generic local build script for epics-containers ioc repositories             #
+################################################################################
+
+# pass rtems as first argument to build RTEMS on cross-compiler
+TARGET_ARCHITECTURE=${1:-linux}
+
+set -xe
+
+cd $(dirname ${0})
+
+# make sure new repos get their submodule ibek-support
+git submodule update --init
+
+# build runtime and developer images
+ec dev build --arch ${TARGET_ARCHITECTURE}
+
+# get the schema file from the developer container and save it locally
+ec dev launch-local --execute 'ibek ioc generate-schema' > ibek.ioc.schema.json
