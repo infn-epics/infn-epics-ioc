@@ -46,8 +46,11 @@ RUN calc/install.sh R3-7-5
 COPY ibek-support/modbus/ modbus/
 RUN modbus/install.sh R3-3
 
-COPY ibek-support/caenels-easy-driver/ caenels-easy-driver/
-RUN caenels-easy-driver/install.sh master
+# COPY ibek-support/caenels-easy-driver/ caenels-easy-driver/
+# RUN caenels-easy-driver/install.sh master
+
+COPY ibek-support/easy-driver-epics/ easy-driver-epics/
+RUN easy-driver-epics/install.sh master
 
 # get the ioc source and build it
 COPY ioc ${SOURCE_FOLDER}/ioc
