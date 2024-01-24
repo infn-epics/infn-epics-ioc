@@ -1,3 +1,3 @@
-epics-containers-cli==2.6.11
+epics-containers-cli==2.7.0
 # to install direct from github during development in the e.g. dev branch:
 #git+https://github.com/epics-containers/epics-containers-cli.git@dev
