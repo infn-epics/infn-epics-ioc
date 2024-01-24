@@ -1,0 +1,26 @@
+record(calc, "EXAMPLE2:SUM") {
+  field(DESC, "Sum A and B")
+  field(CALC, "A+B")
+  field(INPA, "EXAMPLE2:A")
+  field(INPB, "EXAMPLE2:B")
+}
+
+record(ao, "EXAMPLE2:A") {
+    field(DESC, "A voltage")
+    field(PREC, "3")
+    field(EGU,  "Volts")
+    field(DRVL, "-10")
+    field(DRVH, "+10")
+    field(VAL,  "0.000")
+    field(FLNK, "EXAMPLE2:SUM")
+}
+
+record(ao, "EXAMPLE2:B") {
+    field(DESC, "B voltage")
+    field(PREC, "3")
+    field(EGU,  "Volts")
+    field(DRVL, "-10")
+    field(DRVH, "+10")
+    field(VAL,  "0.000")
+    field(FLNK, "EXAMPLE2:SUM")
+}

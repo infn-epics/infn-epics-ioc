@@ -1,0 +1,47 @@
+stages:
+  - container
+
+.build:
+  tags:
+    - argus
+    - docker-image
+  stage: container
+  variables:
+    GIT_SUBMODULE_STRATEGY: recursive
+  image:
+    name: gcr.io/diamond-privreg/container-tools/kaniko-executor:v1.9.1-debug
+    entrypoint: [""]
+  script:
+    - echo 'Building image...'
+    - env | grep "CI_"
+    - /bin/sh .gitlab/kanikobuild.sh
+    - echo "Done!"
+  # uncomment to only publish on tags. At present untagged builds are published
+  # to gcr.io/diamond-privreg/controls/work/ioc
+  # only:
+  #   refs:
+  #     - tags
+
+build_linux_runtime:
+  extends: .build
+  variables:
+    ARCH: linux
+    TARGET: runtime
+
+build_linux_developer:
+  extends: .build
+  variables:
+    ARCH: linux
+    TARGET: developer
+
+# build_rtems_runtime:
+#   extends: .build
+#   variables:
+#     ARCH: rtems
+#     TARGET: runtime
+
+# build_rtems_developer:
+#   extends: .build
+#   variables:
+#     ARCH: rtems
+#     TARGET: developer
