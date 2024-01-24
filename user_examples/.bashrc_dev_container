@@ -1,0 +1,28 @@
+#!/bin/bash
+
+################################################################################
+###### This is sourced by all terminals epics-containers IOC devcontainer ######
+###### personal .bashrc_dev for setting up environment in devcontainers   ######
+################################################################################
+
+export LS_OPTIONS='--color=auto'
+eval "$(dircolors)" 2> /dev/null
+alias ls='ls $LS_OPTIONS'
+alias ll='ls $LS_OPTIONS -l'
+alias l='ls $LS_OPTIONS -lA'
+
+# Save all history forever
+# Add these to your user's .bashrc to keep a single history inside and out of containers
+export HISTCONTROL=ignoreboth:erasedups  # Remove adjacent duplicate entries
+export HISTSIZE=                         # Unlimited history
+export HISTFILESIZE=                     # Unlimited history
+# Use a unique bash history file so it doesn't get manually trucated by applications
+export HISTFILE=${HOME}/.bash_eternal_history
+shopt -s histappend                      # Append to history, don't overwrite it
+export PROMPT_COMMAND='history -a'
+
+# add git completion
+if [[ ! -f /tmp/git-completion.bash ]]; then
+  wget -q -P /tmp  https://raw.githubusercontent.com/git/git/master/contrib/completion/git-completion.bash
+fi
+source /tmp/git-completion.bash

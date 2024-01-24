@@ -1,0 +1,73 @@
+// For format details, see https://containers.dev/implementors/json_reference/
+{
+    "name": "epics-containers IOC devcontainer",
+    "build": {
+        "dockerfile": "../Dockerfile",
+        "target": "developer",
+        "args": {
+            "TARGET_ARCHITECTURE": "linux"
+        }
+    },
+    "remoteEnv": {
+        // allows X11 apps to run inside the container
+        "DISPLAY": "${localEnv:DISPLAY}",
+        // provides a name for epics-containers to use in bash prompt etc.
+        "EC_PROJECT": "${localWorkspaceFolderBasename}"
+    },
+    "features": {
+        // add quality of life features for developers including git config integration
+        "ghcr.io/devcontainers/features/common-utils:2": {
+            // don't upgrade to make this similar to the runtime container
+            "upgradePackages": false
+        }
+    },
+    // IMPORTANT for this devcontainer to work with docker EC_REMOTE_USER must be
+    // set to vscode. You will run as vscode with full sudo rights.
+    // For podman it should be left blank. You will run as root but host mounts
+    // will be owned by your user.
+    "remoteUser": "${localEnv:EC_REMOTE_USER}",
+    "customizations": {
+        "vscode": {
+            // Add the IDs of extensions you want installed when the container is created.
+            "extensions": [
+                "ms-python.vscode-pylance",
+                "tamasfe.even-better-toml",
+                "redhat.vscode-yaml",
+                "ryanluker.vscode-coverage-gutters",
+                "epicsdeb.vscode-epics",
+                "charliermarsh.ruff"
+            ]
+        }
+    },
+    // Make sure the files we are mapping into the container exist on the host
+    // You can place any other outside of the container before-launch commands here
+    "initializeCommand": "bash .devcontainer/initializeCommand ${devcontainerId}",
+    // Hooks the global .bashprofile_dev_container but also can add any other commands
+    // to run in the container at creation in here
+    "postCreateCommand": "bash .devcontainer/postCreateCommand ${devcontainerId}",
+    "runArgs": [
+        // Allow the container to access the host X11 display and EPICS CA
+        "--net=host",
+        // Make sure SELinux does not disable write access to host filesystems like tmp
+        "--security-opt=label=disable"
+    ],
+    // Mount the parent of the project folder so we can access peer projects
+    "workspaceMount": "source=${localWorkspaceFolder}/..,target=/workspaces,type=bind",
+    // mount in other useful files from the host
+    "mounts": [
+        // we also mount the project folder into a know location in the container
+        // this is where the ibek-support and ioc folders reside in the container build
+        // in this way the devcontainer and runtime look very similar
+        "source=${localWorkspaceFolder},target=/epics/generic-source,type=bind",
+        // this provides eternal bash history in and out of the container
+        "source=${localEnv:HOME}/.bash_eternal_history,target=/root/.bash_eternal_history,type=bind",
+        // this bashrc hooks up the .bashrc_dev_container in the following mount
+        "source=${localWorkspaceFolder}/.devcontainer/.bashrc,target=/root/.bashrc,type=bind",
+        // provides a place for you to put your shell customizations for all your dev containers
+        "source=${localEnv:HOME}/.bashrc_dev_container,target=/root/.bashrc_dev_container,type=bind",
+        // provides a place to install any packages you want to have across all your dev containers
+        "source=${localEnv:HOME}/.bashprofile_dev_container,target=/root/.bashprofile_dev_container,type=bind",
+        // provides the same command line editing experience as your host
+        "source=${localEnv:HOME}/.inputrc,target=/root/.inputrc,type=bind"
+    ]
+}
