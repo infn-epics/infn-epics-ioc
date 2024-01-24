@@ -1,0 +1,51 @@
+name: Build and publish image to ghcr.io/epics-containers
+
+on:
+  push:
+  pull_request:
+
+jobs:
+  build-push-images:
+    # pull requests are a duplicate of a branch push if within the same repo.
+    if: github.event_name != 'pull_request' || github.event.pull_request.head.repo.full_name != github.repository
+    runs-on: ubuntu-latest
+    permissions:
+      contents: read
+      packages: write
+    env:
+      CACHE: /tmp/.buildx-cache
+    strategy:
+      fail-fast: false
+      matrix:
+        architecture: ["rtems", "linux"]
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v3
+        with:
+          submodules: recursive
+
+      - name: Cache Docker layers
+        uses: actions/cache@v2
+        with:
+          path: ${{ env.CACHE }}
+          key: ${{ runner.os }}-${{ matrix.architecture }}-buildx-${{ github.sha }}
+          restore-keys: |
+            ${{ runner.os }}-${{ matrix.architecture }}-buildx-
+
+      - name: Log in to GitHub Docker Registry
+        uses: docker/login-action@v1
+        with:
+          registry: ghcr.io/${{ github.repository_owner }}
+          username: ${{ github.actor }}
+          password: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: Docker Build Script
+        env:
+          REGISTRY: ghcr.io
+          ARCH: ${{ matrix.architecture }}
+          REPOSITORY: ${{ github.repository }}
+          TAG: ${{ github.ref_name }}
+          PUSH: ${{ github.event_name == 'push' && startsWith(github.ref, 'refs/tags') }}
+          CACHE: ${{ env.CACHE }}
+        run: .github/workflows/build.sh
