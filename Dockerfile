@@ -28,6 +28,27 @@ RUN iocStats/install.sh 3.1.16
 #  TODO - Add further support module installations here
 ################################################################################
 
+COPY ibek-support/asyn/ asyn/
+RUN asyn/install.sh R4-42
+
+COPY ibek-support/autosave/ autosave/
+RUN autosave/install.sh R5-11
+
+COPY ibek-support/busy/ busy/
+RUN busy/install.sh R1-7-3
+
+COPY ibek-support/sscan/ sscan/
+RUN sscan/install.sh R2-11-6
+
+COPY ibek-support/calc/ calc/
+RUN calc/install.sh R3-7-5
+
+COPY ibek-support/modbus/ modbus/
+RUN modbus/install.sh R3-3
+
+COPY ibek-support/caenels-easy-driver/ caenels-easy-driver/
+RUN caenels-easy-driver/install.sh master
+
 # get the ioc source and build it
 COPY ioc ${SOURCE_FOLDER}/ioc
 RUN cd ${IOC} && make
