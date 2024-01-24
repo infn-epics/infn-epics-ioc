@@ -1,0 +1,2 @@
+# TODO using dev for the moment. Should be a pin to the current release
+git+https://github.com/epics-containers/epics-containers-cli.git@dev

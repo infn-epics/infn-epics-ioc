@@ -1,0 +1,16 @@
+
+# Macros:
+#  IOC  Device prefix
+file $(IOCSTATS)/db/iocAdminSoft.db
+{
+pattern { IOC }
+    { "test-ioc" }
+}
+
+# Macros:
+#  IOC  Device prefix
+file $(IOCSTATS)/db/iocAdminScanMon.db
+{
+pattern { IOC }
+    { "test-ioc" }
+}

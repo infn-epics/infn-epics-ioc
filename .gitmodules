@@ -1,0 +1,7 @@
+
+[submodule "ibek-defs"]
+	path = ibek-defs
+	url = git@github.com:epics-containers/ibek-defs.git
+[submodule "ibek-support"]
+	path = ibek-support
+	url = https://github.com/epics-containers/ibek-support.git

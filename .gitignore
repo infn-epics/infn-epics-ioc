@@ -1,0 +1,14 @@
+.history
+repos*
+**/.ruff_cache/
+**/.mypy_cache/
+
+# build pulls the schema out of the container - ignore it
+*ibek.ioc.schema.json
+# while working on ibek with this project somethimes include it as subfolder
+ibek
+
+# The ioc source tree is created here from a template inside the generic ioc
+# repo.
+# Remove from .gitignore if you want to customize the template.
+/ioc/

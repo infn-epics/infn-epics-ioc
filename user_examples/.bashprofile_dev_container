@@ -1,0 +1,10 @@
+#!/bin/bash
+
+################################################################################
+# Custom profile for epics-containers devcontainer                             #
+#                                                                              #
+# This will run inside the devcontainer after creation                         #
+################################################################################
+
+apt-get update
+apt-get -y --no-install-recommends install vimdiff

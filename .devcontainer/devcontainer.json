@@ -1,0 +1,51 @@
+// For format details, see https://containers.dev/implementors/json_reference/
+{
+    "name": "epics-containers IOC devcontainer",
+    "build": {
+        "dockerfile": "../Dockerfile",
+        "target": "developer",
+        "args": {
+            "TARGET_ARCHITECTURE": "linux"
+        }
+    },
+    "remoteEnv": {
+        "DISPLAY": "${localEnv:DISPLAY}"
+    },
+    "customizations": {
+        "vscode": {
+            // Add the IDs of extensions you want installed when the container is created.
+            "extensions": [
+                "ms-python.vscode-pylance",
+                "tamasfe.even-better-toml",
+                "redhat.vscode-yaml",
+                "ryanluker.vscode-coverage-gutters",
+                "epicsdeb.vscode-epics",
+                "ms-python.black-formatter"
+            ]
+        },
+        "settings": {
+            // global python venv created in epics-base
+            "python.defaultInterpreterPath": "/venv/bin/python"
+        }
+    },
+    // Make sure the files we are mapping into the container exist on the host
+    "initializeCommand": "bash .devcontainer/initializeCommand ${devcontainerId}",
+    "postCreateCommand": "bash .devcontainer/postCreateCommand ${devcontainerId}",
+    "runArgs": [
+        "--net=host",
+        "--security-opt=label=disable"
+    ],
+    "workspaceMount": "source=${localWorkspaceFolder},target=/epics/${localWorkspaceFolderBasename},type=bind",
+    "workspaceFolder": "/epics/${localWorkspaceFolderBasename}",
+    "mounts": [
+        // Mount some useful local files from the user's home directory
+        "source=${localWorkspaceFolder}/../,target=/repos,type=bind",
+        "source=${localEnv:HOME}/.bash_eternal_history,target=/root/.bash_eternal_history,type=bind",
+        "source=${localWorkspaceFolder}/.devcontainer/.bashrc,target=/root/.bashrc,type=bind",
+        "source=${localEnv:HOME}/.bashrc_dev_container,target=/root/.bashrc_dev_container,type=bind",
+        "source=${localEnv:HOME}/.bashprofile_dev_container,target=/root/.bashprofile_dev_container,type=bind",
+        "source=${localEnv:HOME}/.gitconfig,target=/root/.gitconfig,type=bind",
+        "source=${localEnv:HOME}/.inputrc,target=/root/.inputrc,type=bind",
+        "source=${localEnv:HOME}/.ssh,target=/root/.ssh,type=bind"
+    ]
+}
