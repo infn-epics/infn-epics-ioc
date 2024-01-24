@@ -1,0 +1,15 @@
+.history
+repos*
+**/.ruff_cache/
+**/.mypy_cache/
+
+# build pulls the schema out of the container - ignore it
+*ibek.ioc.schema.json
+# while working on ibek with this project somethimes include it as subfolder
+ibek
+
+# dont save workspaces as other users will have differing folders
+*workspace
+
+# config folder is there to be replaced there is just a dummy with Readme.
+ioc/config

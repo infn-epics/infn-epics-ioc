@@ -1,0 +1,29 @@
+#!/bin/bash
+
+################################################################################
+# When using docker we will not be root inside the container
+# the following steps are then required
+################################################################################
+
+if [[ $USER != "root" ]] ; then
+    # make sure the non-root user can build iocs and (mounted in) support modules
+    sudo chown -R ${USER}:${USER} /epics/ibek-defs /epics/pvi-defs /epics/support/configure /venv
+    sudo chown -h ${USER}:${USER} /epics /epics/ioc /epics/support
+
+    # also give non-root user access to the same bash config we use in podman
+    sudo chmod a+rx /root
+    for f in .inputrc .bash_eternal_history .bashrc .bashrc_dev_container; do
+        sudo chmod a+rw /root/$f
+        ln -sf /root/$f $HOME/$f
+    done
+fi
+
+################################################################################
+# Custom install script for each developer to add whatever they like to
+# all epics-containers devcontainers
+################################################################################
+
+# add user's custom profile container creation script
+if [ -f ~/.bashprofile_dev_container ]; then
+    . ~/.bashprofile_dev_container
+fi
