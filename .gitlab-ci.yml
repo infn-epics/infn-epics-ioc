@@ -28,7 +28,7 @@ build_image:
     DOCKER_TLS_CERTDIR: ""
     LAST_TAG: $CI_COMMIT_REF_NAME
     LATEST_TAG: "latest"
-  
+    GIT_SUBMODULE_STRATEGY: recursive
   before_script:
     - apk add --no-cache git
 
