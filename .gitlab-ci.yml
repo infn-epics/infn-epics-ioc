@@ -1,47 +1,43 @@
+services:
+  - docker:19.03.12-dind
+
 stages:
-  - container
+    - build
 
-.build:
-  tags:
-    - argus
-    - docker-image
-  stage: container
+build_image:
+#  tags:
+#    - lnf
+  stage: build
+  image: docker:19.03.12
   variables:
-    GIT_SUBMODULE_STRATEGY: recursive
-  image:
-    name: gcr.io/diamond-privreg/container-tools/kaniko-executor:v1.9.1-debug
-    entrypoint: [""]
+    # When using dind service, you must instruct docker to talk with the
+    # daemon started inside of the service. The daemon is available with
+    # a network connection instead of the default /var/run/docker.sock socket.
+    #
+    # The 'docker' hostname is the alias of the service container as described at
+    # https://docs.gitlab.com/ee/ci/docker/using_docker_images.html#accessing-the-services
+    #
+    # If you're using GitLab Runner 12.7 or earlier with the Kubernetes executor and Kubernetes 1.6 or earlier,
+    # the variable must be set to tcp://localhost:2375 because of how the
+    # Kubernetes executor connects services to the job container
+    # DOCKER_HOST: tcp://localhost:2375
+    #
+    # DOCKER_HOST: tcp://docker:2375
+    #
+    # This instructs Docker not to start over TLS.
+    DOCKER_TLS_CERTDIR: ""
+    LAST_TAG: $CI_COMMIT_REF_NAME
+    LATEST_TAG: "latest"
+  
+  before_script:
+    - apk add --no-cache git
+
+    
   script:
-    - echo 'Building image...'
-    - env | grep "CI_"
-    - /bin/sh .gitlab/kanikobuild.sh
-    - echo "Done!"
-  # uncomment to only publish on tags. At present untagged builds are published
-  # to gcr.io/diamond-privreg/controls/work/ioc
-  # only:
-  #   refs:
-  #     - tags
+    - docker login baltig.infn.it:4567 -u DOCKER_IO_KEY -p ${DOCKER_IO_KEY}
+    - docker build --build-arg TARGET_ARCHITECTURE="linux" --build-arg TARGETARCH="amd64" -t baltig.infn.it:4567/epics-containers/infn-epics-ioc .
+    - docker push baltig.infn.it:4567/epics-containers/infn-epics-ioc
+    # - docker build --build-arg TARGET_ARCHITECTURE="linux" --build-arg TARGETARCH="crossarm" -t baltig.infn.it:4567/epics-containers/infn-epics-ioc:arm64 .
+    # - docker push baltig.infn.it:4567/epics-containers/infn-epics-ioc:arm64
 
-build_linux_runtime:
-  extends: .build
-  variables:
-    ARCH: linux
-    TARGET: runtime
 
-build_linux_developer:
-  extends: .build
-  variables:
-    ARCH: linux
-    TARGET: developer
-
-# build_rtems_runtime:
-#   extends: .build
-#   variables:
-#     ARCH: rtems
-#     TARGET: runtime
-
-# build_rtems_developer:
-#   extends: .build
-#   variables:
-#     ARCH: rtems
-#     TARGET: developer
