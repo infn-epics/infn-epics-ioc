@@ -98,7 +98,7 @@ FROM ${REGISTRY}/epics-base-${TARGET_ARCHITECTURE}-runtime:${BASE} AS runtime
 COPY --from=runtime_prep /assets /
 
 # install runtime system dependencies, collected from install.sh scripts
-RUN ibek support apt-install --runtime
+RUN ibek support apt-install-runtime-packages --skip-non-native
 
 ENV TARGET_ARCHITECTURE ${TARGET_ARCHITECTURE}
 
