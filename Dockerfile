@@ -76,6 +76,9 @@ RUN modbus/install.sh R3-3
 COPY ibek-support/screen-epics-ioc screen-epics-ioc/
 RUN screen-epics-ioc/install.sh v1.3.1
 
+COPY ibek-support/motorNewport motorNewport/
+RUN motorNewport/install.sh R1-2-1
+
 # COPY ibek-support/caenels-easy-driver/ caenels-easy-driver/
 # RUN caenels-easy-driver/install.sh master
 
