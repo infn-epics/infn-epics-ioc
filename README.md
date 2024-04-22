@@ -5,48 +5,65 @@ This repository is a template for creating a generic IOC in the epics-containers
 framework. See https://epics-containers.github.io for tutorials and documentation.
 
 
-Developer image
-------------------------
+## Developer image
+
 The developer is ubuntu22 based has:
 
-image: baltig.infn.it:4567/epics-containers/infn-epics-ioc:devel
+*image: baltig.infn.it:4567/epics-containers/infn-epics-ioc:devel*
 
-1. EPICS_BASE=/epics/epics-base
-2. support modules installed in /epics/support
 
-a tipical RELEASE.local:
+In this image *EPICS_BASE=/epics/epics-base*, support modules installed in */epics/support*
+
+As *RELEASE.local* of your module under developpement, use the */epics/support/configure/RELEASE*
+
+Strongly suggested to add to your VScode project folder a directory named *.devcontainer*, with *devcontainer.json* like this:
+```
+// For format details, see https://aka.ms/devcontainer.json. For config options, see the
+// README at: https://github.com/devcontainers/templates/tree/main/src/ubuntu
+{
+	"name": "Epics",
+	// Or use a Dockerfile or Docker Compose file. More info: https://containers.dev/guide/dockerfile
+	"image": "baltig.infn.it:4567/epics-containers/infn-epics-ioc:devel",
+	"runArgs": [
+        // Allow the container to access the host X11 display and EPICS CA
+        "--net=host",
+        // Make sure SELinux does not disable write access to host filesystems like tmp
+        "--security-opt=label=disable"
+    ],
+    "customizations": {
+        "vscode": {
+            // Add the IDs of extensions you want installed when the container is created.
+            "extensions": [
+                "ms-python.vscode-pylance",
+                "tamasfe.even-better-toml",
+                "redhat.vscode-yaml",
+                "ryanluker.vscode-coverage-gutters",
+                "epicsdeb.vscode-epics",
+                "charliermarsh.ruff"
+            ]
+        }
+    },
+    "forwardPorts": [
+        5064,
+        5065
+      ],
+    // Mount the parent of the project folder so we can access peer projects
+    "workspaceMount": "source=${localWorkspaceFolder}/..,target=/workspaces,type=bind",
+
+	"mounts": [
+       
+        "source=${localWorkspaceFolder},target=/epics/workspace,type=bind"
+    ]
+}
 
 ```
-EPICS_BASE=/epics/epics-base
-
-# Additional Support Modules for individual IOCs will be added below this line
-
-IOCSTATS=/epics/support/iocStats
-SNCSEQ=
-ASYN=/epics/support/asyn
-IPAC=
-AUTOSAVE=/epics/support/autosave
-BUSY=/epics/support/busy
-STREAMDEVICE=/epics/support/StreamDevice
-CALC=/epics/support/calc
-SSCAN=/epics/support/sscan
-MOTOR=/epics/support/motor
-MOTORMOTORSIM=/epics/support/motorMotorSim
-ADCORE=/epics/support/ADCore
-ADGENICAM=/epics/support/ADGenICam
-ADSIMDETECTOR=/epics/support/ADSimDetector
-MODBUS=/epics/support/modbus
-SCREEN-EPICS-IOC=/epics/support/screen-epics-ioc
-MOTORNEWPORT=/epics/support/motorNewport
-```
-
-To mount the current directory:
+### Outside VScode
+Mount your working directory (i.e: '.') in */epics/ioc/config*:
 
 ```
 docker run -p 5064:5064/udp -p 5064:5064/tcp -p 5065:5065/udp -p 5065:5065/tcp -it -v .:/epics/ioc/config baltig.infn.it:4567/epics-containers/infn-epics-ioc:devel
 
 ```
-
 
 Making a new generic IOC
 ------------------------

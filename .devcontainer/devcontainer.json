@@ -54,6 +54,7 @@
     ],
     // Mount the parent of the project folder so we can access peer projects
     "workspaceMount": "source=${localWorkspaceFolder}/..,target=/workspaces,type=bind",
+    
     // mount in other useful files from the host
     "mounts": [
         // // we also mount the project folder into a know location in the container
