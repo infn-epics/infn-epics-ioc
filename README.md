@@ -4,6 +4,50 @@ Generic IOC Template Repository
 This repository is a template for creating a generic IOC in the epics-containers
 framework. See https://epics-containers.github.io for tutorials and documentation.
 
+
+Developer image
+------------------------
+The developer is ubuntu22 based has:
+
+image: baltig.infn.it:4567/epics-containers/infn-epics-ioc:devel
+
+1. EPICS_BASE=/epics/epics-base
+2. support modules installed in /epics/support
+
+a tipical RELEASE.local:
+
+```
+EPICS_BASE=/epics/epics-base
+
+# Additional Support Modules for individual IOCs will be added below this line
+
+IOCSTATS=/epics/support/iocStats
+SNCSEQ=
+ASYN=/epics/support/asyn
+IPAC=
+AUTOSAVE=/epics/support/autosave
+BUSY=/epics/support/busy
+STREAMDEVICE=/epics/support/StreamDevice
+CALC=/epics/support/calc
+SSCAN=/epics/support/sscan
+MOTOR=/epics/support/motor
+MOTORMOTORSIM=/epics/support/motorMotorSim
+ADCORE=/epics/support/ADCore
+ADGENICAM=/epics/support/ADGenICam
+ADSIMDETECTOR=/epics/support/ADSimDetector
+MODBUS=/epics/support/modbus
+SCREEN-EPICS-IOC=/epics/support/screen-epics-ioc
+MOTORNEWPORT=/epics/support/motorNewport
+```
+
+To mount the current directory:
+
+```
+docker run -p 5064:5064/udp -p 5064:5064/tcp -p 5065:5065/udp -p 5065:5065/tcp -it -v .:/epics/ioc/config baltig.infn.it:4567/epics-containers/infn-epics-ioc:devel
+
+```
+
+
 Making a new generic IOC
 ------------------------
 
