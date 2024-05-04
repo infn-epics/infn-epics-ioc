@@ -110,5 +110,5 @@ COPY --from=runtime_prep /assets /
 RUN ibek support apt-install-runtime-packages --skip-non-native
 
 ENV TARGET_ARCHITECTURE ${TARGET_ARCHITECTURE}
-
+RUN chmod 777 -R /epics
 CMD ["/bin/bash", "-c", "${IOC}/start.sh"]
