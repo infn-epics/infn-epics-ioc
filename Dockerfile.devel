@@ -83,13 +83,19 @@ COPY ibek-support/asynInterposeMenlo/ asynInterposeMenlo/
 RUN asynInterposeMenlo/install.sh master
 
 COPY ibek-support/menlo-syncro/ menlo-syncro/
-RUN menlo-syncro/install.sh master
+RUN menlo-syncro/install.sh main
 
 COPY ibek-support/menlo-lfc/ menlo-lfc/
-RUN menlo-lfc/install.sh master
+RUN menlo-lfc/install.sh main
 
 COPY ibek-support/menlo-lac1550/ menlo-lac1550/
-RUN menlo-lac1550/install.sh master
+RUN menlo-lac1550/install.sh main
+
+COPY ibek-support/epics-nds/ epics-nds/
+RUN epics-nds/install.sh main
+
+COPY ibek-support/technosoft/ technosoft/
+RUN technosoft/install.sh main
 # COPY ibek-support/caenels-easy-driver/ caenels-easy-driver/
 # RUN caenels-easy-driver/install.sh master
 
