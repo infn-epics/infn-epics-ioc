@@ -79,14 +79,27 @@ RUN screen-epics-ioc/install.sh v1.3.1
 COPY ibek-support/motorNewport motorNewport/
 RUN motorNewport/install.sh R1-2-1
 
-# COPY ibek-support/epics-menlo/ epics-menlo/
-# RUN epics-menlo/install.sh master
 
-# COPY ibek-support/caenels-easy-driver/ caenels-easy-driver/
-# RUN caenels-easy-driver/install.sh master
+COPY ibek-support/asynInterposeMenlo/ asynInterposeMenlo/
+RUN asynInterposeMenlo/install.sh master
 
-# COPY ibek-support/easy-driver-epics/ easy-driver-epics/
-# RUN easy-driver-epics/install.sh master
+COPY ibek-support/menlo-syncro/ menlo-syncro/
+RUN menlo-syncro/install.sh main
+
+COPY ibek-support/menlo-lfc/ menlo-lfc/
+RUN menlo-lfc/install.sh main
+
+COPY ibek-support/menlo-lac1550/ menlo-lac1550/
+RUN menlo-lac1550/install.sh main
+
+COPY ibek-support/epics-nds/ epics-nds/
+RUN epics-nds/install.sh main
+
+COPY ibek-support/sequencer/ sequencer/
+RUN sequencer/install.sh main
+
+COPY ibek-support/technosoft/ technosoft/
+RUN technosoft/install.sh main
 
 # get the ioc source and build it
 COPY ioc/ ${SOURCE_FOLDER}/ioc

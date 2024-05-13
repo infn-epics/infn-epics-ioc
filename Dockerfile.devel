@@ -94,6 +94,9 @@ RUN menlo-lac1550/install.sh main
 COPY ibek-support/epics-nds/ epics-nds/
 RUN epics-nds/install.sh main
 
+COPY ibek-support/sequencer/ sequencer/
+RUN sequencer/install.sh main
+
 COPY ibek-support/technosoft/ technosoft/
 RUN technosoft/install.sh main
 # COPY ibek-support/caenels-easy-driver/ caenels-easy-driver/
