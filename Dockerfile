@@ -118,10 +118,10 @@ FROM ${REGISTRY}/epics-base-${TARGET_ARCHITECTURE}-runtime:${BASE} AS runtime
 
 # get runtime assets from the preparation stage
 COPY --from=runtime_prep /assets /
-
+# RUN ibek ioc extract-runtime-assets /assets /usr/local/lib/x86_64-linux-gnu
 # install runtime system dependencies, collected from install.sh scripts
 RUN ibek support apt-install-runtime-packages 
-
+RUN cp /epics/support/motorTechnosoft/lib/linux-x86_64/*.so /usr/lib/x86_64-linux-gnu/
 ENV TARGET_ARCHITECTURE ${TARGET_ARCHITECTURE}
 RUN chmod 777 -R /epics
 CMD ["/bin/bash", "-c", "${IOC}/start.sh"]
