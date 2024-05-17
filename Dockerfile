@@ -110,7 +110,8 @@ RUN cd ${IOC} && ./install.sh && make
 FROM developer AS runtime_prep
 
 # get the products from the build stage and reduce to runtime assets only
-RUN ibek ioc extract-runtime-assets /assets ${SOURCE_FOLDER}/ibek*
+# RUN ibek ioc extract-runtime-assets /assets ${SOURCE_FOLDER}/ibek*
+RUN ibek ioc extract-runtime-assets /assets /epics/support/motorTechnosoft/tml_lib/config
 # RUN ibek ioc extract-runtime-assets /assets
 
 ##### runtime stage ############################################################
@@ -119,7 +120,7 @@ FROM ${REGISTRY}/epics-base-${TARGET_ARCHITECTURE}-runtime:${BASE} AS runtime
 
 # get runtime assets from the preparation stage
 COPY --from=runtime_prep /assets /
-RUN mv /support/motorTechnosoft/tml_lib /epics/support/motorTechnosoft/
+# RUN mv /support/motorTechnosoft/tml_lib /epics/support/motorTechnosoft/
 
 # RUN ibek ioc extract-runtime-assets /assets /usr/local/lib/x86_64-linux-gnu
 # install runtime system dependencies, collected from install.sh scripts
