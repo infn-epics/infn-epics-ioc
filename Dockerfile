@@ -119,6 +119,8 @@ FROM ${REGISTRY}/epics-base-${TARGET_ARCHITECTURE}-runtime:${BASE} AS runtime
 
 # get runtime assets from the preparation stage
 COPY --from=runtime_prep /assets /
+RUN mv /support/motorTechnosoft/tml_lib /epics/support/motorTechnosoft/
+
 # RUN ibek ioc extract-runtime-assets /assets /usr/local/lib/x86_64-linux-gnu
 # install runtime system dependencies, collected from install.sh scripts
 RUN ibek support apt-install-runtime-packages 
