@@ -3,6 +3,7 @@ services:
 
 stages:
     - build
+    - test
 
 build_image:
 #  tags:
@@ -45,5 +46,26 @@ build_image:
 
     # - docker build --build-arg TARGET_ARCHITECTURE="linux" --build-arg TARGETARCH="crossarm" -t baltig.infn.it:4567/epics-containers/infn-epics-ioc:arm64 .
     # - docker push baltig.infn.it:4567/epics-containers/infn-epics-ioc:arm64
+
+test_image:
+  stage: test
+  image: baltig.infn.it:4567/epics-containers/infn-epics-ioc:$LATEST_TAG
+  variables:
+    DOCKER_TLS_CERTDIR: ""
+  
+  script: |
+      # List all files in the support directory
+      supps=$(ls tests/support/*)
+      # Define the path to the ibek definition files
+      defs='/epics/ibek-defs/*.ibek.support.yaml'
+      # Iterate over each support file
+      for k in $supps; do
+        echo "* Testing $k"
+        # Generate the runtime for each support file using the definitions
+        ibek runtime generate "$k" $defs
+        cat /epics/runtime/st.cmd
+      done
+    
+
 
 

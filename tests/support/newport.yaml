@@ -1,0 +1,23 @@
+ioc_name: rfmotors
+description: RF motors 
+
+entities:
+
+  - type: motorNewport.SMC100CreateController
+    controllerName: NEWPORT001
+    P: "SPARC:RF:"
+    IP: 192.168.190.56
+    TCPPORT: 4001
+    numAxes: 1
+
+  
+  - type: motorNewport.motorAxis
+    controller: NEWPORT001
+    M: "m0"
+    DESC: "Axis"
+    ADDR: 0
+    DLLM: -25
+    DHLM: 25
+    home: 1
+    start: 10
+    VELO: 1

@@ -57,7 +57,7 @@ COPY ibek-support/ADCore/ ADCore/
 RUN ADCore/install.sh R3-13
 
 COPY ibek-support/ADGenICam ADGenICam/
-RUN ADGenICam/install.sh R1-9
+RUN ADGenICam/install.sh master
 
 COPY ibek-support/ADAravis/ ADAravis/
 RUN ADAravis/install.sh R2-3
