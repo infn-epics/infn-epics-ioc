@@ -49,7 +49,7 @@ build_image:
 
 test_image:
   stage: test
-  image: baltig.infn.it:4567/epics-containers/infn-epics-ioc:$LATEST_TAG
+  image: baltig.infn.it:4567/epics-containers/infn-epics-ioc:latest
   variables:
     DOCKER_TLS_CERTDIR: ""
   
