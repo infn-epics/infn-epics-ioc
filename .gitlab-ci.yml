@@ -41,8 +41,8 @@ build_image:
     - docker tag baltig.infn.it:4567/epics-containers/infn-epics-ioc:$LAST_TAG baltig.infn.it:4567/epics-containers/infn-epics-ioc:$LATEST_TAG
     - docker push baltig.infn.it:4567/epics-containers/infn-epics-ioc:$LAST_TAG
     - docker push baltig.infn.it:4567/epics-containers/infn-epics-ioc:$LATEST_TAG
-    - docker build -f Dockerfile.devel --build-arg TARGET_ARCHITECTURE="linux" --build-arg TARGETARCH="amd64" -t baltig.infn.it:4567/epics-containers/infn-epics-ioc:devel .
-    - docker push baltig.infn.it:4567/epics-containers/infn-epics-ioc:devel
+    # - docker build -f Dockerfile.devel --build-arg TARGET_ARCHITECTURE="linux" --build-arg TARGETARCH="amd64" -t baltig.infn.it:4567/epics-containers/infn-epics-ioc:devel .
+    # - docker push baltig.infn.it:4567/epics-containers/infn-epics-ioc:devel
 
     # - docker build --build-arg TARGET_ARCHITECTURE="linux" --build-arg TARGETARCH="crossarm" -t baltig.infn.it:4567/epics-containers/infn-epics-ioc:arm64 .
     # - docker push baltig.infn.it:4567/epics-containers/infn-epics-ioc:arm64

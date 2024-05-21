@@ -1,0 +1,131 @@
+# yaml-language-server: $schema=../schemas/technosoft.ibek.ioc.schema.json
+
+ioc_name: btfslits
+description: btf
+
+shared:
+  - &motor
+    type: motorTML.motorAxis
+    controller: TML
+    NSTEPS: 200
+    NMICROSTEPS: 256
+    VELO: 20
+    VELO_MAX: 50
+    VELO_MIN: 0.1
+    ACCL: 0.5
+    ACCL_MAX: 1.5
+    ACCL_MIN: 0.01
+    HAR: 0.5
+    HVEL: 10
+    JAR: 1
+    JVEL: 5
+    EGU: "ustep"
+    SLSP: 0.8
+    ENABLED: 1
+    TIMEOUT: 0
+
+entities:
+  - type: motorTML.CreateController
+    controllerName: TML
+    P: "BTF:TML"
+    TTY: /var/tmp/ttyV0
+    numAxes: 14
+    hostid: 3
+
+# Scraper SLT TB 001 H HOST Master CAN CAN IN CAN OUT Note:
+# Cassetto 200703
+# Driver IDM240
+# Canale A 3 R YES ON S12 A1
+# Canale B 4 L NO OFF A1 B1
+  - <<: *motor
+    axid: 3
+    CHANNEL_ID: SLTTB001R
+  - <<: *motor
+    axid: 4
+    CHANNEL_ID: SLTTB001L
+
+# Scraper SLT TB 002 H HOST Master CAN CAN IN CAN OUT Note:
+# Cassetto 200704
+# Driver IDM240
+# Canale A 5 R NO OFF C1 D1
+# Canale B 6 L NO OFF B1 C1
+
+  - <<: *motor
+    axid: 5
+    CHANNEL_ID: SLTTB002R
+  - <<: *motor
+    axid: 6
+    CHANNEL_ID: SLTTB002L
+
+# Scraper SLT TB 003 V HOST Master CAN CAN IN CAN OUT Note: era
+# montato in
+# sala Dafne
+# come master.
+# Cassetto 200701
+# Driver IDM240
+# Canale A 7 U NO OFF E1 F1
+# Canale B 8 D NO OFF D1 E1
+  - <<: *motor
+    axid: 7
+    CHANNEL_ID: SLTTB003U
+  - <<: *motor
+    axid: 8
+    CHANNEL_ID: SLTTB003D
+
+# Scraper SLT TB 001 V HOST Master CAN CAN IN CAN OUT Note: S12 - 8m cavo CAN-BUS twistato e schermato da Rack Linea1 a Rack Linea2
+# Cassetto 200705 T - Terminazione 120 Ohm
+# Driver IDM240
+# Canale A 9 U NO OFF G1 H1
+# Canale B 10 D NO OFF F1 G1
+  - <<: *motor
+    axid: 9
+    CHANNEL_ID: SLTTB001U
+  - <<: *motor
+    axid: 10
+    CHANNEL_ID: SLTTB001D
+
+# Scraper TGT TB 001 H HOST Master CAN CAN IN CAN OUT Note: Scraper TGT TB 002 H HOST Master CAN CAN IN CAN OUT Note:
+# Cassetto 200702 Cassetto MSID003
+# Driver IDM240 Driver IDM640
+# Canale A 11 - NO OFF H1 I1 Canale A 22 - YES ON T A2
+# Canale B NO OFF
+  - <<: *motor
+    axid: 11
+    CHANNEL_ID: TGTTB001
+
+# Scraper SLT TB 005 H HOST Master CAN CAN IN CAN OUT Note: Scraper SL TB 006 H HOST Master CAN CAN IN CAN OUT Note:
+# Cassetto MSID001 Cassetto MSID002
+# Driver IDM640 Driver IDM640
+# Canale A 20 L NO OFF L1 T Canale A 25 L NO OFF B2 S12
+# Canale B 21 R NO OFF I1 L1
+  - <<: *motor
+    axid: 20
+    CHANNEL_ID: SLTTB005L
+  - <<: *motor
+    axid: 21
+    CHANNEL_ID: SLTTB005R
+# Scraper SL TB 006 H HOST Master CAN CAN IN CAN OUT Note:
+# Cassetto MSID001 Cassetto MSID002
+# Driver IDM640 Driver IDM640
+# Canale A 20 L NO OFF L1 T Canale A 25 L NO OFF B2 S12
+# Canale B 21 R NO OFF I1 L1 Canale B 24 R NO OFF A2 B2
+  - <<: *motor
+    axid: 25
+    CHANNEL_ID: SLTTB006L
+  - <<: *motor
+    axid: 24
+    CHANNEL_ID: SLTTB006R
+
+# Scraper TGT TB 002 H HOST Master CAN CAN IN CAN OUT Note:
+# Cassetto 200702 Cassetto MSID003
+# Driver IDM240 Driver IDM640
+# Canale A 11 - NO OFF H1 I1 Canale A 22 - YES ON T A2
+# Canale B NO OFF Canale B
+  - <<: *motor
+    axid: 22
+    CHANNEL_ID: TGTTB002
+  
+  - type: epics.PostStartupCommand 
+    command: |
+          dbpf("{{controller.P}}:{{CHANNEL_ID}}:MSGRS","START")
+          dbl
