@@ -127,5 +127,4 @@ entities:
   
   - type: epics.PostStartupCommand 
     command: |
-          dbpf("{{controller.P}}:{{CHANNEL_ID}}:MSGRS","START")
           dbl
