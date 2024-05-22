@@ -39,10 +39,10 @@ entities:
 # Canale B 4 L NO OFF A1 B1
   - <<: *motor
     axid: 3
-    CHANNEL_ID: SLTTB001R
+    name: SLTTB001R
   - <<: *motor
     axid: 4
-    CHANNEL_ID: SLTTB001L
+    name: SLTTB001L
 
 # Scraper SLT TB 002 H HOST Master CAN CAN IN CAN OUT Note:
 # Cassetto 200704
@@ -52,10 +52,10 @@ entities:
 
   - <<: *motor
     axid: 5
-    CHANNEL_ID: SLTTB002R
+    name: SLTTB002R
   - <<: *motor
     axid: 6
-    CHANNEL_ID: SLTTB002L
+    name: SLTTB002L
 
 # Scraper SLT TB 003 V HOST Master CAN CAN IN CAN OUT Note: era
 # montato in
@@ -67,10 +67,10 @@ entities:
 # Canale B 8 D NO OFF D1 E1
   - <<: *motor
     axid: 7
-    CHANNEL_ID: SLTTB003U
+    name: SLTTB003U
   - <<: *motor
     axid: 8
-    CHANNEL_ID: SLTTB003D
+    name: SLTTB003D
 
 # Scraper SLT TB 001 V HOST Master CAN CAN IN CAN OUT Note: S12 - 8m cavo CAN-BUS twistato e schermato da Rack Linea1 a Rack Linea2
 # Cassetto 200705 T - Terminazione 120 Ohm
@@ -79,10 +79,10 @@ entities:
 # Canale B 10 D NO OFF F1 G1
   - <<: *motor
     axid: 9
-    CHANNEL_ID: SLTTB001U
+    name: SLTTB001U
   - <<: *motor
     axid: 10
-    CHANNEL_ID: SLTTB001D
+    name: SLTTB001D
 
 # Scraper TGT TB 001 H HOST Master CAN CAN IN CAN OUT Note: Scraper TGT TB 002 H HOST Master CAN CAN IN CAN OUT Note:
 # Cassetto 200702 Cassetto MSID003
@@ -91,7 +91,7 @@ entities:
 # Canale B NO OFF
   - <<: *motor
     axid: 11
-    CHANNEL_ID: TGTTB001
+    name: TGTTB001
 
 # Scraper SLT TB 005 H HOST Master CAN CAN IN CAN OUT Note: Scraper SL TB 006 H HOST Master CAN CAN IN CAN OUT Note:
 # Cassetto MSID001 Cassetto MSID002
@@ -100,10 +100,10 @@ entities:
 # Canale B 21 R NO OFF I1 L1
   - <<: *motor
     axid: 20
-    CHANNEL_ID: SLTTB005L
+    name: SLTTB005L
   - <<: *motor
     axid: 21
-    CHANNEL_ID: SLTTB005R
+    name: SLTTB005R
 # Scraper SL TB 006 H HOST Master CAN CAN IN CAN OUT Note:
 # Cassetto MSID001 Cassetto MSID002
 # Driver IDM640 Driver IDM640
@@ -111,10 +111,10 @@ entities:
 # Canale B 21 R NO OFF I1 L1 Canale B 24 R NO OFF A2 B2
   - <<: *motor
     axid: 25
-    CHANNEL_ID: SLTTB006L
+    name: SLTTB006L
   - <<: *motor
     axid: 24
-    CHANNEL_ID: SLTTB006R
+    name: SLTTB006R
 
 # Scraper TGT TB 002 H HOST Master CAN CAN IN CAN OUT Note:
 # Cassetto 200702 Cassetto MSID003
@@ -123,7 +123,7 @@ entities:
 # Canale B NO OFF Canale B
   - <<: *motor
     axid: 22
-    CHANNEL_ID: TGTTB002
+    name: TGTTB002
   
   - type: epics.PostStartupCommand 
     command: |
