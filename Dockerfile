@@ -62,8 +62,6 @@ RUN ADGenICam/install.sh master
 COPY ibek-support/ADAravis/ ADAravis/
 RUN ADAravis/install.sh R2-3
 
-
-
 COPY ibek-support/ADSimDetector ADSimDetector/
 RUN ADSimDetector/install.sh R2-10
 
