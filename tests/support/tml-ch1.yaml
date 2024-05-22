@@ -31,7 +31,6 @@ entities:
     TTY: /var/tmp/ttyV0
     numAxes: 1
     hostid: 5
-    CHANNEL_ID: CH0
 
   - <<: *motor
     axid: 3
