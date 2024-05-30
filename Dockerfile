@@ -99,6 +99,13 @@ RUN sequencer/install.sh main
 COPY ibek-support/technosoft/ technosoft/
 RUN technosoft/install.sh main
 
+
+COPY ibek-support/biltItest biltItest/
+RUN biltItest/install.sh main
+
+COPY ibek-support/sigmaPhiStart sigmaPhiStart/
+RUN sigmaPhiStart/install.sh main
+
 # get the ioc source and build it
 COPY ioc/ ${SOURCE_FOLDER}/ioc
 RUN cd ${IOC} && ./install.sh && make

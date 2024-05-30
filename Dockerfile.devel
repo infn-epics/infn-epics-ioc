@@ -102,8 +102,15 @@ RUN technosoft/install.sh main
 # COPY ibek-support/caenels-easy-driver/ caenels-easy-driver/
 # RUN caenels-easy-driver/install.sh master
 
+COPY ibek-support/biltItest biltItest/
+RUN biltItest/install.sh main
+
+COPY ibek-support/sigmaPhiStart sigmaPhiStart/
+RUN sigmaPhiStart/install.sh main
+
 # COPY ibek-support/easy-driver-epics/ easy-driver-epics/
 # RUN easy-driver-epics/install.sh master
+
 
 # get the ioc source and build it
 COPY ioc/ ${SOURCE_FOLDER}/ioc
