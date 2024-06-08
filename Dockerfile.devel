@@ -82,15 +82,6 @@ RUN motorNewport/install.sh R1-2-1
 COPY ibek-support/asynInterposeMenlo/ asynInterposeMenlo/
 RUN asynInterposeMenlo/install.sh master
 
-COPY ibek-support/menlo-syncro/ menlo-syncro/
-RUN menlo-syncro/install.sh main
-
-COPY ibek-support/menlo-lfc/ menlo-lfc/
-RUN menlo-lfc/install.sh main
-
-COPY ibek-support/menlo-lac1550/ menlo-lac1550/
-RUN menlo-lac1550/install.sh main
-
 COPY ibek-support/epics-nds/ epics-nds/
 RUN epics-nds/install.sh main
 
@@ -107,6 +98,15 @@ RUN biltItest/install.sh main
 
 COPY ibek-support/sigmaPhiStart sigmaPhiStart/
 RUN sigmaPhiStart/install.sh main
+
+COPY ibek-support/menloSyncro/ menloSyncro/
+RUN menloSyncro/install.sh main
+
+COPY ibek-support/menloLfc/ menloLfc/
+RUN menloLfc/install.sh main
+
+COPY ibek-support/menloLac menloLac
+RUN menloLac/install.sh main
 
 # COPY ibek-support/easy-driver-epics/ easy-driver-epics/
 # RUN easy-driver-epics/install.sh master

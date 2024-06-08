@@ -81,31 +81,28 @@ RUN motorNewport/install.sh R1-2-1
 COPY ibek-support/asynInterposeMenlo/ asynInterposeMenlo/
 RUN asynInterposeMenlo/install.sh master
 
-COPY ibek-support/menlo-syncro/ menlo-syncro/
-RUN menlo-syncro/install.sh main
-
-COPY ibek-support/menlo-lfc/ menlo-lfc/
-RUN menlo-lfc/install.sh main
-
-COPY ibek-support/menlo-lac1550/ menlo-lac1550/
-RUN menlo-lac1550/install.sh main
-
 COPY ibek-support/epics-nds/ epics-nds/
 RUN epics-nds/install.sh main
 
 COPY ibek-support/sequencer/ sequencer/
 RUN sequencer/install.sh main
-
-COPY ibek-support/technosoft/ technosoft/
-RUN technosoft/install.sh main
-
-
 COPY ibek-support/biltItest biltItest/
 RUN biltItest/install.sh main
 
 COPY ibek-support/sigmaPhiStart sigmaPhiStart/
 RUN sigmaPhiStart/install.sh main
 
+COPY ibek-support/technosoft/ technosoft/
+RUN technosoft/install.sh main
+
+COPY ibek-support/menloSyncro/ menloSyncro/
+RUN menloSyncro/install.sh main
+
+COPY ibek-support/menloLfc/ menloLfc/
+RUN menloLfc/install.sh main
+
+COPY ibek-support/menloLac menloLac
+RUN menloLac/install.sh main
 # get the ioc source and build it
 COPY ioc/ ${SOURCE_FOLDER}/ioc
 RUN cd ${IOC} && ./install.sh && make
@@ -116,7 +113,7 @@ FROM developer AS runtime_prep
 
 # get the products from the build stage and reduce to runtime assets only
 # RUN ibek ioc extract-runtime-assets /assets ${SOURCE_FOLDER}/ibek*
-RUN ibek ioc extract-runtime-assets /assets /epics/support/motorTechnosoft/tml_lib/config
+RUN ibek ioc extract-runtime-assets /assets /epics/support/motorTechnosoft/tml_lib/config /epics/support/biltItest /epics/support/sigmaPhiStart /epics/support/menloSyncro /epics/support/menloLfc /epics/support/menloLac
 # RUN ibek ioc extract-runtime-assets /assets
 
 ##### runtime stage ############################################################
