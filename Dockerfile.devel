@@ -108,6 +108,9 @@ RUN menloLfc/install.sh main
 COPY ibek-support/menloLac menloLac
 RUN menloLac/install.sh main
 
+COPY ibek-support/icpdas icpdas
+RUN icpdas/install.sh main
+
 # COPY ibek-support/easy-driver-epics/ easy-driver-epics/
 # RUN easy-driver-epics/install.sh master
 

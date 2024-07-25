@@ -103,7 +103,12 @@ RUN menloLfc/install.sh main
 
 COPY ibek-support/menloLac menloLac
 RUN menloLac/install.sh main
+
+COPY ibek-support/icpdas icpdas
+RUN icpdas/install.sh main
+
 # get the ioc source and build it
+
 COPY ioc/ ${SOURCE_FOLDER}/ioc
 RUN cd ${IOC} && ./install.sh && make
 
