@@ -1,3 +1,4 @@
+gitpython
 ibek==3.0.0b5
 # to install direct from github during development in a branch
 # git+https://github.com/epics-containers/ibek.git@motor-demo

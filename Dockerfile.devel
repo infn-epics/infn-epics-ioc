@@ -1,11 +1,11 @@
 ##### build stage ##############################################################
 
 ARG TARGET_ARCHITECTURE
-ARG BASE=7.0.8ec1b3
+ARG BASE=7.0.8ec2
 ARG REGISTRY=ghcr.io/epics-containers
 
-FROM  ${REGISTRY}/epics-base-${TARGET_ARCHITECTURE}-developer:${BASE} AS developer
-
+# FROM  ${REGISTRY}/epics-base-${TARGET_ARCHITECTURE}-runtime:${BASE} AS developer
+FROM ${REGISTRY}/epics-base-developer:7.0.8ec2
 
 # The devcontainer mounts the project root to /epics/generic-source
 # Using the same location here makes devcontainer/runtime differences transparent.
@@ -15,6 +15,12 @@ RUN ln -s ${SOURCE_FOLDER}/ioc ${IOC}
 
 # Get latest ibek while in development. Will come from epics-base when stable
 COPY requirements.txt requirements.txt
+# RUN apt-get update && apt-get install -y \
+#     ca-certificates python3-distutils \
+#     && rm -rf /var/lib/apt/lists/*
+
+# Install Python packages
+#RUN pip install --upgrade setuptools wheel
 RUN pip install --upgrade -r requirements.txt
 
 WORKDIR ${SOURCE_FOLDER}/ibek-support
@@ -138,6 +144,6 @@ EXPOSE 5065/tcp
 # Set working directory
 WORKDIR /epics/ioc/config
 
-ENV TARGET_ARCHITECTURE ${TARGET_ARCHITECTURE}
+#ENV TARGET_ARCHITECTURE ${TARGET_ARCHITECTURE}
 
 CMD ["/bin/bash"]
