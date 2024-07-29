@@ -123,7 +123,7 @@ RUN ibek ioc extract-runtime-assets /assets /epics/support/motorTechnosoft/tml_l
 
 ##### runtime stage ############################################################
 
-FROM ${REGISTRY}/epics-base-${TARGET_ARCHITECTURE}-runtime:${BASE} AS runtime
+FROM ${REGISTRY}/epics-base-runtime:${BASE} AS runtime
 
 # get runtime assets from the preparation stage
 COPY --from=runtime_prep /assets /
