@@ -1,6 +1,6 @@
 ##### build stage ##############################################################
 
-RG TARGET_ARCHITECTURE
+ARG TARGET_ARCHITECTURE
 ARG BASE=7.0.8ec2
 ARG REGISTRY=ghcr.io/epics-containers
 
