@@ -37,7 +37,7 @@ build_image:
   script:
     - LAST_TAG=$(git describe --tags --abbrev=0)
     - docker login baltig.infn.it:4567 -u DOCKER_IO_KEY -p ${DOCKER_IO_KEY}
-    - docker build --build-arg TARGET_ARCHITECTURE="linux" --build-arg TARGETARCH="amd64" -t baltig.infn.it:4567/epics-containers/infn-epics-ioc:$LAST_TAG .
+    - docker build --build-arg BASE="7.0.8ec2" --build-arg TARGET_ARCHITECTURE="linux" --build-arg TARGETARCH="amd64" -t baltig.infn.it:4567/epics-containers/infn-epics-ioc:$LAST_TAG .
     - docker tag baltig.infn.it:4567/epics-containers/infn-epics-ioc:$LAST_TAG baltig.infn.it:4567/epics-containers/infn-epics-ioc:$LATEST_TAG
     - docker push baltig.infn.it:4567/epics-containers/infn-epics-ioc:$LAST_TAG
     - docker push baltig.infn.it:4567/epics-containers/infn-epics-ioc:$LATEST_TAG

@@ -5,7 +5,7 @@ ARG BASE=7.0.8ec2
 ARG REGISTRY=ghcr.io/epics-containers
 
 ## FROM  ${REGISTRY}/epics-base-${TARGET_ARCHITECTURE}-runtime:${BASE} AS developer
-FROM ${REGISTRY}/epics-base-developer:7.0.8ec2
+FROM ${REGISTRY}/epics-base-developer:${BASE} AS developer
 
 # The devcontainer mounts the project root to /epics/generic-source
 # Using the same location here makes devcontainer/runtime differences transparent.
