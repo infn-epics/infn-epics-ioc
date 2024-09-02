@@ -79,6 +79,9 @@ RUN screen-epics-ioc/install.sh v1.3.1
 COPY ibek-support/motorNewport motorNewport/
 RUN motorNewport/install.sh R1-2-1
 
+COPY ibek-support/AgilentXgs600/ AgilentXgs600/
+RUN AgilentXgs600/install.sh main
+
 COPY ibek-support/asynInterposeMenlo/ asynInterposeMenlo/
 RUN asynInterposeMenlo/install.sh master
 
