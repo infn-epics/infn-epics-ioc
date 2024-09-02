@@ -1,0 +1,74 @@
+# yaml-language-server: $schema=../schemas/technosoft.ibek.ioc.schema.json
+
+ioc_name: tmlgun
+description: tmlgun
+
+shared:
+  - &motor
+    type: motorTML.motorAxis
+    controller: TML
+    NSTEPS: 200
+    NMICROSTEPS: 256
+    VELO: 20
+    VELO_MAX: 50
+    VELO_MIN: 0.1
+    ACCL: 0.5
+    ACCL_MAX: 1.5
+    ACCL_MIN: 0.01
+    HAR: 0.5
+    HVEL: 10
+    JAR: 1
+    JVEL: 5
+    EGU: "ustep"
+    SLSP: 0.8
+    ENABLED: 1
+    TIMEOUT: 0
+
+entities:
+  - type: motorTML.CreateController
+    controllerName: TML
+    P: "SPARC:TML:CH1"
+    TTY: /var/tmp/ttyV0
+    numAxes: 1
+    hostid: 5
+
+  - <<: *motor
+    axid: 3
+    name: AC1FLG01
+
+  - <<: *motor
+    axid: 4
+    name: AC2FLG01
+  - <<: *motor
+    axid: 5
+    name: AC3FLG03
+
+  - <<: *motor
+    axid: 10
+    name: GUNFLG01
+  - <<: *motor
+    axid: 8
+    name: GUNHOR01
+  - <<: *motor
+    axid: 7
+    name: GUNVER01
+  
+  - <<: *motor
+    axid: 11
+    name: DGLFLG00
+
+  - <<: *motor
+    axid: 23
+    name: AC1BAM01
+
+  - <<: *motor
+    axid: 12
+    name: UTLFLG01
+
+  - <<: *motor
+    axid: 13
+    name: UTLFLG02
+
+  - <<: *motor
+    axid: 14
+    name: DGLFLG01

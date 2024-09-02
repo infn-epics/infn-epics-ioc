@@ -1,11 +1,11 @@
 ##### build stage ##############################################################
 
 ARG TARGET_ARCHITECTURE
-ARG BASE=7.0.8ec1b3
+ARG BASE=7.0.8ec2
 ARG REGISTRY=ghcr.io/epics-containers
 
-FROM  ${REGISTRY}/epics-base-${TARGET_ARCHITECTURE}-developer:${BASE} AS developer
-
+## FROM  ${REGISTRY}/epics-base-${TARGET_ARCHITECTURE}-runtime:${BASE} AS developer
+FROM ${REGISTRY}/epics-base-developer:${BASE} AS developer
 
 # The devcontainer mounts the project root to /epics/generic-source
 # Using the same location here makes devcontainer/runtime differences transparent.
@@ -57,6 +57,7 @@ COPY ibek-support/ADCore/ ADCore/
 RUN ADCore/install.sh R3-13
 
 COPY ibek-support/ADGenICam ADGenICam/
+<<<<<<< HEAD
 RUN ADGenICam/install.sh R1-9
 
 COPY ibek-support/AgilentXgs600 AgilentXgs600         
@@ -64,7 +65,10 @@ RUN AgilentXgs600/install.sh master
 #COPY ibek-support/ADAravis/ ADAravis/
 #RUN ADAravis/install.sh R2-3
 
+RUN ADGenICam/install.sh master
 
+COPY ibek-support/ADAravis/ ADAravis/
+RUN ADAravis/install.sh R2-3
 
 COPY ibek-support/ADSimDetector ADSimDetector/
 RUN ADSimDetector/install.sh R2-10
@@ -81,16 +85,38 @@ RUN screen-epics-ioc/install.sh v1.3.1
 COPY ibek-support/motorNewport motorNewport/
 RUN motorNewport/install.sh R1-2-1
 
-# COPY ibek-support/epics-menlo/ epics-menlo/
-# RUN epics-menlo/install.sh master
 
-# COPY ibek-support/caenels-easy-driver/ caenels-easy-driver/
-# RUN caenels-easy-driver/install.sh master
+COPY ibek-support/asynInterposeMenlo/ asynInterposeMenlo/
+RUN asynInterposeMenlo/install.sh master
 
-# COPY ibek-support/easy-driver-epics/ easy-driver-epics/
-# RUN easy-driver-epics/install.sh master
+COPY ibek-support/epics-nds/ epics-nds/
+RUN epics-nds/install.sh main
+
+COPY ibek-support/sequencer/ sequencer/
+RUN sequencer/install.sh main
+COPY ibek-support/biltItest biltItest/
+RUN biltItest/install.sh main
+
+COPY ibek-support/sigmaPhiStart sigmaPhiStart/
+RUN sigmaPhiStart/install.sh main
+
+COPY ibek-support/technosoft/ technosoft/
+RUN technosoft/install.sh main
+
+COPY ibek-support/menloSyncro/ menloSyncro/
+RUN menloSyncro/install.sh main
+
+COPY ibek-support/menloLfc/ menloLfc/
+RUN menloLfc/install.sh main
+
+COPY ibek-support/menloLac menloLac
+RUN menloLac/install.sh main
+
+COPY ibek-support/icpdas icpdas
+RUN icpdas/install.sh main
 
 # get the ioc source and build it
+
 COPY ioc/ ${SOURCE_FOLDER}/ioc
 RUN cd ${IOC} && ./install.sh && make
 
@@ -99,18 +125,22 @@ RUN cd ${IOC} && ./install.sh && make
 FROM developer AS runtime_prep
 
 # get the products from the build stage and reduce to runtime assets only
-RUN ibek ioc extract-runtime-assets /assets ${SOURCE_FOLDER}/ibek*
+# RUN ibek ioc extract-runtime-assets /assets ${SOURCE_FOLDER}/ibek*
+RUN ibek ioc extract-runtime-assets /assets /epics/support/motorTechnosoft/tml_lib/config /epics/support/biltItest /epics/support/sigmaPhiStart /epics/support/menloSyncro /epics/support/menloLfc /epics/support/menloLac
+# RUN ibek ioc extract-runtime-assets /assets
 
 ##### runtime stage ############################################################
 
-FROM ${REGISTRY}/epics-base-${TARGET_ARCHITECTURE}-runtime:${BASE} AS runtime
+FROM ${REGISTRY}/epics-base-runtime:${BASE} AS runtime
 
 # get runtime assets from the preparation stage
 COPY --from=runtime_prep /assets /
+# RUN mv /support/motorTechnosoft/tml_lib /epics/support/motorTechnosoft/
 
+# RUN ibek ioc extract-runtime-assets /assets /usr/local/lib/x86_64-linux-gnu
 # install runtime system dependencies, collected from install.sh scripts
-RUN ibek support apt-install-runtime-packages --skip-non-native
-
+RUN ibek support apt-install-runtime-packages 
+RUN cp /epics/support/motorTechnosoft/lib/linux-x86_64/*.so /usr/lib/x86_64-linux-gnu/
 ENV TARGET_ARCHITECTURE ${TARGET_ARCHITECTURE}
 RUN chmod 777 -R /epics
 CMD ["/bin/bash", "-c", "${IOC}/start.sh"]

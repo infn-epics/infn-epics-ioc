@@ -1,11 +1,11 @@
 ##### build stage ##############################################################
 
 ARG TARGET_ARCHITECTURE
-ARG BASE=7.0.8ec1b3
+ARG BASE=7.0.8ec2
 ARG REGISTRY=ghcr.io/epics-containers
 
-FROM  ${REGISTRY}/epics-base-${TARGET_ARCHITECTURE}-developer:${BASE} AS developer
-
+# FROM  ${REGISTRY}/epics-base-${TARGET_ARCHITECTURE}-runtime:${BASE} AS developer
+FROM ${REGISTRY}/epics-base-developer:7.0.8ec2
 
 # The devcontainer mounts the project root to /epics/generic-source
 # Using the same location here makes devcontainer/runtime differences transparent.
@@ -15,6 +15,12 @@ RUN ln -s ${SOURCE_FOLDER}/ioc ${IOC}
 
 # Get latest ibek while in development. Will come from epics-base when stable
 COPY requirements.txt requirements.txt
+# RUN apt-get update && apt-get install -y \
+#     ca-certificates python3-distutils \
+#     && rm -rf /var/lib/apt/lists/*
+
+# Install Python packages
+#RUN pip install --upgrade setuptools wheel
 RUN pip install --upgrade -r requirements.txt
 
 WORKDIR ${SOURCE_FOLDER}/ibek-support
@@ -85,25 +91,38 @@ RUN AgilentXgs600/install.sh main
 COPY ibek-support/asynInterposeMenlo/ asynInterposeMenlo/
 RUN asynInterposeMenlo/install.sh master
 
-COPY ibek-support/menlo-syncro/ menlo-syncro/
-RUN menlo-syncro/install.sh main
-
-COPY ibek-support/menlo-lfc/ menlo-lfc/
-RUN menlo-lfc/install.sh main
-
-COPY ibek-support/menlo-lac1550/ menlo-lac1550/
-RUN menlo-lac1550/install.sh main
-
 COPY ibek-support/epics-nds/ epics-nds/
 RUN epics-nds/install.sh main
+
+COPY ibek-support/sequencer/ sequencer/
+RUN sequencer/install.sh main
 
 COPY ibek-support/technosoft/ technosoft/
 RUN technosoft/install.sh main
 # COPY ibek-support/caenels-easy-driver/ caenels-easy-driver/
 # RUN caenels-easy-driver/install.sh master
 
+COPY ibek-support/biltItest biltItest/
+RUN biltItest/install.sh main
+
+COPY ibek-support/sigmaPhiStart sigmaPhiStart/
+RUN sigmaPhiStart/install.sh main
+
+COPY ibek-support/menloSyncro/ menloSyncro/
+RUN menloSyncro/install.sh main
+
+COPY ibek-support/menloLfc/ menloLfc/
+RUN menloLfc/install.sh main
+
+COPY ibek-support/menloLac menloLac
+RUN menloLac/install.sh main
+
+COPY ibek-support/icpdas icpdas
+RUN icpdas/install.sh main
+
 # COPY ibek-support/easy-driver-epics/ easy-driver-epics/
 # RUN easy-driver-epics/install.sh master
+
 
 # get the ioc source and build it
 COPY ioc/ ${SOURCE_FOLDER}/ioc
@@ -111,6 +130,8 @@ RUN cd ${IOC} && ./install.sh && make
 
 # get the products from the build stage and reduce to runtime assets only
 RUN ibek ioc extract-runtime-assets /assets ${SOURCE_FOLDER}/ibek*
+#RUN ibek ioc extract-runtime-assets /assets
+
 RUN cp -r /assets/* /
 
 
@@ -126,6 +147,6 @@ EXPOSE 5065/tcp
 # Set working directory
 WORKDIR /epics/ioc/config
 
-ENV TARGET_ARCHITECTURE ${TARGET_ARCHITECTURE}
+#ENV TARGET_ARCHITECTURE ${TARGET_ARCHITECTURE}
 
 CMD ["/bin/bash"]

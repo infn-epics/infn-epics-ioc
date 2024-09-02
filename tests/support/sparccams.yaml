@@ -1,0 +1,49 @@
+# yaml-language-server: $schema=../schemas/ibek.support.schema.json
+ioc_name: __IOC_NAME__
+description: Test camera
+
+entities:
+  
+  - type: ADAravis.aravisCamera
+    P: "SPARC:"
+    R: "ACE01:"
+    PORT: ACE01
+    ID: "Basler-a2A2600-20gmBAS-40437926"
+    CLASS: Basler-a2A2600-20gmBAS
+
+  
+  # Want to have also high throuput PVA protocol
+  - type: ADCore.NDPvaPlugin
+    PORT: ACE01.PVA
+    PVNAME: "SPARC:ACE01:PVA:OUTPUT"
+    P: "SPARC:ACE01"
+    R: ":Pva1:"
+    NDARRAY_PORT: ACE01
+
+  
+  - type: ADCore.NDStdArrays
+    P: "SPARC:ACE01"
+    R: ":image1:"
+    PORT: ACE01.NTD
+    NDARRAY_PORT: ACE01
+    TYPE: "Int8"
+    FTVL: UCHAR
+    NELEMENTS: 0
+    ENABLED: 1
+
+
+  - type: ADCore.NDStats
+    PORT: ACE01.STATS
+    NDARRAY_PORT: ACE01
+    HIST_SIZE: 50
+    P: "SPARC:ACE01:"
+    R: "Stats1:"
+    XSIZE: 1400
+    YSIZE: 768
+    ENABLED: 1
+
+  - type: epics.PostStartupCommand 
+    command: dbl              ## dumps PV NAMES
+    
+  - type: epics.EpicsCaMaxArrayBytes 
+    max_bytes: 10000000

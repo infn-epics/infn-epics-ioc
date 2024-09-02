@@ -3,6 +3,7 @@ services:
 
 stages:
     - build
+    - test
 
 build_image:
 #  tags:
@@ -36,14 +37,35 @@ build_image:
   script:
     - LAST_TAG=$(git describe --tags --abbrev=0)
     - docker login baltig.infn.it:4567 -u DOCKER_IO_KEY -p ${DOCKER_IO_KEY}
-    - docker build --build-arg TARGET_ARCHITECTURE="linux" --build-arg TARGETARCH="amd64" -t baltig.infn.it:4567/epics-containers/infn-epics-ioc:$LAST_TAG .
+    - docker build --build-arg BASE="7.0.8ec2" --build-arg TARGET_ARCHITECTURE="linux" --build-arg TARGETARCH="amd64" -t baltig.infn.it:4567/epics-containers/infn-epics-ioc:$LAST_TAG .
     - docker tag baltig.infn.it:4567/epics-containers/infn-epics-ioc:$LAST_TAG baltig.infn.it:4567/epics-containers/infn-epics-ioc:$LATEST_TAG
     - docker push baltig.infn.it:4567/epics-containers/infn-epics-ioc:$LAST_TAG
     - docker push baltig.infn.it:4567/epics-containers/infn-epics-ioc:$LATEST_TAG
-    - docker build -f Dockerfile.devel --build-arg TARGET_ARCHITECTURE="linux" --build-arg TARGETARCH="amd64" -t baltig.infn.it:4567/epics-containers/infn-epics-ioc:devel .
-    - docker push baltig.infn.it:4567/epics-containers/infn-epics-ioc:devel
+    # - docker build -f Dockerfile.devel --build-arg TARGET_ARCHITECTURE="linux" --build-arg TARGETARCH="amd64" -t baltig.infn.it:4567/epics-containers/infn-epics-ioc:devel .
+    # - docker push baltig.infn.it:4567/epics-containers/infn-epics-ioc:devel
 
     # - docker build --build-arg TARGET_ARCHITECTURE="linux" --build-arg TARGETARCH="crossarm" -t baltig.infn.it:4567/epics-containers/infn-epics-ioc:arm64 .
     # - docker push baltig.infn.it:4567/epics-containers/infn-epics-ioc:arm64
+
+test_image:
+  stage: test
+  image: baltig.infn.it:4567/epics-containers/infn-epics-ioc:latest
+  variables:
+    DOCKER_TLS_CERTDIR: ""
+  
+  script: |
+      # List all files in the support directory
+      supps=$(ls tests/support/*)
+      # Define the path to the ibek definition files
+      defs='/epics/ibek-defs/*.ibek.support.yaml'
+      # Iterate over each support file
+      for k in $supps; do
+        echo "* Testing $k"
+        # Generate the runtime for each support file using the definitions
+        ibek runtime generate "$k" $defs
+        cat /epics/runtime/st.cmd
+      done
+    
+
 
 

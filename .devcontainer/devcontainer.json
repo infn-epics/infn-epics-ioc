@@ -2,7 +2,7 @@
 {
     "name": "epics-containers IOC devcontainer",
     "build": {
-        "dockerfile": "../Dockerfile",
+        "dockerfile": "../Dockerfile.devel",
         "target": "developer",
         "args": {
             "TARGET_ARCHITECTURE": "linux"
@@ -27,19 +27,19 @@
     // will be owned by your user.
     "remoteUser": "${localEnv:EC_REMOTE_USER}",
     "extensions": ["ms-python.python"],
-    // "customizations": {
-    //     "vscode": {
-    //         // Add the IDs of extensions you want installed when the container is created.
-    //         "extensions": [
-    //             "ms-python.vscode-pylance",
-    //             "tamasfe.even-better-toml",
-    //             "redhat.vscode-yaml",
-    //             "ryanluker.vscode-coverage-gutters",
-    //             "epicsdeb.vscode-epics",
-    //             "charliermarsh.ruff"
-    //         ]
-    //     }
-    // },
+    "customizations": {
+        "vscode": {
+            // Add the IDs of extensions you want installed when the container is created.
+            "extensions": [
+                "ms-python.vscode-pylance",
+                "tamasfe.even-better-toml",
+                "redhat.vscode-yaml",
+                "ryanluker.vscode-coverage-gutters",
+                "epicsdeb.vscode-epics",
+                "charliermarsh.ruff"
+            ]
+        }
+    },
     // Make sure the files we are mapping into the container exist on the host
     // You can place any other outside of the container before-launch commands here
     "initializeCommand": "bash .devcontainer/initializeCommand ${devcontainerId}",
@@ -74,6 +74,6 @@
         // we also mount the project folder into a know location in the container
         // this is where the ibek-support and ioc folders reside in the container build
         // in this way the devcontainer and runtime look very similar
-        "source=${localWorkspaceFolder},target=/epics/generic-source,type=bind"
+        //"source=${localWorkspaceFolder},target=/epics/generic-source,type=bind"
     ]
 }
