@@ -57,7 +57,6 @@ COPY ibek-support/ADCore/ ADCore/
 RUN ADCore/install.sh R3-13
 
 COPY ibek-support/ADGenICam ADGenICam/
-<<<<<<< HEAD
 RUN ADGenICam/install.sh R1-9
 
 COPY ibek-support/AgilentXgs600 AgilentXgs600         
