@@ -57,14 +57,11 @@ COPY ibek-support/ADCore/ ADCore/
 RUN ADCore/install.sh R3-13
 
 COPY ibek-support/ADGenICam ADGenICam/
-RUN ADGenICam/install.sh R1-9
+RUN ADGenICam/install.sh master
 
-COPY ibek-support/AgilentXgs600 AgilentXgs600         
-RUN AgilentXgs600/install.sh master                
 #COPY ibek-support/ADAravis/ ADAravis/
 #RUN ADAravis/install.sh R2-3
 
-RUN ADGenICam/install.sh master
 
 COPY ibek-support/ADAravis/ ADAravis/
 RUN ADAravis/install.sh R2-3
@@ -114,6 +111,8 @@ RUN menloLac/install.sh main
 COPY ibek-support/icpdas icpdas
 RUN icpdas/install.sh main
 
+COPY ibek-support/AgilentXgs600 AgilentXgs600
+RUN AgilentXgs600/install.sh main
 # get the ioc source and build it
 
 COPY ioc/ ${SOURCE_FOLDER}/ioc
