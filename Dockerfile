@@ -112,7 +112,7 @@ COPY ibek-support/icpdas icpdas
 RUN icpdas/install.sh main
 
 COPY ibek-support/AgilentXgs600 AgilentXgs600
-RUN AgilentXgs600/install.sh main
+RUN AgilentXgs600/install.sh master
 # get the ioc source and build it
 
 COPY ioc/ ${SOURCE_FOLDER}/ioc
