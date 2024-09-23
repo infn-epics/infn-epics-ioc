@@ -115,6 +115,11 @@ RUN icpdas/install.sh main
 COPY ioc/ ${SOURCE_FOLDER}/ioc
 RUN cd ${IOC} && ./install.sh && make
 
+ibek support apt-install iputils iproute2
+
+# declare packages for installation in the Dockerfile's runtime stage
+ibek support add-runtime-packages iputils iproute2
+
 ##### runtime preparation stage ################################################
 
 FROM developer AS runtime_prep
