@@ -115,7 +115,7 @@ RUN icpdas/install.sh main
 COPY ioc/ ${SOURCE_FOLDER}/ioc
 RUN cd ${IOC} && ./install.sh && make
 
-RUN ibek support apt-install iputils iproute2 telnet;ibek support add-runtime-packages iputils iproute2 telnet
+RUN ibek support apt-install iputils-ping iproute2 telnet;ibek support add-runtime-packages iputils-ping iproute2 telnet
 
 # declare packages for installation in the Dockerfile's runtime stage
 
