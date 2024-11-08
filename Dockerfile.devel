@@ -35,7 +35,7 @@ RUN iocStats/install.sh 3.2.0
 #  TODO - Add further support module installations here
 ################################################################################
 
-COPY ibek-support/asyn/ asyn/
+OPY ibek-support/asyn/ asyn/
 RUN asyn/install.sh R4-44-2
 
 COPY ibek-support/autosave/ autosave/
@@ -56,6 +56,9 @@ RUN calc/install.sh R3-7-5
 COPY ibek-support/motor/ motor/
 RUN motor/install.sh R7-3
 
+COPY ibek-support/AgilentXgs600 AgilentXgs600
+RUN AgilentXgs600/install.sh main
+
 COPY ibek-support/motorMotorSim/ motorMotorSim/
 RUN motorMotorSim/install.sh R1-2
 
@@ -65,10 +68,8 @@ RUN ADCore/install.sh R3-13
 COPY ibek-support/ADGenICam ADGenICam/
 RUN ADGenICam/install.sh R1-9
 
-#COPY ibek-support/ADAravis/ ADAravis/
-#RUN ADAravis/install.sh R2-3
-
-
+COPY ibek-support/ADAravis/ ADAravis/
+RUN ADAravis/install.sh R2-3
 
 COPY ibek-support/ADSimDetector ADSimDetector/
 RUN ADSimDetector/install.sh R2-10
@@ -85,8 +86,6 @@ RUN screen-epics-ioc/install.sh v1.3.1
 COPY ibek-support/motorNewport motorNewport/
 RUN motorNewport/install.sh R1-2-1
 
-COPY ibek-support/AgilentXgs600/ AgilentXgs600/
-RUN AgilentXgs600/install.sh main
 
 COPY ibek-support/asynInterposeMenlo/ asynInterposeMenlo/
 RUN asynInterposeMenlo/install.sh master
@@ -96,17 +95,14 @@ RUN epics-nds/install.sh main
 
 COPY ibek-support/sequencer/ sequencer/
 RUN sequencer/install.sh main
-
-COPY ibek-support/technosoft/ technosoft/
-RUN technosoft/install.sh main
-# COPY ibek-support/caenels-easy-driver/ caenels-easy-driver/
-# RUN caenels-easy-driver/install.sh master
-
 COPY ibek-support/biltItest biltItest/
 RUN biltItest/install.sh main
 
 COPY ibek-support/sigmaPhiStart sigmaPhiStart/
 RUN sigmaPhiStart/install.sh main
+
+COPY ibek-support/technosoft/ technosoft/
+RUN technosoft/install.sh main
 
 COPY ibek-support/menloSyncro/ menloSyncro/
 RUN menloSyncro/install.sh main
