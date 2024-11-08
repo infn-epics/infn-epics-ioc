@@ -35,7 +35,7 @@ RUN iocStats/install.sh 3.2.0
 #  TODO - Add further support module installations here
 ################################################################################
 
-OPY ibek-support/asyn/ asyn/
+COPY ibek-support/asyn/ asyn/
 RUN asyn/install.sh R4-44-2
 
 COPY ibek-support/autosave/ autosave/
