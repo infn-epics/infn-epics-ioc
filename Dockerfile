@@ -109,6 +109,9 @@ RUN menloLac/install.sh main
 COPY ibek-support/icpdas icpdas
 RUN icpdas/install.sh main
 
+COPY ibek-support/easy-driver-epics easy-driver-epics
+RUN easy-driver-epics/install.sh master
+
 # get the ioc source and build it
 
 COPY ioc/ ${SOURCE_FOLDER}/ioc
