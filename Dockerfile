@@ -128,7 +128,7 @@ FROM developer AS runtime_prep
 
 # get the products from the build stage and reduce to runtime assets only
 # RUN ibek ioc extract-runtime-assets /assets ${SOURCE_FOLDER}/ibek*
-RUN ibek ioc extract-runtime-assets /assets /epics/support/motorTechnosoft/tml_lib/config /epics/support/biltItest /epics/support/sigmaPhiStart /epics/support/menloSyncro /epics/support/menloLfc /epics/support/menloLac
+RUN ibek ioc extract-runtime-assets /assets /epics/support/motorTechnosoft/tml_lib/config /epics/support/biltItest /epics/support/AgilentXgs600 /epics/support/sigmaPhiStart /epics/support/menloSyncro /epics/support/menloLfc /epics/support/menloLac
 # RUN ibek ioc extract-runtime-assets /assets
 
 ##### runtime stage ############################################################
