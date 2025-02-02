@@ -112,6 +112,9 @@ RUN icpdas/install.sh main
 COPY ibek-support/easy-driver-epics easy-driver-epics
 RUN easy-driver-epics/install.sh master
 
+COPY ibek-support/agilent4uhv agilent4uhv
+RUN agilent4uhv/install.sh main
+
 # get the ioc source and build it
 
 COPY ioc/ ${SOURCE_FOLDER}/ioc
@@ -128,7 +131,7 @@ FROM developer AS runtime_prep
 
 # get the products from the build stage and reduce to runtime assets only
 # RUN ibek ioc extract-runtime-assets /assets ${SOURCE_FOLDER}/ibek*
-RUN ibek ioc extract-runtime-assets /assets /epics/support/motorTechnosoft/tml_lib/config /epics/support/biltItest /epics/support/AgilentXgs600 /epics/support/sigmaPhiStart /epics/support/menloSyncro /epics/support/menloLfc /epics/support/menloLac
+RUN ibek ioc extract-runtime-assets /assets /epics/support/motorTechnosoft/tml_lib/config /epics/support/biltItest /epics/support/agilent4uhv /epics/support/AgilentXgs600 /epics/support/sigmaPhiStart /epics/support/menloSyncro /epics/support/menloLfc /epics/support/menloLac
 # RUN ibek ioc extract-runtime-assets /assets
 
 ##### runtime stage ############################################################
