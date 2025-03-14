@@ -127,6 +127,7 @@ COPY ibek-support/easy-driver-epics easy-driver-epics
 RUN easy-driver-epics/install.sh master
 
 COPY ibek-support/kima kima
+RUN chmod +x kima/install.sh
 RUN kima/install.sh main
 
 # get the ioc source and build it
