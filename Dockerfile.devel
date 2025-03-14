@@ -56,6 +56,8 @@ RUN calc/install.sh R3-7-5
 COPY ibek-support/motor/ motor/
 RUN motor/install.sh R7-3
 
+
+
 COPY ibek-support/AgilentXgs600 AgilentXgs600
 RUN AgilentXgs600/install.sh main
 
@@ -79,6 +81,8 @@ RUN ADSimDetector/install.sh R2-10
 
 COPY ibek-support/modbus/ modbus/
 RUN modbus/install.sh R3-3
+
+
 
 COPY ibek-support/TPG366/ TPG366/
 RUN TPG366/install.sh main
@@ -122,7 +126,8 @@ RUN icpdas/install.sh main
 COPY ibek-support/easy-driver-epics easy-driver-epics
 RUN easy-driver-epics/install.sh master
 
-
+COPY ibek-support/kima kima
+RUN kima/install.sh main
 
 # get the ioc source and build it
 COPY ioc/ ${SOURCE_FOLDER}/ioc
