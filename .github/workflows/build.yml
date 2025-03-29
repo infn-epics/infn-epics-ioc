@@ -46,18 +46,9 @@ jobs:
           platforms: ${{ matrix.platform }}
           target: ${{ matrix.target }}
           build-args: TARGET_ARCHITECTURE=${{ matrix.architecture }}
-          tags: ghcr.io/${{ github.repository_owner }}/${{ github.event.repository.name }}-${{ matrix.architecture }}-${{ matrix.target }}:${{ github.ref_name }}
+          tags: |
+            ghcr.io/${{ github.repository_owner }}/${{ github.event.repository.name }}-${{ matrix.architecture }}-${{ matrix.target }}:${{ github.ref_name }}
+            ghcr.io/${{ github.repository_owner }}/${{ github.event.repository.name }}-${{ matrix.architecture }}-${{ matrix.target }}:latest
           cache-from: type=gha
           cache-to: type=gha,mode=max
 
-      - name: Make Image Public
-        run: |
-          IMAGE_NAME="ghcr.io/${{ github.repository_owner }}/${{ github.event.repository.name }}-${{ matrix.architecture }}-${{ matrix.target }}:${{ github.ref_name }}"
-          echo "Setting visibility of $IMAGE_NAME to public"
-          gh api --method PATCH \
-            -H "Authorization: Bearer ${{ secrets.GITHUB_TOKEN }}" \
-            -H "Accept: application/vnd.github.v3+json" \
-            /user/packages/container/$IMAGE_NAME/visibility \
-            -f visibility=public
-        env:
-          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
