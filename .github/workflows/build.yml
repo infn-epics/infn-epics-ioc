@@ -1,19 +1,18 @@
-name: Build and publish image to ghcr.io/epics-containers
+name: Build and publish image to ghcr.io/infn-epics
 
 on:
   push:
-  pull_request:
+    tags:
+      - '*'  # Run only when a tag is pushed
 
 jobs:
   build-push-images:
-    # pull requests are a duplicate of a branch push if within the same repo.
-    if: github.event_name != 'pull_request' || github.event.pull_request.head.repo.full_name != github.repository
     permissions:
       contents: read
       packages: write
     strategy:
       fail-fast: false
-      max-parallel: 1 # take advantage of caching
+      max-parallel: 1
       matrix:
         target: [developer, runtime]
         architecture: [linux]
@@ -38,39 +37,15 @@ jobs:
       - name: Set up Docker Buildx
         uses: docker/setup-buildx-action@v3
 
-      - name: Build image
+      - name: Build and Push Image
         uses: docker/build-push-action@v5
         with:
           context: .
           file: Dockerfile
-          push: ${{ github.event_name == 'push' && github.ref_type == 'tag' }}
+          push: true  # Always push since we trigger only on tag pushes
           platform: ${{ matrix.platform }}
           target: ${{ matrix.target }}
           build-args: TARGET_ARCHITECTURE=${{ matrix.architecture }}
           tags: ghcr.io/${{ github.repository_owner }}/${{ github.event.repository.name }}-${{ matrix.architecture }}-${{ matrix.target }}:${{ github.ref_name }}
           cache-from: type=gha
           cache-to: type=gha,mode=max
-
-  release:
-    # Release on tag push - publish ioc schema
-    needs: [build-push-images]
-    if: ${{ github.event_name == 'push' && github.ref_type == 'tag' }}
-    runs-on: ubuntu-latest
-
-    # this job runs in the (linux) developer container we just made
-    container:
-      image: ghcr.io/${{ github.repository_owner }}/${{ github.event.repository.name }}-linux-developer:${{ github.ref_name }}
-
-    steps:
-      - name: generate-schema
-        run: |
-          ibek ioc generate-schema --output ibek.ioc.schema.json
-
-      # TODO add back in some tests that run INSIDE the container
-
-      # - name: Github Release
-      #   uses: softprops/action-gh-release@de2c0eb89ae2a093876385947365aca7b0e5f844 # v0.1.15
-      #   with:
-      #     files: |
-      #       ibek.ioc.schema.json
-      #     generate_release_notes: true
