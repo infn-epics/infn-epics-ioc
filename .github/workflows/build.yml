@@ -43,7 +43,7 @@ jobs:
           context: .
           file: Dockerfile
           push: true  # Always push since we trigger only on tag pushes
-          platform: ${{ matrix.platform }}
+          platforms: ${{ matrix.platform }}
           target: ${{ matrix.target }}
           build-args: TARGET_ARCHITECTURE=${{ matrix.architecture }}
           tags: ghcr.io/${{ github.repository_owner }}/${{ github.event.repository.name }}-${{ matrix.architecture }}-${{ matrix.target }}:${{ github.ref_name }}
