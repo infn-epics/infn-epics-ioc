@@ -68,9 +68,9 @@ jobs:
 
       # TODO add back in some tests that run INSIDE the container
 
-      - name: Github Release
-        uses: softprops/action-gh-release@de2c0eb89ae2a093876385947365aca7b0e5f844 # v0.1.15
-        with:
-          files: |
-            ibek.ioc.schema.json
-          generate_release_notes: true
+      # - name: Github Release
+      #   uses: softprops/action-gh-release@de2c0eb89ae2a093876385947365aca7b0e5f844 # v0.1.15
+      #   with:
+      #     files: |
+      #       ibek.ioc.schema.json
+      #     generate_release_notes: true
