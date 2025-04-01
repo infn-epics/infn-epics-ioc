@@ -1,7 +1,7 @@
 ##### build stage ##############################################################
 
 ARG TARGET_ARCHITECTURE
-ARG BASE=7.0.8ec2
+ARG BASE=7.0.9ec3 ## 7.0.9ec3 support includes pvx #7.0.8ec2
 ARG REGISTRY=ghcr.io/epics-containers
 
 ## FROM  ${REGISTRY}/epics-base-${TARGET_ARCHITECTURE}-runtime:${BASE} AS developer
