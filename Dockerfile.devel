@@ -124,6 +124,7 @@ COPY ibek-support/icpdas icpdas
 RUN icpdas/install.sh main
 
 COPY ibek-support/smc/ smc/
+RUN chmod +x smc/install.sh 
 RUN smc/install.sh main
 
 COPY ibek-support/easy-driver-epics easy-driver-epics
