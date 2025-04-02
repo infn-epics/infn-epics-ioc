@@ -117,6 +117,9 @@ RUN agilent4uhv/install.sh main
 
 COPY ibek-support/kima kima
 RUN kima/install.sh main
+
+COPY ibek-support/agilent4uhv agilent4uhv
+RUN agilent4uhv/install.sh main
 # get the ioc source and build it
 
 COPY ioc/ ${SOURCE_FOLDER}/ioc
