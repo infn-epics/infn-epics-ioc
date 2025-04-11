@@ -84,11 +84,11 @@ WORKDIR ${SOURCE_FOLDER}/ibek-support-infn
 # TODO remove this once all support is using ansible.sh
 COPY ibek-support-infn/_global/ _global
 
-# COPY ibek-support/AgilentXgs600 AgilentXgs600
-# RUN AgilentXgs600/install.sh main
+COPY ibek-support-infn/AgilentXgs600 AgilentXgs600
+RUN AgilentXgs600/install.sh main
 
-# COPY ibek-support/screen-epics-ioc screen-epics-ioc/
-# RUN screen-epics-ioc/install.sh v1.3.1
+COPY ibek-support-infn/screen-epics-ioc screen-epics-ioc/
+RUN screen-epics-ioc/install.sh v1.3.1
 
 COPY ibek-support-infn/asynInterposeMenlo/ asynInterposeMenlo/
 RUN asynInterposeMenlo/install.sh master
@@ -99,44 +99,47 @@ RUN epics-nds/install.sh main
 COPY ibek-support-infn/biltItest biltItest/
 RUN biltItest/install.sh main
 
-# COPY ibek-support-infn/sigmaPhiStart sigmaPhiStart/
-# RUN sigmaPhiStart/install.sh main
+COPY ibek-support-infn/sigmaPhiStart sigmaPhiStart/
+RUN sigmaPhiStart/install.sh main
 
-# COPY ibek-support-infn/technosoft/ technosoft/
-# RUN technosoft/install.sh main
+COPY ibek-support-infn/technosoft/ technosoft/
+RUN technosoft/install.sh main
 
-# # COPY ibek-support-infn/menloSyncro/ menloSyncro/
-# # RUN menloSyncro/install.sh main
+# TODO these 3 modules have a dbd conflict issue
 
-# # COPY ibek-support-infn/menloLfc/ menloLfc/
-# # RUN menloLfc/install.sh main
+# COPY ibek-support-infn/menloSyncro/ menloSyncro/
+# RUN menloSyncro/install.sh main
 
-# # COPY ibek-support-infn/menloLac menloLac
-# # RUN menloLac/install.sh main
+# COPY ibek-support-infn/menloLfc/ menloLfc/
+# RUN menloLfc/install.sh main
 
-# COPY ibek-support-infn/icpdas icpdas
-# RUN icpdas/install.sh main
+# COPY ibek-support-infn/menloLac menloLac
+# RUN menloLac/install.sh main
 
-# COPY ibek-support-infn/easy-driver-epics easy-driver-epics
-# RUN easy-driver-epics/install.sh master
+COPY ibek-support-infn/icpdas icpdas
+RUN icpdas/install.sh main
 
-# COPY ibek-support-infn/agilent4uhv agilent4uhv
-# RUN agilent4uhv/install.sh main
+COPY ibek-support-infn/easy-driver-epics easy-driver-epics
+RUN easy-driver-epics/install.sh master
 
-# COPY ibek-support-infn/kima kima
-# RUN kima/install.sh main
+COPY ibek-support-infn/agilent4uhv agilent4uhv
+RUN agilent4uhv/install.sh main
 
-# COPY ibek-support-infn/agilent4uhv agilent4uhv
-# RUN agilent4uhv/install.sh main
+COPY ibek-support-infn/kima kima
+RUN kima/install.sh main
 
-# COPY ibek-support-infn/agilentipcmini agilentipcmini
-# RUN agilentipcmini/install.sh main
-# # get the ioc source and build it
+COPY ibek-support-infn/agilent4uhv agilent4uhv
+RUN agilent4uhv/install.sh main
+
+COPY ibek-support-infn/agilentipcmini agilentipcmini
+RUN agilentipcmini/install.sh main
+# get the ioc source and build it
 
 COPY ioc/ ${SOURCE_FOLDER}/ioc
 RUN ansible.sh ioc
 
-RUN ibek support apt-install iputils-ping iproute2 telnet;ibek support add-runtime-packages iputils-ping iproute2 telnet  python3-distutils ca-certificates python3.10-venv
+# add some debugging tools for the developer target
+RUN ibek support apt-install iputils-ping iproute2 telnet;ibek support add-runtime-packages iputils-ping iproute2 telnet python3-distutils ca-certificates python3.10-venv
 
 # # get the ioc source and build it
 # COPY ioc ${SOURCE_FOLDER}/ioc
