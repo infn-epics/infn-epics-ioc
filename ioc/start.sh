@@ -33,7 +33,7 @@ description='
     startup script. The file name should always be 'ioc.yaml'. The ioc instance
     can determine its own name with the following as the first line in 'ioc.yaml'
 
-        ioc_name: ""{{ __utils__.get_env('IOC_NAME') }}""
+        ioc_name: ""{{ _global.get_env('IOC_NAME') }}""
 
     at the top of the file and in turn "{{ ioc_name }}"" can be used in any
     of the fields within the file. For example: by default Kubernetes will be
@@ -57,7 +57,6 @@ description='
  4. empty config folder *******************************************************
     If the config folder is empty this message will be displayed.
 
-
  RTEMS IOCS - RTEMS IOC startup files can be generated using any of the above.
 
  For RTEMS we do not execute the ioc inside of the pod. Instead we:
@@ -74,7 +73,7 @@ function ibek_error {
     echo "${1}"
 
     # Wait for a bit so the container does not exit and restart continually
-    sleep 10
+    sleep 120
 }
 
 # environment setup ************************************************************
@@ -121,7 +120,7 @@ if [ -f ${override} ]; then
 # 2. ioc.yaml ******************************************************************
 elif [ -f ${ibek_src} ]; then
 
-    if [[ ${#ibek_yams[@]} > 1 ]]; then
+    if [[ ${#ibek_yamls[@]} > 1 ]]; then
         ibek_error "ERROR: Multiple YAML files found in ${CONFIG_DIR}."
     fi
 
@@ -131,7 +130,13 @@ elif [ -f ${ibek_src} ]; then
 
     # get the ibek support yaml files this ioc's support modules
     defs=/epics/ibek-defs/*.ibek.support.yaml
+    # prepare the runtime assets: ioc.db, st.cmd + protocol, autosave files
     ibek runtime generate ${ibek_src} ${defs}
+    ibek runtime generate-autosave
+    if [[ -d /epics/support/configure/protocol ]] ; then
+        rm -fr ${RUNTIME_DIR}/protocol
+        cp -r /epics/support/configure/protocol  ${RUNTIME_DIR}
+    fi
 
     # build expanded database using msi
     if [ -f ${db_src} ]; then
@@ -146,22 +151,36 @@ elif [ -f ${ioc_startup} ] ; then
         # generate ioc.db from ioc.subst, including all templates from SUPPORT
         includes=$(for i in ${SUPPORT}/*/db; do echo -n "-I $i "; done)
         msi ${includes} -I${RUNTIME_DIR} -S ${CONFIG_DIR}/ioc.subst -o ${epics_db}
+        ibek runtime generate-autosave
     fi
     final_ioc_startup=${ioc_startup}
 # 4. incorrect config folder ***************************************************
 else
-    echo "ERROR: No startup assets found in ${CONFIG_DIR}"
-    ibek_error "${description}"
+    ibek_error "
+    ${description}
+
+    ERROR: No IOC Instance Startup Assets found in ${CONFIG_DIR}
+    Please add ioc.yaml to the config folder (or see above for other options).
+    "
 fi
 
 # Launch the IOC ***************************************************************
 
-if [[ ${TARGET_ARCHITECTURE} == "rtems" ]] ; then
-    echo "RTEMS IOC startup - copying IOC to RTEMS mount point ..."
-    cp -r ${IOC} ${K8S_IOC_ROOT}
-    sleep 100
-else
+if [[ ${EPICS_TARGET_ARCH} == "linux-x86_64" ]] ; then
     # Execute the IOC binary and pass the startup script as an argument
     exec ${IOC}/bin/linux-x86_64/ioc ${final_ioc_startup}
+else
+    # for not native architectures use the appropriate python package
+    if [[ -f ${CONFIG_DIR}/proxy-start.sh ]]; then
+        # instances can provide proxy-start.sh to override default behavior
+        bash ${CONFIG_DIR}/proxy-start.sh
+    else
+        # the RTEMS container provides a python package to:
+        # - copy binaries to the IOC's shared folder
+        # - remotely launch the IOC
+        # - can also remotely configure the boot parameters
+        rtems-proxy start
+    fi
 fi
+
 

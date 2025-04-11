@@ -1,0 +1,68 @@
+// Generic IOC debugging launcher
+// To use this l
+// 1. make sure you have gdb installed in your container with
+//    apt update; apt-get install gdb
+// 2. run the IOC once to make sure rutime assets are generated:
+//    cd /epics/ioc; make
+//    ./start.sh
+// 3. stop the IOC with 'exit'
+// 4. In vscode go to the support source in /epics/support/xxx
+// 5. Set any breakpoints in the source code that you require.
+// 6. You may want to set 'HOST_OPT=NO' in CONFIG_SITE and rebuild the support
+// 6. Go to the debug tab and select 'IOC devcontainer debug' from the
+//    RUN AND DEBUG dropdown
+{
+    "version": "0.2.0",
+    "configurations": [
+        {
+            "name": "(gdb) Attach to IOC",
+            "type": "cppdbg",
+            "request": "attach",
+            "program": "/epics/ioc/bin/linux-x86_64/ioc",
+            "MIMode": "gdb",
+            "setupCommands": [
+                {
+                    "description": "Enable pretty-printing for gdb",
+                    "text": "-enable-pretty-printing",
+                    "ignoreFailures": true
+                },
+                {
+                    "description": "Set Disassembly Flavor to Intel",
+                    "text": "-gdb-set disassembly-flavor intel",
+                    "ignoreFailures": true
+                }
+            ]
+        },
+        {
+            "name": "Launch IOC in debugger",
+            "type": "cppdbg",
+            "request": "launch",
+            "program": "/epics/ioc/bin/linux-x86_64/ioc",
+            "args": [
+                "/epics/runtime/st.cmd"
+            ],
+            "stopAtEntry": false,
+            "cwd": "/epics/ioc",
+            "environment": [
+                {
+                    "name": "RUNTIME_DIR",
+                    "value": "/epics/runtime"
+                }
+            ],
+            "externalConsole": false,
+            "MIMode": "gdb",
+            "setupCommands": [
+                {
+                    "description": "Enable pretty-printing for gdb",
+                    "text": "-enable-pretty-printing",
+                    "ignoreFailures": true
+                },
+                {
+                    "description": "Set Disassembly Flavor to Intel",
+                    "text": "-gdb-set disassembly-flavor intel",
+                    "ignoreFailures": true
+                }
+            ]
+        }
+    ]
+}

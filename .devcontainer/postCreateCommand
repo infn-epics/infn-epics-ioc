@@ -1,5 +1,8 @@
 #!/bin/bash
 
+# Custom initialization goes here if needed.
+# Runs inside the dev container after the container is created
+
 ################################################################################
 # When using docker we will not be root inside the container
 # the following steps are then required
@@ -9,21 +12,23 @@ if [[ $USER != "root" ]] ; then
     # make sure the non-root user can build iocs and (mounted in) support modules
     sudo chown -R ${USER}:${USER} /epics/ibek-defs /epics/pvi-defs /epics/support/configure /venv
     sudo chown -h ${USER}:${USER} /epics /epics/ioc /epics/support
-
-    # also give non-root user access to the same bash config we use in podman
-    sudo chmod a+rx /root
-    for f in .inputrc .bash_eternal_history .bashrc .bashrc_dev_container; do
-        sudo chmod a+rw /root/$f
-        ln -sf /root/$f $HOME/$f
-    done
 fi
 
 ################################################################################
-# Custom install script for each developer to add whatever they like to
-# all epics-containers devcontainers
+# Shell customizations for Generic IOC devcontainers
 ################################################################################
 
-# add user's custom profile container creation script
-if [ -f ~/.bashprofile_dev_container ]; then
-    . ~/.bashprofile_dev_container
+# add ibek completion to bash and zsh
+echo 'source <(ibek --show-completion bash)' >> $HOME/.bashrc
+echo 'source <(ibek --show-completion zsh)' >> $HOME/.zshrc
+
+# pick theme and RPS1 with no unicode chars to avoid completion corruption in zsh
+sed -i $HOME/.zshrc -e 's/^ZSH_THEME.*$/ZSH_THEME="dst"/' -e '/^RPS1=/d'
+# override the response PS - this shows the last exit code in red only
+# echo "RPS1=$'%(?..%{\C-[[01;31m%}%? %{\C-[[00m%})'" >> $HOME/.zshrc
+
+# allow personalization of all devcontainers in this subdirectory
+# by placing a .devcontainer_rc file in the workspace root
+if [[ -f /workspaces/.devcontainer_rc ]] ; then
+    source /workspaces/.devcontainer_rc
 fi

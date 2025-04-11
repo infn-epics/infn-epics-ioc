@@ -1,0 +1,9 @@
+# Changes here will be overwritten by Copier; NEVER EDIT MANUALLY
+_commit: 4.3.2
+_src_path: gh:epics-containers/ioc-template
+description: all support for the beamlines at infn
+git_platform: github.com
+github_org: infn-epics
+name: ioc-infn
+repo_uri: git@github.com:infn-epics/infn-epics-ioc.git
+rtems: false

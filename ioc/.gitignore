@@ -8,3 +8,4 @@ lib
 .svn*
 iocs/*IOC*
 .idea
+.iocsh_history
