@@ -88,13 +88,13 @@ COPY ibek-support-infn/AgilentXgs600 AgilentXgs600
 RUN AgilentXgs600/install.sh main
 
 COPY ibek-support-infn/screen-epics-ioc screen-epics-ioc/
-RUN screen-epics-ioc/install.sh v1.3.1
+RUN ansible.sh screen-epics-ioc
 
 COPY ibek-support-infn/asynInterposeMenlo/ asynInterposeMenlo/
 RUN asynInterposeMenlo/install.sh master
 
 COPY ibek-support-infn/epics-nds/ epics-nds/
-RUN epics-nds/install.sh main
+RUN ansible.sh epics-nds
 
 COPY ibek-support-infn/biltItest biltItest/
 RUN biltItest/install.sh main
@@ -120,13 +120,13 @@ COPY ibek-support-infn/icpdas icpdas
 RUN icpdas/install.sh main
 
 COPY ibek-support-infn/easy-driver-epics easy-driver-epics
-RUN easy-driver-epics/install.sh master
+RUN ansible.sh easy-driver-epics
 
 COPY ibek-support-infn/agilent4uhv agilent4uhv
 RUN agilent4uhv/install.sh main
 
 COPY ibek-support-infn/kima kima
-RUN kima/install.sh main
+RUN ansible.sh kima
 
 COPY ibek-support-infn/agilent4uhv agilent4uhv
 RUN agilent4uhv/install.sh main
