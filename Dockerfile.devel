@@ -124,11 +124,21 @@ RUN menloLac/install.sh main
 COPY ibek-support/icpdas icpdas
 RUN icpdas/install.sh main
 
+COPY ibek-support/smc/ smc/
+RUN chmod +x smc/install.sh 
+RUN smc/install.sh main
+
 COPY ibek-support/easy-driver-epics easy-driver-epics
 RUN easy-driver-epics/install.sh master
 
 COPY ibek-support/kima kima
 RUN kima/install.sh main
+
+COPY ibek-support/agilent4uhv agilent4uhv
+RUN agilent4uhv/install.sh main
+
+COPY ibek-support/agilentipcmini agilentipcmini
+RUN agilentipcmini/install.sh main
 
 # get the ioc source and build it
 COPY ioc/ ${SOURCE_FOLDER}/ioc
