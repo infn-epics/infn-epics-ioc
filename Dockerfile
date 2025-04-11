@@ -50,7 +50,6 @@ RUN ansible.sh calc
 COPY ibek-support/motor/ motor/
 RUN ansible.sh motor
 
-
 COPY ibek-support/motorMotorSim/ motorMotorSim/
 RUN ansible.sh motorMotorSim
 
