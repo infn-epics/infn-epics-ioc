@@ -125,8 +125,8 @@ RUN ansible.sh easy-driver-epics
 COPY ibek-support-infn/agilent4uhv agilent4uhv
 RUN agilent4uhv/install.sh main
 
-COPY ibek-support-infn/kima kima
-RUN ansible.sh kima
+COPY ibek-support-infn/kima-undulator-ioc kima-undulator-ioc
+RUN ansible.sh kima-undulator-ioc
 
 COPY ibek-support-infn/agilent4uhv agilent4uhv
 RUN agilent4uhv/install.sh main
