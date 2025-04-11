@@ -20,10 +20,6 @@ RUN pip install --upgrade -r requirements.txt
 
 WORKDIR ${SOURCE_FOLDER}/ibek-support
 
-# copy the global ibek files
-# TODO remove this once all support is using ansible.sh
-COPY ibek-support/_global/ _global
-
 COPY ibek-support/_ansible _ansible
 ENV PATH=$PATH:${SOURCE_FOLDER}/ibek-support/_ansible
 
@@ -89,6 +85,10 @@ RUN ansible.sh sequencer
 
 # INFN Specific Support
 WORKDIR ${SOURCE_FOLDER}/ibek-support-infn
+
+# copy the global ibek files
+# TODO remove this once all support is using ansible.sh
+COPY ibek-support-infn/_global/ _global
 
 COPY ibek-support-infn/asynInterposeMenlo/ asynInterposeMenlo/
 RUN asynInterposeMenlo/install.sh master
