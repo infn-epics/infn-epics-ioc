@@ -1,3 +1,6 @@
+[submodule "ibek-support-infn"]
+	path = ibek-support-infn
+	url = https://github.com/infn-epics/ibek-support-infn.git
 [submodule "ibek-support"]
 	path = ibek-support
-	url = ../ibek-support.git
+	url = https://github.com/infn-epics/ibek-support.git

@@ -20,127 +20,121 @@ RUN pip install --upgrade -r requirements.txt
 
 WORKDIR ${SOURCE_FOLDER}/ibek-support
 
-# COPY ibek-support/_ansible _ansible
-# ENV PATH=$PATH:${SOURCE_FOLDER}/ibek-support/_ansible
-
-# COPY ibek-support/iocStats/ iocStats
-# RUN ansible.sh iocStats
-
-# COPY ibek-support/pvlogging/ pvlogging/
-# RUN ansible.sh pvlogging
-
-# COPY ibek-support/autosave/ autosave
-# RUN ansible.sh autosave
-
 # copy the global ibek files
+# TODO remove this once all support is using ansible.sh
 COPY ibek-support/_global/ _global
 
-COPY ibek-support/iocStats/ iocStats
-RUN iocStats/install.sh 3.2.0
+COPY ibek-support/_ansible _ansible
+ENV PATH=$PATH:${SOURCE_FOLDER}/ibek-support/_ansible
 
-################################################################################
-#  TODO - Add further support module installations here
-################################################################################
+COPY ibek-support/iocStats/ iocStats
+RUN ansible.sh iocStats
+
+COPY ibek-support/pvlogging/ pvlogging/
+RUN ansible.sh pvlogging
+
+COPY ibek-support/autosave/ autosave
+RUN ansible.sh autosave
 
 COPY ibek-support/asyn/ asyn/
-RUN asyn/install.sh R4-44-2
-
-COPY ibek-support/autosave/ autosave/
-RUN autosave/install.sh R5-11
+RUN ansible.sh asyn
 
 COPY ibek-support/busy/ busy/
-RUN busy/install.sh R1-7-3
+RUN ansible.sh -v R1-7-3 busy
 
 COPY ibek-support/StreamDevice/ StreamDevice/
-RUN StreamDevice/install.sh 2.8.24
+RUN ansible.sh StreamDevice
 
 COPY ibek-support/sscan/ sscan/
-RUN sscan/install.sh R2-11-6
+RUN ansible.sh sscan
 
 COPY ibek-support/calc/ calc/
-RUN calc/install.sh R3-7-5
+RUN ansible.sh calc
 
 COPY ibek-support/motor/ motor/
-RUN motor/install.sh R7-3
+RUN ansible.sh motor
 
-COPY ibek-support/AgilentXgs600 AgilentXgs600
-RUN AgilentXgs600/install.sh main
+# COPY ibek-support/AgilentXgs600 AgilentXgs600
+# RUN AgilentXgs600/install.sh main
 
-COPY ibek-support/motorMotorSim/ motorMotorSim/
-RUN motorMotorSim/install.sh R1-2
+# COPY ibek-support/motorMotorSim/ motorMotorSim/
+# RUN motorMotorSim/install.sh R1-2
 
-COPY ibek-support/ADCore/ ADCore/
-RUN ADCore/install.sh R3-13
+# COPY ibek-support/ADCore/ ADCore/
+# RUN ADCore/install.sh R3-13
 
-COPY ibek-support/ADGenICam ADGenICam/
-RUN ADGenICam/install.sh R1-9
+# COPY ibek-support/ADGenICam ADGenICam/
+# RUN ADGenICam/install.sh R1-9
 
-COPY ibek-support/ADAravis/ ADAravis/
-RUN ADAravis/install.sh R2-3
+# COPY ibek-support/ADAravis/ ADAravis/
+# RUN ADAravis/install.sh R2-3
 
-COPY ibek-support/ADSimDetector ADSimDetector/
-RUN ADSimDetector/install.sh R2-10
+# COPY ibek-support/ADSimDetector ADSimDetector/
+# RUN ADSimDetector/install.sh R2-10
 
-# COPY ibek-support/lakeshore340  lakeshore340/
-# RUN  lakeshore340/install.sh 2-6
+# # COPY ibek-support/lakeshore340  lakeshore340/
+# # RUN  lakeshore340/install.sh 2-6
 
-COPY ibek-support/modbus/ modbus/
-RUN modbus/install.sh R3-3
+# COPY ibek-support/modbus/ modbus/
+# RUN modbus/install.sh R3-3
 
-COPY ibek-support/screen-epics-ioc screen-epics-ioc/
-RUN screen-epics-ioc/install.sh v1.3.1
+# COPY ibek-support/screen-epics-ioc screen-epics-ioc/
+# RUN screen-epics-ioc/install.sh v1.3.1
 
-COPY ibek-support/motorNewport motorNewport/
-RUN motorNewport/install.sh R1-2-1
-
-
-COPY ibek-support/asynInterposeMenlo/ asynInterposeMenlo/
-RUN asynInterposeMenlo/install.sh master
-
-COPY ibek-support/epics-nds/ epics-nds/
-RUN epics-nds/install.sh main
+# COPY ibek-support/motorNewport motorNewport/
+# RUN motorNewport/install.sh R1-2-1
 
 COPY ibek-support/sequencer/ sequencer/
-RUN sequencer/install.sh main
-COPY ibek-support/biltItest biltItest/
+RUN ansible.sh sequencer
+
+# INFN Specific Support
+WORKDIR ${SOURCE_FOLDER}/ibek-support-infn
+
+COPY ibek-support-infn/asynInterposeMenlo/ asynInterposeMenlo/
+RUN asynInterposeMenlo/install.sh master
+
+COPY ibek-support-infn/epics-nds/ epics-nds/
+RUN epics-nds/install.sh main
+
+COPY ibek-support-infn/biltItest biltItest/
 RUN biltItest/install.sh main
 
-COPY ibek-support/sigmaPhiStart sigmaPhiStart/
-RUN sigmaPhiStart/install.sh main
+# COPY ibek-support-infn/sigmaPhiStart sigmaPhiStart/
+# RUN sigmaPhiStart/install.sh main
 
-COPY ibek-support/technosoft/ technosoft/
-RUN technosoft/install.sh main
+# COPY ibek-support-infn/technosoft/ technosoft/
+# RUN technosoft/install.sh main
 
-# COPY ibek-support/menloSyncro/ menloSyncro/
-# RUN menloSyncro/install.sh main
+# # COPY ibek-support-infn/menloSyncro/ menloSyncro/
+# # RUN menloSyncro/install.sh main
 
-# COPY ibek-support/menloLfc/ menloLfc/
-# RUN menloLfc/install.sh main
+# # COPY ibek-support-infn/menloLfc/ menloLfc/
+# # RUN menloLfc/install.sh main
 
-# COPY ibek-support/menloLac menloLac
-# RUN menloLac/install.sh main
+# # COPY ibek-support-infn/menloLac menloLac
+# # RUN menloLac/install.sh main
 
-COPY ibek-support/icpdas icpdas
-RUN icpdas/install.sh main
+# COPY ibek-support-infn/icpdas icpdas
+# RUN icpdas/install.sh main
 
-COPY ibek-support/easy-driver-epics easy-driver-epics
-RUN easy-driver-epics/install.sh master
+# COPY ibek-support-infn/easy-driver-epics easy-driver-epics
+# RUN easy-driver-epics/install.sh master
 
-COPY ibek-support/agilent4uhv agilent4uhv
-RUN agilent4uhv/install.sh main
+# COPY ibek-support-infn/agilent4uhv agilent4uhv
+# RUN agilent4uhv/install.sh main
 
-COPY ibek-support/kima kima
-RUN kima/install.sh main
+# COPY ibek-support-infn/kima kima
+# RUN kima/install.sh main
 
-COPY ibek-support/agilent4uhv agilent4uhv
-RUN agilent4uhv/install.sh main
+# COPY ibek-support-infn/agilent4uhv agilent4uhv
+# RUN agilent4uhv/install.sh main
 
-COPY ibek-support/agilentipcmini agilentipcmini
-RUN agilentipcmini/install.sh main
-# get the ioc source and build it
+# COPY ibek-support-infn/agilentipcmini agilentipcmini
+# RUN agilentipcmini/install.sh main
+# # get the ioc source and build it
 
 COPY ioc/ ${SOURCE_FOLDER}/ioc
-RUN cd ${IOC} && ./install.sh && make
+RUN ansible.sh ioc
 
 RUN ibek support apt-install iputils-ping iproute2 telnet;ibek support add-runtime-packages iputils-ping iproute2 telnet  python3-distutils ca-certificates python3.10-venv
 
