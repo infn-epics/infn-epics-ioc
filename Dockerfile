@@ -1,6 +1,6 @@
 ##### build stage ##############################################################
 
-ARG TARGET_ARCHITECTURE
+ARG TARGET_ARCHITECTURE=linux
 ARG BASE=7.0.9ec3 ## 7.0.9ec3 support includes pvx #7.0.8ec2
 ARG REGISTRY=ghcr.io/epics-containers
 
@@ -15,6 +15,7 @@ RUN ln -s ${SOURCE_FOLDER}/ioc ${IOC}
 # Get latest ibek while in development. Will come from epics-base when stable
 COPY requirements.txt requirements.txt
 RUN pip install --upgrade -r requirements.txt
+ENV TARGET_ARCHITECTURE=${TARGET_ARCHITECTURE}
 
 WORKDIR ${SOURCE_FOLDER}/ibek-support
 
@@ -148,6 +149,6 @@ COPY --from=runtime_prep /assets /
 # install runtime system dependencies, collected from install.sh scripts
 RUN ibek support apt-install-runtime-packages 
 RUN cp /epics/support/motorTechnosoft/lib/linux-x86_64/*.so /usr/lib/x86_64-linux-gnu/
-ENV TARGET_ARCHITECTURE ${TARGET_ARCHITECTURE}
+ENV TARGET_ARCHITECTURE=${TARGET_ARCHITECTURE}
 RUN chmod 777 -R /epics
 CMD ["/bin/bash", "-c", "${IOC}/start.sh"]

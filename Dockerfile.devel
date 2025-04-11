@@ -1,11 +1,12 @@
 ##### build stage ##############################################################
 
+
 ARG TARGET_ARCHITECTURE
-ARG BASE=7.0.8ec2
+ARG BASE=7.0.9ec3 ## 7.0.9ec3 support includes pvx #7.0.8ec2
 ARG REGISTRY=ghcr.io/epics-containers
 
 # FROM  ${REGISTRY}/epics-base-${TARGET_ARCHITECTURE}-runtime:${BASE} AS developer
-FROM ${REGISTRY}/epics-base-developer:7.0.8ec2
+FROM ${REGISTRY}/epics-base-developer:${BASE}
 
 # The devcontainer mounts the project root to /epics/generic-source
 # Using the same location here makes devcontainer/runtime differences transparent.
@@ -36,7 +37,7 @@ RUN iocStats/install.sh 3.2.0
 ################################################################################
 
 COPY ibek-support/asyn/ asyn/
-RUN asyn/install.sh R4-44-2
+RUN asyn/install.sh R4-45
 
 COPY ibek-support/autosave/ autosave/
 RUN autosave/install.sh R5-11
