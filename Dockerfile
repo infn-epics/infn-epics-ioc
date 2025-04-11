@@ -50,35 +50,30 @@ RUN ansible.sh calc
 COPY ibek-support/motor/ motor/
 RUN ansible.sh motor
 
-# COPY ibek-support/AgilentXgs600 AgilentXgs600
-# RUN AgilentXgs600/install.sh main
 
-# COPY ibek-support/motorMotorSim/ motorMotorSim/
-# RUN motorMotorSim/install.sh R1-2
+COPY ibek-support/motorMotorSim/ motorMotorSim/
+RUN ansible.sh motorMotorSim
 
-# COPY ibek-support/ADCore/ ADCore/
-# RUN ADCore/install.sh R3-13
+COPY ibek-support/ADCore/ ADCore/
+RUN ansible.sh ADCore
 
-# COPY ibek-support/ADGenICam ADGenICam/
-# RUN ADGenICam/install.sh R1-9
+COPY ibek-support/ADGenICam ADGenICam/
+RUN ansible.sh ADGenICam
 
-# COPY ibek-support/ADAravis/ ADAravis/
-# RUN ADAravis/install.sh R2-3
+COPY ibek-support/ADAravis/ ADAravis/
+RUN ansible.sh ADAravis
 
-# COPY ibek-support/ADSimDetector ADSimDetector/
-# RUN ADSimDetector/install.sh R2-10
+COPY ibek-support/ADSimDetector ADSimDetector/
+RUN ansible.sh ADSimDetector
 
-# # COPY ibek-support/lakeshore340  lakeshore340/
-# # RUN  lakeshore340/install.sh 2-6
+# COPY ibek-support/lakeshore340  lakeshore340/
+# RUN  ansible.sh lakeshore340
 
-# COPY ibek-support/modbus/ modbus/
-# RUN modbus/install.sh R3-3
+COPY ibek-support/modbus/ modbus/
+RUN ansible.sh modbus
 
-# COPY ibek-support/screen-epics-ioc screen-epics-ioc/
-# RUN screen-epics-ioc/install.sh v1.3.1
-
-# COPY ibek-support/motorNewport motorNewport/
-# RUN motorNewport/install.sh R1-2-1
+COPY ibek-support/motorNewport motorNewport/
+RUN ansible.sh motorNewport
 
 COPY ibek-support/sequencer/ sequencer/
 RUN ansible.sh sequencer
@@ -89,6 +84,12 @@ WORKDIR ${SOURCE_FOLDER}/ibek-support-infn
 # copy the global ibek files
 # TODO remove this once all support is using ansible.sh
 COPY ibek-support-infn/_global/ _global
+
+# COPY ibek-support/AgilentXgs600 AgilentXgs600
+# RUN AgilentXgs600/install.sh main
+
+# COPY ibek-support/screen-epics-ioc screen-epics-ioc/
+# RUN screen-epics-ioc/install.sh v1.3.1
 
 COPY ibek-support-infn/asynInterposeMenlo/ asynInterposeMenlo/
 RUN asynInterposeMenlo/install.sh master
