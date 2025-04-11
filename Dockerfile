@@ -111,8 +111,8 @@ RUN sigmaPhiStart/install.sh main
 COPY ibek-support/technosoft/ technosoft/
 RUN technosoft/install.sh main
 
-COPY ibek-support/menloSyncro/ menloSyncro/
-RUN menloSyncro/install.sh main
+# COPY ibek-support/menloSyncro/ menloSyncro/
+# RUN menloSyncro/install.sh main
 
 # COPY ibek-support/menloLfc/ menloLfc/
 # RUN menloLfc/install.sh main
