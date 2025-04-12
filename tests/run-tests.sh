@@ -5,36 +5,38 @@
 # all present and correct and that mounting IOC config or ibek config
 # works as expected.
 
-THIS_DIR=$(realpath $(dirname $0))
-ROOT=$(realpath ${THIS_DIR}/..)
+TAG=${1} # pass a tag on the command line to test a prebuilt image
+THIS=$(realpath $(dirname $0))
+ROOT=$(realpath ${THIS}/..)
+CONF=/epics/ioc/config
 
+# log commands and stop on errorsr
 set -ex
 
+# prefer docker but use podman if USE_PODMAN is set
+if docker version &> /dev/null && [[ -z $USE_PODMAN ]]
+    then docker=docker
+    else docker=podman
+fi
+
 cd ${ROOT}
-# Build the container (inherit arguments from CI workflow if set) ##############
-ec dev build ${EC_TAG}
 
-# try out an ibek config IOC instance with the generic IOC #####################
-ec dev launch-local tests/example-config --args '-dit' ${EC_TAG}
-ec dev wait-pv EXAMPLE2:A --attempts 20
-ec dev exec 'caput EXAMPLE2:A 1.3'
-ec dev exec 'caput EXAMPLE2:B 1.2'
-ec dev exec 'caget EXAMPLE2:SUM' | grep '2.5'
+# if a tag was passed in this implies it was already built
+export TAG=${TAG:-ec_test}
+if [[ ${TAG} == "ec_test" ]] ; then TARGET=runtime ./build; fi
 
-# Test an ibek IOC #############################################################
-ec dev launch-local tests/example-ibek-config --args '-dit' ${EC_TAG}
-ec dev wait-pv EXAMPLE:IBEK:A --attempts 20
-ec dev exec 'caput EXAMPLE:IBEK:A 1.3'
-ec dev exec 'caput EXAMPLE:IBEK:B 1.2'
-ec dev exec 'caget EXAMPLE:IBEK:SUM' | grep '2.5'
-ec dev exec 'caget test-ibek-ioc:EPICS_VERS' | grep 'R7.0.7'
+# try out a test ibek config IOC instance with the generic IOC
+opts="--rm --security-opt=label=disable -v ${THIS}/config:${CONF}"
+result=$($docker run ${opts} ${TAG} /epics/ioc/start.sh 2>&1)
 
-# Stop the test IOC ############################################################
-ec dev stop
+# check that the IOC output expected results
+if echo "${result}" | grep -i error; then
+    echo "ERROR: errors in IOC startup"
+    exit 1
+elif [[ ! ${result} =~ "5.15" || ! ${result} =~ "/epics/runtime/st.cmd" ]]; then
+    echo "ERROR: dbgf output not as expected"
+    exit 1
+fi
 
-# Done #########################################################################
-echo
-echo "All tests passed!"
-
-
+echo "Tests passed!"
 
