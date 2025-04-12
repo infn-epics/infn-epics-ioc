@@ -105,17 +105,6 @@ RUN sigmaPhiStart/install.sh main
 COPY ibek-support-infn/technosoft/ technosoft/
 RUN technosoft/install.sh main
 
-# TODO these 3 modules have a dbd conflict issue
-
-# COPY ibek-support-infn/menloSyncro/ menloSyncro/
-# RUN menloSyncro/install.sh main
-
-# COPY ibek-support-infn/menloLfc/ menloLfc/
-# RUN menloLfc/install.sh main
-
-# COPY ibek-support-infn/menloLac menloLac
-# RUN menloLac/install.sh main
-
 COPY ibek-support-infn/icpdas icpdas
 RUN icpdas/install.sh main
 
@@ -133,8 +122,17 @@ RUN agilent4uhv/install.sh main
 
 COPY ibek-support-infn/agilentipcmini agilentipcmini
 RUN agilentipcmini/install.sh main
-# get the ioc source and build it
 
+COPY ibek-support-infn/menloSyncro/ menloSyncro/
+RUN ansible.sh menloSyncro
+
+COPY ibek-support-infn/menloLfc/ menloLfc/
+RUN ansible.sh menloLfc
+
+COPY ibek-support-infn/menloLac menloLac
+RUN ansible.sh menloLac
+
+# get the ioc source and build it
 COPY ioc/ ${SOURCE_FOLDER}/ioc
 RUN ansible.sh ioc
 
