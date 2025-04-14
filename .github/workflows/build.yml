@@ -109,9 +109,7 @@ jobs:
           target: runtime
           build-args: |
             IMAGE_EXT=${{ matrix.extension }}
-          tags: |
-            ${{ steps.meta-runtime.outputs.tags }}
-            ghcr.io/${{ github.repository_owner }}/${{ github.event.repository.name }}${{ matrix.extension }}-runtime:latest
+          tags: ${{ steps.meta-runtime.outputs.tags }}
           labels: ${{ steps.meta-runtime.outputs.labels }}
           push: true
 
