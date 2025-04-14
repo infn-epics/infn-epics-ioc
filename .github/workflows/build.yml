@@ -75,6 +75,7 @@ jobs:
             ghcr.io/${{ github.repository_owner }}/${{ github.event.repository.name }}${{ matrix.extension }}-developer
           tags: |
             type=raw,value=${{ github.ref_name }}
+            type=raw,value=latest
 
       - name: Push developer image
         if: ${{ github.event_name == 'push' && github.ref_type == 'tag' }}
@@ -97,7 +98,7 @@ jobs:
             ghcr.io/${{ github.repository_owner }}/${{ github.event.repository.name }}${{ matrix.extension }}-runtime
           tags: |
             type=raw,value=${{ github.ref_name }}
-            type=raw,value=latest  # Add the latest tag here
+            type=raw,value=latest
 
       - name: Push runtime image
         if: ${{ github.event_name == 'push' && github.ref_type == 'tag' }}
@@ -110,7 +111,7 @@ jobs:
             IMAGE_EXT=${{ matrix.extension }}
           tags: |
             ${{ steps.meta-runtime.outputs.tags }}
-            ghcr.io/${{ github.repository_owner }}/${{ github.event.repository.name }}${{ matrix.extension }}-runtime:latest  # Push the latest tag
+            ghcr.io/${{ github.repository_owner }}/${{ github.event.repository.name }}${{ matrix.extension }}-runtime:latest
           labels: ${{ steps.meta-runtime.outputs.labels }}
           push: true
 
