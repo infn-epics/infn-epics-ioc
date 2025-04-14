@@ -1,3 +1,4 @@
 ibek==3.1.5
+jnjrender
 # to install direct from github during development in a branch
 # git+https://github.com/epics-containers/ibek.git@fix-extract-assets
