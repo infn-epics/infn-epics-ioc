@@ -132,6 +132,9 @@ RUN ansible.sh menloLfc
 COPY ibek-support-infn/menloLac menloLac
 RUN ansible.sh menloLac
 
+COPY ibek-support-infn/smc smc
+RUN ansible.sh smc
+
 # get the ioc source and build it
 COPY ioc/ ${SOURCE_FOLDER}/ioc
 RUN ansible.sh ioc
