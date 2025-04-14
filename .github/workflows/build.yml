@@ -28,7 +28,7 @@ jobs:
 
     runs-on: ${{ matrix.os }}
     outputs:
-      developer-tag: ${{ steps.meta-developer.outputs.tags }}
+      developer-tag: ${{ steps.developer-tag-single.outputs.developer_tag }}
 
     steps:
       - name: Checkout
@@ -76,6 +76,11 @@ jobs:
           tags: |
             type=raw,value=${{ github.ref_name }}
             type=raw,value=latest
+
+      - name: Set single developer tag (for release)
+        id: developer-tag-single
+        run: |
+          echo "${{ steps.meta-developer.outputs.tags }}" | head -n 1 | awk '{ print "developer_tag="$1 }' >> "$GITHUB_OUTPUT"
 
       - name: Push developer image
         if: ${{ github.event_name == 'push' && github.ref_type == 'tag' }}
