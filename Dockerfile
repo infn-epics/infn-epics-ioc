@@ -33,7 +33,7 @@ COPY ibek-support/autosave/ autosave
 RUN ansible.sh autosave
 
 COPY ibek-support/asyn/ asyn/
-RUN ansible.sh asyn
+RUN ansible.sh -v R4-44-2 asyn
 
 COPY ibek-support/busy/ busy/
 RUN ansible.sh -v R1-7-3 busy
