@@ -39,7 +39,7 @@ COPY ibek-support/busy/ busy/
 RUN ansible.sh -v R1-7-3 busy
 
 COPY ibek-support/StreamDevice/ StreamDevice/
-RUN ansible.sh StreamDevice
+RUN ansible.sh -v 2.8.24 StreamDevice
 
 COPY ibek-support/sscan/ sscan/
 RUN ansible.sh sscan
