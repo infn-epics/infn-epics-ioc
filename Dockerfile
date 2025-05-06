@@ -111,9 +111,6 @@ RUN icpdas/install.sh main
 COPY ibek-support-infn/easy-driver-epics easy-driver-epics
 RUN ansible.sh easy-driver-epics
 
-COPY ibek-support-infn/agilent4uhv agilent4uhv
-RUN agilent4uhv/install.sh main
-
 COPY ibek-support-infn/kima-undulator-ioc kima-undulator-ioc
 RUN ansible.sh kima-undulator-ioc
 
@@ -121,7 +118,8 @@ COPY ibek-support-infn/agilent4uhv agilent4uhv
 RUN agilent4uhv/install.sh main
 
 COPY ibek-support-infn/agilentipcmini agilentipcmini
-RUN agilentipcmini/install.sh main
+#RUN agilentipcmini/install.sh main
+RUN ansible.sh agilentipcmini
 
 COPY ibek-support-infn/menloSyncro/ menloSyncro/
 RUN ansible.sh menloSyncro
