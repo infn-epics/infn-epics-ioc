@@ -72,8 +72,9 @@ jobs:
         if: ${{ matrix.epics-target == 'linux-x86_64' }}
         run: |
           for file in tests/templates/*; do
-            echo "Testing template: $file"
-            tests/templates.sh ci_test "$file"
+            filename=$(basename "$file")
+            echo "Testing template: $filename"
+            tests/templates.sh ci_test "$filename"
           done
 
       - name: Developer target metadata
