@@ -28,7 +28,7 @@ cd ${ROOT}
 opts="--rm --security-opt=label=disable -v ${THIS}/templates:${CONF}"
 
 # Execute jnjrender inside the container before starting the IOC
-render_cmd="jnjrender /assets/epics/ibek-templates ${FILE}"
+render_cmd="jnjrender /epics/ibek-templates ${FILE}"
 start_cmd="/epics/ioc/start.sh"
 result=$($docker run ${opts} ${TAG} bash -c "${render_cmd} && ${start_cmd}" 2>&1)
 
