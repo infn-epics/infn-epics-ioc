@@ -3,6 +3,7 @@
 iocname: "testcam"
 iocprefix: "TESTCAM"
 template: "adcamera"
+iocexit: true
 cameras:
   - name: cam01
     CAMERA_ID: "none"
