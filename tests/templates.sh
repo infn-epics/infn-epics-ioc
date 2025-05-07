@@ -25,10 +25,10 @@ cd ${ROOT}
 # if a tag was passed in this implies it was already built
 
 # try out a test ibek config IOC instance with the generic IOC
-opts="--rm --security-opt=label=disable -v ${THIS}/templates:${CONF}"
+opts="--rm --security-opt=label=disable -v ${THIS}:${CONF}"
 
 # Execute jnjrender inside the container before starting the IOC
-render_cmd="jnjrender /epics/ibek-templates ${FILE}"
+render_cmd="jnjrender /epics/ibek-templates ${CONF}/templates/${FILE} --output ${CONF}/config.yaml"
 start_cmd="/epics/ioc/start.sh"
 result=$($docker run ${opts} ${TAG} bash -c "${render_cmd} && ${start_cmd}" 2>&1)
 
