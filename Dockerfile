@@ -151,7 +151,7 @@ FROM developer AS runtime_prep
 # RUN ibek ioc extract-runtime-assets /assets ${SOURCE_FOLDER}/ibek*
 RUN ibek ioc extract-runtime-assets /assets /epics/support/motorTechnosoft/tml_lib/config /epics/support/biltItest /epics/support/agilent4uhv /epics/support/AgilentXgs600 /epics/support/sigmaPhiStart /epics/support/menloSyncro /epics/support/menloLfc /epics/support/menloLac
 # RUN ibek ioc extract-runtime-assets /assets
-COPY ibek-templates/ /assets
+COPY ibek-templates /assets/epics/ibek-templates
 ##### runtime stage ############################################################
 FROM ${RUNTIME} AS runtime
 
@@ -161,6 +161,4 @@ COPY --from=runtime_prep /assets /
 # install runtime system dependencies, collected from install.sh scripts
 RUN ibek support apt-install-runtime-packages
 RUN cp /epics/support/motorTechnosoft/lib/linux-x86_64/*.so /usr/lib/x86_64-linux-gnu/
-ENV TARGET_ARCHITECTURE=${TARGET_ARCHITECTURE}
-RUN chmod 777 -R /epics
 CMD ["/bin/bash", "-c", "${IOC}/start.sh"]
