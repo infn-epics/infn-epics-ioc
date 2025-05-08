@@ -161,4 +161,5 @@ COPY --from=runtime_prep /assets /
 # install runtime system dependencies, collected from install.sh scripts
 RUN ibek support apt-install-runtime-packages
 RUN cp /epics/support/motorTechnosoft/lib/linux-x86_64/*.so /usr/lib/x86_64-linux-gnu/
+RUN chmod 777 -R /epics
 CMD ["/bin/bash", "-c", "${IOC}/start.sh"]
