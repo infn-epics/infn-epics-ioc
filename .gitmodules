@@ -4,3 +4,6 @@
 [submodule "ibek-support"]
 	path = ibek-support
 	url = https://github.com/infn-epics/ibek-support.git
+[submodule "ibek-templates"]
+	path = ibek-templates
+	url = https://github.com/infn-epics/ibek-templates.git

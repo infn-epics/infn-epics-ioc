@@ -67,6 +67,16 @@ jobs:
         if: ${{ matrix.epics-target == 'linux-x86_64' }}
         run: tests/run-tests.sh ci_test
 
+      - name: Test Templates
+        # can't test non-native without some hardware to run on
+        if: ${{ matrix.epics-target == 'linux-x86_64' }}
+        run: |
+          for file in tests/templates/*; do
+            filename=$(basename "$file")
+            echo "Testing template: $filename"
+            tests/templates.sh ci_test "$filename"
+          done
+
       - name: Developer target metadata
         id: meta-developer
         uses: docker/metadata-action@v3
