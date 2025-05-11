@@ -151,7 +151,7 @@ FROM developer AS runtime_prep
 # RUN ibek ioc extract-runtime-assets /assets ${SOURCE_FOLDER}/ibek*
 RUN ibek ioc extract-runtime-assets /assets /epics/support/motorTechnosoft/tml_lib/config /epics/support/biltItest /epics/support/agilent4uhv /epics/support/AgilentXgs600 /epics/support/sigmaPhiStart /epics/support/menloSyncro /epics/support/menloLfc /epics/support/menloLac
 # RUN ibek ioc extract-runtime-assets /assets
-COPY ibek-templates /assets/epics/ibek-templates
+COPY ibek-templates/templates/ /assets/epics/ibek-templates
 ##### runtime stage ############################################################
 FROM ${RUNTIME} AS runtime
 
