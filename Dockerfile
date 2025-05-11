@@ -100,13 +100,13 @@ COPY ibek-support-infn/biltItest biltItest/
 RUN biltItest/install.sh main
 
 COPY ibek-support-infn/sigmaPhiStart sigmaPhiStart/
-RUN sigmaPhiStart/install.sh main
+RUN ansible.sh sigmaPhiStart
 
 COPY ibek-support-infn/technosoft/ technosoft/
 RUN technosoft/install.sh main
 
 COPY ibek-support-infn/icpdas icpdas
-RUN icpdas/install.sh main
+RUN ansible.sh icpdas
 
 COPY ibek-support-infn/easy-driver-epics easy-driver-epics
 RUN ansible.sh easy-driver-epics
