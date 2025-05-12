@@ -133,6 +133,8 @@ RUN ansible.sh menloLac
 COPY ibek-support-infn/smc smc
 RUN ansible.sh smc
 
+COPY ibek-support/ffmpegServer ffmpegServer
+RUN ansible.sh ffmpegServer
 # get the ioc source and build it
 COPY ioc/ ${SOURCE_FOLDER}/ioc
 RUN ansible.sh ioc
