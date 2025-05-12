@@ -71,7 +71,7 @@ jobs:
         # can't test non-native without some hardware to run on
         if: ${{ matrix.epics-target == 'linux-x86_64' }}
         run: |
-          for file in tests/templates/*; do
+          for file in ibek-templates/tests/*; do
             filename=$(basename "$file")
             echo "Testing template: $filename"
             tests/templates.sh ci_test "$filename"

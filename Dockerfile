@@ -97,13 +97,13 @@ COPY ibek-support-infn/epics-nds/ epics-nds/
 RUN ansible.sh epics-nds
 
 COPY ibek-support-infn/biltItest biltItest/
-RUN biltItest/install.sh main
+RUN ansible.sh biltItest
 
 COPY ibek-support-infn/sigmaPhiStart sigmaPhiStart/
 RUN ansible.sh sigmaPhiStart
 
 COPY ibek-support-infn/technosoft/ technosoft/
-RUN technosoft/install.sh main
+RUN ansible.sh technosoft
 
 COPY ibek-support-infn/icpdas icpdas
 RUN ansible.sh icpdas
@@ -111,11 +111,11 @@ RUN ansible.sh icpdas
 COPY ibek-support-infn/easy-driver-epics easy-driver-epics
 RUN ansible.sh easy-driver-epics
 
-COPY ibek-support-infn/kima-undulator-ioc kima-undulator-ioc
-RUN ansible.sh kima-undulator-ioc
+COPY ibek-support-infn/kima-undulator kima-undulator
+RUN ansible.sh kima-undulator
 
 COPY ibek-support-infn/agilent4uhv agilent4uhv
-RUN agilent4uhv/install.sh main
+RUN ansible.sh agilent4uhv
 
 COPY ibek-support-infn/agilentipcmini agilentipcmini
 #RUN agilentipcmini/install.sh main
@@ -139,6 +139,7 @@ RUN ansible.sh ioc
 
 # add some debugging tools for the developer target
 RUN ibek support apt-install iputils-ping iproute2 telnet;ibek support add-runtime-packages iputils-ping iproute2 telnet python3-distutils ca-certificates python3.10-venv
+COPY ibek-templates/templates/ templates
 
 # # get the ioc source and build it
 # COPY ioc ${SOURCE_FOLDER}/ioc
