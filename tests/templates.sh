@@ -7,8 +7,7 @@
 
 TAG=${1} # pass a tag on the command line to test a prebuilt image
 FILE=${2} # pass a file to test a specific IOC config
-THIS=$(realpath $(dirname $0))
-ROOT=$(realpath ${THIS}/..)
+THIS=${3}
 CONF=/epics/ioc/config
 
 # log commands and stop on errors
@@ -20,12 +19,12 @@ if docker version &> /dev/null && [[ -z $USE_PODMAN ]]
     else docker=podman
 fi
 
-cd ${ROOT}
+cd ${THIS}
 
 # if a tag was passed in this implies it was already built
 
 # try out a test ibek config IOC instance with the generic IOC
-opts="--rm --security-opt=label=disable -v ${THIS}../:${CONF}"
+opts="--rm --security-opt=label=disable -v ${THIS}:${CONF}"
 
 # Execute jnjrender inside the container before starting the IOC
 render_cmd="jnjrender /epics/ibek-templates ${CONF}/ibek-templates/tests/${FILE} --output ${CONF}/config.yaml"

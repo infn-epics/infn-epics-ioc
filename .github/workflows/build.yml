@@ -74,7 +74,7 @@ jobs:
           for file in ibek-templates/tests/*; do
             filename=$(basename "$file")
             echo "Testing template: $filename"
-            tests/templates.sh ci_test "$filename"
+            tests/templates.sh ci_test "$filename" `pwd`
           done
 
       - name: Developer target metadata
