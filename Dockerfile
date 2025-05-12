@@ -139,7 +139,6 @@ RUN ansible.sh ioc
 
 # add some debugging tools for the developer target
 RUN ibek support apt-install iputils-ping iproute2 telnet;ibek support add-runtime-packages iputils-ping iproute2 telnet python3-distutils ca-certificates python3.10-venv
-COPY ibek-templates/templates/ templates
 
 # # get the ioc source and build it
 # COPY ioc ${SOURCE_FOLDER}/ioc
@@ -152,9 +151,9 @@ FROM developer AS runtime_prep
 # RUN ibek ioc extract-runtime-assets /assets ${SOURCE_FOLDER}/ibek*
 RUN ibek ioc extract-runtime-assets /assets /epics/support/motorTechnosoft/tml_lib/config /epics/support/biltItest /epics/support/agilent4uhv /epics/support/AgilentXgs600 /epics/support/sigmaPhiStart /epics/support/menloSyncro /epics/support/menloLfc /epics/support/menloLac
 # RUN ibek ioc extract-runtime-assets /assets
-COPY ibek-templates/templates/ /assets/epics/ibek-templates
 ##### runtime stage ############################################################
 FROM ${RUNTIME} AS runtime
+COPY ibek-templates/templates/ /epics/ibek-templates
 
 # get runtime assets from the preparation stage
 COPY --from=runtime_prep /assets /
