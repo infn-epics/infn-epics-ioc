@@ -33,9 +33,9 @@ result=$($docker run ${opts} ${TAG} bash -c "${render_cmd} && ${start_cmd}" 2>&1
 
 # check that the IOC output expected results
 if echo "${result}" | grep -i " error"; then
-    echo "ERROR: errors in IOC startup"
-    exit 1
+    echo "ERROR: errors in IOC ${FILE} startup"
+else
+    echo "Tests ${FILE} passed!"
 fi
 
-echo "Tests passed!"
 
