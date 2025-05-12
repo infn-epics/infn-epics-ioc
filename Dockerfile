@@ -143,7 +143,7 @@ RUN ibek support apt-install iputils-ping iproute2 telnet;ibek support add-runti
 # # get the ioc source and build it
 # COPY ioc ${SOURCE_FOLDER}/ioc
 # RUN ansible.sh ioc
-COPY ibek-templates /epics/support
+COPY ibek-templates/templates /epics/support/ibek-templates
 
 ##### runtime preparation stage ################################################
 FROM developer AS runtime_prep
