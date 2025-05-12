@@ -25,7 +25,7 @@ cd ${ROOT}
 # if a tag was passed in this implies it was already built
 
 # try out a test ibek config IOC instance with the generic IOC
-opts="--rm --security-opt=label=disable -v ${THIS}:${CONF}"
+opts="--rm --security-opt=label=disable -v ${THIS}../:${CONF}"
 
 # Execute jnjrender inside the container before starting the IOC
 render_cmd="jnjrender /epics/ibek-templates ${CONF}/ibek-templates/tests/${FILE} --output ${CONF}/config.yaml"
