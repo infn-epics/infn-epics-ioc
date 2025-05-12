@@ -32,7 +32,7 @@ start_cmd="/epics/ioc/start.sh"
 result=$($docker run ${opts} ${TAG} bash -c "${render_cmd} && ${start_cmd}" 2>&1)
 
 # check that the IOC output expected results
-if echo "${result}" | grep error; then
+if echo "${result}" | grep -i " error"; then
     echo "ERROR: errors in IOC startup"
     exit 1
 fi
