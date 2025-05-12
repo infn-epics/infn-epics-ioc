@@ -85,13 +85,13 @@ WORKDIR ${SOURCE_FOLDER}/ibek-support-infn
 COPY ibek-support-infn/_global/ _global
 
 COPY ibek-support-infn/AgilentXgs600 AgilentXgs600
-RUN AgilentXgs600/install.sh main
+RUN ansible.sh AgilentXgs600
 
 COPY ibek-support-infn/screen-epics-ioc screen-epics-ioc/
 RUN ansible.sh screen-epics-ioc
 
 COPY ibek-support-infn/asynInterposeMenlo/ asynInterposeMenlo/
-RUN asynInterposeMenlo/install.sh master
+RUN ansible.sh asynInterposeMenlo
 
 COPY ibek-support-infn/epics-nds/ epics-nds/
 RUN ansible.sh epics-nds
@@ -143,6 +143,7 @@ RUN ibek support apt-install iputils-ping iproute2 telnet;ibek support add-runti
 # # get the ioc source and build it
 # COPY ioc ${SOURCE_FOLDER}/ioc
 # RUN ansible.sh ioc
+COPY ibek-templates/ /assets/ibek-templates
 
 ##### runtime preparation stage ################################################
 FROM developer AS runtime_prep
@@ -153,7 +154,6 @@ RUN ibek ioc extract-runtime-assets /assets /epics/support/motorTechnosoft/tml_l
 # RUN ibek ioc extract-runtime-assets /assets
 ##### runtime stage ############################################################
 FROM ${RUNTIME} AS runtime
-COPY ibek-templates/templates/ /epics/ibek-templates
 
 # get runtime assets from the preparation stage
 COPY --from=runtime_prep /assets /
