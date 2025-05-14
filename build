@@ -12,10 +12,12 @@ T_A=${EPICS_TARGET_ARCH:-linux_x86_64}
 TARGET=${TARGET:-developer}
 # set TAG to override the default tag
 TAG=${TAG:-ec_test}
-
+PLATFORM=""
 if [[ ${T_A} != "linux_x86_64" ]]; then
     # container image extension is the lcase of EPICS_TARGET_ARCH
     IMAGE_EXT=-"${T_A,,}"
+else
+    PLATFORM="--platform=linux/amd64"
 fi
 
 cd $(dirname ${0})
@@ -37,4 +39,4 @@ set -x
 $docker build -t ${TAG} "${@}" --build-arg IMAGE_EXT=$IMAGE_EXT \
     --build-arg BUILDKIT_INLINE_CACHE=1 \
     --build-arg EPICS_TARGET_ARCH=$T_A \
-    --load --target $TARGET .
+    --load --target $TARGET $PLATFORM .

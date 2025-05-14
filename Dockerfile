@@ -85,37 +85,37 @@ WORKDIR ${SOURCE_FOLDER}/ibek-support-infn
 COPY ibek-support-infn/_global/ _global
 
 COPY ibek-support-infn/AgilentXgs600 AgilentXgs600
-RUN AgilentXgs600/install.sh main
+RUN ansible.sh AgilentXgs600
 
 COPY ibek-support-infn/screen-epics-ioc screen-epics-ioc/
 RUN ansible.sh screen-epics-ioc
 
 COPY ibek-support-infn/asynInterposeMenlo/ asynInterposeMenlo/
-RUN asynInterposeMenlo/install.sh master
+RUN ansible.sh asynInterposeMenlo
 
 COPY ibek-support-infn/epics-nds/ epics-nds/
 RUN ansible.sh epics-nds
 
 COPY ibek-support-infn/biltItest biltItest/
-RUN biltItest/install.sh main
+RUN ansible.sh biltItest
 
 COPY ibek-support-infn/sigmaPhiStart sigmaPhiStart/
-RUN sigmaPhiStart/install.sh main
+RUN ansible.sh sigmaPhiStart
 
 COPY ibek-support-infn/technosoft/ technosoft/
-RUN technosoft/install.sh main
+RUN ansible.sh technosoft
 
 COPY ibek-support-infn/icpdas icpdas
-RUN icpdas/install.sh main
+RUN ansible.sh icpdas
 
 COPY ibek-support-infn/easy-driver-epics easy-driver-epics
 RUN ansible.sh easy-driver-epics
 
-COPY ibek-support-infn/kima-undulator-ioc kima-undulator-ioc
-RUN ansible.sh kima-undulator-ioc
+COPY ibek-support-infn/kima-undulator kima-undulator
+RUN ansible.sh kima-undulator
 
 COPY ibek-support-infn/agilent4uhv agilent4uhv
-RUN agilent4uhv/install.sh main
+RUN ansible.sh agilent4uhv
 
 COPY ibek-support-infn/agilentipcmini agilentipcmini
 #RUN agilentipcmini/install.sh main
@@ -133,6 +133,8 @@ RUN ansible.sh menloLac
 COPY ibek-support-infn/smc smc
 RUN ansible.sh smc
 
+COPY ibek-support/ffmpegServer ffmpegServer
+RUN ansible.sh ffmpegServer
 # get the ioc source and build it
 COPY ioc/ ${SOURCE_FOLDER}/ioc
 RUN ansible.sh ioc
@@ -143,15 +145,15 @@ RUN ibek support apt-install iputils-ping iproute2 telnet;ibek support add-runti
 # # get the ioc source and build it
 # COPY ioc ${SOURCE_FOLDER}/ioc
 # RUN ansible.sh ioc
+COPY ibek-templates/templates /epics/support/ibek-templates
 
 ##### runtime preparation stage ################################################
 FROM developer AS runtime_prep
 
 # get the products from the build stage and reduce to runtime assets only
 # RUN ibek ioc extract-runtime-assets /assets ${SOURCE_FOLDER}/ibek*
-RUN ibek ioc extract-runtime-assets /assets /epics/support/motorTechnosoft/tml_lib/config /epics/support/biltItest /epics/support/agilent4uhv /epics/support/AgilentXgs600 /epics/support/sigmaPhiStart /epics/support/menloSyncro /epics/support/menloLfc /epics/support/menloLac
+RUN ibek ioc extract-runtime-assets /assets /epics/support/ibek-templates /epics/support/motorTechnosoft/tml_lib/config /epics/support/biltItest /epics/support/agilent4uhv /epics/support/AgilentXgs600 /epics/support/sigmaPhiStart /epics/support/menloSyncro /epics/support/menloLfc /epics/support/menloLac
 # RUN ibek ioc extract-runtime-assets /assets
-COPY ibek-templates /assets/epics/ibek-templates
 ##### runtime stage ############################################################
 FROM ${RUNTIME} AS runtime
 
