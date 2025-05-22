@@ -77,6 +77,8 @@ RUN ansible.sh motorNewport
 COPY ibek-support/sequencer/ sequencer/
 RUN ansible.sh sequencer
 
+COPY ibek-support/pvxs pvxs
+RUN ansible.sh pvxs
 # INFN Specific Support
 WORKDIR ${SOURCE_FOLDER}/ibek-support-infn
 
