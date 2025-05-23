@@ -147,15 +147,15 @@ RUN ibek support apt-install iputils-ping iproute2 telnet;ibek support add-runti
 # # get the ioc source and build it
 # COPY ioc ${SOURCE_FOLDER}/ioc
 # RUN ansible.sh ioc
-COPY ibek-templates/templates /epics/support/ibek-templates
-COPY epics-support-template-infn /epics/support/support-templates
+COPY ibek-templates/templates /epics/support/templates/ibek-templates
+COPY epics-support-template-infn /epics/support/templates/infn-support-templates
 
 ##### runtime preparation stage ################################################
 FROM developer AS runtime_prep
 
 # get the products from the build stage and reduce to runtime assets only
 # RUN ibek ioc extract-runtime-assets /assets ${SOURCE_FOLDER}/ibek*
-RUN ibek ioc extract-runtime-assets /assets /epics/support/ibek-templates /epics/support/support-templates /epics/support/motorTechnosoft/tml_lib/config /epics/support/biltItest /epics/support/agilent4uhv /epics/support/AgilentXgs600 /epics/support/sigmaPhiStart /epics/support/menloSyncro /epics/support/menloLfc /epics/support/menloLac
+RUN ibek ioc extract-runtime-assets /assets /epics/support/ibek-templates /epics/support/templates /epics/support/motorTechnosoft/tml_lib/config /epics/support/biltItest /epics/support/agilent4uhv /epics/support/AgilentXgs600 /epics/support/sigmaPhiStart /epics/support/menloSyncro /epics/support/menloLfc /epics/support/menloLac
 # RUN ibek ioc extract-runtime-assets /assets
 ##### runtime stage ############################################################
 FROM ${RUNTIME} AS runtime
