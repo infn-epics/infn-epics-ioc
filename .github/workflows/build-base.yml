@@ -1,4 +1,4 @@
-name: Build and publish image to ghcr.io/epics-containers
+name: Build and publish base image to ghcr.io/infn-epics/infn-epics-ioc-base
 
 on:
   push:
@@ -9,7 +9,7 @@ jobs:
     if: github.event_name == 'push' && github.ref_type == 'tag'
     runs-on: ubuntu-latest
     permissions:
-      contents: read
+      contents: wrie
       packages: write
     steps:
       - name: Checkout
@@ -59,6 +59,7 @@ jobs:
         with:
           tag_name: ${{ github.ref_name }}
           generate_release_notes: true
+          token: ${{ secrets.GITHUB_TOKEN }}
 
       - name: Create/Update GitHub Release for latest
         if: steps.check_tag.outputs.match == 'true'
@@ -66,4 +67,6 @@ jobs:
         with:
           tag_name: latest
           generate_release_notes: true
+          token: ${{ secrets.GITHUB_TOKEN }}
+
 
