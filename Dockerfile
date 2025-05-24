@@ -13,7 +13,6 @@ FROM  ${DEVELOPER} AS developer
 # Using the same location here makes devcontainer/runtime differences transparent.
 ENV SOURCE_FOLDER=/epics/generic-source
 # connect ioc source folder to its know location
-RUN ln -s ${SOURCE_FOLDER}/ioc ${IOC}
 
 # Get the current version of ibek
 RUN pip install --upgrade -r requirements.txt
