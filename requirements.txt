@@ -1,5 +1,5 @@
 ibek==3.1.5
 jnjrender>=1.0.9
-epik8s-tools>=0.8.8
+epik8s-tools>=0.8.9
 # to install direct from github during development in a branch
 # git+https://github.com/epics-containers/ibek.git@fix-extract-assets
