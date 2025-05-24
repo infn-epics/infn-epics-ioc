@@ -1,7 +1,7 @@
 ARG IMAGE_EXT
 ARG BASE=7.0.8ad3
 ARG REGISTRY=ghcr.io/infn-epics
-ARG DEVELOPER=${REGISTRY}/infn-epics-ioc-base${IMAGE_EXT}-developer:latest
+ARG DEVELOPER=${REGISTRY}/infn-epics-ioc-base${IMAGE_EXT}:latest
 ARG RUNTIME=${REGISTRY}/epics-base${IMAGE_EXT}-runtime:${BASE}
 
 ##### build stage ##############################################################
