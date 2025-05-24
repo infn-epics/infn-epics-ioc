@@ -1,8 +1,10 @@
 ARG IMAGE_EXT
 ARG BASE=7.0.8ad3
+ARG REGISTRY_EC=ghcr.io/epics-containers
+
 ARG REGISTRY=ghcr.io/infn-epics
 ARG DEVELOPER=${REGISTRY}/infn-epics-ioc-base${IMAGE_EXT}:latest
-ARG RUNTIME=${REGISTRY}/epics-base${IMAGE_EXT}-runtime:${BASE}
+ARG RUNTIME=${REGISTRY_EC}/epics-base${IMAGE_EXT}-runtime:${BASE}
 
 ##### build stage ##############################################################
 FROM  ${DEVELOPER} AS developer
