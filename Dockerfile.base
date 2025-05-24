@@ -1,0 +1,91 @@
+ARG IMAGE_EXT
+
+ARG BASE=7.0.8ad3
+ARG REGISTRY=ghcr.io/epics-containers
+ARG RUNTIME=${REGISTRY}/epics-base${IMAGE_EXT}-runtime:${BASE}
+ARG DEVELOPER=${REGISTRY}/epics-base${IMAGE_EXT}-developer:${BASE}
+
+##### build stage ##############################################################
+FROM  ${DEVELOPER} AS developer
+
+# The devcontainer mounts the project root to /epics/generic-source
+# Using the same location here makes devcontainer/runtime differences transparent.
+ENV SOURCE_FOLDER=/epics/generic-source
+# connect ioc source folder to its know location
+RUN ln -s ${SOURCE_FOLDER}/ioc ${IOC}
+
+# Get the current version of ibek
+COPY requirements.txt requirements.txt
+RUN pip install --upgrade -r requirements.txt
+
+WORKDIR ${SOURCE_FOLDER}/ibek-support
+
+COPY ibek-support/_ansible _ansible
+ENV PATH=$PATH:${SOURCE_FOLDER}/ibek-support/_ansible
+
+COPY ibek-support/iocStats/ iocStats
+RUN ansible.sh iocStats
+
+COPY ibek-support/pvlogging/ pvlogging/
+RUN ansible.sh pvlogging
+
+COPY ibek-support/autosave/ autosave
+RUN ansible.sh autosave
+
+COPY ibek-support/asyn/ asyn/
+RUN ansible.sh -v R4-44-2 asyn
+
+COPY ibek-support/busy/ busy/
+RUN ansible.sh -v R1-7-3 busy
+
+COPY ibek-support/StreamDevice/ StreamDevice/
+RUN ansible.sh -v 2.8.24 StreamDevice
+
+COPY ibek-support/sscan/ sscan/
+RUN ansible.sh sscan
+
+COPY ibek-support/calc/ calc/
+RUN ansible.sh calc
+
+COPY ibek-support/motor/ motor/
+RUN ansible.sh motor
+
+COPY ibek-support/motorMotorSim/ motorMotorSim/
+RUN ansible.sh motorMotorSim
+
+COPY ibek-support/ADCore/ ADCore/
+RUN ansible.sh ADCore
+
+COPY ibek-support/ADGenICam ADGenICam/
+RUN ansible.sh ADGenICam
+
+COPY ibek-support/ADAravis/ ADAravis/
+RUN ansible.sh ADAravis
+
+COPY ibek-support/ADSimDetector ADSimDetector/
+RUN ansible.sh ADSimDetector
+
+# COPY ibek-support/lakeshore340  lakeshore340/
+# RUN  ansible.sh lakeshore340
+
+COPY ibek-support/modbus/ modbus/
+RUN ansible.sh modbus
+
+COPY ibek-support/motorNewport motorNewport/
+RUN ansible.sh motorNewport
+
+COPY ibek-support/sequencer/ sequencer/
+RUN ansible.sh sequencer
+
+COPY ibek-support/ffmpegServer ffmpegServer
+RUN ansible.sh -v master ffmpegServer
+
+COPY ibek-support/pvxs pvxs
+RUN ansible.sh pvxs
+
+# get the ioc source and build it
+COPY ioc/ ${SOURCE_FOLDER}/ioc
+RUN ansible.sh ioc
+
+# add some debugging tools for the developer target
+RUN ibek support apt-install iputils-ping iproute2 telnet;ibek support add-runtime-packages iputils-ping iproute2 telnet python3-distutils ca-certificates python3.10-venv  openssh-client
