@@ -102,7 +102,7 @@ jobs:
           target: developer
           build-args: |
             IMAGE_EXT=${{ matrix.extension }}
-            TAGVERSION=${{ github.ref_name }}
+            TAGVERSION="developer-${{ github.ref_name }}"
           tags: ${{ steps.meta-developer.outputs.tags }}
           labels: ${{ steps.meta-developer.outputs.labels }}
           push: true
@@ -126,6 +126,7 @@ jobs:
           target: runtime
           build-args: |
             IMAGE_EXT=${{ matrix.extension }}
+            TAGVERSION="runtime-${{ github.ref_name }}"
           tags: ${{ steps.meta-runtime.outputs.tags }}
           labels: ${{ steps.meta-runtime.outputs.labels }}
           push: true
