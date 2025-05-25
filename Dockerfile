@@ -8,6 +8,8 @@ ARG RUNTIME=${REGISTRY_EC}/epics-base${IMAGE_EXT}-runtime:${BASE}
 
 ##### build stage ##############################################################
 FROM  ${DEVELOPER} AS developer
+ARG TAGVERSION
+ENV TAGVERSION=${TAGVERSION}
 
 # The devcontainer mounts the project root to /epics/generic-source
 # Using the same location here makes devcontainer/runtime differences transparent.
@@ -76,6 +78,9 @@ RUN ibek support apt-install iputils-ping iproute2 telnet;ibek support add-runti
 
 ##### runtime preparation stage ################################################
 FROM developer AS runtime_prep
+ARG TAGVERSION
+ENV TAGVERSION=${TAGVERSION}
+RUN date --utc +%Y-%m-%dT%H:%M:%SZ > /assets/BUILD_INFO.txt && echo "TAG $TAGVERSION" >> /assets/BUILD_INFO.txt
 
 # get the products from the build stage and reduce to runtime assets only
 # RUN ibek ioc extract-runtime-assets /assets ${SOURCE_FOLDER}/ibek*
@@ -85,6 +90,8 @@ RUN ibek ioc extract-runtime-assets /assets /epics/support/ibek-templates /epics
 RUN date --utc +%Y-%m-%dT%H:%M:%SZ > /assets/BUILD_INFO.txt && echo "TAG ${TAGVERSION}" >> /assets/BUILD_INFO.txt
 ##### runtime stage ############################################################
 FROM ${RUNTIME} AS runtime
+ARG TAGVERSION
+ENV TAGVERSION=${TAGVERSION}
 
 # get runtime assets from the preparation stage
 COPY --from=runtime_prep /assets /
