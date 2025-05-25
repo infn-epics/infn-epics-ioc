@@ -102,6 +102,7 @@ jobs:
           target: developer
           build-args: |
             IMAGE_EXT=${{ matrix.extension }}
+            TAGVERSION=${{ github.ref_name }}
           tags: ${{ steps.meta-developer.outputs.tags }}
           labels: ${{ steps.meta-developer.outputs.labels }}
           push: true
