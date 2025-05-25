@@ -87,5 +87,3 @@ RUN ansible.sh pvxs
 COPY ioc/ ${SOURCE_FOLDER}/ioc
 RUN ansible.sh ioc
 
-# add some debugging tools for the developer target
-RUN ibek support apt-install iputils-ping iproute2 telnet;ibek support add-runtime-packages iputils-ping iproute2 telnet python3-distutils ca-certificates python3.10-venv  openssh-client

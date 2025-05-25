@@ -71,6 +71,8 @@ RUN ansible.sh smc
 # RUN ansible.sh ioc
 COPY ibek-templates/templates /epics/support/templates/ibek-templates
 COPY epics-support-template-infn /epics/support/templates/infn-support-templates
+# add some debugging tools for the developer target
+RUN ibek support apt-install iputils-ping iproute2 telnet;ibek support add-runtime-packages iputils-ping iproute2 telnet python3-distutils ca-certificates python3.10-venv  openssh-client
 
 ##### runtime preparation stage ################################################
 FROM developer AS runtime_prep
