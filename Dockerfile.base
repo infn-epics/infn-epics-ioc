@@ -83,6 +83,8 @@ RUN ansible.sh -v master ffmpegServer
 COPY ibek-support/pvxs pvxs
 RUN ansible.sh pvxs
 
+COPY ibek-support-infn/pcas pcas
+RUN ansible.sh pcas
 
 COPY ibek-support-infn/epics-nds/ epics-nds/
 RUN ansible.sh epics-nds

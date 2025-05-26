@@ -53,9 +53,6 @@ RUN ansible.sh agilentipcmini
 COPY ibek-support-infn/smc smc
 RUN ansible.sh smc
 
-COPY ibek-support-infn/pcas pcas
-RUN ansible.sh pcas
-
 COPY ibek-support-infn/cagateway cagateway
 RUN ansible.sh cagateway
 # RUN technosoft/install.sh main
