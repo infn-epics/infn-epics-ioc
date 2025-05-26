@@ -53,11 +53,12 @@ RUN ansible.sh agilentipcmini
 COPY ibek-support-infn/smc smc
 RUN ansible.sh smc
 
+
 COPY ibek-support-infn/cagateway cagateway
 RUN ansible.sh cagateway
 # RUN technosoft/install.sh main
 
-COPY ibek-support-infn/ ${SOURCE_FOLDER}/ioc
+COPY ibek-support-infn// ${SOURCE_FOLDER}/ioc
 RUN ansible.sh ioc
 
 COPY ioc/ ${SOURCE_FOLDER}/ioc
