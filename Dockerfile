@@ -24,23 +24,14 @@ WORKDIR ${SOURCE_FOLDER}/ibek-support-infn
 COPY ibek-support-infn/AgilentXgs600 AgilentXgs600
 RUN ansible.sh AgilentXgs600
 
-COPY ibek-support-infn/screen-epics-ioc screen-epics-ioc/
-RUN ansible.sh screen-epics-ioc
-
-COPY ibek-support-infn/asynInterposeMenlo/ asynInterposeMenlo/
-RUN ansible.sh asynInterposeMenlo
-
-COPY ibek-support-infn/epics-nds/ epics-nds/
-RUN ansible.sh epics-nds
+#COPY ibek-support-infn/screen-epics-ioc screen-epics-ioc/
+# RUN ansible.sh screen-epics-ioc
 
 COPY ibek-support-infn/biltItest biltItest/
 RUN ansible.sh biltItest
 
 COPY ibek-support-infn/sigmaPhiStart sigmaPhiStart/
 RUN ansible.sh sigmaPhiStart
-
-COPY ibek-support-infn/technosoft/ technosoft/
-RUN ansible.sh technosoft
 
 COPY ibek-support-infn/icpdas icpdas
 RUN ansible.sh icpdas
@@ -58,17 +49,12 @@ COPY ibek-support-infn/agilentipcmini agilentipcmini
 #RUN agilentipcmini/install.sh main
 RUN ansible.sh agilentipcmini
 
-COPY ibek-support-infn/menloSyncro/ menloSyncro/
-RUN ansible.sh menloSyncro
-
-COPY ibek-support-infn/menloLfc/ menloLfc/
-RUN ansible.sh menloLfc
-
-COPY ibek-support-infn/menloLac menloLac
-RUN ansible.sh menloLac
-
 COPY ibek-support-infn/smc smc
 RUN ansible.sh smc
+
+
+COPY ibek-support-infn/technosoft/ technosoft/
+RUN ansible.sh technosoft
 
 # RUN ansible.sh ioc
 COPY ibek-templates/templates /epics/support/templates/ibek-templates

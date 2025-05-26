@@ -83,6 +83,23 @@ RUN ansible.sh -v master ffmpegServer
 COPY ibek-support/pvxs pvxs
 RUN ansible.sh pvxs
 
+
+COPY ibek-support-infn/epics-nds/ epics-nds/
+RUN ansible.sh epics-nds
+
+COPY ibek-support-infn/asynInterposeMenlo/ asynInterposeMenlo/
+RUN ansible.sh asynInterposeMenlo
+
+COPY ibek-support-infn/menloSyncro/ menloSyncro/
+RUN ansible.sh menloSyncro
+
+
+COPY ibek-support-infn/menloLfc/ menloLfc/
+RUN ansible.sh menloLfc
+
+COPY ibek-support-infn/menloLac menloLac
+RUN ansible.sh menloLac
+
 # get the ioc source and build it
 COPY ioc/ ${SOURCE_FOLDER}/ioc
 RUN ansible.sh ioc
