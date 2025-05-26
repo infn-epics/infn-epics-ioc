@@ -1,12 +1,12 @@
 [submodule "ibek-support-infn"]
 	path = ibek-support-infn
-	url = https://github.com/infn-epics/ibek-support-infn.git
+	url = ../ibek-support-infn.git
 [submodule "ibek-support"]
 	path = ibek-support
-	url = https://github.com/infn-epics/ibek-support.git
+	url = ../ibek-support.git
 [submodule "ibek-templates"]
 	path = ibek-templates
-	url = https://github.com/infn-epics/ibek-templates.git
+	url = ../ibek-templates.git
 [submodule "epics-support-template-infn"]
 	path = epics-support-template-infn
 	url = ../epics-support-template-infn

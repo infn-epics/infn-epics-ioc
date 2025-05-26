@@ -20,6 +20,7 @@ ENV SOURCE_FOLDER=/epics/generic-source
 RUN pip install --upgrade epik8s-tools
 
 WORKDIR ${SOURCE_FOLDER}/ibek-support-infn
+# COPY ibek-support-infn/_global/ _global
 
 COPY ibek-support-infn/AgilentXgs600 AgilentXgs600
 RUN ansible.sh AgilentXgs600
@@ -55,7 +56,10 @@ RUN ansible.sh smc
 
 COPY ibek-support-infn/technosoft/ technosoft/
 RUN ansible.sh technosoft
+# RUN technosoft/install.sh main
 
+COPY ioc/ ${SOURCE_FOLDER}/ioc
+RUN ansible.sh ioc
 # RUN ansible.sh ioc
 COPY ibek-templates/templates /epics/support/templates/ibek-templates
 COPY epics-support-template-infn /epics/support/templates/infn-support-templates
