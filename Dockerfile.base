@@ -39,11 +39,11 @@ COPY ibek-support/busy/ busy/
 RUN ansible.sh -v R1-7-3 busy
 
 
-COPY ibek-support/calc/ calc/
-RUN ansible.sh calc
-
 COPY ibek-support/StreamDevice/ StreamDevice/
 RUN ansible.sh StreamDevice
+
+COPY ibek-support/calc/ calc/
+RUN ansible.sh calc
 
 COPY ibek-support/sscan/ sscan/
 RUN ansible.sh sscan
