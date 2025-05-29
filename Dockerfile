@@ -43,11 +43,12 @@ RUN ansible.sh easy-driver-epics
 COPY ibek-support-infn/kima-undulator kima-undulator
 RUN ansible.sh kima-undulator
 
+COPY ibek-support-infn/agilentipcmini agilentipcmini
+RUN ansible.sh agilentipcmini
+
 COPY ibek-support-infn/agilent4uhv agilent4uhv
 RUN ansible.sh agilent4uhv
 
-COPY ibek-support-infn/agilentipcmini agilentipcmini
-RUN ansible.sh agilentipcmini
 
 COPY ibek-support-infn/smc smc
 RUN ansible.sh smc
@@ -58,8 +59,8 @@ RUN ansible.sh technosoft
 COPY ibek-support-infn/cagateway cagateway
 RUN ansible.sh cagateway
 
-COPY ibek-support-infn/ ${SOURCE_FOLDER}/ioc
-RUN ansible.sh ioc
+COPY ibek-support-infn/tpg300_500 tpg300_500
+RUN ansible.sh tpg300_500
 
 COPY ioc/ ${SOURCE_FOLDER}/ioc
 RUN ansible.sh ioc

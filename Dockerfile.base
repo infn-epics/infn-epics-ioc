@@ -38,14 +38,15 @@ RUN ansible.sh -v R4-44-2 asyn
 COPY ibek-support/busy/ busy/
 RUN ansible.sh -v R1-7-3 busy
 
-COPY ibek-support/StreamDevice/ StreamDevice/
-RUN ansible.sh -v 2.8.24 StreamDevice
-
-COPY ibek-support/sscan/ sscan/
-RUN ansible.sh sscan
 
 COPY ibek-support/calc/ calc/
 RUN ansible.sh calc
+
+COPY ibek-support/StreamDevice/ StreamDevice/
+RUN ansible.sh StreamDevice
+
+COPY ibek-support/sscan/ sscan/
+RUN ansible.sh sscan
 
 COPY ibek-support/motor/ motor/
 RUN ansible.sh motor
@@ -105,4 +106,7 @@ RUN ansible.sh menloLac
 # get the ioc source and build it
 COPY ioc/ ${SOURCE_FOLDER}/ioc
 RUN ansible.sh ioc
+
+EXPOSE 5064 5065
+
 
