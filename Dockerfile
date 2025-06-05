@@ -85,6 +85,7 @@ RUN date --utc +%Y-%m-%dT%H:%M:%SZ > /assets/BUILD_INFO.txt && echo "TAG ${TAGVE
 FROM ${RUNTIME} AS runtime
 ARG TAGVERSION
 ENV TAGVERSION=${TAGVERSION}
+RUN groupadd -g 1000 epics && useradd -m -u 1000 -g 1000 epics
 
 # get runtime assets from the preparation stage
 COPY --from=runtime_prep /assets /
