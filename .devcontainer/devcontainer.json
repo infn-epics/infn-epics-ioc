@@ -3,12 +3,12 @@
     "name": "epics-containers IOC devcontainer",
     "build": {
         "dockerfile": "../Dockerfile",
-        "target": "developer",
+        "target": "runtime",
         "platform": "linux/amd64",
         "args": {
             // Native target development settings ==============================
             "EPICS_TARGET_ARCH": "linux-x86_64",
-            "TARGET":"-developer",
+            "TARGET":"-runtime",
             // Local cross compilation settings ================================
             // "EPICS_TARGET_ARCH": "RTEMS-beatnik",
             "IMAGE_EXT": ""
