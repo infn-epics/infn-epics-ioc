@@ -77,7 +77,7 @@ ENV TAGVERSION=${TAGVERSION}
 
 # get the products from the build stage and reduce to runtime assets only
 # RUN ibek ioc extract-runtime-assets /assets ${SOURCE_FOLDER}/ibek*
-RUN ibek ioc extract-runtime-assets /assets /epics/support/ibek-templates /epics/support/templates /epics/support/motorTechnosoft/tml_lib/config /epics/support/biltItest /epics/support/agilent4uhv /epics/support/AgilentXgs600 /epics/support/sigmaPhiStart
+RUN ibek ioc extract-runtime-assets /assets /epics/support/ibek-templates /epics/support/templates /epics/support/motorTechnosoft /epics/support/biltItest /epics/support/agilent4uhv /epics/support/AgilentXgs600 /epics/support/sigmaPhiStart
 # RUN ibek ioc extract-runtime-assets /assets
 
 RUN date --utc +%Y-%m-%dT%H:%M:%SZ > /assets/BUILD_INFO.txt && echo "TAG ${TAGVERSION}" >> /assets/BUILD_INFO.txt
@@ -91,6 +91,6 @@ RUN groupadd -g 1000 epics && useradd -m -u 1000 -g 1000 epics
 COPY --from=runtime_prep /assets /
 # install runtime system dependencies, collected from install.sh scripts
 RUN ibek support apt-install-runtime-packages
-# RUN cp /epics/support/motorTechnosoft/lib/linux-x86_64/*.so /usr/lib/x86_64-linux-gnu/
+RUN cp /epics/support/motorTechnosoft/lib/linux-x86_64/*.so /usr/lib/x86_64-linux-gnu/
 RUN chown epics.epics -R /epics
 CMD ["/bin/bash", "-c", "${IOC}/start.sh"]
