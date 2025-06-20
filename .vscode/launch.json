@@ -1,68 +1,389 @@
-// Generic IOC debugging launcher
-// To use this l
-// 1. make sure you have gdb installed in your container with
-//    apt update; apt-get install gdb
-// 2. run the IOC once to make sure rutime assets are generated:
-//    cd /epics/ioc; make
-//    ./start.sh
-// 3. stop the IOC with 'exit'
-// 4. In vscode go to the support source in /epics/support/xxx
-// 5. Set any breakpoints in the source code that you require.
-// 6. You may want to set 'HOST_OPT=NO' in CONFIG_SITE and rebuild the support
-// 6. Go to the debug tab and select 'IOC devcontainer debug' from the
-//    RUN AND DEBUG dropdown
 {
+    // Use IntelliSense to learn about possible attributes.
+    // Hover to view descriptions of existing attributes.
+    // For more information, visit: https://go.microsoft.com/fwlink/?linkid=830387
     "version": "0.2.0",
     "configurations": [
-        {
-            "name": "(gdb) Attach to IOC",
-            "type": "cppdbg",
-            "request": "attach",
-            "program": "/epics/ioc/bin/linux-x86_64/ioc",
-            "MIMode": "gdb",
-            "setupCommands": [
-                {
-                    "description": "Enable pretty-printing for gdb",
-                    "text": "-enable-pretty-printing",
-                    "ignoreFailures": true
-                },
-                {
-                    "description": "Set Disassembly Flavor to Intel",
-                    "text": "-gdb-set disassembly-flavor intel",
-                    "ignoreFailures": true
-                }
-            ]
+         {
+            "name": "Python: RUN IOC on ELI libera-spe",
+            "type": "python",
+            "request": "launch",
+            "cwd": "${workspaceFolder}",
+            "program": "epik8s-run",
+            "console": "integratedTerminal",
+            //"python": "${workspaceFolder}/.epik8s-tools/bin/python",
+            "args":[
+                    "tests/epik8s-configs/eli_values.yaml",
+                    "bdelilibera01",
+                    "--native",
+                    "--rm",
+                    "--templatedir","tests/epik8s-configs/templates_dir",
+                    "--workdir", "/tmp"
+                    
+                ],
+            "justMyCode": true,
+            "env": {
+                "PYTHONPATH": "${workspaceFolder}"
+            }
         },
         {
-            "name": "Launch IOC in debugger",
-            "type": "cppdbg",
+            "name": "Python: RUN IOC on TPG300",
+            "type": "python",
             "request": "launch",
-            "program": "/epics/ioc/bin/linux-x86_64/ioc",
-            "args": [
-                "/epics/runtime/st.cmd"
-            ],
-            "stopAtEntry": false,
-            "cwd": "/epics/ioc",
-            "environment": [
-                {
-                    "name": "RUNTIME_DIR",
-                    "value": "/epics/runtime"
-                }
-            ],
-            "externalConsole": false,
-            "MIMode": "gdb",
-            "setupCommands": [
-                {
-                    "description": "Enable pretty-printing for gdb",
-                    "text": "-enable-pretty-printing",
-                    "ignoreFailures": true
-                },
-                {
-                    "description": "Set Disassembly Flavor to Intel",
-                    "text": "-gdb-set disassembly-flavor intel",
-                    "ignoreFailures": true
-                }
-            ]
+            "cwd": "${workspaceFolder}",
+            "program": "epik8s-run",
+            "console": "integratedTerminal",
+            "python": "${workspaceFolder}/.epik8s-tools/bin/python",
+            "args":[
+                    "tests/epik8s-configs/sparc_values.yaml",
+                    "vga-gun01",
+                    "--rm",
+                    "--image","ec_test",
+                    "--templatedir","tests/epik8s-configs/templates_dir",
+                    "--workdir", "/tmp"
+                    
+                ],
+            "justMyCode": true,
+            "env": {
+                "PYTHONPATH": "${workspaceFolder}"
+            }
+        },
+        {
+            "name": "Python: RUN IOC on ELI TEST MRF",
+            "type": "python",
+            "request": "launch",
+            "cwd": "${workspaceFolder}",
+            "program": "epik8s-run",
+            "console": "integratedTerminal",
+            //"python": "${workspaceFolder}/.epik8s-tools/bin/python",
+            "args":[
+                    "tests/epik8s-configs/rke2_test.yaml",
+                    "key-test",
+                    "--native",
+                    "--rm",
+                    "--templatedir","tests/epik8s-configs/templates_dir",
+                    "--workdir", "/tmp"
+                    
+                ],
+            "justMyCode": true,
+            "env": {
+                "PYTHONPATH": "${workspaceFolder}"
+            }
+        },
+        {
+            "name": "Python: RUN IOC on SPARC libera-sppp",
+            "type": "python",
+            "request": "launch",
+            "cwd": "${workspaceFolder}",
+            "program": "epik8s-run",
+            "console": "integratedTerminal",
+            //"python": "${workspaceFolder}/.epik8s-tools/bin/python",
+            "args":[
+                    "tests/epik8s-configs/sparc_values.yaml",
+                    "bdsparcac1bpm001",
+                    "--native",
+                    "--rm",
+                    "--templatedir","tests/epik8s-configs/templates_dir",
+                    "--workdir", "/tmp"
+                    
+                ],
+            "justMyCode": true,
+            "env": {
+                "PYTHONPATH": "${workspaceFolder}"
+            }
+        },
+        {
+            "name": "Python: RUN ICPDAS IOC on SPARC IBEK",
+            "type": "python",
+            "request": "launch",
+            "cwd": "${workspaceFolder}",
+            "program": "epik8s-run",
+            "console": "integratedTerminal",
+            "args":[
+                    "tests/epik8s-configs/sparc_values.yaml",
+                    "deflettori",
+                    "--native",
+                    "--rm",
+                    "--workdir", "/tmp"
+                    
+                ],
+            "justMyCode": true,
+            "env": {
+                "PYTHONPATH": "${workspaceFolder}"
+            }
+        },
+        {
+            "name": "Python: RUN IOC on SPARC IBEK pfeiffer",
+            "type": "python",
+            "request": "launch",
+            "cwd": "${workspaceFolder}",
+            "program": "epik8s-run",
+            "console": "integratedTerminal",
+            "args":[
+                    "tests/epik8s-configs/sparc_values.yaml",
+                    "vga-gun01",
+                    "--native",
+                    "--rm",
+                    "--workdir", "/tmp"
+                    
+                ],
+            "justMyCode": true,
+            "env": {
+                "PYTHONPATH": "${workspaceFolder}"
+            }
+        },
+        {
+            "name": "Python: RUN IOC",
+            "type": "python",
+            "request": "launch",
+            "cwd": "${workspaceFolder}",
+            "program": "epik8s-run",
+            "console": "integratedTerminal",
+            //"python": "${workspaceFolder}/.epik8s-tools/bin/python",
+            "args":[
+                    "tests/epik8s-configs/eli_values.yaml",
+                    "camerasim",
+                    "--native",
+                    "--workdir", "/tmp"
+                   // "--services","diag-tml","gateway","cam01"
+                    //"vgcon01","vgcon02","vpcon17","vpcon19",
+                    
+                ],
+            "justMyCode": true,
+            "env": {
+                "PYTHONPATH": "${workspaceFolder}"
+            }
+        }, {
+            "name": "Python: RUN IOC in docker",
+            "type": "python",
+            "request": "launch",
+            "cwd": "${workspaceFolder}",
+            "program": "epik8s-run",
+            "console": "integratedTerminal",
+            //"python": "${workspaceFolder}/.epik8s-tools/bin/python",
+            "args":[
+                    "tests/epik8s-configs/eli_values.yaml",
+                    "camerasim",
+                    "--workdir", "/tmp"
+                   // "--services","diag-tml","gateway","cam01"
+                    //"vgcon01","vgcon02","vpcon17","vpcon19",
+                    
+                ],
+            "justMyCode": true,
+            "env": {
+                "PYTHONPATH": "${workspaceFolder}"
+            }
+        },
+        {
+            "name": "Python: COMPOSE ELI",
+            "type": "python",
+            "request": "launch",
+            "cwd": "${workspaceFolder}",
+            "program": "${workspaceFolder}/epik8s_tools/epik8s_compose.py",
+            "console": "integratedTerminal",
+            //"python": "${workspaceFolder}/.epik8s-tools/bin/python",
+            "args":[
+                    "--config", "./tests/epik8s-configs/eli_values.yaml",
+                    "--host-dir", "./tests/epik8s-configs/eli_config",
+                    "--pvaport","5175",
+                   // "--services","diag-tml","gateway","cam01"
+                    //"vgcon01","vgcon02","vpcon17","vpcon19",
+                    
+                ],
+            "justMyCode": true,
+            "env": {
+                "PYTHONPATH": "${workspaceFolder}"
+            }
+        },
+        {
+            "name": "Python: COMPOSE ELI template",
+            "type": "python",
+            "request": "launch",
+            "cwd": "${workspaceFolder}",
+            "program": "${workspaceFolder}/epik8s_tools/epik8s_compose.py",
+            "console": "integratedTerminal",
+            //"python": "${workspaceFolder}/.epik8s-tools/bin/python",
+            "args":[
+                    "--config", "./tests/epik8s-configs/eli_values.yaml",
+                    "--pvaport","5175",
+                    "--services","cam01"
+                    //"vgcon01","vgcon02","vpcon17","vpcon19",
+                    
+                ],
+            "justMyCode": true,
+            "env": {
+                "PYTHONPATH": "${workspaceFolder}"
+            }
+        },
+        {
+            "name": "Python: OPIGEN ELI",
+            "type": "python",
+            "request": "launch",
+            "cwd": "${workspaceFolder}",
+            "program": "${workspaceFolder}/epik8s_tools/opigen.py",
+            "console": "integratedTerminal",
+            //"python": "${workspaceFolder}/.epik8s-tools/bin/python",
+            "args":[
+                    "--yaml", "tests/epik8s-configs/eli_values.yaml",
+                    "--projectdir", "eli-test-opi",
+                    "--controls","polrev-icpdas01","polrev-icpdas02"
+                ],
+            "justMyCode": true,
+            "env": {
+                "PYTHONPATH": "${workspaceFolder}"
+            }
+        },
+ 
+        {
+            "name": "Python: epik8s-tools beamlinetest",
+            "type": "python",
+            "request": "launch",
+            "cwd": "${workspaceFolder}",
+            "program": "epik8s_tools/epik8s_gen.py",
+            "console": "integratedTerminal",
+            // "python": "${workspaceFolder}/.venv/bin/python",
+            "args":["testbeamline","--beamlinerepogit","https://baltig.infn.it/epics-containers/epik8s-testbeamline.git",
+                    "--dnsnamespace","pldanteco101.lnf.infn.it",
+                    "--iocbaseip", "10.10.0.0/24",
+                    "--cagatewayip", "192.168.114.200",
+                    "--pvagatewayip","192.168.114.201",
+                    "--vcams","10",
+                    "--vicpdas","4"],
+            "justMyCode": true,
+            "env": {
+                
+            }
+        },
+        {
+            "name": "Python: Beamline Test EUAPS",
+            "type": "python",
+            "request": "launch",
+            "cwd": "${workspaceFolder}",
+            "program": "epik8s_tools/epik8s_gen.py",
+            "console": "integratedTerminal",
+            //"python": "${workspaceFolder}/.epik8s-tools/bin/python",
+            "args":["epik8s-euaps",
+                    "--beamline", "euaps",
+                    "--ingressclass", "haproxy",
+                    "--beamlinerepogit","https://baltig.infn.it/lnf-da-control/epik8s-euaps.git",
+                    "--dnsnamespace","apps.k8s-da.lnf.infn.it",
+                    "--iocbaseip", "10.96.0.0/12",
+                    "--cagatewayip", "10.10.6.109",
+                    "--pvagatewayip","10.10.6.110",
+                    "--vcams","10",
+                    "--token","6r-MzeKyVxfVnhPAxtpP",
+                    "--vicpdas","4"],
+            "justMyCode": true,
+            "env": {
+                
+            }
+        },
+        {
+            "name": "Python: OPIGEN EUAPS",
+            "type": "python",
+            "request": "launch",
+            "cwd": "${workspaceFolder}",
+            "program": "${workspaceFolder}/epik8s_tools/opigen.py",
+            "console": "integratedTerminal",
+            //"python": "${workspaceFolder}/.epik8s-tools/bin/python",
+            "args":[
+                    "--yaml", "epik8s-euaps/deploy/values.yaml",
+                    "--projectdir", "euaps-test-opi"
+                ],
+            "justMyCode": true,
+            "env": {
+                "PYTHONPATH": "${workspaceFolder}"
+            }
+        },
+        {
+            "name": "Python: COMPOSE EUAPS",
+            "type": "python",
+            "request": "launch",
+            "cwd": "${workspaceFolder}",
+            "program": "${workspaceFolder}/epik8s_tools/epik8s_compose.py",
+            "console": "integratedTerminal",
+            //"python": "${workspaceFolder}/.epik8s-tools/bin/python",
+            "args":[
+                    "--config", "epik8s-euaps/deploy/values.yaml",
+                    "--host-dir", "./epik8s-euaps/config",
+                    "--output", "./tests/epik8s-configs/docker-control-euaps",
+                    "--pvaport","5175"
+                ],
+            "justMyCode": true,
+            "env": {
+                "PYTHONPATH": "${workspaceFolder}"
+            }
+        },
+        {
+            "name": "Python: OPIGEN SPARC",
+            "type": "python",
+            "request": "launch",
+            "cwd": "${workspaceFolder}",
+            "program": "${workspaceFolder}/epik8s_tools/opigen.py",
+            "console": "integratedTerminal",
+            //"python": "${workspaceFolder}/.epik8s-tools/bin/python",
+            "args":[
+                    "--yaml", "tests/epik8s-configs/sparc_values.yaml",
+                    "--projectdir", "sparc-test-opi"
+                ],
+            "justMyCode": true,
+            "env": {
+                "PYTHONPATH": "${workspaceFolder}"
+            }
+        },
+        {
+            "name": "Python: OPIGEN BTF",
+            "type": "python",
+            "request": "launch",
+            "cwd": "${workspaceFolder}",
+            "program": "${workspaceFolder}/epik8s_tools/opigen.py",
+            "console": "integratedTerminal",
+            //"python": "${workspaceFolder}/.epik8s-tools/bin/python",
+            "args":[
+                    "--yaml", "tests/epik8s-configs/btf_values.yaml",
+                    "--projectdir", "btf-test-opi"
+                ],
+            "justMyCode": true,
+            "env": {
+                "PYTHONPATH": "${workspaceFolder}"
+            }
+        },
+        {
+            "name": "Python: OPIGEN MD ELI",
+            "type": "python",
+            "request": "launch",
+            "cwd": "${workspaceFolder}",
+            "program": "${workspaceFolder}/epik8s_tools/opigen.py",
+            "console": "integratedTerminal",
+            //"python": "${workspaceFolder}/.epik8s-tools/bin/python",
+            "args":[
+                    "--yaml", "tests/epik8s-configs/eli_values.yaml",
+                    "--projectdir", "eli-test-opi"
+                ],
+            "justMyCode": true,
+            "env": {
+                "PYTHONPATH": "${workspaceFolder}"
+            }
+        },
+        {
+            "name": "Python: epik8s-tools CAMERA01",
+            "type": "python",
+            "request": "launch",
+            "cwd": "${workspaceFolder}",
+            "program": "epik8s_gen/epik8s_gen.py",
+            "console": "integratedTerminal",
+            // "python": "${workspaceFolder}/.venv/bin/python",
+            "args":["testbeamline","--beamlinerepogit","https://baltig.infn.it/epics-containers/epik8s-testbeamline.git",
+                    "--dnsnamespace","chaost-camera01.chaos.lnf.infn.it",
+                    "--targetRevision","devel",
+                    "--cagatewayip", "192.168.197.2",
+                    "--pvagatewayip","192.168.197.3"],
+            "justMyCode": true,
+            "env": {
+                        
+            }
         }
+
+
     ]
 }
