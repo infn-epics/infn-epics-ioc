@@ -3,18 +3,18 @@
     "name": "epics-containers IOC devcontainer",
     "build": {
         "dockerfile": "../Dockerfile",
-        "target": "runtime",
-       // "target": "developer",
+        //"target": "runtime",
+        "target": "developer",
         "platform": "linux/amd64",
         "tag": "ec_test",
-        // "options": [
-        //     "--load",
-        //     "--target=runtime"
-        // ],
+        "options": [
+            "--load",
+            "--target=developer",
+            "--platform","linux/amd64"
+        ],
         "args": {
             // Native target development settings ==============================
             "EPICS_TARGET_ARCH": "linux-x86_64",
-            //"DEVELOPER": "ec_base_test",
             //"TARGET":"-runtime",
             //"TARGET":"-developer",
             "BUILDKIT_INLINE_CACHE": "1",

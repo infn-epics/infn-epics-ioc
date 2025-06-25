@@ -56,15 +56,16 @@ RUN ansible.sh smc
 COPY ibek-support-infn/technosoft/ technosoft/
 RUN ansible.sh technosoft
 
-COPY ibek-support-infn/cagateway cagateway
-RUN ansible.sh cagateway
 
 COPY ibek-support-infn/tpg300_500 tpg300_500
 RUN ansible.sh tpg300_500
 
+COPY ibek-support-infn/cagateway cagateway
+RUN ansible.sh cagateway
+
 COPY ioc/ ${SOURCE_FOLDER}/ioc
 RUN ansible.sh ioc
-# RUN ansible.sh ioc
+
 COPY ibek-templates/templates /epics/support/templates/ibek-templates
 COPY epics-support-template-infn /epics/support/templates/infn-support-templates
 # add some debugging tools for the developer target
@@ -77,7 +78,7 @@ ENV TAGVERSION=${TAGVERSION}
 
 # get the products from the build stage and reduce to runtime assets only
 # RUN ibek ioc extract-runtime-assets /assets ${SOURCE_FOLDER}/ibek*
-RUN ibek ioc extract-runtime-assets /assets /epics/support/ibek-templates /epics/support/templates /epics/support/motorTechnosoft /epics/support/biltItest /epics/support/agilent4uhv /epics/support/AgilentXgs600 /epics/support/sigmaPhiStart
+RUN ibek ioc extract-runtime-assets /assets /epics/support/ibek-templates /epics/support/templates /epics/support/motorTechnosoft
 # RUN ibek ioc extract-runtime-assets /assets
 
 RUN date --utc +%Y-%m-%dT%H:%M:%SZ > /assets/BUILD_INFO.txt && echo "TAG ${TAGVERSION}" >> /assets/BUILD_INFO.txt
