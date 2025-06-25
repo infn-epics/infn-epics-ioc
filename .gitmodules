@@ -1,12 +1,12 @@
 [submodule "ibek-support-infn"]
 	path = ibek-support-infn
 	url = ../ibek-support-infn.git
-[submodule "ibek-support"]
-	path = ibek-support
-	url = ../ibek-support.git
 [submodule "ibek-templates"]
 	path = ibek-templates
 	url = ../ibek-templates.git
 [submodule "epics-support-template-infn"]
 	path = epics-support-template-infn
 	url = ../epics-support-template-infn
+[submodule "ibek-support"]
+	path = ibek-support
+	url = https://github.com/epics-containers/ibek-support.git
