@@ -133,6 +133,26 @@
             }
         },
         {
+            "name": "Python: RUN IOC on SPARC IBEK fastps",
+            "type": "python",
+            "request": "launch",
+            "cwd": "${workspaceFolder}",
+            "program": "epik8s-run",
+            "console": "integratedTerminal",
+            "args":[
+                    "tests/epik8s-configs/sparc_values.yaml",
+                    "caenelsfast",
+                    "--native",
+                    "--rm",
+                    "--workdir", "/tmp"
+                    
+                ],
+            "justMyCode": true,
+            "env": {
+                "PYTHONPATH": "${workspaceFolder}"
+            }
+        },
+        {
             "name": "Python: RUN IOC",
             "type": "python",
             "request": "launch",
