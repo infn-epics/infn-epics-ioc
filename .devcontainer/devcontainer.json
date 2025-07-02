@@ -3,13 +3,13 @@
     "name": "epics-containers IOC devcontainer",
     "build": {
         "dockerfile": "../Dockerfile",
-        "target": "runtime",
-        //"target": "developer",
+        //"target": "runtime",
+        "target": "developer",
         "platform": "linux/amd64",
         "tag": "ec_test",
         "options": [
             "--load",
-            "--target=developer",
+           // "--target=developer",
             "--platform","linux/amd64"
         ],
         "args": {
