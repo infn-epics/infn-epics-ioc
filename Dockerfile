@@ -63,8 +63,8 @@ RUN ansible.sh tpg300_500
 COPY ibek-support-infn/Tektronix_MSO58LP/ Tektronix_MSO58LP/
 RUN ansible.sh Tektronix_MSO58LP
 
-COPY ibek-support-infn/caenelsFastPS caenelsFastPS/
-RUN ansible.sh caenelsFastPS
+COPY ibek-support-infn/caenelsPS caenelsPS/
+RUN ansible.sh caenelsPS
 
 COPY ibek-support-infn/cagateway cagateway
 RUN ansible.sh cagateway
