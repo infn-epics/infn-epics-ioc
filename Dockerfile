@@ -72,7 +72,6 @@ RUN ansible.sh motorMicos
 COPY ibek-support-infn/cagateway cagateway
 RUN ansible.sh cagateway
 
-
 COPY ioc/ ${SOURCE_FOLDER}/ioc
 RUN ansible.sh ioc
 
