@@ -58,7 +58,7 @@ COPY ibek-support/ADCore/ ADCore/
 RUN ansible.sh ADCore
 
 COPY ibek-support/ADGenICam ADGenICam/
-RUN ansible.sh ADGenICam
+RUN ansible.sh ADGenICam R1-10
 
 COPY ibek-support/ADAravis/ ADAravis/
 RUN ansible.sh ADAravis
