@@ -71,6 +71,8 @@ RUN ansible.sh motorMicos
 
 COPY ibek-support-infn/cagateway cagateway
 RUN ansible.sh cagateway
+COPY ibek-support/ADGenICam ADGenICam/
+RUN ansible.sh -v R1-10 ADGenICam
 
 COPY ioc/ ${SOURCE_FOLDER}/ioc
 RUN ansible.sh ioc
