@@ -2994,7 +2994,7 @@ epicsConfiguration:
         - name: "server"
           value: "192.168.197.102"
         - name: "port"  
-          port: "4001"
+          value: "4001"
       autosync: false ## restart automatically on changes
       devtype: haz-ser
       devgroup: mag
