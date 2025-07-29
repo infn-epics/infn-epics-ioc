@@ -66,6 +66,9 @@ RUN ansible.sh Tektronix_MSO58LP
 COPY ibek-support-infn/caenelsPS caenelsPS/
 RUN ansible.sh caenelsPS
 
+COPY ibek-support-infn/ocemPS ocemPS/
+RUN ansible.sh ocemPS
+
 COPY ibek-support-infn/motorMicos motorMicos/
 RUN ansible.sh motorMicos
 

@@ -8,7 +8,7 @@
         "platform": "linux/amd64",
         "tag": "ec_test",
         "options": [
-            "--load",
+            //"--load",
            // "--target=developer",
             "--platform","linux/amd64"
         ],
@@ -27,10 +27,10 @@
 
     
     
-    "features": {
-        // add in eternal history and other bash features
-        "ghcr.io/diamondlightsource/devcontainer-features/bash-config:1": {}
-    },
+    // "features": {
+    //     // add in eternal history and other bash features
+    //     "ghcr.io/diamondlightsource/devcontainer-features/bash-config:1": {}
+    // },
     // outside of the container setup
    //"initializeCommand": "bash .devcontainer/initializeCommand ${devcontainerId}",
     // IMPORTANT for this devcontainer to work with docker rootful
