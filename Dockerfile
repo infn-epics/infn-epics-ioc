@@ -75,20 +75,24 @@ RUN ansible.sh motorMicos
 COPY ibek-support-infn/cagateway cagateway
 RUN ansible.sh cagateway
 
+COPY ibek-support-infn/hazemeyer hazemeyer
+RUN ansible.sh hazemeyer
+
 COPY ioc/ ${SOURCE_FOLDER}/ioc
 RUN ansible.sh ioc
 
 COPY ibek-templates/templates /epics/support/templates/ibek-templates
 COPY epics-support-template-infn /epics/support/templates/infn-support-templates
-RUN apt-get update && apt-get install -y openssh-server lshw nvidia-utils-550 sudo
+RUN apt-get update && apt-get install -y openssh-server lshw nvidia-utils-550 sudo curl
 RUN groupadd -g 1000 epics && useradd -m -u 1000 -g 1000 epics -s /bin/bash && echo "epics:epics" | chpasswd
 RUN mkdir /var/run/sshd
 # Allow password login
 RUN sed -i 's/#PasswordAuthentication yes/PasswordAuthentication yes/' /etc/ssh/sshd_config
 RUN sed -i 's/PermitRootLogin prohibit-password/PermitRootLogin yes/' /etc/ssh/sshd_config
+RUN curl -o /usr/bin/yq -L https://github.com/mikefarah/yq/releases/download/v4.44.2/yq_linux_amd64 && chmod +x /usr/bin/yq
 
 # add some debugging tools for the developer target
-RUN ibek support apt-install iputils-ping iproute2 telnet;ibek support add-runtime-packages iputils-ping iproute2 telnet python3-distutils ca-certificates python3.10-venv  openssh-client
+RUN ibek support apt-install iputils-ping iproute2 telnet;ibek support add-runtime-packages iputils-ping iproute2 telnet python3-distutils ca-certificates python3.10-venv  openssh-client curl
 EXPOSE 22
 CMD ["/usr/sbin/sshd", "-D"]
 
@@ -108,11 +112,13 @@ FROM ${RUNTIME} AS runtime
 ARG TAGVERSION
 ENV TAGVERSION=${TAGVERSION}
 RUN groupadd -g 1000 epics && useradd -m -u 1000 -g 1000 epics
-
 # get runtime assets from the preparation stage
 COPY --from=runtime_prep /assets /
 # install runtime system dependencies, collected from install.sh scripts
+RUN ibek support apt-install curl
 RUN ibek support apt-install-runtime-packages
+RUN curl -o /usr/bin/yq -L https://github.com/mikefarah/yq/releases/download/v4.44.2/yq_linux_amd64 && chmod +x /usr/bin/yq
+
 RUN cp /epics/support/motorTechnosoft/lib/linux-x86_64/*.so /usr/lib/x86_64-linux-gnu/
 RUN chown epics.epics -R /epics
 CMD ["/bin/bash", "-c", "${IOC}/start.sh"]

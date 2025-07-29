@@ -3,8 +3,8 @@
     "name": "epics-containers IOC devcontainer",
     "build": {
         "dockerfile": "../Dockerfile",
-        //"target": "runtime",
-        "target": "developer",
+        "target": "runtime",
+        //"target": "developer",
         "platform": "linux/amd64",
         "tag": "ec_test",
         "options": [
@@ -55,14 +55,14 @@
     //"postCreateCommand": "bash .devcontainer/postCreateCommand ${devcontainerId}",
     
     // Mount the parent of the project folder so we can access peer projects
-    "workspaceMount": "source=${localWorkspaceFolder}/..,target=/workspaces,type=bind",
+    "workspaceMount": "source=${localWorkspaceFolder}/..,target=/workspaces,type=bind"//,
     // mount in other useful files from the host
-    "mounts": [
+    //"mounts": [
         // we also mount the project folder into a know location in the container
         // this is where the ibek-support and ioc folders reside in the container build
         // in this way the devcontainer and runtime look very similar
        // "source=${localWorkspaceFolder},target=/epics/generic-source,type=bind",
         // Mount the opi folder so we can use phoebus from outside the container
        // "source=${localWorkspaceFolder}/opi/auto-generated,target=/epics/opi,type=bind"
-    ]
+    //]
 }
