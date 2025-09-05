@@ -1248,23 +1248,43 @@ epicsConfiguration:
         - name: "ALAS0"
           devtype: rtd
           desc: "anticamera laser0"
-          channel: 0 
+          channel: 0
+          high: 80
+          low: 10
+          lolo: 5
+          hihi: 90
         - name: "ALAS1"
           devtype: rtd
           desc: "anticamera laser1"
           channel: 1
+          high: 80
+          low: 10
+          lolo: 5
+          hihi: 90
         - name: "LAS0"
           devtype: rtd
           desc: "laser 0"
-          channel: 2 
+          channel: 2
+          high: 80
+          low: 10
+          lolo: 5
+          hihi: 90
         - name: "LAS1"
           devtype: rtd
           desc: "laser 1"
           channel: 3
+          high: 80
+          low: 10
+          lolo: 5
+          hihi: 90
         - name: "TEST"
           devtype: rtd
           desc: "TEST"
           channel: 4
+          high: 80
+          low: 10
+          lolo: 5
+          hihi: 90
       # temp:
       #   - name: "TEMP01"
       #     idx: 1
@@ -1398,6 +1418,7 @@ epicsConfiguration:
           channel: 0
         - name: "REOSLAS01"
           devtype: di
+          desc: "mega redback"
           channel: 1
       autosync: false ## restart automatically on changes
 
