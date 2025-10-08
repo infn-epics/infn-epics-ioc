@@ -77,13 +77,13 @@ epicsConfiguration:
           size: 2000Gi
           claim: ""
           accessMode: ReadWriteOnce
-          storageClassName: "nfs-atlas"
+          storageClassName: "archiver-lts"
         mts:
           path: /storage/mts
           size: 100Gi
           claim: ""
           accessMode: ReadWriteOnce
-          storageClassName: "nfs-atlas"
+          storageClassName: "archiver-mts"
 
         sts:
           path: /storage/sts
@@ -112,7 +112,7 @@ epicsConfiguration:
             requests:
               cpu: 100m
               memory: 4Gi
-      autosync: false ## restart automatically on changes
+      autosync: true ## restart automatically on changes
       usegateway: true
 
     console: 
@@ -129,7 +129,6 @@ epicsConfiguration:
               memory: 1Gi
         gitRepoConfig:
           url: https://baltig.infn.it/lnf-da-control/epik8-sparc.git
-          path: opi
           branch: master
         autosync: true ## restart automatically on changes
         usegateway: true
@@ -164,7 +163,7 @@ epicsConfiguration:
       enable_ingress: true
       autosync: false ## restart automatically on changes
       service:
-        loglevel: "INFO"
+        loglevel: "DEBUG"
       usegateway: true
 
     pws: 
@@ -196,7 +195,7 @@ epicsConfiguration:
           url: https://baltig.infn.it/lnf-da-control/sparc-epics-opi.git
           path: .
       pvws:
-        host: sparc-pws.apps.okd-datest.lnf.infn.it
+        host: sparc-pws.k8sda.lnf.infn.it
         port: 80
     
 
@@ -322,7 +321,7 @@ epicsConfiguration:
       enable_ingress: true
       mongodb: "sparc-channelfinder"
       aa:
-        urls: "{'default': 'http://sparc-archiver.apps.okd-datest.lnf.infn.it'}"
+        urls: "{'default': 'http://sparc-archiver.k8sda.lnf.infn.it'}"
         default_alias: default
         enabled: true
         pva: false
@@ -521,13 +520,193 @@ epicsConfiguration:
       asset: "https://confluence.infn.it/x/nYD8DQ"
       charturl: 'https://github.com/infn-epics/ioc-chart.git'
       image: baltig.infn.it:4567/epics-containers/epics-py-base
-      iocprefix: "SPARC:RF:CONDITIONING03"
+      iocprefix: "SPARC:RF:CONDITIONING01"
       iocdir: "rf-conditioning"
+      pump:
+        - name: "GUNSIP01"
+          prefix: "SPARC:VAC:GUNVPC:"
+          suffix: ":PRES_RB"
+          tsh: "1E-8"
+        - name: "GUNSIP02"
+          prefix: "SPARC:VAC:GUNVPC:"
+          suffix: ":PRES_RB"
+          tsh: "1E-7"
+        - name: "GUNVGA01"
+          prefix: "SPARC:VAC:GUNVGC:"
+          suffix: ":PRES_RB"
+          tsh: "1E-8"
+        - name: "KLY1SIP1"
+          prefix: "SPARC:VAC:KLY12VPC:"
+          suffix: ":PRES_RB"
+          tsh: "1E-8"
+        - name: "W1DSIP01"
+          prefix: "SPARC:VAC:KLY1VPC:"
+          suffix: ":PRES_RB"
+          tsh: "1E-8"
+        - name: "W1GSIP01"
+          prefix: "SPARC:VAC:KLY1VPC:"
+          suffix: ":PRES_RB"
+          tsh: "1E-8"
+        - name: "W1KSIP01"
+          prefix: "SPARC:VAC:KLY12VPC:"
+          suffix: ":PRES_RB"
+          tsh: "1E-8"
+        - name: "W1KSIP02"
+          prefix: "SPARC:VAC:KLY12VPC:"
+          suffix: ":PRES_RB"
+          tsh: "1E-8"
+        - name: "W1KSIP03"
+          prefix: "SPARC:VAC:KLY1VPC:"
+          suffix: ":PRES_RB"
+          tsh: "1E-8"
       iocparam:
-        - name: "config"
-          value: "sparc_rf_conditioning-gun.json"
+        - name: "llrf_prefix"
+          value: "SPARC:LLRF1"
+        - name: "init_counter_intlk"
+          value: "5"
+        - name: "init_intlk_hyst"
+          value: "0.95"
+        - name: "init_raise_wait"
+          value: "5"
+        - name: "init_raise_step"
+          value: "50"
       devtype: softioc
       devgroup: rf
+      start: "start.sh"
+      gitinit: true
+      autosync: false ## restart automatically on changes
+      usegateway: false
+    
+    - name: "rf-conditioning-s2"
+      asset: "https://confluence.infn.it/x/nYD8DQ"
+      charturl: 'https://github.com/infn-epics/ioc-chart.git'
+      image: baltig.infn.it:4567/epics-containers/epics-py-base
+      iocprefix: "SPARC:RF:CONDITIONING02"
+      iocdir: "rf-conditioning"
+      pump:
+        - name: "W2KSIP01"
+          prefix: "SPARC:VAC:KLY12VPC:"
+          suffix: ":PRES_RB"
+          tsh: "1E-8"
+        - name: "W2KSIP02"
+          prefix: "SPARC:VAC:KLY12VPC:"
+          suffix: ":PRES_RB"
+          tsh: "1E-8"
+        - name: "W2KSIP03"
+          prefix: "SPARC:VAC:KLY2VPC:"
+          suffix: ":PRES_RB"
+          tsh: "1E-8"
+        - name: "W2KSIP04"
+          prefix: "SPARC:VAC:KLY2VPC:"
+          suffix: ":PRES_RB"
+          tsh: "1E-8"
+        - name: "W2BSIP01"
+          prefix: "SPARC:VAC:KLY2VPC:"
+          suffix: ":PRES_RB"
+          tsh: "1E-8"
+        - name: "W2ASIP01"
+          prefix: "SPARC:VAC:KLY2VPC:"
+          suffix: ":PRES_RB"
+          tsh: "1E-8"
+        - name: "AC2SIP01"
+          prefix: "SPARC:VAC:GACVPC:"
+          suffix: ":PRES_RB"
+          tsh: "1E-8"
+        - name: "AC1SIP01"
+          prefix: "SPARC:VAC:GACVPC:"
+          suffix: ":PRES_RB"
+          tsh: "1E-8"
+        - name: "AC1SIP02"
+          prefix: "SPARC:VAC:GACVPC:"
+          suffix: ":PRES_RB"
+          tsh: "1E-8"
+      iocparam:
+        - name: "llrf_prefix"
+          value: "SPARC:LLRF1"
+        - name: "init_counter_intlk"
+          value: "5"
+        - name: "init_intlk_hyst"
+          value: "0.95"
+        - name: "init_raise_wait"
+          value: "5"
+        - name: "init_raise_step"
+          value: "50"
+      devtype: softioc
+      devgroup: rf
+      start: "start.sh"
+      gitinit: true
+      autosync: false ## restart automatically on changes
+      usegateway: false
+
+    - name: "rf-conditioning-c1"
+      asset: "https://confluence.infn.it/x/nYD8DQ"
+      charturl: 'https://github.com/infn-epics/ioc-chart.git'
+      image: baltig.infn.it:4567/epics-containers/epics-py-base
+      iocprefix: "SPARC:RF:CONDITIONING03"
+      iocdir: "rf-conditioning"
+      pump:
+        - name: "KLCSIP01"
+          prefix: "SPARC:VAC:KLCTVPC:"
+          suffix: ":PRES_RB"
+          tsh: "1E-8"
+        - name: "BOCSIP01"
+          prefix: "SPARC:VAC:KLCTVPC:"
+          suffix: ":PRES_RB"
+          tsh: "1E-8"
+        - name: "WCSIP01"
+          prefix: "SPARC:VAC:KLYCVPC:"
+          suffix: ":PRES_RB"
+          tsh: "1E-8"
+        - name: "WCSIP02"
+          prefix: "SPARC:VAC:KLYCVPC:"
+          suffix: ":PRES_RB"
+          tsh: "1E-8"
+        - name: "WCSIP03"
+          prefix: "SPARC:VAC:KLYCVPC:"
+          suffix: ":PRES_RB"
+          tsh: "1E-8"
+        - name: "WCSIP04"
+          prefix: "SPARC:VAC:KLYC2VPC:"
+          suffix: ":PRES_RB"
+          tsh: "1E-8"
+        - name: "WCSIP05"
+          prefix: "SPARC:VAC:KLYC2VPC:"
+          suffix: ":PRES_RB"
+          tsh: "1E-8"
+        - name: "WCSIP06"
+          prefix: "SPARC:VAC:KLYC2VPC:"
+          suffix: ":PRES_RB"
+          tsh: "1E-8"
+        - name: "AC3SIP01"
+          prefix: "SPARC:VAC:AC3VPC:"
+          suffix: ":PRES_RB"
+          tsh: "1E-8"
+        - name: "AC3SIP02"
+          prefix: "SPARC:VAC:AC3VPC:"
+          suffix: ":PRES_RB"
+          tsh: "1E-8"
+        - name: "AC3SIP03"
+          prefix: "SPARC:VAC:AC3VPC:"
+          suffix: ":PRES_RB"
+          tsh: "1E-8"
+        - name: "AC3SIP04"
+          prefix: "SPARC:VAC:AC3VPC:"
+          suffix: ":PRES_RB"
+          tsh: "1E-8"
+      iocparam:
+        - name: "llrf_prefix"
+          value: "SPARC:LLRF3"
+        - name: "init_counter_intlk"
+          value: "5"
+        - name: "init_intlk_hyst"
+          value: "0.95"
+        - name: "init_raise_wait"
+          value: "5"
+        - name: "init_raise_step"
+          value: "50"
+      devtype: softioc
+      devgroup: rf
+      start: "start.sh"
       gitinit: true
       autosync: false ## restart automatically on changes
       usegateway: false
@@ -680,30 +859,6 @@ epicsConfiguration:
             - name: "compression"
               pos: 1249306
 
-    - name: "bdsparcplxbpm007"
-      asset: "https://confluence.infn.it/x/doKBBg"
-      charturl: 'https://github.com/infn-epics/ioc-chart.git' 
-      template: "libera-spe"
-      devtype: bpm
-      devgroup: diag
-      iocprefix: "PLXSPE"
-      pva: false
-      devices:
-        - name: "PLXBPM07"
-          channel: 3
-        - name: "PLXBPM08"
-          channel: 4
-        - name: "PLXBPM09"
-          channel: 5
-        - name: "PLXBPM10"
-          channel: 6  
-      host: "bdsparcplxbpm007.lnf.infn.it"
-      ssh_options: "-o PubkeyAcceptedKeyTypes=+ssh-rsa"
-      workdir: "/opt/sparc-template-sppp"
-      scpoptions: "-O"
-      exec: "start.sh"
-      autosync: false ## restart automatically on changes
-
     - name: "bdsparcac1bpm001"
       pva: false
       asset: "https://confluence.infn.it/x/doKBBg"
@@ -836,48 +991,14 @@ epicsConfiguration:
         - name: "ENV:ENV_ADCSP_THRESHOLD_SP"
           value: "300"
 
-
-    - name: "bdsparcutlbpm001-001"
+    - name: "bdsparcsbnbpm1"
       pva: false
       asset: "https://confluence.infn.it/x/doKBBg"
       charturl: 'https://github.com/infn-epics/ioc-chart.git'
       template: "libera-sppp"
       devtype: bpm
       devgroup: diag
-      iocprefix: "UTLBPM01"
-      host: "bdsparcutlbpm001.lnf.infn.it"
-      ssh_options: "-o KexAlgorithms=diffie-hellman-group1-sha1 -o HostKeyAlgorithms=ssh-rsa -o PubkeyAcceptedKeyTypes=+ssh-rsa"
-      scpoptions: "-O"
-      workdir: "/opt/sparc-template-sppp"
-      exec: "start.sh"
-      autosync: false ## restart automatically on changes
-      initcmd: "mount -o remount,rw /"
-      iocinit:
-        - name: "ENV:ENV_KX_SP"
-          value: "10000000"
-        - name: "ENV:ENV_KY_SP"
-          value: "10000000"
-        - name: "ENV:ENV_KA_SP"
-          value: "10000000"
-        - name: "ENV:ENV_KB_SP"
-          value: "10000000"
-        - name: "ENV:ENV_KC_SP"
-          value: "10000000"
-        - name: "ENV:ENV_KD_SP"
-          value: "10000000"
-        - name: "ENV:ENV_SUM_SP"
-          value: "10000000"
-        - name: "ENV:ENV_ADCSP_THRESHOLD_SP"
-          value: "500"
-
-    - name: "bdsparcdglbpm001"
-      pva: false
-      asset: "https://confluence.infn.it/x/doKBBg"
-      charturl: 'https://github.com/infn-epics/ioc-chart.git'
-      template: "libera-sppp"
-      devtype: bpm
-      devgroup: diag
-      iocprefix: "DGLBPM01"
+      iocprefix: "SBNBPM01"
       host: "bdsparcdglbpm001.lnf.infn.it"
       ssh_options: "-o KexAlgorithms=diffie-hellman-group1-sha1 -o HostKeyAlgorithms=ssh-rsa -o PubkeyAcceptedKeyTypes=+ssh-rsa"
       scpoptions: "-O"
@@ -903,14 +1024,14 @@ epicsConfiguration:
         - name: "ENV:ENV_ADCSP_THRESHOLD_SP"
           value: "500"
 
-    - name: "bdsparcdglbpm002"
+    - name: "bdsparcsbnbpm002"
       pva: false
       asset: "https://confluence.infn.it/x/doKBBg"
       charturl: 'https://github.com/infn-epics/ioc-chart.git'
       template: "libera-sppp"
       devtype: bpm
       devgroup: diag
-      iocprefix: "DGLBPM02"
+      iocprefix: "SBNBPM02"
       host: "bdsparcdglbpm002.lnf.infn.it"
       ssh_options: "-o KexAlgorithms=diffie-hellman-group1-sha1 -o HostKeyAlgorithms=ssh-rsa -o PubkeyAcceptedKeyTypes=+ssh-rsa"
       scpoptions: "-O"
@@ -936,14 +1057,14 @@ epicsConfiguration:
         - name: "ENV:ENV_ADCSP_THRESHOLD_SP"
           value: "500"
 
-    - name: "bdsparcdglbpm003"
+    - name: "bdsparcsbnbpm003"
       pva: false
       asset: "https://confluence.infn.it/x/doKBBg"
       charturl: 'https://github.com/infn-epics/ioc-chart.git'
       template: "libera-sppp"
       devtype: bpm
       devgroup: diag
-      iocprefix: "DGLBPM03"
+      iocprefix: "SBNBPM03"
       host: "bdsparcdglbpm003.lnf.infn.it"
       ssh_options: "-o KexAlgorithms=diffie-hellman-group1-sha1 -o HostKeyAlgorithms=ssh-rsa -o PubkeyAcceptedKeyTypes=+ssh-rsa"
       scpoptions: "-O"
@@ -969,210 +1090,261 @@ epicsConfiguration:
         - name: "ENV:ENV_ADCSP_THRESHOLD_SP"
           value: "500"
 
+#    - name: "bdsparcutlbpm001"
+#      pva: false
+#      asset: "https://confluence.infn.it/x/doKBBg"
+#      charturl: 'https://github.com/infn-epics/ioc-chart.git'
+#      template: "libera-sppp"
+#      devtype: bpm
+#      devgroup: diag
+#      iocprefix: "UTLBPM01"
+#      host: "bdsparcutlbpm001.lnf.infn.it"
+#      ssh_options: "-o KexAlgorithms=diffie-hellman-group1-sha1 -o HostKeyAlgorithms=ssh-rsa -o PubkeyAcceptedKeyTypes=+ssh-rsa"
+#      scpoptions: "-O"
+#      workdir: "/opt/sparc-template-sppp"
+#      exec: "start.sh"
+#      autosync: false ## restart automatically on changes
+#      initcmd: "mount -o remount,rw /"
+#      iocinit:
+#        - name: "ENV:ENV_KX_SP"
+#          value: "10000000"
+#        - name: "ENV:ENV_KY_SP"
+#          value: "10000000"
+#        - name: "ENV:ENV_KA_SP"
+#          value: "10000000"
+#        - name: "ENV:ENV_KB_SP"
+#          value: "10000000"
+#        - name: "ENV:ENV_KC_SP"
+#          value: "10000000"
+#        - name: "ENV:ENV_KD_SP"
+#          value: "10000000"
+#        - name: "ENV:ENV_SUM_SP"
+#          value: "10000000"
+#        - name: "ENV:ENV_ADCSP_THRESHOLD_SP"
+#          value: "500"
+#
+#    - name: "bdsparcplxbpm001"
+#      pva: false
+#      asset: "https://confluence.infn.it/x/doKBBg"
+#      charturl: 'https://github.com/infn-epics/ioc-chart.git'
+#      template: "libera-sppp"
+#      devtype: bpm
+#      devgroup: diag
+#      iocprefix: "PLXBPM01"
+#      host: "bdsparcplxbpm001.lnf.infn.it"
+#      ssh_options: "-o KexAlgorithms=diffie-hellman-group1-sha1 -o HostKeyAlgorithms=ssh-rsa -o PubkeyAcceptedKeyTypes=+ssh-rsa"
+#      scpoptions: "-O"
+#      workdir: "/opt/sparc-template-sppp"
+#      exec: "start.sh"
+#      autosync: false ## restart automatically on changes
+#      initcmd: "mount -o remount,rw /"
+#      iocinit:
+#        - name: "ENV:ENV_KX_SP"
+#          value: "10000000"
+#        - name: "ENV:ENV_KY_SP"
+#          value: "10000000"
+#        - name: "ENV:ENV_KA_SP"
+#          value: "10000000"
+#        - name: "ENV:ENV_KB_SP"
+#          value: "10000000"
+#        - name: "ENV:ENV_KC_SP"
+#          value: "10000000"
+#        - name: "ENV:ENV_KD_SP"
+#          value: "10000000"
+#        - name: "ENV:ENV_SUM_SP"
+#          value: "10000000"
+#        - name: "ENV:ENV_ADCSP_THRESHOLD_SP"
+#          value: "500"
+#
+#    - name: "bdsparcplxbpm002"
+#      pva: false
+#      asset: "https://confluence.infn.it/x/doKBBg"
+#      charturl: 'https://github.com/infn-epics/ioc-chart.git'
+#      template: "libera-sppp"
+#      iocprefix: "PLXBPM02"
+#      devtype: bpm
+#      devgroup: diag
+#      host: "bdsparcplxbpm002.lnf.infn.it"
+#      ssh_options: "-o KexAlgorithms=diffie-hellman-group1-sha1 -o HostKeyAlgorithms=ssh-rsa -o PubkeyAcceptedKeyTypes=+ssh-rsa"
+#      scpoptions: "-O"
+#      workdir: "/opt/sparc-template-sppp"
+#      exec: "start.sh"
+#      autosync: false ## restart automatically on changes
+#      initcmd: "mount -o remount,rw /"
+#      iocinit:
+#        - name: "ENV:ENV_KX_SP"
+#          value: "10000000"
+#        - name: "ENV:ENV_KY_SP"
+#          value: "10000000"
+#        - name: "ENV:ENV_KA_SP"
+#          value: "10000000"
+#        - name: "ENV:ENV_KB_SP"
+#          value: "10000000"
+#        - name: "ENV:ENV_KC_SP"
+#          value: "10000000"
+#        - name: "ENV:ENV_KD_SP"
+#          value: "10000000"
+#        - name: "ENV:ENV_SUM_SP"
+#          value: "10000000"
+#        - name: "ENV:ENV_ADCSP_THRESHOLD_SP"
+#          value: "500"
+#
+#    - name: "bdsparcplxbpm003"
+#      pva: false
+#      asset: "https://confluence.infn.it/x/doKBBg"
+#      charturl: 'https://github.com/infn-epics/ioc-chart.git'
+#      template: "libera-sppp"
+#      iocprefix: "PLXBPM03"
+#      devtype: bpm
+#      devgroup: diag
+#      host: "bdsparcplxbpm003.lnf.infn.it"
+#      ssh_options: "-o KexAlgorithms=diffie-hellman-group1-sha1 -o HostKeyAlgorithms=ssh-rsa -o PubkeyAcceptedKeyTypes=+ssh-rsa"
+#      scpoptions: "-O"
+#      workdir: "/opt/sparc-template-sppp"
+#      exec: "start.sh"
+#      autosync: false ## restart automatically on changes
+#      initcmd: "mount -o remount,rw /"
+#      iocinit:
+#        - name: "ENV:ENV_KX_SP"
+#          value: "10000000"
+#        - name: "ENV:ENV_KY_SP"
+#          value: "10000000"
+#        - name: "ENV:ENV_KA_SP"
+#          value: "10000000"
+#        - name: "ENV:ENV_KB_SP"
+#          value: "10000000"
+#        - name: "ENV:ENV_KC_SP"
+#          value: "10000000"
+#        - name: "ENV:ENV_KD_SP"
+#          value: "10000000"
+#        - name: "ENV:ENV_SUM_SP"
+#          value: "10000000"
+#        - name: "ENV:ENV_ADCSP_THRESHOLD_SP"
+#          value: "500"
+#
+#    - name: "bdsparcplxbpm004"
+#      pva: false
+#      asset: "https://confluence.infn.it/x/doKBBg"
+#      charturl: 'https://github.com/infn-epics/ioc-chart.git'
+#      template: "libera-sppp"
+#      iocprefix: "PLXBPM04"
+#      devtype: bpm
+#      devgroup: diag
+#      host: "bdsparcplxbpm004.lnf.infn.it"
+#      ssh_options: "-o KexAlgorithms=diffie-hellman-group1-sha1 -o HostKeyAlgorithms=ssh-rsa -o PubkeyAcceptedKeyTypes=+ssh-rsa"
+#      scpoptions: "-O"
+#      workdir: "/opt/sparc-template-sppp"
+#      exec: "start.sh"
+#      autosync: false ## restart automatically on changes
+#      initcmd: "mount -o remount,rw /"
+#      iocinit:
+#        - name: "ENV:ENV_KX_SP"
+#          value: "10000000"
+#        - name: "ENV:ENV_KY_SP"
+#          value: "10000000"
+#        - name: "ENV:ENV_KA_SP"
+#          value: "10000000"
+#        - name: "ENV:ENV_KB_SP"
+#          value: "10000000"
+#        - name: "ENV:ENV_KC_SP"
+#          value: "10000000"
+#        - name: "ENV:ENV_KD_SP"
+#          value: "10000000"
+#        - name: "ENV:ENV_SUM_SP"
+#          value: "10000000"
+#        - name: "ENV:ENV_ADCSP_THRESHOLD_SP"
+#          value: "500"
+#
+#    - name: "bdsparcplxbpm005"
+#      pva: false
+#      asset: "https://confluence.infn.it/x/doKBBg"
+#      charturl: 'https://github.com/infn-epics/ioc-chart.git'
+#      template: "libera-sppp"
+#      iocprefix: "PLXBPM05"
+#      devtype: bpm
+#      devgroup: diag
+#      host: "bdsparcplxbpm005.lnf.infn.it"
+#      ssh_options: "-o KexAlgorithms=diffie-hellman-group1-sha1 -o HostKeyAlgorithms=ssh-rsa -o PubkeyAcceptedKeyTypes=+ssh-rsa"
+#      scpoptions: "-O"
+#      workdir: "/opt/sparc-template-sppp"
+#      exec: "start.sh"
+#      autosync: false ## restart automatically on changes
+#      initcmd: "mount -o remount,rw /"
+#      iocinit:
+#        - name: "ENV:ENV_KX_SP"
+#          value: "10000000"
+#        - name: "ENV:ENV_KY_SP"
+#          value: "10000000"
+#        - name: "ENV:ENV_KA_SP"
+#          value: "10000000"
+#        - name: "ENV:ENV_KB_SP"
+#          value: "10000000"
+#        - name: "ENV:ENV_KC_SP"
+#          value: "10000000"
+#        - name: "ENV:ENV_KD_SP"
+#          value: "10000000"
+#        - name: "ENV:ENV_SUM_SP"
+#          value: "10000000"
+#        - name: "ENV:ENV_ADCSP_THRESHOLD_SP"
+#          value: "500"
+#
+#    - name: "bdsparcplxbpm006"
+#      pva: false
+#      asset: "https://confluence.infn.it/x/doKBBg"
+#      charturl: 'https://github.com/infn-epics/ioc-chart.git'
+#      template: "libera-sppp"
+#      iocprefix: "PLXBPM06"
+#      devtype: bpm
+#      devgroup: diag
+#      host: "bdsparcplxbpm006.lnf.infn.it"
+#      ssh_options: "-o KexAlgorithms=diffie-hellman-group1-sha1 -o HostKeyAlgorithms=ssh-rsa -o PubkeyAcceptedKeyTypes=+ssh-rsa"
+#      scpoptions: "-O"
+#      workdir: "/opt/sparc-template-sppp"
+#      exec: "start.sh"
+#      autosync: false ## restart automatically on changes
+#      initcmd: "mount -o remount,rw /"
+#      iocinit:
+#        - name: "ENV:ENV_KX_SP"
+#          value: "10000000"
+#        - name: "ENV:ENV_KY_SP"
+#          value: "10000000"
+#        - name: "ENV:ENV_KA_SP"
+#          value: "10000000"
+#        - name: "ENV:ENV_KB_SP"
+#          value: "10000000"
+#        - name: "ENV:ENV_KC_SP"
+#          value: "10000000"
+#        - name: "ENV:ENV_KD_SP"
+#          value: "10000000"
+#        - name: "ENV:ENV_SUM_SP"
+#          value: "10000000"
+#        - name: "ENV:ENV_ADCSP_THRESHOLD_SP"
+#          value: "500" 
+#
+#    - name: "bdsparcplxbpm007"
+#      asset: "https://confluence.infn.it/x/doKBBg"
+#      charturl: 'https://github.com/infn-epics/ioc-chart.git' 
+#      template: "libera-spe"
+#      devtype: bpm
+#      devgroup: diag
+#      iocprefix: "PLXSPE"
+#      pva: false
+#      devices:
+#        - name: "PLXBPM07"
+#          channel: 3
+#        - name: "PLXBPM08"
+#          channel: 4
+#        - name: "PLXBPM09"
+#          channel: 5
+#        - name: "PLXBPM10"
+#          channel: 6  
+#      host: "bdsparcplxbpm007.lnf.infn.it"
+#      ssh_options: "-o PubkeyAcceptedKeyTypes=+ssh-rsa"
+#      workdir: "/opt/sparc-template-sppp"
+#      scpoptions: "-O"
+#      exec: "start.sh"
+#      autosync: false ## restart automatically on changes
 
-    - name: "bdsparcplxbpm001"
-      pva: false
-      asset: "https://confluence.infn.it/x/doKBBg"
-      charturl: 'https://github.com/infn-epics/ioc-chart.git'
-      template: "libera-sppp"
-      devtype: bpm
-      devgroup: diag
-      iocprefix: "PLXBPM01"
-      host: "bdsparcplxbpm001.lnf.infn.it"
-      ssh_options: "-o KexAlgorithms=diffie-hellman-group1-sha1 -o HostKeyAlgorithms=ssh-rsa -o PubkeyAcceptedKeyTypes=+ssh-rsa"
-      scpoptions: "-O"
-      workdir: "/opt/sparc-template-sppp"
-      exec: "start.sh"
-      autosync: false ## restart automatically on changes
-      initcmd: "mount -o remount,rw /"
-      iocinit:
-        - name: "ENV:ENV_KX_SP"
-          value: "10000000"
-        - name: "ENV:ENV_KY_SP"
-          value: "10000000"
-        - name: "ENV:ENV_KA_SP"
-          value: "10000000"
-        - name: "ENV:ENV_KB_SP"
-          value: "10000000"
-        - name: "ENV:ENV_KC_SP"
-          value: "10000000"
-        - name: "ENV:ENV_KD_SP"
-          value: "10000000"
-        - name: "ENV:ENV_SUM_SP"
-          value: "10000000"
-        - name: "ENV:ENV_ADCSP_THRESHOLD_SP"
-          value: "500"
-
-
-    - name: "bdsparcplxbpm002"
-      pva: false
-      asset: "https://confluence.infn.it/x/doKBBg"
-      charturl: 'https://github.com/infn-epics/ioc-chart.git'
-      template: "libera-sppp"
-      iocprefix: "PLXBPM02"
-      devtype: bpm
-      devgroup: diag
-      host: "bdsparcplxbpm002.lnf.infn.it"
-      ssh_options: "-o KexAlgorithms=diffie-hellman-group1-sha1 -o HostKeyAlgorithms=ssh-rsa -o PubkeyAcceptedKeyTypes=+ssh-rsa"
-      scpoptions: "-O"
-      workdir: "/opt/sparc-template-sppp"
-      exec: "start.sh"
-      autosync: false ## restart automatically on changes
-      initcmd: "mount -o remount,rw /"
-      iocinit:
-        - name: "ENV:ENV_KX_SP"
-          value: "10000000"
-        - name: "ENV:ENV_KY_SP"
-          value: "10000000"
-        - name: "ENV:ENV_KA_SP"
-          value: "10000000"
-        - name: "ENV:ENV_KB_SP"
-          value: "10000000"
-        - name: "ENV:ENV_KC_SP"
-          value: "10000000"
-        - name: "ENV:ENV_KD_SP"
-          value: "10000000"
-        - name: "ENV:ENV_SUM_SP"
-          value: "10000000"
-        - name: "ENV:ENV_ADCSP_THRESHOLD_SP"
-          value: "500"
-
-
-    - name: "bdsparcplxbpm003"
-      pva: false
-      asset: "https://confluence.infn.it/x/doKBBg"
-      charturl: 'https://github.com/infn-epics/ioc-chart.git'
-      template: "libera-sppp"
-      iocprefix: "PLXBPM03"
-      devtype: bpm
-      devgroup: diag
-      host: "bdsparcplxbpm003.lnf.infn.it"
-      ssh_options: "-o KexAlgorithms=diffie-hellman-group1-sha1 -o HostKeyAlgorithms=ssh-rsa -o PubkeyAcceptedKeyTypes=+ssh-rsa"
-      scpoptions: "-O"
-      workdir: "/opt/sparc-template-sppp"
-      exec: "start.sh"
-      autosync: false ## restart automatically on changes
-      initcmd: "mount -o remount,rw /"
-      iocinit:
-        - name: "ENV:ENV_KX_SP"
-          value: "10000000"
-        - name: "ENV:ENV_KY_SP"
-          value: "10000000"
-        - name: "ENV:ENV_KA_SP"
-          value: "10000000"
-        - name: "ENV:ENV_KB_SP"
-          value: "10000000"
-        - name: "ENV:ENV_KC_SP"
-          value: "10000000"
-        - name: "ENV:ENV_KD_SP"
-          value: "10000000"
-        - name: "ENV:ENV_SUM_SP"
-          value: "10000000"
-        - name: "ENV:ENV_ADCSP_THRESHOLD_SP"
-          value: "500"
-
-
-    - name: "bdsparcplxbpm004"
-      pva: false
-      asset: "https://confluence.infn.it/x/doKBBg"
-      charturl: 'https://github.com/infn-epics/ioc-chart.git'
-      template: "libera-sppp"
-      iocprefix: "PLXBPM04"
-      devtype: bpm
-      devgroup: diag
-      host: "bdsparcplxbpm004.lnf.infn.it"
-      ssh_options: "-o KexAlgorithms=diffie-hellman-group1-sha1 -o HostKeyAlgorithms=ssh-rsa -o PubkeyAcceptedKeyTypes=+ssh-rsa"
-      scpoptions: "-O"
-      workdir: "/opt/sparc-template-sppp"
-      exec: "start.sh"
-      autosync: false ## restart automatically on changes
-      initcmd: "mount -o remount,rw /"
-      iocinit:
-        - name: "ENV:ENV_KX_SP"
-          value: "10000000"
-        - name: "ENV:ENV_KY_SP"
-          value: "10000000"
-        - name: "ENV:ENV_KA_SP"
-          value: "10000000"
-        - name: "ENV:ENV_KB_SP"
-          value: "10000000"
-        - name: "ENV:ENV_KC_SP"
-          value: "10000000"
-        - name: "ENV:ENV_KD_SP"
-          value: "10000000"
-        - name: "ENV:ENV_SUM_SP"
-          value: "10000000"
-        - name: "ENV:ENV_ADCSP_THRESHOLD_SP"
-          value: "500"
-
-
-    - name: "bdsparcplxbpm005"
-      pva: false
-      asset: "https://confluence.infn.it/x/doKBBg"
-      charturl: 'https://github.com/infn-epics/ioc-chart.git'
-      template: "libera-sppp"
-      iocprefix: "PLXBPM05"
-      devtype: bpm
-      devgroup: diag
-      host: "bdsparcplxbpm005.lnf.infn.it"
-      ssh_options: "-o KexAlgorithms=diffie-hellman-group1-sha1 -o HostKeyAlgorithms=ssh-rsa -o PubkeyAcceptedKeyTypes=+ssh-rsa"
-      scpoptions: "-O"
-      workdir: "/opt/sparc-template-sppp"
-      exec: "start.sh"
-      autosync: false ## restart automatically on changes
-      initcmd: "mount -o remount,rw /"
-      iocinit:
-        - name: "ENV:ENV_KX_SP"
-          value: "10000000"
-        - name: "ENV:ENV_KY_SP"
-          value: "10000000"
-        - name: "ENV:ENV_KA_SP"
-          value: "10000000"
-        - name: "ENV:ENV_KB_SP"
-          value: "10000000"
-        - name: "ENV:ENV_KC_SP"
-          value: "10000000"
-        - name: "ENV:ENV_KD_SP"
-          value: "10000000"
-        - name: "ENV:ENV_SUM_SP"
-          value: "10000000"
-        - name: "ENV:ENV_ADCSP_THRESHOLD_SP"
-          value: "500"
-
-
-    - name: "bdsparcplxbpm006"
-      pva: false
-      asset: "https://confluence.infn.it/x/doKBBg"
-      charturl: 'https://github.com/infn-epics/ioc-chart.git'
-      template: "libera-sppp"
-      iocprefix: "PLXBPM06"
-      devtype: bpm
-      devgroup: diag
-      host: "bdsparcplxbpm006.lnf.infn.it"
-      ssh_options: "-o KexAlgorithms=diffie-hellman-group1-sha1 -o HostKeyAlgorithms=ssh-rsa -o PubkeyAcceptedKeyTypes=+ssh-rsa"
-      scpoptions: "-O"
-      workdir: "/opt/sparc-template-sppp"
-      exec: "start.sh"
-      autosync: false ## restart automatically on changes
-      initcmd: "mount -o remount,rw /"
-      iocinit:
-        - name: "ENV:ENV_KX_SP"
-          value: "10000000"
-        - name: "ENV:ENV_KY_SP"
-          value: "10000000"
-        - name: "ENV:ENV_KA_SP"
-          value: "10000000"
-        - name: "ENV:ENV_KB_SP"
-          value: "10000000"
-        - name: "ENV:ENV_KC_SP"
-          value: "10000000"
-        - name: "ENV:ENV_KD_SP"
-          value: "10000000"
-        - name: "ENV:ENV_SUM_SP"
-          value: "10000000"
-        - name: "ENV:ENV_ADCSP_THRESHOLD_SP"
-          value: "500" 
-    
     - name: "sparctemp00"
       asset: "https://confluence.infn.it/display/LDCG/ICP-23-0032"
       charturl: 'https://github.com/infn-epics/ioc-chart.git'
@@ -1248,52 +1420,6 @@ epicsConfiguration:
           desc: "BCM 1"
           coeff: 4.5
 
-    # - name: "tektronix-bcm"
-    #   asset: "https://servicedesk.infn.it/secure/ObjectSchema.jspa?id=32&typeId=1444&objectId=138748"
-    #   charturl: 'https://github.com/infn-epics/ioc-chart.git'
-    #   iocprefix: "SPARC:DIAG:TEK-BCM"
-    #   template: "tektronix"
-    #   devtype: mso58lp
-    #   devgroup: diag
-    #   pva: true
-    #   iocparam:
-    #     - name: "server"
-    #       value: 192.168.197.195
-    #     - name: "port"
-    #       value: 4000
-    #     - name: "samples"
-    #       value: 6200 
-    #   devices:
-    #     - name: "AC1BCM01"
-    #       channel: 1
-    #       coeff: 210000000000
-    #     - name: "AC2BCM01"
-    #       channel: 2
-    #       coeff: 429120000000
-    #     - name: "PTLBCM01"
-    #       channel: 3
-    #       coeff: 429120000000
-    #     - name: "UNDBCM01"
-    #       channel: 4
-    #       coeff: 1
-    #       desc: "BCM 1"
-    #     - name: "DGL01BCM01"
-    #       channel: 5
-    #       coeff: 214560000000
-    #       desc: "BCM 1"
-    #     - name: "DGL02BCM01"
-    #       channel: 6
-    #       coeff: 214560000000
-    #       desc: "BCM 1"
-    #     - name: "SBNTR02BCM01"
-    #       channel: 7
-    #       coeff: 1
-    #       desc: "BCM 1"
-    #     - name: "LRSDIODE"
-    #       channel: 8
-    #       coeff: 1
-    #       desc: "BCM 1"
-
     - name: "tektronix-bcm"
       asset: "https://servicedesk.infn.it/secure/ObjectSchema.jspa?id=32&typeId=1444&objectId=138748"
       charturl: 'https://github.com/infn-epics/ioc-chart.git'
@@ -1312,40 +1438,35 @@ epicsConfiguration:
       devices:
         - name: "AC1BCM01"
           channel: 1
-          coeff: 210000000000
+          coeff: -210000000000
           devtype: measurement
         - name: "AC2BCM01"
           channel: 2
-          coeff: 429120000000
+          coeff: -429120000000
           devtype: measurement
         - name: "PTLBCM01"
           channel: 3
           devtype: measurement
-          coeff: 429120000000
+          coeff: -429120000000
         - name: "UNDBCM01"
           channel: 4
-          coeff: 1
-          desc: "BCM 1"
+          coeff: -1
           devtype: measurement
-        - name: "DGL01BCM01"
+        - name: "SBNBCM01"
           channel: 5
-          coeff: 214560000000
-          desc: "BCM 1"
+          coeff: -214560000000
           devtype: measurement
-        - name: "DGL02BCM01"
+        - name: "SBNBCM02"
           channel: 6
-          coeff: 214560000000
-          desc: "BCM 1"
+          coeff: -214560000000
           devtype: measurement
-        - name: "SBNTR02BCM01"
+        - name: "SBNBCM03"
           channel: 7
-          coeff: 1
-          desc: "BCM 1"
+          coeff: -1
           devtype: measurement
         - name: "LRSDIODE"
           channel: 8
           coeff: 1
-          desc: "BCM 1"
           devtype: measurement
 
     - name: "hv-plasma" 
@@ -1573,7 +1694,9 @@ epicsConfiguration:
       template: "pfeiffer-tpg"
       devtype: tpg300
       devgroup: vac
-      zones: LINAC
+      zones: 
+        - LINAC
+        - AC1
       devfunc: pig
       opi: "tpg300_500/tpg300.bob"
       autosync: false
@@ -1593,7 +1716,9 @@ epicsConfiguration:
       template: "pfeiffer-tpg"
       devtype: tpg300
       devgroup: vac
-      zones: LINAC
+      zones: 
+        - LINAC
+        - AC3
       devfunc: pig
       opi: "tpg300_500/tpg300.bob"
       autosync: false
@@ -1623,7 +1748,7 @@ epicsConfiguration:
       devfunc: pig
       opi: "tpg300_500/tpg300.bob"
       autosync: false
-      zones: COMB
+      zones: CMB
       iocparam:
         - name: "server"
           value: scsparcmoxa007.lnf.infn.it
@@ -1641,7 +1766,7 @@ epicsConfiguration:
     #   devtype: tpg300
     #   devgroup: vac
     #   autosync: false
-    #   zones: SABINA
+    #   zones: SBN
     #   devfunc: pig
     #   opi: "tpg300_500/tpg300.bob"
     #   iocparam:
@@ -1661,7 +1786,9 @@ epicsConfiguration:
       devtype: tpg300
       devgroup: vac
       autosync: false
-      zones: LINAC
+      zones: 
+        - LINAC
+        - PTL
       devfunc: pig
       opi: "tpg300_500/tpg300.bob"
       iocparam:
@@ -1683,7 +1810,9 @@ epicsConfiguration:
       devtype: tpg300
       devgroup: vac
       autosync: false
-      zones: LINAC
+      zones: 
+        - LINAC
+        - AC3
       devfunc: pig
       opi: "tpg300_500/tpg300.bob"
       iocparam:
@@ -1715,10 +1844,13 @@ epicsConfiguration:
       devices:
           - name: "RFDSIP01"
             channel: 0x85
+            zones: RFD
           - name: "PTLSIP01"
             channel: 0x86
+            zones: PTL
           - name: "PTLSIP02"
             channel: 0x87
+            zones: PTL
 
     - name: "vac-gac1vpc"
       asset: "https://servicedesk.infn.it/secure/ObjectSchema.jspa?id=44&typeId=2505&objectId=129491"
@@ -1740,12 +1872,16 @@ epicsConfiguration:
       devices:
           - name: "GUNNEG02"
             channel: 0x8D
+            zones: GUN
           - name: "AC1SIP01"
             channel: 0x8E
+            zones: AC1
           - name: "AC1SIP02"
             channel: 0x8F
+            zones: AC1
           - name: "AC2SIP01"
             channel: 0x90
+            zones: AC2
    
     - name: "vac-gunvpc"
       asset: "https://servicedesk.infn.it/secure/ObjectSchema.jspa?id=44&typeId=2505&objectId=129491"
@@ -1753,7 +1889,9 @@ epicsConfiguration:
       iocprefix: "SPARC:VAC"
       iocroot: "GUNVPC"
       template: "agilent-vac"
-      zones: LINAC
+      zones: 
+        - LINAC
+        - GUN
       devtype: ipcmini
       devgroup: vac
       devfunc: ion
@@ -1785,7 +1923,9 @@ epicsConfiguration:
       autosync: false
       devfunc: ion
       opi: "agilentipcmini/resources/ipcmini.bob"
-      zones: WAVEGUIDE
+      zones: 
+        - WAVEGUIDE
+        - KLY2
       iocparam:
         - name: "server"
           value: 192.168.197.108
@@ -1816,7 +1956,9 @@ epicsConfiguration:
       devtype: ipcmini
       opi: "agilentipcmini/resources/ipcmini.bob"
       devfunc: ion
-      zones: WAVEGUIDE
+      zones: 
+        - WAVEGUIDE
+        - KLY1
       devgroup: vac
       autosync: false
       iocparam:
@@ -1856,21 +1998,25 @@ epicsConfiguration:
           - name: "W1KSIP01"
             channel: 0x81
             interlock: true
+            zones: KLY1
           - name: "W1KSIP02"
             channel: 0x83
+            zones: KLY1
           - name: "W2KSIP01"
             channel: 0x84
             interlock: true
+            zones: KLY2
           - name: "W2KSIP02"
             channel: 0x82
+            zones: KLY2
           - name: "KLY1SIP1"
             channel: 0x85
             interlock: true
-            zones: KLYSTRON
+            zones: KLY1
           - name: "KLY2SIP1"
             channel: 0x86
             interlock: true
-            zones: KLYSTRON
+            zones: KLY2
 
     - name: "vac-klyc1vpc"
       asset: "https://servicedesk.infn.it/secure/ObjectSchema.jspa?id=44&typeId=2505&objectId=129491"
@@ -1879,7 +2025,9 @@ epicsConfiguration:
       iocroot: "KLYCVPC"
       template: "agilent-vac"
       devfunc: ion
-      zones: WAVEGUIDE
+      zones: 
+        - WAVEGUIDE
+        - KLYC
       devtype: ipcmini
       opi: "agilentipcmini/resources/ipcmini.bob"
       devgroup: vac
@@ -1906,7 +2054,9 @@ epicsConfiguration:
       iocprefix: "SPARC:VAC"
       iocroot: "KLYC2VPC"
       template: "agilent-vac"
-      zones: WAVEGUIDE
+      zones: 
+        - WAVEGUIDE
+        - KLYC
       devfunc: ion
       devtype: ipcmini
       opi: "agilentipcmini/resources/ipcmini.bob"
@@ -1935,7 +2085,9 @@ epicsConfiguration:
       iocprefix: "SPARC:VAC"
       iocroot: "KLCTVPC"
       template: "agilent-vac"
-      zones: WAVEGUIDE
+      zones: 
+        - WAVEGUIDE
+        - KLYC
       devfunc: ion
       devgroup: vac
       devtype: ipcmini
@@ -1962,7 +2114,9 @@ epicsConfiguration:
       devtype: ipcmini
       opi: "agilentipcmini/resources/ipcmini.bob"
       devfunc: ion
-      zones: LINAC
+      zones: 
+        - LINAC
+        - AC3
       devgroup: vac
       autosync: false
       iocparam:
@@ -2014,7 +2168,7 @@ epicsConfiguration:
       iocroot: "SBNVPC"
       template: "agilent-vac"
       devfunc: ion
-      zones: SABINA
+      zones: SBN
       devtype: ipcmini
       opi: "agilentipcmini/resources/ipcmini.bob"
       devgroup: vac
@@ -2033,7 +2187,9 @@ epicsConfiguration:
             channel: 0x9E
           - name: "W2BSIP02" ## not working remote, 31 
             channel: 0x9F
-            zones: WAVEGUIDE
+            zones: 
+              - WAVEGUIDE
+              - KLY2
 
 
     - name: "mrf01"
@@ -2236,9 +2392,9 @@ epicsConfiguration:
               - name: DlyGen0Label-I
                 value: "AC 1Hz"
               - name: DlyGen1Delay-SP
-                value: 80000.0
+                value: 8000.0
               - name: DlyGen1Width-SP
-                value: 3.0
+                value: 10.0
               - name: DlyGen1Label-I
                 value: "CCD"
               - name: DlyGen2Delay-SP
@@ -2388,7 +2544,7 @@ epicsConfiguration:
       zones: LINAC
       iocprefix: "SPARC:MOT:TML"
       serial:
-        ip: scsparcmoxa001.lnf.infn.it
+        ip: localhost
         port: 4001
         ptty: /var/tmp/ttyV0
         baud: 9600
@@ -2411,6 +2567,13 @@ epicsConfiguration:
             velo: 30
             jvel: 30
             hvel: 30
+            poi:
+            - name: "yag"
+              value: 688640
+            - name: "calibration"
+              value: 688640
+            - name: "mirror"
+              value: 1688320
           - name: "AC1FLG01"
             axid: 3
           - name: AC2FLG01
@@ -2435,15 +2598,15 @@ epicsConfiguration:
             velo: 40
             jvel: 40
             hvel: 40
-            zones: SABINA 
+            zones: SBN 
           - name: SBNFLG01
             axid: 14
             velo: 40
             jvel: 40
             hvel: 40
-            zones: SABINA
+            zones: SBN
           - name: GUNSOLH1
-            axis: 8
+            axid: 8
           - name: GUNSOLV1
             axid: 7
           
@@ -2456,8 +2619,8 @@ epicsConfiguration:
       template: "motor"
       iocprefix: "SPARC:MOT:TML"
       serial:
-        ip: scsparcmoxa001.lnf.infn.it
-        port: 4002
+        ip: localhost
+        port: 4001
         ptty: /var/tmp/ttyV0
         baud: 9600
       autosync: false ## restart automatically on changes
@@ -2524,8 +2687,8 @@ epicsConfiguration:
       opi: "tml/TML_Main.bob"
       zones: WAVEGUIDE
       serial:
-        ip: scsparcmoxa001.lnf.infn.it
-        port: 4003
+        ip: localhost
+        port: 4001
         ptty: /var/tmp/ttyV0
         baud: 9600
       motor:
@@ -3117,214 +3280,6 @@ epicsConfiguration:
             - name: "pxcal"
               value: 37.73
 
-    - name: "caenelsfast"
-      asset: "https://confluence.infn.it/x/nYD8DQ"
-      charturl: 'https://github.com/infn-epics/ioc-chart.git'
-      iocprefix: "SPARC:MAG:FAST"
-      autosync: false ## restart automatically on changes
-      devtype: fastps
-      devgroup: mag
-      opi: "fastps/fastps.bob"
-      template: "caenels"
-      zones: LINAC
-      networks:
-        - name: "control"
-          annotation: "sparc-magnets"
-      devices:
-        - name: "PTLQUA03"
-          ip: 192.168.0.123
-          rangeI: 10
-        - name: "PTLQUA02"
-          ip: 192.168.0.122
-          rangeI: 10
-        - name: "PTLQUA01"
-          ip: 192.168.0.121
-          rangeI: 10
-
-    - name: "ocem-modbus"
-      asset: "https://confluence.infn.it/x/nYD8DQ"
-      charturl: 'https://github.com/infn-epics/ioc-chart.git'
-      iocprefix: "SPARC:MAG:OCEM"
-      autosync: false ## restart automatically on changes
-      devtype: modbusps
-      devgroup: mag
-      opi: "ocem/OCEM_modbus.bob"
-      template: "ocem"
-      networks:
-        - name: "control"
-          annotation: "sparc-magnets"
-      devices:
-        - name: "PTLDPL01"
-          ip: 192.168.0.158
-          imax: 280
-          vmax: 16
-          zones: 
-            - PTL
-        - name: "PLXDPL02"
-          ip: 192.168.0.154
-          imax: 280
-          vmax: 16
-          zones: 
-            - PLX
-        - name: "PLXDPL03"
-          ip: 192.168.0.156
-          imax: 280
-          vmax: 16
-          zones: 
-            - PLX
-        - name: "PLXDPL04"
-          ip: 192.168.0.159
-          imax: 280
-          vmax: 16
-          zones: 
-            - PLX
-        - name: "SBNSEX01"
-          ip: 192.168.0.157
-          imax: 280
-          vmax: 16
-          zones: 
-            - SBN
-        - name: "SBNSEX02"
-          ip: 192.168.0.155
-          imax: 280
-          vmax: 16
-          zones: 
-            - SBN
-
-    - name: "histar-sabina"
-      asset: "https://confluence.infn.it/x/nYD8DQ"
-      charturl: 'https://github.com/infn-epics/ioc-chart.git'
-      iocprefix: "SPARC:MAG:HISTAR"
-      autosync: false ## restart automatically on changes
-      devtype: histar
-      devgroup: mag
-      opi: "caenels/caenels.bob"
-      template: "caenels"
-      zones: SABINA
-      networks:
-        - name: "control"
-          annotation: "sparc-magnets"
-      devices:
-        - name: "SBNVCR01"
-          ip: 192.168.0.9
-          range: 30
-        - name: "SBNHCR01"
-          ip: 192.168.0.10
-          range: 30
-        - name: "SBNVCR02"
-          ip: 192.168.0.11
-          range: 30
-        - name: "SBNHCR02"
-          ip: 192.168.0.12
-          range: 30
-        - name: "SBNVCR03"
-          ip: 192.168.0.13
-          range: 30
-        - name: "SBNHCR03"
-          ip: 192.168.0.14
-          range: 30
-        - name: "SBNHCR07"
-          ip: 192.168.0.31
-          range: 30
-        - name: "SBNVCR07"
-          ip: 192.168.0.32
-          range: 30
-        - name: "SBNVCR04"
-          ip: 192.168.0.33
-          range: 30
-        - name: "SBNHCR04"
-          ip: 192.168.0.34
-          range: 30
-        - name: "SBNHCR06"
-          ip: 192.168.0.35
-          range: 30
-        - name: "SBNVCR06"
-          ip: 192.168.0.36
-          range: 30
-       
-    - name: "histar"
-      asset: "https://confluence.infn.it/x/nYD8DQ"
-      charturl: 'https://github.com/infn-epics/ioc-chart.git'
-      iocprefix: "SPARC:MAG:HISTAR"
-      autosync: false ## restart automatically on changes
-      zones: LINAC
-      devtype: histar
-      devgroup: mag
-      opi: "caenels/caenels.bob"
-      template: "caenels"
-      networks:
-        - name: "control"
-          annotation: "sparc-magnets"
-      devices:
-        - name: "PLXVCR05"
-          ip: 192.168.0.15
-          range: 30
-          zones: PLX
-        - name: "PLXHCR05"
-          ip: 192.168.0.16
-          range: 30
-          zones: PLX
-        - name: "PLXVCR06"
-          ip: 192.168.0.17
-          range: 30
-        - name: "PLXHCR06"
-          ip: 192.168.0.18
-          range: 30
-          zones: PLX
-        - name: "PLXVCR07"
-          ip: 192.168.0.19
-          range: 30
-          zones: PLX
-        - name: "PLXHCR07"
-          ip: 192.168.0.20
-          range: 30
-          zones: PLX
-        - name: "PLXVCR08"
-          ip: 192.168.0.21
-          range: 30
-          zones: PLX
-        - name: "PLXHCR08"
-          ip: 192.168.0.22
-          range: 30
-        - name: "AC1VCR1A"
-          ip: 192.168.0.23
-          range: 30
-        - name: "AC1HCR1A"
-          ip: 192.168.0.24
-          range: 30
-        - name: "PLXVCR01"
-          ip: 192.168.0.25
-          range: 30
-          zones: PLX
-        - name: "PLXHCR01"
-          ip: 192.168.0.26
-          range: 30
-          zones: PLX
-        - name: "GUNQSK01"
-          ip: 192.168.0.27
-          range: 30
-        - name: "GUNQUA01"
-          ip: 192.168.0.28
-          range: 30
-        - name: "PTLVCR02"
-          ip: 192.168.0.29
-          range: 30
-        - name: "PTLHCR02"
-          ip: 192.168.0.30
-          range: 30
-        - name: "DPLSOL01"
-          ip: 192.168.0.40
-          range: 30
-        - name: "PTLQUA04"
-          ip: 192.168.0.37
-          range: 30
-        - name: "PTLQUA05"
-          ip: 192.168.0.38
-          range: 30
-        - name: "PTLQUA06"
-          ip: 192.168.0.39
-          range: 30
-
     - name: "hazemeyer-serial-ch1"
       asset: "https://confluence.infn.it/x/nYD8DQ"
       charturl: 'https://github.com/infn-epics/ioc-chart.git'
@@ -3351,52 +3306,6 @@ epicsConfiguration:
           vmax: "110"
         - name: "AC1SOL02"
           id: "8"
-          imax: "200"
-          vmax: "110"
-            
-    - name: "hazemeyer-serial-ch2"
-      asset: "https://confluence.infn.it/x/nYD8DQ"
-      charturl: 'https://github.com/infn-epics/ioc-chart.git'
-      iocprefix: "SPARC:MAG:HZ"
-      iocparam:
-        - name: "server"
-          value: "scsparcmoxa008.lnf.infn.it"
-        - name: "port"  
-          value: "4002"
-      autosync: false ## restart automatically on changes
-      zones: LINAC
-      devtype: haz-ser
-      devgroup: mag
-      opi: "hazemeyer/hz_serial.bob"
-      template: "hazemeyer"
-      devices:
-        - name: "AC2SOL04"
-          id: "15"
-          imax: "200"
-          vmax: "110"
-
-    - name: "hazemeyer-serial-ch3"
-      asset: "https://confluence.infn.it/x/nYD8DQ"
-      charturl: 'https://github.com/infn-epics/ioc-chart.git'
-      iocprefix: "SPARC:MAG:HZ"
-      iocparam:
-        - name: "server"
-          value: "scsparcmoxa008.lnf.infn.it"
-        - name: "port"  
-          value: "4003"
-      autosync: false ## restart automatically on changes
-      zones: LINAC
-      devtype: haz-ser
-      devgroup: mag
-      opi: "hazemeyer/hz_serial.bob"
-      template: "hazemeyer"
-      devices:
-        - name: "AC2SOL02"
-          id: "13"
-          imax: "200"
-          vmax: "110"
-        - name: "AC2SOL03"
-          id: "14"
           imax: "200"
           vmax: "110"
     
@@ -3446,6 +3355,52 @@ epicsConfiguration:
           imax: "200"
           vmax: "110"
 
+    - name: "hazemeyer-serial-ch3"
+      asset: "https://confluence.infn.it/x/nYD8DQ"
+      charturl: 'https://github.com/infn-epics/ioc-chart.git'
+      iocprefix: "SPARC:MAG:HZ"
+      iocparam:
+        - name: "server"
+          value: "scsparcmoxa008.lnf.infn.it"
+        - name: "port"  
+          value: "4003"
+      autosync: false ## restart automatically on changes
+      zones: LINAC
+      devtype: haz-ser
+      devgroup: mag
+      opi: "hazemeyer/hz_serial.bob"
+      template: "hazemeyer"
+      devices:
+        - name: "AC2SOL02"
+          id: "13"
+          imax: "200"
+          vmax: "110"
+        - name: "AC2SOL03"
+          id: "14"
+          imax: "200"
+          vmax: "110"
+            
+    - name: "hazemeyer-serial-ch2"
+      asset: "https://confluence.infn.it/x/nYD8DQ"
+      charturl: 'https://github.com/infn-epics/ioc-chart.git'
+      iocprefix: "SPARC:MAG:HZ"
+      iocparam:
+        - name: "server"
+          value: "scsparcmoxa008.lnf.infn.it"
+        - name: "port"  
+          value: "4002"
+      autosync: false ## restart automatically on changes
+      zones: LINAC
+      devtype: haz-ser
+      devgroup: mag
+      opi: "hazemeyer/hz_serial.bob"
+      template: "hazemeyer"
+      devices:
+        - name: "AC2SOL04"
+          id: "15"
+          imax: "200"
+          vmax: "110"
+
     - name: "easydriver"
       asset: "https://confluence.infn.it/x/nYD8DQ"
       charturl: 'https://github.com/infn-epics/ioc-chart.git'
@@ -3459,26 +3414,34 @@ epicsConfiguration:
         - name: "GUNHCR01"
           ip: 192.168.0.41
           range: 10
+          zones: GUN
         - name: "GUNVCR01"
           ip: 192.168.0.42
           range: 10
+          zones: GUN
         - name: "AC1HCR01"
           ip: 192.168.0.43
           range: 10
+          zones: AC1
         - name: "AC1VCR01"
           ip: 192.168.0.44
           range: 10
+          zones: AC1
         - name: "AC1HCR02"
           ip: 192.168.0.45
+          zones: AC1
           range: 10
         - name: "AC1VCR02"
           ip: 192.168.0.46
           range: 10
+          zones: AC1
         - name: "AC2HCR01"
           ip: 192.168.0.47
           range: 10
+          zones: AC2
         - name: "AC2VCR01"
           ip: 192.168.0.48
+          zones: AC2
           range: 10
         - name: "AC2HCR02"
           ip: 192.168.0.49
@@ -3497,33 +3460,481 @@ epicsConfiguration:
       devgroup: mag
       template: "caenels"
 
-    - name: "mag-wrapper"
-      asset: "https://confluence.infn.it/display/SCS/Magnet+SoftIOC+Devil+Wrapper"
+    - name: "caenelsfast"
+      asset: "https://confluence.infn.it/x/nYD8DQ"
       charturl: 'https://github.com/infn-epics/ioc-chart.git'
-      image: baltig.infn.it:4567/epics-containers/epics-py-base
-      iocprefix: "SPARC"
-      start: "start.sh" ## if your mynewioc has a start.sh this line must be kept
-      devtype: softioc
-      devgroup: mag
-      gitinit: true
+      iocprefix: "SPARC:MAG:FAST"
       autosync: false ## restart automatically on changes
-      
-    - name: "unimag"
-      asset: "https://confluence.infn.it/display/TESTBEAM/SoftIOC+DEVIL+Wrapper"
-      charturl: 'https://github.com/infn-epics/ioc-chart.git'
-      image: baltig.infn.it:4567/epics-containers/epics-py-base
-      iocprefix: "UNI"
-      start: "./start.sh" ## if your mynewioc has a start.sh this line must be kept
-      gitinit: true
-      devtype: unimag
+      devtype: fastps
       devgroup: mag
-      iocdir: "unimag"
+      opi: "fastps/fastps.bob"
+      template: "caenels"
+      zones: 
+        - LINAC
+        - PTL
+      networks:
+        - name: "control"
+          annotation: "sparc-magnets"
+      devices:
+        - name: "PTLQUA01"
+          ip: 192.168.0.121
+          rangeI: 10
+        - name: "PTLQUA02"
+          ip: 192.168.0.122
+          rangeI: 10
+        - name: "PTLQUA03"
+          ip: 192.168.0.123
+          rangeI: 10
+
+    - name: "histar"
+      asset: "https://confluence.infn.it/x/nYD8DQ"
+      charturl: 'https://github.com/infn-epics/ioc-chart.git'
+      iocprefix: "SPARC:MAG:HISTAR"
+      autosync: false ## restart automatically on changes
+      zones: LINAC
+      devtype: histar
+      devgroup: mag
+      opi: "caenels/caenels.bob"
+      template: "caenels"
+      networks:
+        - name: "control"
+          annotation: "sparc-magnets"
+      devices:
+        - name: "AC1VCR1A"
+          ip: 192.168.0.23
+          range: 30
+        - name: "AC1HCR1A"
+          ip: 192.168.0.24
+          range: 30
+        - name: "GUNQSK01"
+          ip: 192.168.0.27
+          range: 30
+        - name: "GUNQUA01"
+          ip: 192.168.0.28
+          range: 30
+        - name: "PTLVCR02"
+          ip: 192.168.0.29
+          range: 30
+        - name: "PTLHCR02"
+          ip: 192.168.0.30
+          range: 30
+        - name: "DPLSOL01"
+          ip: 192.168.0.40
+          range: 30
+        - name: "PTLQUA04"
+          ip: 192.168.0.37
+          range: 30
+        - name: "PTLQUA05"
+          ip: 192.168.0.38
+          range: 30
+        - name: "PTLQUA06"
+          ip: 192.168.0.39
+          range: 30
+        - name: "PLXVCR05"
+          ip: 192.168.0.15
+          range: 30
+          zones: PLX
+        - name: "PLXHCR05"
+          ip: 192.168.0.16
+          range: 30
+          zones: PLX
+        - name: "PLXVCR06"
+          ip: 192.168.0.17
+          range: 30
+        - name: "PLXHCR06"
+          ip: 192.168.0.18
+          range: 30
+          zones: PLX
+        - name: "PLXVCR07"
+          ip: 192.168.0.19
+          range: 30
+          zones: PLX
+        - name: "PLXHCR07"
+          ip: 192.168.0.20
+          range: 30
+          zones: PLX
+        - name: "PLXVCR08"
+          ip: 192.168.0.21
+          range: 30
+          zones: PLX
+        - name: "PLXHCR08"
+          ip: 192.168.0.22
+          range: 30
+        - name: "PLXVCR01"
+          ip: 192.168.0.25
+          range: 30
+          zones: PLX
+        - name: "PLXHCR01"
+          ip: 192.168.0.26
+          range: 30
+          zones: PLX
+
+    - name: "ocem-modbus"
+      asset: "https://confluence.infn.it/x/nYD8DQ"
+      charturl: 'https://github.com/infn-epics/ioc-chart.git'
+      iocprefix: "SPARC:MAG:OCEM"
+      autosync: false ## restart automatically on changes
+      devtype: modbusps
+      devgroup: mag
+      opi: "ocem/OCEM_modbus.bob"
+      template: "ocem"
+      zones: LINAC
+      networks:
+        - name: "control"
+          annotation: "sparc-magnets"
+      devices:
+        - name: "PTLDPL01"
+          ip: 192.168.0.158
+          imax: 280
+          vmax: 16
+          zones: PTL
+        - name: "PLXDPL02"
+          ip: 192.168.0.154
+          imax: 280
+          vmax: 16
+          zones: PLX
+        - name: "PLXDPL03"
+          ip: 192.168.0.156
+          imax: 280
+          vmax: 16
+          zones: PLX
+        - name: "PLXDPL04"
+          ip: 192.168.0.159
+          imax: 280
+          vmax: 16
+          zones: PLX
+        - name: "SBNSEX01"
+          ip: 192.168.0.157
+          imax: 280
+          vmax: 16
+          zones: SBN
+        - name: "SBNSEX02"
+          ip: 192.168.0.155
+          imax: 280
+          vmax: 16
+          zones: SBN
+
+    - name: "histar-SBN"
+      asset: "https://confluence.infn.it/x/nYD8DQ"
+      charturl: 'https://github.com/infn-epics/ioc-chart.git'
+      iocprefix: "SPARC:MAG:HISTAR"
+      autosync: false ## restart automatically on changes
+      devtype: histar
+      devgroup: mag
+      opi: "caenels/caenels.bob"
+      template: "caenels"
+      zones: SBN
+      networks:
+        - name: "control"
+          annotation: "sparc-magnets"
+      devices:
+        - name: "SBNVCR01"
+          ip: 192.168.0.9
+          range: 30
+        - name: "SBNHCR01"
+          ip: 192.168.0.10
+          range: 30
+        - name: "SBNVCR02"
+          ip: 192.168.0.11
+          range: 30
+        - name: "SBNHCR02"
+          ip: 192.168.0.12
+          range: 30
+        - name: "SBNVCR03"
+          ip: 192.168.0.13
+          range: 30
+        - name: "SBNHCR03"
+          ip: 192.168.0.14
+          range: 30
+        - name: "SBNVCR04"
+          ip: 192.168.0.33
+          range: 30
+        - name: "SBNHCR04"
+          ip: 192.168.0.34
+          range: 30
+        - name: "SBNHCR06"
+          ip: 192.168.0.35
+          range: 30
+        - name: "SBNVCR06"
+          ip: 192.168.0.36
+          range: 30
+        - name: "SBNHCR07"
+          ip: 192.168.0.31
+          range: 30
+        - name: "SBNVCR07"
+          ip: 192.168.0.32
+          range: 30
+          zones: PLX
+        - name: "PLXVCR06"
+          ip: 192.168.0.17
+          range: 30
+        - name: "PLXHCR06"
+          ip: 192.168.0.18
+          range: 30
+          zones: PLX
+        - name: "PLXVCR07"
+          ip: 192.168.0.19
+          range: 30
+          zones: PLX
+        - name: "PLXHCR07"
+          ip: 192.168.0.20
+          range: 30
+          zones: PLX
+        - name: "PLXVCR08"
+          ip: 192.168.0.21
+          range: 30
+          zones: PLX
+        - name: "PLXHCR08"
+          ip: 192.168.0.22
+          range: 30
+          zones: PLX
+        - name: "AC1VCR1A"
+          ip: 192.168.0.23
+          range: 30
+          zones: AC1
+        - name: "AC1HCR1A"
+          ip: 192.168.0.24
+          range: 30
+          zones: AC1
+        - name: "PLXVCR01"
+          ip: 192.168.0.25
+          range: 30
+          zones: PLX
+        - name: "PLXHCR01"
+          ip: 192.168.0.26
+          range: 30
+          zones: PLX
+        - name: "GUNQSK01"
+          ip: 192.168.0.27
+          range: 30
+          zones: GUN
+        - name: "GUNQUA01"
+          ip: 192.168.0.28
+          range: 30
+          zones: GUN
+        - name: "PTLVCR02"
+          ip: 192.168.0.29
+          range: 30
+          zones: PTL
+
+        - name: "PTLHCR02"
+          ip: 192.168.0.30
+          range: 30
+          zones: PTL
+
+        - name: "DPLSOL01"
+          ip: 192.168.0.40
+          range: 30
+        - name: "PTLQUA04"
+          ip: 192.168.0.37
+          range: 30
+          zones: PTL
+        - name: "PTLQUA05"
+          ip: 192.168.0.38
+          range: 30
+          zones: PTL
+        - name: "PTLQUA06"
+          ip: 192.168.0.39
+          range: 30
+          zones: PTL
+
+    - name: "hazemeyer-serial-ch1"
+      asset: "https://confluence.infn.it/x/nYD8DQ"
+      charturl: 'https://github.com/infn-epics/ioc-chart.git'
+      iocprefix: "SPARC:MAG:HZ"
       iocparam:
-        - name: "config"
-          value: "sparcmag.csv"
-        - name: "verbose"
-          value: "1"
-      opi: "unimag"
+        - name: "server"
+          value: "scsparcmoxa009.lnf.infn.it"
+        - name: "port"  
+          value: "4001"
+      autosync: false ## restart automatically on changes
+      zones: LINAC
+      devtype: haz-ser
+      devgroup: mag
+      opi: "hazemeyer/hzai_serial.bob"
+      template: "hazemeyer"
+      devices:
+        - name: "GUNSOL01"
+          id: "6"
+          imax: "200"
+          vmax: "110"
+          zones: GUN
+        - name: "AC1SOL01" ## problemi di comunicazione
+          id: "7"
+          imax: "200"
+          vmax: "110"
+          zones: AC1
+        - name: "AC1SOL02"
+          id: "8"
+          imax: "200"
+          vmax: "110"
+          zones: AC1
+            
+    - name: "hazemeyer-serial-ch2"
+      asset: "https://confluence.infn.it/x/nYD8DQ"
+      charturl: 'https://github.com/infn-epics/ioc-chart.git'
+      iocprefix: "SPARC:MAG:HZ"
+      iocparam:
+        - name: "server"
+          value: "scsparcmoxa008.lnf.infn.it"
+        - name: "port"  
+          value: "4002"
+      autosync: false ## restart automatically on changes
+      zones: 
+        - LINAC
+        - AC2
+      devtype: haz-ser
+      devgroup: mag
+      opi: "hazemeyer/hz_serial.bob"
+      template: "hazemeyer"
+      devices:
+        - name: "AC2SOL04"
+          id: "15"
+          imax: "200"
+          vmax: "110"
+
+
+    - name: "hazemeyer-serial-ch3"
+      asset: "https://confluence.infn.it/x/nYD8DQ"
+      charturl: 'https://github.com/infn-epics/ioc-chart.git'
+      iocprefix: "SPARC:MAG:HZ"
+      iocparam:
+        - name: "server"
+          value: "scsparcmoxa008.lnf.infn.it"
+        - name: "port"  
+          value: "4003"
+      autosync: false ## restart automatically on changes
+      zones: 
+        - LINAC
+        - AC2
+      devtype: haz-ser
+      devgroup: mag
+      opi: "hazemeyer/hz_serial.bob"
+      template: "hazemeyer"
+      devices:
+        - name: "AC2SOL02"
+          id: "13"
+          imax: "200"
+          vmax: "110"
+        - name: "AC2SOL03"
+          id: "14"
+          imax: "200"
+          vmax: "110"
+    
+    - name: "hazemeyer-serial-ch4"
+      asset: "https://confluence.infn.it/x/nYD8DQ"
+      charturl: 'https://github.com/infn-epics/ioc-chart.git'
+      iocprefix: "SPARC:MAG:HZ"
+      iocparam:
+        - name: "server"
+          value: "scsparcmoxa009.lnf.infn.it"
+        - name: "port"  
+          value: "4004"
+      autosync: false ## restart automatically on changes
+      zones: 
+        - LINAC
+        - AC1
+      devtype: haz-ser
+      devgroup: mag
+      opi: "hazemeyer/hz_serial.bob"
+      template: "hazemeyer"
+      devices:
+        - name: "AC1SOL03"
+          id: "9"
+          imax: "200"
+          vmax: "110"
+        - name: "AC1SOL04"
+          id: "10"
+          imax: "200"
+          vmax: "110"
+
+    - name: "hazemeyer-serial-ch5"
+      asset: "https://confluence.infn.it/x/nYD8DQ"
+      charturl: 'https://github.com/infn-epics/ioc-chart.git'
+      iocprefix: "SPARC:MAG:HZ"
+      iocparam:
+        - name: "server"
+          value: "scsparcmoxa008.lnf.infn.it"
+        - name: "port"  
+          value: "4001"
+      autosync: false ## restart automatically on changes
+      zones: 
+        - LINAC
+        - AC2
+      devtype: haz-ser
+      devgroup: mag
+      opi: "hazemeyer/hz_serial.bob"
+      template: "hazemeyer"
+      devices:
+        - name: "AC2SOL01"
+          id: "12"
+          imax: "200"
+          vmax: "110"
+
+    - name: "easydriver"
+      asset: "https://confluence.infn.it/x/nYD8DQ"
+      charturl: 'https://github.com/infn-epics/ioc-chart.git'
+      iocprefix: "SPARC:MAG:EASY"
+      networks:
+        - name: "control"
+          annotation: "sparc-magnets"
+      opi: "easydriver/easydriver-main.bob"
+      zones: LINAC
+      devices:
+        - name: "GUNHCR01"
+          ip: 192.168.0.41
+          range: 10
+          zones: GUN
+        - name: "GUNVCR01"
+          ip: 192.168.0.42
+          range: 10
+          zones: GUN
+        - name: "AC1HCR01"
+          ip: 192.168.0.43
+          range: 10
+          zones: AC1
+        - name: "AC1VCR01"
+          ip: 192.168.0.44
+          range: 10
+          zones: AC1
+        - name: "AC1HCR02"
+          ip: 192.168.0.45
+          zones: AC1
+          range: 10
+        - name: "AC1VCR02"
+          ip: 192.168.0.46
+          range: 10
+          zones: AC1
+        - name: "AC2HCR01"
+          ip: 192.168.0.47
+          range: 10
+          zones: AC2
+        - name: "AC2VCR01"
+          ip: 192.168.0.48
+          zones: AC2
+          range: 10
+        - name: "AC2HCR02"
+          ip: 192.168.0.49
+          range: 10
+          zones: AC2
+        - name: "AC2VCR02"
+          ip: 192.168.0.50
+          range: 10
+          zones: AC2
+        - name: "AC3HCR01"
+          ip: 192.168.0.51
+          range: 10
+          zones: AC3
+        - name: "AC3VCR01"
+          ip: 192.168.0.52
+          zones: AC3
+          range: 10
+      autosync: false ## restart automatically on changes
+      devtype: easydriver
+      devgroup: mag
+      template: "caenels"
+
+    
     
     - name: "development-andrea"
       image: "ghcr.io/infn-epics/infn-epics-ioc-developer"
@@ -3743,16 +4154,7 @@ opi:
       - name: "CONFFILE"
         value: "{{CONFIG}}"
   
-  unimag:
-    url: https://baltig.infn.it/infn-epics/unimag.git
-    main: opi/unimag.bob
-    macro:
-      - name: "TITLE"
-        value: "Unimag {{beamline}}"
-      - name: "P"
-        value: "{{iocprefix}}"
-      - name: "CONFFILE"
-        value: "{{CONFIG}}"
+  
 syncPolicy:
     automated:
       prune: true  # Optional: Automatically remove resources not specified in Helm chart
