@@ -78,6 +78,9 @@ RUN ansible.sh cagateway
 COPY ibek-support-infn/hazemeyer hazemeyer
 RUN ansible.sh hazemeyer
 
+COPY ibek-support-infn/ppt-modulator ppt-modulator
+RUN ansible.sh ppt-modulator
+
 # COPY ibek-support-infn/hazemeyer-lnf hazemeyer
 # RUN ansible.sh hazemeyer
 
