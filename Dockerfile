@@ -1,5 +1,5 @@
 ARG IMAGE_EXT
-ARG BASE=7.0.8ad3
+ARG BASE=7.0.9ec4
 ARG REGISTRY_EC=ghcr.io/epics-containers
 ARG TAGVERSION=latest
 ARG REGISTRY=ghcr.io/infn-epics
@@ -17,10 +17,26 @@ ENV SOURCE_FOLDER=/epics/generic-source
 # connect ioc source folder to its know location
 
 # Get the current version of ibek
-RUN uv pip install --upgrade epik8s-tools
+RUN pip install --upgrade epik8s-tools
 
 WORKDIR ${SOURCE_FOLDER}/ibek-support-infn
 # COPY ibek-support-infn/_global/ _global
+
+COPY ibek-support-infn/epics-nds/ epics-nds/
+RUN ansible.sh epics-nds
+
+COPY ibek-support-infn/asynInterposeMenlo/ asynInterposeMenlo/
+RUN ansible.sh asynInterposeMenlo
+
+COPY ibek-support-infn/menloSyncro/ menloSyncro/
+RUN ansible.sh menloSyncro
+
+
+COPY ibek-support-infn/menloLfc/ menloLfc/
+RUN ansible.sh menloLfc
+
+COPY ibek-support-infn/menloLac menloLac
+RUN ansible.sh menloLac
 
 COPY ibek-support-infn/AgilentXgs600 AgilentXgs600
 RUN ansible.sh AgilentXgs600
