@@ -17,7 +17,7 @@ ENV SOURCE_FOLDER=/epics/generic-source
 # connect ioc source folder to its know location
 
 # Get the current version of ibek
-RUN pip install --upgrade epik8s-tools
+RUN uv pip install --upgrade epik8s-tools
 
 WORKDIR ${SOURCE_FOLDER}/ibek-support-infn
 # COPY ibek-support-infn/_global/ _global
