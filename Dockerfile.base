@@ -78,8 +78,8 @@ RUN ansible.sh motorNewport
 COPY ibek-support/sequencer/ sequencer/
 RUN ansible.sh sequencer
 
-COPY ibek-support/ffmpegServer ffmpegServer
-RUN ansible.sh -v master ffmpegServer
+COPY ibek-support/ffmpegServer/ ffmpegServer
+RUN ansible.sh ffmpegServer
 
 COPY ibek-support/pvxs pvxs
 RUN ansible.sh pvxs
