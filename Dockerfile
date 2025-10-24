@@ -125,7 +125,7 @@ ENV TAGVERSION=${TAGVERSION}
 
 # get the products from the build stage and reduce to runtime assets only
 # RUN ibek ioc extract-runtime-assets /assets ${SOURCE_FOLDER}/ibek*
-RUN ibek ioc extract-runtime-assets /assets /epics/support/ibek-templates /epics/support/templates /epics/support/motorTechnosoft
+RUN ibek ioc extract-runtime-assets /assets /python /epics/support/ibek-templates /epics/support/templates /epics/support/motorTechnosoft
 # RUN ibek ioc extract-runtime-assets /assets
 
 RUN date --utc +%Y-%m-%dT%H:%M:%SZ > /assets/BUILD_INFO.txt && echo "TAG ${TAGVERSION}" >> /assets/BUILD_INFO.txt
