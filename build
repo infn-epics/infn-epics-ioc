@@ -9,7 +9,7 @@ set -e
 # set EPICS_TARGET_ARCH to rtems for RTEMS based targets
 T_A=${EPICS_TARGET_ARCH:-linux_x86_64}
 # set TARGET to runtime for runtime images
-TARGET=${TARGET:-developer}
+TARGET=${TARGET:-runtime}
 # set TAG to override the default tag
 TAG=${TAG:-ec_test}
 PLATFORM=""

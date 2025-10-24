@@ -133,7 +133,7 @@ RUN date --utc +%Y-%m-%dT%H:%M:%SZ > /assets/BUILD_INFO.txt && echo "TAG ${TAGVE
 FROM ${RUNTIME} AS runtime
 ARG TAGVERSION
 ENV TAGVERSION=${TAGVERSION}
-RUN groupadd -g 1000 epics && useradd -m -u 1000 -g 1000 epics
+# RUN groupadd -g 1000 epics && useradd -m -u 1000 -g 1000 epics
 # get runtime assets from the preparation stage
 COPY --from=runtime_prep /assets /
 # install runtime system dependencies, collected from install.sh scripts
@@ -142,5 +142,5 @@ RUN ibek support apt-install-runtime-packages
 RUN curl -o /usr/bin/yq -L https://github.com/mikefarah/yq/releases/download/v4.44.2/yq_linux_amd64 && chmod +x /usr/bin/yq
 
 RUN cp /epics/support/motorTechnosoft/lib/linux-x86_64/*.so /usr/lib/x86_64-linux-gnu/
-RUN chown epics.epics -R /epics
+RUN chown 1000.1000 -R /epics
 CMD ["/bin/bash", "-c", "${IOC}/start.sh"]
