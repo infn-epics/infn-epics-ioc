@@ -15,9 +15,10 @@ ENV TAGVERSION=${TAGVERSION}
 # Using the same location here makes devcontainer/runtime differences transparent.
 ENV SOURCE_FOLDER=/epics/generic-source
 # connect ioc source folder to its know location
-
+COPY requirements.txt requirements.txt
+RUN uv pip install --upgrade -r requirements.txt
 # Get the current version of ibek
-RUN uv pip install --upgrade epik8s-tools
+##RUN uv pip install --upgrade epik8s-tools
 
 WORKDIR ${SOURCE_FOLDER}/ibek-support-infn
 # COPY ibek-support-infn/_global/ _global
@@ -114,7 +115,7 @@ RUN sed -i 's/PermitRootLogin prohibit-password/PermitRootLogin yes/' /etc/ssh/s
 RUN curl -o /usr/bin/yq -L https://github.com/mikefarah/yq/releases/download/v4.44.2/yq_linux_amd64 && chmod +x /usr/bin/yq
 
 # add some debugging tools for the developer target
-RUN ibek support apt-install iputils-ping iproute2 telnet;ibek support add-runtime-packages iputils-ping iproute2 telnet python3-distutils ca-certificates python3.10-venv  openssh-client curl
+RUN ibek support apt-install iputils-ping iproute2 telnet;ibek support add-runtime-packages iputils-ping iproute2 telnet ca-certificates openssh-client curl
 EXPOSE 22
 CMD ["/usr/sbin/sshd", "-D"]
 
