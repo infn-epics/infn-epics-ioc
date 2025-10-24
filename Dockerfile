@@ -17,7 +17,7 @@ ENV SOURCE_FOLDER=/epics/generic-source
 # connect ioc source folder to its know location
 
 # Get the current version of ibek
-RUN pip install --upgrade epik8s-tools
+RUN uv pip install --upgrade epik8s-tools
 
 WORKDIR ${SOURCE_FOLDER}/ibek-support-infn
 # COPY ibek-support-infn/_global/ _global
@@ -106,7 +106,7 @@ RUN ansible.sh ioc
 COPY ibek-templates/templates /epics/support/templates/ibek-templates
 COPY epics-support-template-infn /epics/support/templates/infn-support-templates
 RUN apt-get update && apt-get install -y openssh-server lshw nvidia-utils-550 sudo curl
-RUN groupadd -g 1000 epics && useradd -m -u 1000 -g 1000 epics -s /bin/bash && echo "epics:epics" | chpasswd
+# RUN groupadd -g 1000 epics && useradd -m -u 1000 -g 1000 epics -s /bin/bash && echo "epics:epics" | chpasswd
 RUN mkdir /var/run/sshd
 # Allow password login
 RUN sed -i 's/#PasswordAuthentication yes/PasswordAuthentication yes/' /etc/ssh/sshd_config
