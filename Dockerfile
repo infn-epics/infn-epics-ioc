@@ -101,6 +101,9 @@ RUN ansible.sh ppt-modulator
 COPY ibek-support-infn/scandinova-scandicat-mod scandinova-scandicat-mod
 RUN ansible.sh scandinova-scandicat-mod
 
+COPY ibek-support-infn/ocemE642 ocemE642
+RUN ansible.sh ocemE642
+
 # COPY ibek-support-infn/hazemeyer-lnf hazemeyer
 # RUN ansible.sh hazemeyer
 
