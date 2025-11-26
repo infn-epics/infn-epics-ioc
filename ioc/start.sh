@@ -192,6 +192,12 @@ else
     "
 fi
 
+# Copy OPI files if available
+if [[ -d /epics/opi ]] && [[ -n ${CONFIG_DIR} ]] && [[ -n ${IOC_NAME} ]]; then
+    mkdir -p ${CONFIG_DIR}/${IOC_NAME}
+    cp -r /epics/opi ${CONFIG_DIR}/${IOC_NAME}/
+fi
+
 # Launch the IOC ***************************************************************
 
 if [[ ${EPICS_TARGET_ARCH} == "linux-x86_64" ]] ; then
