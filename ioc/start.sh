@@ -192,10 +192,13 @@ else
     "
 fi
 
+echo "${IOC_NAME} checking opi files and copying to config folder ${CONFIG_DIR}"
 # Copy OPI files if available
 if [[ -d /epics/opi ]] && [[ -n ${CONFIG_DIR} ]] && [[ -n ${IOC_NAME} ]]; then
     mkdir -p ${CONFIG_DIR}/${IOC_NAME}
-    cp -r /epics/opi ${CONFIG_DIR}/${IOC_NAME}/
+    echo "copying OPI files to config folder ${CONFIG_DIR}"
+
+    cp -rv /epics/opi ${CONFIG_DIR}/${IOC_NAME}/
 fi
 
 # Launch the IOC ***************************************************************
