@@ -192,6 +192,14 @@ else
     "
 fi
 
+# Copy OPI files if available
+if [[ -d /epics/opi ]] && [[ -n ${CONFIG_NFS_MOUNT_DIR} ]] && [[ -n ${IOC_NAME} ]]; then
+    mkdir -p ${CONFIG_NFS_MOUNT_DIR}/${IOC_NAME}
+    echo "copying OPI files to config folder ${CONFIG_NFS_MOUNT_DIR}"
+
+    cp -rv /epics/opi ${CONFIG_NFS_MOUNT_DIR}/${IOC_NAME}/
+fi
+
 # Launch the IOC ***************************************************************
 
 if [[ ${EPICS_TARGET_ARCH} == "linux-x86_64" ]] ; then

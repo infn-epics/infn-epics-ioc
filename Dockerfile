@@ -23,9 +23,6 @@ RUN uv pip install --upgrade -r requirements.txt
 WORKDIR ${SOURCE_FOLDER}/ibek-support-infn
 # COPY ibek-support-infn/_global/ _global
 
-COPY ibek-support-infn/ocemSerialPS ocemSerialPS/
-RUN ansible.sh ocemSerialPS
-
 COPY ibek-support-infn/epics-nds/ epics-nds/
 RUN ansible.sh epics-nds
 
@@ -103,6 +100,9 @@ RUN ansible.sh ppt-modulator
 
 COPY ibek-support-infn/scandinova-scandicat-mod scandinova-scandicat-mod
 RUN ansible.sh scandinova-scandicat-mod
+
+COPY ibek-support-infn/ocemE642 ocemE642
+RUN ansible.sh ocemE642
 
 # COPY ibek-support-infn/hazemeyer-lnf hazemeyer
 # RUN ansible.sh hazemeyer
