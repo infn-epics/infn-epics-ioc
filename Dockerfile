@@ -104,6 +104,8 @@ RUN ansible.sh scandinova-scandicat-mod
 COPY ibek-support-infn/ocemE642 ocemE642
 RUN ansible.sh ocemE642
 
+COPY ibek-support-infn/plc-elinp plc-elinp
+RUN ansible.sh plc-elinp
 # COPY ibek-support-infn/hazemeyer-lnf hazemeyer
 # RUN ansible.sh hazemeyer
 
