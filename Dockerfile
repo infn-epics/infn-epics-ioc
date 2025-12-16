@@ -106,6 +106,10 @@ RUN ansible.sh ocemE642
 
 COPY ibek-support-infn/plc-elinp plc-elinp
 RUN ansible.sh plc-elinp
+##
+COPY ibek-support-infn/psEEI psEEI
+RUN ansible.sh psEEI
+
 # COPY ibek-support-infn/hazemeyer-lnf hazemeyer
 # RUN ansible.sh hazemeyer
 

@@ -9,8 +9,7 @@
         "tag": "ec_test",
         "options": [
             //"--load",
-           // "--target=developer",
-            "--platform","linux/amd64"
+                "--platform","linux/amd64"
         ],
         "args": {
             // Native target development settings ==============================
@@ -23,6 +22,13 @@
             "IMAGE_EXT": ""
         }
     },
+    "runArgs": [
+        // Allow the container to access the host X11 display and EPICS CA
+        "--net=host",
+        // Make sure SELinux does not disable with access to host filesystems like tmp
+        "--security-opt=label=disable",
+        "--platform=linux/amd64"
+    ],
     
 
     
