@@ -79,34 +79,34 @@ jobs:
       #       tests/templates.sh ci_test "$filename" `pwd`
       #     done
 
-      - name: Developer target metadata
-        id: meta-developer
-        uses: docker/metadata-action@v3
-        with:
-          images: |
-            ghcr.io/${{ github.repository_owner }}/${{ github.event.repository.name }}${{ matrix.extension }}-developer
-          tags: |
-            type=raw,value=${{ github.ref_name }}
-            type=raw,value=latest
+      # - name: Developer target metadata
+      #   id: meta-developer
+      #   uses: docker/metadata-action@v3
+      #   with:
+      #     images: |
+      #       ghcr.io/${{ github.repository_owner }}/${{ github.event.repository.name }}${{ matrix.extension }}-developer
+      #     tags: |
+      #       type=raw,value=${{ github.ref_name }}
+      #       type=raw,value=latest
 
-      - name: Set single developer tag (for release)
-        id: developer-tag-single
-        run: |
-          echo "${{ steps.meta-developer.outputs.tags }}" | head -n 1 | awk '{ print "developer_tag="$1 }' >> "$GITHUB_OUTPUT"
+      # - name: Set single developer tag (for release)
+      #   id: developer-tag-single
+      #   run: |
+      #     echo "${{ steps.meta-developer.outputs.tags }}" | head -n 1 | awk '{ print "developer_tag="$1 }' >> "$GITHUB_OUTPUT"
 
-      - name: Push developer image
-        if: ${{ github.event_name == 'push' && github.ref_type == 'tag' }}
-        uses: docker/build-push-action@v5
-        with:
-          context: .
-          platforms: ${{ matrix.platform }}
-          target: developer
-          build-args: |
-            IMAGE_EXT=${{ matrix.extension }}
-            TAGVERSION="developer-${{ github.ref_name }}"
-          tags: ${{ steps.meta-developer.outputs.tags }}
-          labels: ${{ steps.meta-developer.outputs.labels }}
-          push: true
+      # - name: Push developer image
+      #   if: ${{ github.event_name == 'push' && github.ref_type == 'tag' }}
+      #   uses: docker/build-push-action@v5
+      #   with:
+      #     context: .
+      #     platforms: ${{ matrix.platform }}
+      #     target: developer
+      #     build-args: |
+      #       IMAGE_EXT=${{ matrix.extension }}
+      #       TAGVERSION="developer-${{ github.ref_name }}"
+      #     tags: ${{ steps.meta-developer.outputs.tags }}
+      #     labels: ${{ steps.meta-developer.outputs.labels }}
+      #     push: true
 
       - name: Runtime target metadata
         id: meta-runtime
@@ -143,9 +143,9 @@ jobs:
       image: ${{ needs.build.outputs.developer-tag }}
 
     steps:
-      - name: report container tag name
-        run: |
-          echo developer container image tag is ${{ needs.build.outputs.developer-tag }}
+      # - name: report container tag name
+      #   run: |
+      #     echo developer container image tag is ${{ needs.build.outputs.developer-tag }}
 
       - name: generate-schema
         run: |
