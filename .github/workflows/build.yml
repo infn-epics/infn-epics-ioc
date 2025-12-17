@@ -29,7 +29,7 @@ jobs:
 
     runs-on: ${{ matrix.os }}
     outputs:
-      developer-tag: ${{ steps.developer-tag-single.outputs.developer_tag }}
+      runtime-tag: ${{ steps.runtime-tag-single.outputs.runtime_tag }}
 
     steps:
       - name: Checkout
@@ -118,6 +118,11 @@ jobs:
             type=raw,value=${{ github.ref_name }}
             type=raw,value=latest
 
+      - name: Set single runtime tag (for release)
+        id: runtime-tag-single
+        run: |
+          echo "${{ steps.meta-runtime.outputs.tags }}" | head -n 1 | awk '{ print "runtime_tag="$1 }' >> "$GITHUB_OUTPUT"
+
       - name: Push runtime image
         if: ${{ github.event_name == 'push' && github.ref_type == 'tag' }}
         uses: docker/build-push-action@v5
@@ -138,14 +143,14 @@ jobs:
     if: ${{ github.event_name == 'push' && github.ref_type == 'tag' }}
     runs-on: ubuntu-latest
 
-    # this job runs in the native developer container we just made
+    # this job runs in the native runtime container we just made
     container:
-      image: ${{ needs.build.outputs.developer-tag }}
+      image: ${{ needs.build.outputs.runtime-tag }}
 
     steps:
       # - name: report container tag name
       #   run: |
-      #     echo developer container image tag is ${{ needs.build.outputs.developer-tag }}
+      #     echo runtime container image tag is ${{ needs.build.outputs.runtime-tag }}
 
       - name: generate-schema
         run: |
