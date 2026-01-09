@@ -1,0 +1,123 @@
+{
+    "$schema": "http://json-schema.org/draft-07/schema#",
+    "type": "object",
+    "$id": "ioc.schema",
+    "properties": {
+        "iocname": {
+            "type": "string",
+            "description": "Name of the IOC."
+        },
+        "iocexit": {
+            "type": "boolean",
+            "description": "Exit IOC after initialization. (debug and CI integration)"
+        },
+        "template": {
+            "const": "ioc",
+            "description": "The template type for this schema."
+        },
+        "devtype": {
+            "type": "string",
+            "description": "Global Device type."
+        },
+        "iocprefix": {
+            "type": "string",
+            "description": "Prefix for the IOC PVs."
+        },
+        "iocroot": {
+            "type": "string",
+            "description": "PV prefix for the IOC PVs."
+        },
+        "data_dir": {
+            "type": "string",
+            "description": "Directory for storing data files."
+        },
+        "config_dir": {
+            "type": "string",
+            "description": "Directory for storing configuration files."
+        },
+        "asset": {
+            "type": "string",
+            "description": "Asset entry associated with the IOC."
+        },
+        "iocinit": {
+            "type": "array",
+            "description": "Common IOC initialization parameters.",
+            "items": {
+                "$ref": "#/definitions/iocinit"
+            }
+        },
+        "connection": {
+            "type": "object",
+            "description": "Connection parameters for the IOC.",
+            "$ref": "#/definitions/connection"
+        },
+        "devices": {
+            "type": "array",
+            "description": "List of devices to configure.",
+            "items": {
+                "$ref": "#/definitions/device"
+            }
+        }
+    },
+    "required": ["iocname", "iocprefix", "asset"],
+    "definitions": {
+        "iocinit": {
+            "type": "object",
+            "properties": {
+                "name": {
+                    "type": "string",
+                    "description": "Name of the parameter."
+                },
+                "value": {
+                    "type": "string",
+                    "description": "Value of the parameter."
+                }
+            },
+            "required": ["name", "value"]
+        },
+        "connection": {
+            "type": "object",
+            "properties": {
+                "server": {
+                    "type": "string",
+                    "description": "IP address of the device"
+                },
+                "port": {
+                    "type": "string",
+                    "description": "connection port of the device"
+                }
+            },
+            "required": ["name", "value"]
+        },
+        "device": {
+            "type": "object",
+            "properties": {
+                "name": {
+                    "type": "string",
+                    "description": "Name of the device."
+                },
+                "channel": {
+                    "type": "integer",
+                    "description": "Channel number of the device."
+                },
+                "asset": {
+                    "type": "string",
+                    "description": "Asset entry associated with the device."
+                },
+                "iocinit": {
+                    "type": "array",
+                    "description": "Device-specific IOC initialization parameters.",
+                    "items": {
+                        "$ref": "#/definitions/iocinit"
+                    }
+                },
+                "connection": {
+                    "type": "object",
+                    "description": "Connection parameters for the device.",
+                    "$ref": "#/definitions/connection"
+                }
+            },
+            "required": ["name", "channel", "asset"]
+        }
+    }
+}

@@ -1,0 +1,42 @@
+# ICPDASRly.template
+# Template database for the ICPDAS PET-7067 Relays in use at STAR.
+# francesco.prelz@mi.infn.it - 
+#
+# substitutions:
+# P  
+# R
+# get_port - modbus 'read coils' port
+# set_port - modbus 'force single coil' port
+# NUM   - index of relay 
+################################################################################
+# Extract from startup script to create modbus ports
+#
+# drvAsynIPPortConfigure ("ICP1_IP", "icprly-gv1.star.unical.it:502", 0, 0, 1)
+# modbusInterposeConfig  ("ICP1_IP", 0, 255, 0)
+# drvModbusAsynConfigure ("ICP1_GET", "ICP1_IP", 1, 1, 0,  8, 0, 1000, "ICPDAS")
+# drvModbusAsynConfigure ("ICP1_SET", "ICP1_IP", 1, 5, 0,  8, 0, 1000, "ICPDAS")
+# drvModbusAsynConfigure ("ICP1_PWRONSET",   "ICP1_IP", 1, 5, 235,  8, 0, 1000, "ICPDAS")
+# drvModbusAsynConfigure ("ICP1_PWRONWRITE", "ICP1_IP", 1, 5, 231,  1, 0, 1000, "ICPDAS")
+#
+################################################################################
+# relay control
+#
+record(bi, "$(P):$(R):RLY$(ID)_RB") 
+{
+    field(DESC, "$(DESC=RLY $(ID) RB)")
+    field(DTYP, "asynUInt32Digital")
+    field(INP,  "@asynMask($(get_port) $(ID) 1)")
+    field(SCAN, "I/O Intr")
+    field(ONAM, "ON")
+    field(ZNAM, "OFF")
+}
+record(bo, "$(P):$(R):RLY$(ID)_SP") 
+{
+    field(DESC, "$(DESC=RLY $(ID) SP)")
+    field(DTYP, "asynUInt32Digital")
+    field(OUT,  "@asynMask($(set_port) $(ID) 1)")
+    field(ONAM, "ON")
+    field(ZNAM, "OFF")
+    field(SCAN, "Passive")
+}
+

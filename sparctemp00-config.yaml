@@ -1,0 +1,73 @@
+asset: https://confluence.infn.it/display/LDCG/ICP-23-0032
+autosave_dir: /nfs/autosave/sparctemp00
+autosync: false
+charturl: https://baltig.infn.it/epics-containers/ioc-chart.git
+config_dir: /nfs/config/sparctemp00
+data_dir: /nfs/data/sparctemp00
+devgroup: temp
+devices:
+- channel: 0
+  desc: anticamera laser0
+  devtype: rtd
+  high: 80
+  hihi: 90
+  lolo: 5
+  low: 10
+  name: ALAS0
+- channel: 1
+  desc: anticamera laser1
+  devtype: rtd
+  high: 80
+  hihi: 90
+  lolo: 5
+  low: 10
+  name: ALAS1
+- channel: 2
+  desc: laser 0
+  devtype: rtd
+  high: 80
+  hihi: 90
+  lolo: 5
+  low: 10
+  name: LAS0
+- channel: 3
+  desc: laser 1
+  devtype: rtd
+  high: 80
+  hihi: 90
+  lolo: 5
+  low: 10
+  name: LAS1
+- channel: 4
+  desc: TEST
+  devtype: rtd
+  high: 80
+  hihi: 90
+  lolo: 5
+  low: 10
+  name: TEST
+devtype: icp7215
+epik8s-tools-version: 0.9.12
+gitinit: true
+iocname: sparctemp00
+iocprefix: SPARC
+iocroot: TEMP
+name: sparctemp00
+nfsMounts:
+- mountPath: /nfs/data
+  name: data
+  opt: -o nolock
+  path: /sparcstorage/space2/SparcData
+  server: 192.168.197.157
+- mountPath: /nfs/autosave
+  name: autosave
+  opt: -o nolock
+  path: /data_epik8s/autosave
+  server: 192.168.197.157
+- mountPath: /nfs/config
+  name: config
+  opt: -o nolock
+  path: /data_epik8s/config
+  server: 192.168.197.157
+server: ddcgicp006.lnf.infn.it
+template: icpdas

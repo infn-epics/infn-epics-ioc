@@ -1,0 +1,43 @@
+
+
+record(seq, "$(P):$(R):$(ID)_seqcalc")
+{
+    field(DOL1, "$(P):$(R):$(ID):$(PROP)_RB CP")  
+    field(LNK1, "$(P):$(R):$(ID):STATS:$(PROP)_AVG PP")  
+    field(DOL2, "$(P):$(R):$(ID):$(PROP)_RB CP")  
+    field(LNK2, "$(P):$(R):$(ID):STATS:$(PROP)_MAX PP")  
+    field(DOL3, "$(P):$(R):$(ID):$(PROP)_RB CP")  
+    field(LNK3, "$(P):$(R):$(ID):STATS:$(PROP)_MIN PP")
+}
+
+record(compress, "$(P):$(R):$(ID):STATS:$(PROP)_AVG")
+{
+    field(DESC, "Average $(PROP) Calculation on $(NELM)")
+    field(ALG, "3")
+    field(N, "$(NELM=60)")
+    field(INP, "$(P):$(R):$(ID):$(PROP)_RB")
+    field(EGU, "$(EGU=degC)")
+    field(PREC, "3")
+    field(FLNK, "$(P):$(R):$(ID):STATS:$(PROP)_MAX") 
+}
+
+record(compress, "$(P):$(R):$(ID):STATS:$(PROP)_MAX")
+{
+    field(DESC, "Max $(PROP) Calculation")
+    field(ALG, "1")
+    field(N, "$(NELM=60)")
+    field(INP, "$(P):$(R):$(ID):$(PROP)_RB")
+    field(EGU, "$(EGU=degC)")
+    field(PREC, "3")
+    field(FLNK, "$(P):$(R):$(ID):STATS:$(PROP)_MIN")
+}
+
+record(compress, "$(P):$(R):$(ID):STATS:$(PROP)_MIN")
+{
+    field(DESC, "Min $(PROP) Calculation")
+    field(ALG, "0")
+    field(N, "$(NELM=60)")
+    field(INP, "$(P):$(R):$(ID):$(PROP)_RB")
+    field(EGU, "$(EGU=degC)")
+    field(PREC, "3")
+}

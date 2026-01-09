@@ -1,0 +1,45 @@
+asset: https://confluence.infn.it/display/LDCG/ICP-23-0032
+autosave_dir: /nfs/autosave/shutter
+autosync: false
+charturl: https://baltig.infn.it/epics-containers/ioc-chart.git
+config_dir: /nfs/config/shutter
+data_dir: /nfs/data/shutter
+devgroup: diag
+devices:
+- channel: 0
+  devtype: do
+  name: CATLAS01
+- channel: 1
+  devtype: do
+  name: EOSLAS01
+- channel: 0
+  devtype: di
+  name: RCATLAS01
+- channel: 1
+  desc: mega redback
+  devtype: di
+  name: REOSLAS01
+devtype: icp7250
+epik8s-tools-version: 0.9.12
+iocname: shutter
+iocprefix: SPARC:SHT
+iocroot: ICP
+name: shutter
+nfsMounts:
+- mountPath: /nfs/data
+  name: data
+  opt: -o nolock
+  path: /sparcstorage/space2/SparcData
+  server: 192.168.197.157
+- mountPath: /nfs/autosave
+  name: autosave
+  opt: -o nolock
+  path: /data_epik8s/autosave
+  server: 192.168.197.157
+- mountPath: /nfs/config
+  name: config
+  opt: -o nolock
+  path: /data_epik8s/config
+  server: 192.168.197.157
+server: ddcgicp12di6do002.lnf.infn.it
+template: icpdas

@@ -1,0 +1,53 @@
+asset: https://servicedesk.infn.it/secure/ObjectSchema.jspa?id=32&typeId=1444&objectId=138748
+autosave_dir: /nfs/autosave/deflettori
+autosync: false
+charturl: https://baltig.infn.it/epics-containers/ioc-chart.git
+config_dir: /nfs/config/deflettori
+data_dir: /nfs/data/deflettori
+devgroup: diag
+devices:
+- channel: 0
+  devtype: rly
+  name: CAMRST01
+- channel: 1
+  devtype: rly
+  name: CAMRST02
+- channel: 2
+  devtype: rly
+  name: CAMLIGHT
+- channel: 3
+  devtype: rly
+  name: DEFDIR
+- channel: 4
+  devtype: rly
+  name: DEFPOW
+- channel: 0
+  devtype: di
+  name: RDEFDIR
+- channel: 1
+  devtype: di
+  name: RDEFPOW
+devtype: icp7060
+epik8s-tools-version: 0.9.12
+iocname: deflettori
+iocprefix: SPARC:RFD
+iocroot: ICP
+name: deflettori
+nfsMounts:
+- mountPath: /nfs/data
+  name: data
+  opt: -o nolock
+  path: /sparcstorage/space2/SparcData
+  server: 192.168.197.157
+- mountPath: /nfs/autosave
+  name: autosave
+  opt: -o nolock
+  path: /data_epik8s/autosave
+  server: 192.168.197.157
+- mountPath: /nfs/config
+  name: config
+  opt: -o nolock
+  path: /data_epik8s/config
+  server: 192.168.197.157
+server: ddselcedicp7060-001.lnf.infn.it
+template: icpdas

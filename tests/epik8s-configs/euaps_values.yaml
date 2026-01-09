@@ -1,0 +1,433 @@
+# created automatically epik8s-gen (0.4.3) at 2024-11-11
+beamline: euaps
+namespace: euaps
+epik8namespace: "k8sda.lnf.infn.it"
+ingressClassName: "nginx"
+targetRevision: main ## chart default revision
+serviceAccountName: default
+argocdProject: "euaps"
+## starting point
+giturl: https://baltig.infn.it/lnf-da-control/epik8s-euaps.git
+gitrev: devel
+epik8s_secrets: epik8s-secret
+
+baseIp: "10.43.248.0/22" ## valid service IPs are 10.43.248.1 to 10.43.251.254
+startIp: 1 # 2
+openshift: false
+
+epicsConfiguration:
+  name: "epics-configuration" # name of existing configMap that set CA parameters
+  address_list: "" ## modulator
+  max_array_bytes: "10000000"
+  # conn_tmo: 120
+  services:
+    pvagateway:
+      asset: "Gateway for PVA external connections"
+      charturl: 'https://baltig.infn.it/epics-containers/ca-gateway-chart.git'
+      template: "pvagateway"
+      ingress:
+        enabled: false
+      loadbalancer: 192.168.108.230
+      nodeSelector:
+        lb-network-access: vlan-108
+      replicaCount: 1
+      auto_security: true
+      gitinit: true
+      autosync: true ## restart automatically on changes
+      staticIp: true
+      resources:
+            limits:
+              cpu: 999m
+              memory: 2Gi
+            requests:
+              cpu: 400m
+              memory: 500Mi
+    gateway:
+      asset: "Gateway for CA external connections"
+      charturl: 'https://baltig.infn.it/epics-containers/ca-gateway-chart.git'
+      template: "gateway"
+      ingress:
+        enabled: false
+      loadbalancer: 192.168.108.231
+      nodeSelector:
+        lb-network-access: vlan-108
+      replicaCount: 1
+      auto_security: true
+      gitinit: true
+      autosync: true ## restart automatically on changes
+      staticIp: true
+      resources:
+            limits:
+              cpu: 999m
+              memory: 4Gi
+            requests:
+              cpu: 400m
+              memory: 1Gi
+    archiver:
+      asset: "Epics PV Archiver"
+      charturl: 'https://baltig.infn.it/epics-containers/epics-archiver-chart.git'
+      replicaCount: 1
+      serviceAccount:
+        create: false
+        name: default
+      storage:
+        lts:
+          path: /storage/lts
+          size: 10Gi
+          claim: ""
+          accessMode: ReadWriteOnce
+        mts:
+          path: /storage/mts
+          size: 10Gi
+          claim: ""
+          accessMode: ReadWriteOnce
+        sts:
+          path: /storage/sts
+          size: 5Gi
+          claim: ""
+          accessMode: ReadWriteOnce
+        logs:
+          path: /storage/logs
+          size: 5Gi
+          claim: ""
+          accessMode: ReadWriteOnce
+      mysql:
+            host: mysql
+            dbname: arcappl
+            user: arcappl
+            pass: arcappl
+      enable_ingress: true
+      securityContext:
+            privileged: true
+            runAsUser: 0
+            runAsGroup: 1000
+      resources:
+            limits:
+              cpu: 999m
+              memory: 6Gi
+            requests:
+              cpu: 100m
+              memory: 4Gi
+      autosync: true ## restart automatically on changes
+      usegateway: true
+    console:
+        asset: "Ubuntu WEB Console running Phoebus"
+        replicaCount: 1
+        charturl: https://baltig.infn.it/epics-containers/epics-console-chart.git
+        enable_ingress: true
+        gitpath: opi
+        resources:
+            limits:
+              cpu: 2000m
+              memory: 4Gi
+            requests:
+              cpu: 1000m
+              memory: 1Gi
+        gitRepoConfig:
+          url: https://baltig.infn.it/lnf-da-control/epik8-sparc.git
+          path: opi
+          branch: master
+        autosync: true ## restart automatically on changes
+        usegateway: true
+    notebook:
+      asset: "Jupyther notebook enabled to access EPIK8s resources"
+      charturl: 'https://baltig.infn.it/epics-containers/jupyter-control-notebook-chart.git'
+      replicaCount: 1
+      gitRepoConfig:
+        url: https://baltig.infn.it/lnf-da-control/ecs-jupyter-control.git
+        path: .
+        branch: main
+        init: true
+      dataVolume:
+          claim:  ## an existing claim or empty will create a new one
+          size: 1Gi ## size of the claim
+          accessMode: ReadWriteOnce
+      enable_ingress: true
+      usegateway: true
+      autosync: true ## restart automatically on changes
+      pip:
+        - bluesky
+        - infn-ophyd-hal
+    pws:
+      asset: "Phoebus WEB (experimental)"
+      loglevel: DEBUG
+      charturl: https://baltig.infn.it/epics-containers/phoebus-services-chart.git
+      image:
+        repository: baltig.infn.it:4567/epics-containers/phoebus-web-docker
+      phoebusservice: "pvws"
+      auto_security: true
+      enable_ingress: true
+      autosync: true ## restart automatically on changes
+      service:
+        loglevel: "INFO"
+      usegateway: true
+    dbwr:
+      asset: "PV REST server (experimental)"
+      loglevel: DEBUG
+      charturl: https://baltig.infn.it/epics-containers/phoebus-services-chart.git
+      image:
+        repository: baltig.infn.it:4567/epics-containers/phoebus-web-docker
+      phoebusservice: "dbwr"
+      auto_security: true
+      enable_ingress: true
+      autosync: true ## restart automatically on changes
+      service:
+        loglevel: "INFO"
+      usegateway: true
+      gitRepoConfig:
+          url: https://baltig.infn.it/lnf-da-control/sparc-epics-opi.git
+          path: .
+      pvws:
+        host: sparc-pws.apps.okd-datest.lnf.infn.it
+        port: 80
+    
+
+   ## olog, scanserver,channelfinder, saverestore
+    ## require backend activated
+    mysql: 
+      asset: "Mysql(bitnami) Service primarly used for Epics Archiver"
+      name: mysql
+      charturl: registry-1.docker.io/bitnamicharts
+      targetRevision: '9.21.1'
+      chart: mysql
+      image:
+        repository: bitnamilegacy/mysql
+      auth:
+          rootPassword: "arcappl"
+          createDatabase: true
+          database: "arcappl"
+          username: "arcappl"
+          password: "arcappl"
+      serviceAccount:
+        create: false
+        name: "default"
+
+    docs:
+      name: "docs"
+      image:
+        repository: "nginx:alpine"
+        pullPolicy: "Always"
+      charturl: https://baltig.infn.it/epics-containers/generic-application-chart.git
+      enable_ingress: true
+      disable: false ##
+      secure: true
+      service:
+        port: 80
+      exec: {} ## default
+      nfsMounts:
+        - name: httpsrv-nfs
+          mountPath: /usr/share/nginx/html
+          server: 192.168.197.157
+          path: /data_epik8s/euaps/Documents/public
+    
+    
+    
+  iocs:
+
+    - name: "pollux-ctrl01"
+      asset: "https://confluence.infn.it/x/JIBnLw"
+      charturl: 'https://baltig.infn.it/epics-containers/ioc-chart.git'
+      template: "motor"
+      autosync: false ## restart automatically on changes
+      devtype: pollux
+      devgroup: mot
+      opi: "asyn/motorx_all.bob"
+      iocprefix: "EUAPS:CTRL"
+      iocroot: "FPMMIR"
+      machine: "pluto:pocfewf::fwef-fewfwe--fwwtet"
+      zones: "FP"
+      iocparam:
+        - name: "server"
+          value: "192.168.190.64"
+        - name: "port"
+          value: "4001"
+      devices:
+          - name: "HMOT01"
+            axid: 7
+            dllm: -25
+            dhlm: 25
+            home: 1
+            start: 10
+            velo: 1
+          - name: "VMOT01"
+            axid: 8
+            dllm: -25
+            dhlm: 25
+            home: 1
+            start: 10
+            velo: 1
+    
+    - name: "camerasim"
+      asset: "https://servicedesk.infn.it/secure/ObjectSchema.jspa?id=44&typeId=2748&objectId=126655"
+      charturl: 'https://github.com/infn-epics/ioc-chart.git'     
+      devtype: camerasim
+      devgroup: cam
+      template: "adcamera"
+      pva: true
+      enable_ingress: true
+      service:   
+        http:
+          enable: true
+          port: 8082
+      stream_enable: true
+      roi_enable: true
+      stats_enable: true
+      proc_enable: true
+      overlay_enable: true
+      iocprefix: "EUAPS:CAM"
+      autosync: true ## restart automatically on changes
+      iocinit:
+        - name: "AcquirePeriod"
+          value: "1"
+        - name: "FrameRate"
+          value: "1"
+        - name: "FrameRateEnable"
+          value: "Yes"
+      iocparam:
+        - name: "overlay_enable"
+          value: true
+        - name: "stats_enable"
+          value: true
+        - name: "proc_enable"
+          value: true
+        - name: "tiff_enable"
+          value: true
+        - name: "roi_enable"
+          value: true
+      devices:
+        - name: "SIM01"
+          iocinit:
+          - name: "AcquirePeriod"
+            value: "1"
+          - name: "Gain"
+            value: "255"
+          - name: "SimMode"
+            value: "Peaks"
+          - name: "PeakStartX"
+            value: "250"
+          - name: "PeakStartY"
+            value: "200"
+          - name: "PeakWidthX"
+            value: "70"
+          - name: "PeakWidthY"
+            value: "50"
+          - name: "PeakVariation"
+            value: "10"
+  
+
+ 
+cronjobs:
+    - name: "hugo-docs"
+      ## schedule every hours
+      schedule: "*/10 * * * *"
+      image:
+        repository: "ghcr.io/hugomods/hugo:debian-nightly"
+        pullPolicy: "Always"
+      charturl: https://baltig.infn.it/epics-containers/generic-application-chart.git
+      gitRepoApp:
+        url: https://baltig.infn.it/lnf-da-control/epik8s-euaps-site.git
+        mountPath: /src
+      secure: true
+      exec: |
+        mkdir -p /src/static/reports /src/static/iocinfo
+        cp /docsrc/* /src/static/reports
+        cp /etc/epik8s-beamline.yaml content/control
+        cd /src
+        node /src/tools/iocinfo.js --iocinfo-dir  /doc-iocs/ --opi-dir content/control/epik8s-opi  --control-dir content/control/ --values-file content/control/epik8s-beamline.yaml --services-dir content/services
+        hugo --source /src/ --destination /docsrc/public --minify
+      
+      nfsMounts:
+        - name: hugo-docs-nfs
+          mountPath: /docsrc
+          server: 192.168.197.157
+          path: /data_epik8s/euaps/Documents
+        - name: config
+          mountPath: /doc-iocs
+          server: 192.168.197.157
+          path: /data_epik8s/euaps/config
+applications:
+  
+  
+  
+    
+opi:
+  camera:
+    url: https://baltig.infn.it/infn-epics/camera-opi.git
+    main: Camera_Main.bob
+    macro:
+      - name: "DEVICE"
+        value: "{{iocprefix}}"
+      - name: "CAM"
+        value: "{{iocroot}}"
+  icpdas:
+    url: https://baltig.infn.it/infn-epics/icpdas-opi.git
+    main: "{{devtype}}.bob"
+    macro:
+      - name: "P"
+        value: "{{iocprefix}}"
+      - name: "R"
+        value: "{{iocroot}}"
+  unimag:
+    url: https://baltig.infn.it/infn-epics/unimag.git
+    main: opi/unimag.bob
+    macro:
+      - name: "TITLE"
+        value: "Unimag {{beamline}}"
+      - name: "P"
+        value: "{{iocprefix}}"
+      - name: "CONFFILE"
+        value: "{{CONFIG}}"
+backend:
+  namespace: "backend"
+  mongo:
+    host: mongodb
+    port: 27017
+  elasticsearch:
+    host: elasticsearch-es-http
+    clusterName: elasticsearch
+    port: 9200
+    protocol: https
+    pubcertsecret: elasticsearch-es-http-certs-public #secret containing the public cert
+    authorization:
+      username: elastic
+      password: GJkrSqzVRka9PC7b2N2cHmBM
+
+  kafka:
+    host: eph-kafka-kafka-brokers
+    port: 9092
+nfsMounts:
+    - name: data
+      server: 192.168.197.157
+      path: /data_epik8s/euaps/data
+      mountPath: /nfs/data
+      opt: "-o nolock"
+    - name: autosave
+      server: 192.168.197.157
+      path: /data_epik8s/euaps/autosave
+      mountPath: /nfs/autosave
+      opt: "-o nolock"
+    - name: config
+      server: 192.168.197.157
+      path: /data_epik8s/euaps/config
+      mountPath: /nfs/config
+      opt: "-o nolock"
+
+email:
+  from: "phoebus@localhost"
+  to: "phoebus@localhost"
+  smtp:
+    host: smtp.lnf.infn.it
+    port: 25
+    user: ""
+    password: ""
+    tls: false
+    starttls: false
+    auth: false
+
+syncPolicy:
+    automated:
+      prune: true  # Optional: Automatically remove resources not specified in Helm chart
+      selfHeal: true
+    syncOptions:
+      - CreateNamespace=true 
+      - Prune=true

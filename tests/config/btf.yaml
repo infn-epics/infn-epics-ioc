@@ -1,0 +1,1114 @@
+beamline: BTF
+namespace: btf
+epik8namespace: "k8sda.lnf.infn.it"
+ingressClassName: "nginx"
+targetRevision: "main"
+token: 6r-MzeKyVxfVnhPAxtpP
+serviceAccountName: "default"
+argocdProject: "btf"
+
+## starting point
+giturl: https://baltig.infn.it/lnf-da-control/epik8s-btf.git
+http_proxy: "http://squid.lnf.infn.it:3128"
+https_proxy: "http://squid.lnf.infn.it:3128"
+no_proxy: "localhost,127.0.0.1,::1,10.0.0.0/8,192.168.0.0/16,.svc,.svc.cluster.local,.lnf.infn.it"
+gitrev: k8sda
+epik8s_secrets: epik8s-secret
+## valid IPs are 10.43.0.1 to 10.43.255.254
+baseIp: "10.43.244.0/22" ## valid service IPs are 10.43.244.1 to 10.43.247.254
+startIp: 1
+
+
+epicsConfiguration:
+  name: "epics-configuration" # name of existing configMap that set CA parameters
+  address_list: "193.206.82.124 192.168.189.190 192.168.189.198"
+    
+  max_array_bytes: "10000000"
+  services:
+    pvagateway:
+      charturl: 'https://baltig.infn.it/epics-containers/ca-gateway-chart.git'
+      
+      ingress:
+        enabled: false
+      loadbalancer: 192.168.108.220
+      template: "pvagateway"
+      nodeSelector:
+        lb-network-access: vlan-108
+      replicaCount: 1
+      exec: start.sh
+      auto_security: true
+      autosync: true ## restart automatically on changes
+      staticIp: true
+      resources:
+            limits:
+              cpu: 999m
+              memory: 2Gi
+            requests:
+              cpu: 400m
+              memory: 500Mi
+      
+    gateway:
+      name: "cagateway"
+      charturl: 'https://baltig.infn.it/epics-containers/ca-gateway-chart.git'
+      ingress:
+        enabled: false
+      loadbalancer: 192.168.108.221
+      
+      template: "gateway"
+      replicaCount: 1
+      exec: start.sh
+      auto_security: true
+      autosync: true
+      staticIp: true
+      nodeSelector:
+        lb-network-access: vlan-108
+
+    archiver:
+      name: "archiver"
+      charturl: 'https://baltig.infn.it/epics-containers/epics-archiver-chart.git'
+      desc: "EPICS Archiver Appliance for BTF"
+      path: "/mgmt/ui/index.html"
+      replicaCount: 1
+      autosync: true
+      serviceAccount:
+        create: false
+        name: "default"
+      resources:
+            limits:
+              cpu: 999m
+              memory: 5Gi
+            requests:
+              cpu: 100m
+              memory: 4Gi
+      storage:
+        lts:
+          path: /storage/lts
+          size: 2000Gi
+          claim: ""
+          accessMode: ReadWriteOnce
+          storageClassName: "archiver-lts"
+        mts:
+          path: /storage/mts
+          size: 100Gi
+          claim: ""
+          accessMode: ReadWriteOnce
+          storageClassName: "archiver-mts"
+
+        sts:
+          path: /storage/sts
+          size: 10Gi
+          claim: ""
+          accessMode: ReadWriteOnce
+        logs:
+          path: /storage/logs
+          size: 50Gi
+          claim: ""
+          accessMode: ReadWriteOnce
+      mysql:
+            host: mysql
+            dbname: arcappl
+            user: arcappl
+            pass: arcappl
+      enable_ingress: true
+      securityContext:
+            privileged: true
+            runAsUser: 0
+            runAsGroup: 1000
+      disable: false ## dont deploy
+
+    console: 
+        name: "console"
+        replicaCount: 1
+        charturl: https://baltig.infn.it/epics-containers/epics-console-chart.git
+        enable_ingress: true
+        gitpath: opi
+        gitRepoConfig:
+          url: https://baltig.infn.it/lnf-da-control/epik8s-btf.git
+          path: opi
+          branch: master
+        autosync: true
+    
+
+    notebook: 
+      name: "notebook"
+      charturl: https://baltig.infn.it/epics-containers/jupyter-chart.git
+      replicaCount: 1
+      gitRepoConfig:
+        url: https://baltig.infn.it/lnf-da-control/ecs-jupyter-control.git
+        path: .
+        branch: main
+        init: true
+      dataVolume:
+          claim:  ## an existing claim or empty will create a new one
+          size: 5Gi ## size of the claim
+          accessMode: ReadWriteOnce
+      auto_security: true
+      enable_ingress: true
+      autosync: false
+
+    olog: 
+      name: "olog"
+      loglevel: DEBUG
+      charturl: https://baltig.infn.it/epics-containers/phoebus-services-chart.git
+      phoebusservice: "olog"
+      auto_security: true
+      enable_ingress: true
+      mongodb: "btf-ologAttachments"
+      disable: false ##      
+      secure: true
+      targetRevision: "test-olog-saveandrestore"
+      service:
+        loglevel: "DEBUG"
+      cors:
+        origins: "https://btf-webolog.k8sda.lnf.infn.it"
+      user: epics
+      password: epics
+      oauth2:
+        enabled: true
+        issueUri: "https://idp-test.app.infn.it/auth/realms/aai"
+        claimsName: "name"
+      ldap:
+        enable: false  
+        user:
+          dn:
+            pattern: "uid"
+        url: "ldap://ds.infn.it"
+        base:
+          dn: "ou=People,dc=infn,dc=it"
+    
+    webolog:
+      name: "webolog"
+      image:
+        repository: "ghcr.io/infn-epics/phoebus-olog-web-client"
+        tag: "latest"
+        pullPolicy: "Always"
+      charturl: https://baltig.infn.it/epics-containers/generic-application-chart.git
+      enable_ingress: true
+      disable: false ##
+      secure: true
+      env:
+        - name: VITE_APP_LEVEL_VALUES
+          value: "[\"Urgent\",\"Suggestion\",\"Info\",\"Request\",\"Problem\"]"
+        - name: VITE_APP_DEFAULT_LEVEL
+          value: "Info"
+        - name: VITE_APP_BASE_URL
+          value: "https://btf-olog.k8sda.lnf.infn.it/Olog"
+        - name: VITE_REACT_APP_USE_KEYCLOAK
+          value: true
+        - name: VITE_AUTH_CLIENT_ID
+          value: camunda
+        - name: VITE_AUTH_ENDPOINT
+          value: "https://idp-test.app.infn.it/auth/realms/aai/protocol/openid-connect/auth"
+        - name: VITE_AUTH_ENDPOINT_LOGOUT
+          value: "https://idp-test.app.infn.it/auth/realms/aai/protocol/openid-connect/logout"
+        - name: VITE_AUTH_ENDPOINT_TOKEN
+          value: "https://idp-test.app.infn.it/auth/realms/aai/protocol/openid-connect/token"
+        - name: VITE_AUTH_ENDPOINT_REDIRECT_URI
+          value: "http://btf-webolog.k8sda.lnf.infn.it"
+        - name: VITE_AUTH_SCOPE
+          value: openid
+
+      exec: |
+        echo "VITE_APP_BASE_URL=$(VITE_APP_BASE_URL)" > .env
+        echo "VITE_APP_LOGBOOK_NAME=INFN BTF Logbook" >> .env
+        echo "VITE_AUTH_CLIENT_ID=camunda" >> .env
+        echo "VITE_AUTH_ENDPOINT=https://idp-test.app.infn.it/auth/realms/aai/protocol/openid-connect/auth" >> .env
+        echo "VITE_AUTH_ENDPOINT_LOGOUT=https://idp-test.app.infn.it/auth/realms/aai/protocol/openid-connect/logout" >> .env
+        echo "VITE_AUTH_ENDPOINT_TOKEN=https://idp-test.app.infn.it/auth/realms/aai/protocol/openid-connect/token" >> .env
+        echo "VITE_AUTH_ENDPOINT_REDIRECT_URI=http://localhost:3000/" >> .env
+        echo "VITE_AUTH_SCOPE=openid" >> .env
+        echo "VITE_APP_OAUTH2_ENABLED=true" >> .env
+        cat .env
+        npm ci
+        npm run build --force
+        serve -l 3000 -s build
+      securityContext:
+            runAsUser: 1000
+            runAsGroup: 1000
+      service:
+        ports:
+          - name: webolog
+            port: 80
+            targetport: 3000
+            targetname: webolog
+            protocol: TCP
+            
+    saveandrestore: 
+      name: "saveandrestore"
+      loglevel: DEBUG
+      charturl: https://baltig.infn.it/epics-containers/phoebus-services-chart.git
+      phoebusservice: "saveandrestore"
+      targetRevision: "test-olog-saveandrestore"
+
+      auto_security: true
+      enable_ingress: true
+      mongodb: "btf-ologAttachments"
+      disable: false ##
+      usegateway: true
+    
+    alarmserver: 
+      name: "alarmserver"
+      loglevel: DEBUG
+      charturl: https://baltig.infn.it/epics-containers/phoebus-services-chart.git
+      phoebusservice: "alarmserver"
+      auto_security: true
+      enable_ingress: true
+      mongodb: "btf-ologAttachments"
+      disable: false ##
+      targetRevision: "test-olog-saveandrestore"
+
+
+    channelfinder: 
+      name: "channelfinder"
+      loglevel: DEBUG
+      charturl: https://baltig.infn.it/epics-containers/channelfinder-chart.git
+      auto_security: true
+      enable_ingress: true
+      mongodb: "btf-ologAttachments"
+      disable: false ## 
+
+    scanserver: 
+      name: "scanserver"
+      loglevel: DEBUG
+      charturl: https://baltig.infn.it/epics-containers/phoebus-services-chart.git
+      phoebusservice: "scanserver"
+      auto_security: true
+      enable_ingress: true
+      mongodb: "btf-ologAttachments"
+      disable: true ## 
+
+    pws: 
+      loglevel: DEBUG
+      charturl: https://baltig.infn.it/epics-containers/phoebus-services-chart.git
+      image:
+        repository: baltig.infn.it:4567/epics-containers/phoebus-web-docker
+      phoebusservice: "pvws"
+      auto_security: true
+      enable_ingress: true
+      autosync: false ## restart automatically on changes
+      service:
+        loglevel: "INFO"
+      usegateway: true
+    
+    dbwr: 
+      loglevel: DEBUG
+      charturl: https://baltig.infn.it/epics-containers/phoebus-services-chart.git
+      image:
+        repository: baltig.infn.it:4567/epics-containers/phoebus-web-docker
+      phoebusservice: "dbwr"
+      auto_security: true
+      enable_ingress: true
+      autosync: false ## restart automatically on changes
+      service:
+        loglevel: "INFO"
+      usegateway: true
+      gitRepoConfig:
+          url: https://baltig.infn.it/lnf-da-control/btf-epics-opi.git
+          path: .
+      pvws:
+        host: btf-pws.k8sda.lnf.infn.it
+        port: 80
+
+    docs:
+      name: "docs"
+      image:
+        repository: "nginx:alpine"
+        pullPolicy: "Always"
+      charturl: https://baltig.infn.it/epics-containers/generic-application-chart.git
+      enable_ingress: true
+      disable: false ##
+      secure: true
+      service:
+        port: 80
+      exec: {} ## default
+      nfsMounts:
+        - name: httpsrv-nfs
+          mountPath: /usr/share/nginx/html
+          server: 192.168.197.157
+          path: /data_epik8s/btf/Documents/public
+    mysql: 
+      name: mysql
+      charturl: registry-1.docker.io/bitnamicharts
+      targetRevision: '9.21.1'
+      chart: mysql
+      image:
+        repository: bitnamilegacy/mysql
+      auth:
+          rootPassword: "arcappl"
+          createDatabase: true
+          database: "arcappl"
+          username: "arcappl"
+          password: "arcappl"
+      primary:
+        resources:
+          limits:
+            cpu: 1000m
+            memory: 4Gi
+          requests:
+            cpu: 100m
+            memory: 2Gi
+
+      serviceAccount:
+        create: false
+        name: "default"
+      disable: false ## dont deploy
+
+  iocs:
+    - name: "slowcontrol"
+      asset: "https://confluence.infn.it/x/nYD8DQ"
+      charturl: 'https://github.com/infn-epics/ioc-chart.git'
+      image: baltig.infn.it:4567/epics-containers/epics-py-base
+      iocprefix: "BTF2:slow"
+      iocdir: "mem2epics"
+      iocparam:
+        - name: "config"
+          value: "btfimport.json"
+        - name: "server"
+          value: "plbtfhactr001.lnf.infn.it"
+      start: "/epics/ioc/config/start.sh" ## if your mynewioc has a start.sh this line must be kept
+      gitinit: true
+
+
+    - name: "daq"
+      asset: "https://confluence.infn.it/x/nYD8DQ"
+      charturl: 'https://github.com/infn-epics/ioc-chart.git'
+      image: baltig.infn.it:4567/epics-containers/epics-py-base
+      iocprefix: "BTF2:daq"
+      iocdir: "mem2epics"
+      iocparam:
+        - name: "config"
+          value: "btfimport_daq.json"
+        - name: "server"
+          value: "plbtfhactr001.lnf.infn.it"
+      start: "/epics/ioc/config/start.sh" ## if your mynewioc has a start.sh this line must be kept
+      gitinit: true
+      devtype: softioc
+      devgroup: diag
+      autosync: true ## restart automatically on changes
+
+    - name: "tml-motor"
+      asset: "https://confluence.infn.it/x/nYD8DQ"
+      charturl: 'https://github.com/infn-epics/ioc-chart.git'
+      iocprefix: "BTF:TML"
+      
+      serial:
+        ip: 192.168.190.29
+        port: 4001
+        ptty: /var/tmp/ttyV0
+        baud: 9600
+      
+      autosync: false ## restart automatically on changes
+      devtype: tml
+      devgroup: mot
+      template: "motor"
+      opi: "tml/TML_Main.bob"
+      motor:
+        hostid: 3
+        egu: "rpm"
+      devices:
+        - axid: 3
+          name: SLTTB004R
+          egu2mm: 684931.506849
+          velo_max: 200
+          velo: 200
+          hvel: 200
+          jvel: 200
+          pos_max: 19383561
+        - axid: 4
+          name: SLTTB004L
+          egu2mm: 684931.506849
+          velo_max: 200
+          velo: 200
+          hvel: 200
+          jvel: 200
+          pos_max: 16301369
+        - axid: 5
+          name: SLTTB002R
+          egu2mm: 684931.506849
+          velo_max: 200
+          velo: 200
+          hvel: 200
+          jvel: 200 
+          pos_max: 17979452
+        - axid: 6
+          name: SLTTB002L
+          egu2mm: 684931.506849
+          velo_max: 200
+          velo: 200
+          hvel: 200
+          jvel: 200
+          pos_max: 19212328
+        - axid: 7
+          name: SLTTB003U
+          egu2mm: 51282.0512821
+          velo_max: 100
+          velo: 100
+          hvel: 100
+          jvel: 100 
+          pos_max: 1338461
+        - axid: 8
+          name: SLTTB003D
+          egu2mm: 51282.0512821
+          velo_max: 100
+          velo: 100
+          hvel: 100
+          jvel: 100
+          pos_max: 1346153
+        - axid: 9
+          name: SLTTB001U
+          egu2mm: 51282.0512821
+          velo_max: 50
+          velo : 50
+          hvel: 50
+          jvel: 50
+          pos_max: 1297435
+        - axid: 10
+          name: SLTTB001D
+          egu2mm: 51282.0512821
+          velo_max: 50
+          velo: 50
+          hvel: 50
+          jvel: 50
+          pos_max: 1235897
+        - axid: 11
+          name: TGTTB001
+          egu2mm: 51282.0512821
+          velo_max: 100
+          velo: 100
+          hvel: 100
+          jvel: 100
+          pos_max: 7692307
+        - axid: 20
+          name: SLTTB005L
+          egu2mm: 34129.6928328
+          velo_max: 100
+          velo: 100
+          hvel: 100
+          jvel: 100 
+          pos_max: 1322423
+        - axid: 21
+          name: SLTTB005R
+          egu2mm: 34129.6928328
+          velo_max: 100
+          velo: 100
+          hvel: 100
+          jvel: 100
+          pos_max: 1348805
+        - axid: 25
+          name: SLTTB006L
+          egu2mm: 34129.6928328
+          velo_max: 100
+          velo: 100
+          hvel: 100
+          jvel: 100
+          pos_max: 1365187
+        - axid: 24
+          name: SLTTB006R
+          egu2mm: 34129.6928328
+          velo_max: 100
+          velo: 100
+          hvel: 100
+          jvel: 100
+          pos_max: 1338907
+        - axid: 22
+          name: TGTTB002
+          egu2mm: 34129.6928328
+          velo_max: 100
+          hvel: 100
+          jvel: 100
+          pos_max: 3398293
+
+    - name: "camerasim"
+      asset: "https://servicedesk.infn.it/secure/ObjectSchema.jspa?id=44&typeId=2748&objectId=126655"
+      charturl: 'https://github.com/infn-epics/ioc-chart.git'     
+      devtype: camerasim
+      devgroup: cam
+      template: "adcamera"
+      pva: true
+      enable_ingress: true
+      service:   
+        http:
+          enable: true
+          port: 8082
+      stream_enable: true
+      roi_enable: true
+      stats_enable: true
+      proc_enable: true
+      overlay_enable: true
+      iocprefix: "BTF:CAM"
+      autosync: true ## restart automatically on changes
+      iocinit:
+        - name: "AcquirePeriod"
+          value: "1"
+        - name: "FrameRate"
+          value: "1"
+        - name: "FrameRateEnable"
+          value: "Yes"
+      iocparam:
+        - name: "overlay_enable"
+          value: true
+        - name: "stats_enable"
+          value: true
+        - name: "proc_enable"
+          value: true
+        - name: "tiff_enable"
+          value: true
+        - name: "roi_enable"
+          value: true
+      devices:
+        - name: "SIM01"
+          iocinit:
+          - name: "AcquirePeriod"
+            value: "1"
+          - name: "Gain"
+            value: "255"
+          - name: "SimMode"
+            value: "Peaks"
+          - name: "PeakStartX"
+            value: "250"
+          - name: "PeakStartY"
+            value: "200"
+          - name: "PeakWidthX"
+            value: "70"
+          - name: "PeakWidthY"
+            value: "50"
+          - name: "PeakVariation"
+            value: "10"
+
+    - name: "ocem-e642"
+      asset: "https://confluence.infn.it/x/nYD8DQ"
+      charturl: 'https://github.com/infn-epics/ioc-chart.git'
+      iocprefix: "BTF:MAG:OCEME642"
+      autosync: false ## restart automatically on changes
+      devtype: E642
+      devgroup: mag
+      opi: "ocem/OCEM_serial.bob"
+      template: "ocem"
+      zones: LINAC
+      iocparam:
+        - name: "server"
+          value: "192.168.192.20"
+        - name: "port"
+          value: 4001
+        
+      devices:
+        - name: MEA10
+          id: 10
+          imax: 280
+          vmax: 40
+        - name: MEA11
+          id: 11
+          imax: 280
+          vmax: 40
+    - name: "ocem-e642-SER15001bis"
+      asset: "https://confluence.infn.it/spaces/TESTBEAM/pages/323780659/SoftIOC+DEVIL+Wrapper"
+      charturl: 'https://github.com/infn-epics/ioc-chart.git'
+      iocprefix: "BTF:MAG:OCEME642"
+      autosync: false ## restart automatically on changes
+      devtype: E642
+      devgroup: mag
+      opi: "ocem/OCEM_serial.bob"
+      template: "ocem"
+      zones: LINAC
+      iocparam:
+        - name: "server"
+          value: "192.168.192.40"
+        - name: "port"
+          value: 4013
+      devices:
+        - name: QUATB102
+          id: 0
+          imax: 100
+          vmax: 25
+        - name: QUATM001
+          id: 2
+          imax: 100
+          vmax: 25
+        - name: QUATM004
+          id: 1
+          imax: 100
+          vmax: 25
+        - name: QUATB101
+          id: 3
+          imax: 100
+          vmax: 25
+          
+
+    - name: "ocem-e642-SER18004"
+      asset: "https://confluence.infn.it/spaces/TESTBEAM/pages/323780659/SoftIOC+DEVIL+Wrapper"
+      charturl: 'https://github.com/infn-epics/ioc-chart.git'
+      iocprefix: "BTF:MAG:OCEME642"
+      autosync: false ## restart automatically on changes
+      devtype: E642
+      devgroup: mag
+      opi: "ocem/OCEM_serial.bob"
+      template: "ocem"
+      zones: LINAC
+      iocparam:
+        - name: "server"
+          value: "192.168.192.32"
+        - name: "port"
+          value: 4007
+      devices:
+        - name: QUATB003
+          id: 5
+          imax: 100
+          vmax: 25
+        - name: QUATB004
+          id: 4
+          imax: 100
+          vmax: 25
+        - name: DHSTB002
+          id: 6
+          imax: 700
+          vmax: 70
+          
+    - name: "maccaferri-SER23013"
+      asset: "https://confluence.infn.it/spaces/TESTBEAM/pages/323780659/SoftIOC+DEVIL+Wrapper"
+      charturl: 'https://github.com/infn-epics/ioc-chart.git'
+      iocprefix: "BTF:MAG:MACCAFERRI"
+      autosync: false ## restart automatically on changes
+      devtype: maccaferri
+      devgroup: mag
+      opi: "maccaferri/maccaferriPS.bob"
+      template: "maccaferriPS"
+      zones: LINAC
+      iocparam:
+        - name: "server"
+          value: "192.168.192.40"
+        - name: "port"
+          value: 4006
+      devices:
+        - name: DHPTB101
+          id: 1
+          imax: 500
+          vmax: 100
+    
+
+    - name: "ocem-e642-SER23020"
+      asset: "https://confluence.infn.it/spaces/TESTBEAM/pages/323780659/SoftIOC+DEVIL+Wrapper"
+      charturl: 'https://github.com/infn-epics/ioc-chart.git'
+      iocprefix: "BTF:MAG:OCEME642"
+      autosync: false ## restart automatically on changes
+      devtype: E642
+      devgroup: mag
+      opi: "ocem/OCEM_serial.bob"
+      template: "ocem"
+      zones: LINAC
+      iocparam:
+        - name: "server"
+          value: "192.168.192.30"
+        - name: "port"
+          value: 4003
+      devices:
+        - name: DHSTB001
+          id: 4
+          imax: 700
+          vmax: 70
+    
+          
+    - name: "ocem-e642-SER15004"
+      asset: "https://confluence.infn.it/spaces/TESTBEAM/pages/323780659/SoftIOC+DEVIL+Wrapper"
+      charturl: 'https://github.com/infn-epics/ioc-chart.git'
+      iocprefix: "BTF:MAG:OCEME642"
+      autosync: false ## restart automatically on changes
+      devtype: E642
+      devgroup: mag
+      opi: "ocem/OCEM_serial.bob"
+      template: "ocem"
+      zones: LINAC
+      iocparam:
+        - name: "server"
+          value: "192.168.192.40"
+        - name: "port"
+          value: 4012
+      devices:
+        - name: QUATB001
+          id: 9
+          imax: 100
+          vmax: 25
+  
+     
+
+    - name: "eeips"
+      asset: "https://confluence.infn.it/x/nYD8DQ"
+      charturl: 'https://github.com/infn-epics/ioc-chart.git'
+      iocprefix: "BTF:MAG:EEI"
+      autosync: false ## restart automatically on changes
+      devtype: eei
+      devgroup: mag
+      opi: "eeips/eei_ps.bob"
+      template: "psEEI"
+      
+      devices:
+        - name: "QUATB201"
+          ip: 192.168.190.151
+          max_curr: 100
+          zones:
+            - TB
+        - name: "QUATB202"
+          ip: 192.168.190.152 
+          max_curr: 100
+          zones:
+            - TB
+        - name: "QUATB203"
+          ip: 192.168.190.153
+          max_curr: 100
+          zones:
+            - TB
+        - name: "QUATB204"
+          ip: 192.168.190.154 
+          max_curr: 100
+          zones:
+            - TB
+        - name: "QUATB205"
+          ip: 192.168.190.155 
+          max_curr: 100
+          zones:
+            - TB
+        - name: "QUATB206"
+          ip: 192.168.190.156
+          max_curr: 100
+          zones:
+            - TB
+        - name: "DHPTB102"
+          ip: 192.168.190.157 
+          max_curr: 100
+          zones:
+            - TB
+        - name: "DHSTB201"
+          ip: 192.168.190.158 
+          max_curr: 100
+          zones:
+            - TB
+        - name: "DHSTB202"
+          ip: 192.168.190.159
+          max_curr: 100
+          zones:
+            - TB
+        - name: "DHSTB203"
+          ip: 192.168.190.160
+          max_curr: 100
+          zones:
+            - TB
+
+
+    - name: "ngps-linac"
+      asset: "https://confluence.infn.it/x/nYD8DQ"
+      charturl: 'https://github.com/infn-epics/ioc-chart.git'
+      iocprefix: "LINAC:MAG:FAST"
+      autosync: false ## restart automatically on changes
+      devtype: fastps
+      devgroup: mag
+      opi: "fastps/fastps.bob"
+      template: "caenels"
+      zones: LINAC
+      
+      devices:
+        - name: "UFSLL578"
+          ip: 192.168.190.106
+          rangeI: 10
+        - name: "UFSLL346"
+          ip: 192.168.190.107
+          rangeI: 10
+        - name: "UFSLL012"
+          ip: 192.168.190.108
+          rangeI: 10
+
+    - name: "easy-linac"
+      asset: "https://confluence.infn.it/x/nYD8DQ"
+      charturl: 'https://github.com/infn-epics/ioc-chart.git'
+      iocprefix: "LINAC:MAG:EASY"
+      opi: "easydriver/easydriver-main.bob"
+      zones: LINAC
+      autosync: false ## restart automatically on changes
+      devtype: easydriver
+      devgroup: mag
+      template: "caenels"  
+      devices:
+        - name: "CHHLL023"
+          ip: 190.168.190.190
+          range: 10
+          
+        - name: "CHHLL024"
+          ip: 190.168.190.191
+          range: 10
+          
+        - name: "CVVLL001"
+          ip: 190.168.190.192
+          range: 10
+          
+        - name: "CHHLL001"
+          ip: 190.168.190.193
+          range: 10
+          
+        - name: "CVVLL002"
+          ip: 190.168.190.194
+          range: 10
+          
+        - name: "CHHLL002"
+          ip: 190.168.190.195
+          range: 10
+          
+        - name: "CVVLL003"
+          ip: 190.168.190.196
+          range: 10
+          
+        - name: "CHHLL003"
+          ip: 190.168.190.197
+          range: 10
+          
+        - name: "CVVLL004"
+          ip: 190.168.190.198
+          range: 10
+          
+        - name: "CHHLL004"
+          ip: 190.168.190.199
+          range: 10
+          
+        - name: "CVVLL005"
+          ip: 190.168.190.200
+          range: 10
+          
+        - name: "CHHLL005"
+          ip:  190.168.190.201
+          range: 10
+
+        - name: "CVVLL006"
+          ip: 190.168.190.202
+          range: 10
+          
+        - name: "CHHLL006"
+          ip: 190.168.190.203
+          range: 10
+          
+
+    - name: "easydriver"
+      asset: "https://confluence.infn.it/x/nYD8DQ"
+      charturl: 'https://github.com/infn-epics/ioc-chart.git'
+      iocprefix: "BTF:MAG:EASY"
+      opi: "easydriver/easydriver-main.bob"
+      autosync: false ## restart automatically on changes
+      devtype: easydriver
+      devgroup: mag
+      template: "caenels"  
+      devices:
+        - name: "CHHTM001"
+          ip: 192.168.191.230
+          range: 10
+          zones: 
+            - TM
+        - name: "CVVTM001"
+          ip: 192.168.191.231
+          range: 10
+          zones: 
+            - TM
+        - name: "CHHTM002"
+          ip: 192.168.191.232
+          range: 10
+          zones: 
+            - TM
+        - name: "CVVTM002"
+          ip: 192.168.191.233
+          range: 10
+          zones: 
+            - TM
+        - name: "CHHTM003"
+          ip: 192.168.191.234
+          range: 10
+          zones: 
+            - TM
+        - name: "CVVTM003"
+          ip: 192.168.191.235
+          range: 10
+          zones: 
+            - TM
+        - name: "CHHTB001"
+          ip: 192.168.191.236
+          range: 10
+          zones:
+            - TB1
+        - name: "CVVTB001"
+          ip: 192.168.191.237
+          range: 10
+          zones:
+            - TB1
+        - name: "CHHTB002"
+          ip: 192.168.191.238
+          range: 10
+          zones:
+            - TB1
+        - name: "CVVTB002"
+          ip: 192.168.191.239
+          range: 10
+          zones:
+            - TB1
+        - name: "CHHTB101"
+          ip: 192.168.191.240
+          range: 10
+          zones:
+            - TB1
+        - name: "CVVTB101"
+          ip:  192.168.191.241
+          range: 10
+          zones:
+            - TB1
+
+        - name: "CHHTB201"
+          ip: 192.168.191.177
+          range: 10
+          zones:
+            - TB2
+        - name: "CVVTB201"
+          ip: 192.168.191.178
+          range: 10
+          zones:
+            - TB2
+
+      
+applications:
+
+cronjobs:
+    - name: "hugo-docs"
+      ## schedule every hours
+      schedule: "*/10 * * * *"
+      image:
+        repository: "ghcr.io/hugomods/hugo:debian-nightly"
+        pullPolicy: "Always"
+      charturl: https://baltig.infn.it/epics-containers/generic-application-chart.git
+      gitRepoApp:
+        url: https://baltig.infn.it/lnf-da-control/epik8s-btf-site.git
+        mountPath: /src
+        secret: baltig-lnf-secret-14-12-2026
+      secure: true
+      exec: |
+        mkdir -p /src/static/reports /src/static/iocinfo
+        cp /docsrc/* /src/static/reports
+        cp /etc/epik8s-beamline.yaml content/control
+        cd /src
+        node /src/tools/iocinfo.js --iocinfo-dir  /doc-iocs/ --opi-dir content/control/epik8s-opi  --control-dir content/control/ --values-file content/control/epik8s-beamline.yaml --services-dir content/services
+        hugo --source /src/ --destination /docsrc/public --minify
+        
+      nfsMounts:
+        - name: hugo-docs-nfs
+          mountPath: /docsrc
+          server: 192.168.197.157
+          path: /data_epik8s/btf/Documents
+        - name: config
+          mountPath: /doc-iocs
+          server: 192.168.197.157
+          path: /data_epik8s/btf/config
+    
+backend:
+  namespace: "backend"
+  mongo:
+    host: mongodb
+    port: 27017
+  elasticsearch:
+    host: elasticsearch-es-http
+    clusterName: elasticsearch
+    port: 9200
+    protocol: https
+    pubcertsecret: elasticsearch-es-http-certs-public #secret containing the public cert
+    authorization:
+      username: elastic
+      password: GJkrSqzVRka9PC7b2N2cHmBM
+
+  kafka:
+    host: eph-kafka-kafka-brokers
+    port: 9092
+opi:
+  camera:
+    url: https://baltig.infn.it/infn-epics/camera-opi.git
+    main: Camera_Main.bob
+    macro:
+      - name: "DEVICE"
+        value: "{{iocprefix}}"
+      - name: "CAM"
+        value: "{{iocroot}}"
+  dantemag:
+    url: https://baltig.infn.it/infn-epics/mag-opi.git
+    main: MagnetsTabs.bob
+    macro:
+      - name: "TITLE"
+        value: "MAGTERMINAL {{beamline}}"
+      - name: "P"
+        value: "{{iocprefix}}"
+  motor:
+    url: https://github.com/epics-modules/motor.git
+    main: "motorApp/op/opi/motorx.opi"
+    macro:
+      - name: "P"
+        value: "{{iocprefix}}"
+      - name: "M"
+        value: "m0"
+  easydriver:
+    url: https://baltig.infn.it/infn-epics/caenels-opi.git
+    main: "easydriver/easydriver-main.bob"
+    macro:
+      - name: "P"
+        value: "{{iocprefix}}"
+      - name: "R"
+        value: ""
+  icpdas:
+    url: https://baltig.infn.it/infn-epics/icpdas-opi.git
+    main: "{{devtype}}.bob"
+    macro:
+      - name: "P"
+        value: "{{iocprefix}}"
+      - name: "R"
+        value: "{{iocroot}}"
+  tml:
+    url: https://baltig.infn.it/infn-epics/motor-tml-opi.git
+    main: TML.bob
+    macro:
+      - name: "PREFIX"
+        value: "{{iocprefix}}"
+      - name: "CONFFILE"
+        value: "{{CONFIG}}"
+  unimag:
+    url: https://baltig.infn.it/infn-epics/unimag.git
+    main: opi/unimag.bob
+    macro:
+      - name: "TITLE"
+        value: "Unimag {{beamline}}"
+      - name: "P"
+        value: "{{iocprefix}}"
+      - name: "CONFFILE"
+        value: "{{CONFIG}}"
+        
+nfsMounts:
+    - name: data
+      server: 192.168.197.157
+      path: /data_epik8s/btf/data
+      mountPath: /nfs/data
+      opt: "-o nolock"
+    - name: autosave
+      server: 192.168.197.157
+      path: /data_epik8s/btf/autosave
+      mountPath: /nfs/autosave
+      opt: "-o nolock"
+    - name: config
+      server: 192.168.197.157
+      path: /data_epik8s/btf/config
+      mountPath: /nfs/config
+      opt: "-o nolock"
+
+nfsBackups:
+    - name: documents
+      server: 192.168.197.157
+      path: /data_epik8s/btf/Documents
+      mountPath: /nfs/documents
+      opt: "-o nolock"
+    - name: backups
+      server: 192.168.197.157
+      path: /data_epik8s/btf/Backups
+      mountPath: /nfs/backups
+      opt: "-o nolock"
+syncPolicy:
+    automated:
+      prune: true  # Optional: Automatically remove resources not specified in Helm chart
+      selfHeal: true
+    syncOptions:
+      - CreateNamespace=true 
+      - Prune=true

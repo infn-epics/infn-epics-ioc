@@ -1,0 +1,54 @@
+asset: https://confluence.infn.it/x/nYD8DQ
+autosave_dir: /nfs/autosave/tml-ch3
+autosync: false
+charturl: https://github.com/infn-epics/ioc-chart.git
+config_dir: /nfs/config/tml-ch3
+data_dir: /nfs/data/tml-ch3
+devgroup: mot
+devices:
+- axid: 7
+  name: RFDATT01
+- axid: 8
+  name: RFDPHS01
+- axid: 3
+  name: W2BPHS01
+devtype: tml
+disable: false
+epik8s-tools-version: 0.9.12
+iocname: tml-ch3
+iocprefix: SPARC:MOT:TML
+motor:
+  accl: 100
+  accl_max: 100
+  har: 100
+  hostid: 3
+  hvel: 40
+  jar: 100
+  jvel: 40
+  velo: 40
+  velo_max: 50
+name: tml-ch3
+nfsMounts:
+- mountPath: /nfs/data
+  name: data
+  opt: -o nolock
+  path: /sparcstorage/space2/SparcData
+  server: 192.168.197.157
+- mountPath: /nfs/autosave
+  name: autosave
+  opt: -o nolock
+  path: /data_epik8s/autosave
+  server: 192.168.197.157
+- mountPath: /nfs/config
+  name: config
+  opt: -o nolock
+  path: /data_epik8s/config
+  server: 192.168.197.157
+opi: tml/TML_Main.bob
+serial:
+  baud: 9600
+  ip: localhost
+  port: 4001
+  ptty: /var/tmp/ttyV0
+template: motor
+zones: WAVEGUIDE

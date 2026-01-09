@@ -1,0 +1,70 @@
+asset: https://servicedesk.infn.it/secure/ObjectSchema.jspa?id=32&typeId=1444&objectId=138748
+autosave_dir: /nfs/autosave/tektronix-bcm
+charturl: https://github.com/infn-epics/ioc-chart.git
+config_dir: /nfs/config/tektronix-bcm
+data_dir: /nfs/data/tektronix-bcm
+devgroup: diag
+devices:
+- channel: 1
+  coeff: 210000000000
+  devtype: measurement
+  name: AC1BCM01
+- channel: 2
+  coeff: 429120000000
+  devtype: measurement
+  name: AC2BCM01
+- channel: 3
+  coeff: 429120000000
+  devtype: measurement
+  name: PTLBCM01
+- channel: 4
+  coeff: 1
+  desc: BCM 1
+  devtype: measurement
+  name: UNDBCM01
+- channel: 5
+  coeff: 214560000000
+  desc: BCM 1
+  devtype: measurement
+  name: DGL01BCM01
+- channel: 6
+  coeff: 214560000000
+  desc: BCM 1
+  devtype: measurement
+  name: DGL02BCM01
+- channel: 7
+  coeff: 1
+  desc: BCM 1
+  devtype: measurement
+  name: SBNTR02BCM01
+- channel: 8
+  coeff: 1
+  desc: BCM 1
+  devtype: measurement
+  name: LRSDIODE
+devtype: mso58lp
+epik8s-tools-version: 0.9.12
+iocname: tektronix-bcm
+iocprefix: SPARC:DIAG:TEK-BCM
+name: tektronix-bcm
+nfsMounts:
+- mountPath: /nfs/data
+  name: data
+  opt: -o nolock
+  path: /sparcstorage/space2/SparcData
+  server: 192.168.197.157
+- mountPath: /nfs/autosave
+  name: autosave
+  opt: -o nolock
+  path: /data_epik8s/autosave
+  server: 192.168.197.157
+- mountPath: /nfs/config
+  name: config
+  opt: -o nolock
+  path: /data_epik8s/config
+  server: 192.168.197.157
+port: 4000
+pva: true
+samples: 6200
+server: 192.168.197.195
+template: tektronix

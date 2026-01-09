@@ -1,0 +1,81 @@
+asset: https://confluence.infn.it/x/nYD8DQ
+autosave_dir: /nfs/autosave/eeips
+autosync: false
+charturl: https://github.com/infn-epics/ioc-chart.git
+config_dir: /nfs/config/eeips
+data_dir: /nfs/data/eeips
+devgroup: mag
+devices:
+- ip: 192.168.190.151
+  max_curr: 100
+  name: QUATB201
+  zones:
+  - TB
+- ip: 192.168.190.152
+  max_curr: 100
+  name: QUATB202
+  zones:
+  - TB
+- ip: 192.168.190.153
+  max_curr: 100
+  name: QUATB203
+  zones:
+  - TB
+- ip: 192.168.190.154
+  max_curr: 100
+  name: QUATB204
+  zones:
+  - TB
+- ip: 192.168.190.155
+  max_curr: 100
+  name: QUATB205
+  zones:
+  - TB
+- ip: 192.168.190.156
+  max_curr: 100
+  name: QUATB206
+  zones:
+  - TB
+- ip: 192.168.190.157
+  max_curr: 100
+  name: DHPTB102
+  zones:
+  - TB
+- ip: 192.168.190.158
+  max_curr: 100
+  name: DHSTB201
+  zones:
+  - TB
+- ip: 192.168.190.159
+  max_curr: 100
+  name: DHSTB202
+  zones:
+  - TB
+- ip: 192.168.190.160
+  max_curr: 100
+  name: DHSTB203
+  zones:
+  - TB
+devtype: eei
+epik8s-tools-version: 0.9.14
+iocname: eeips
+iocprefix: BTF:MAG:EEI
+name: eeips
+nfsMounts:
+- mountPath: /nfs/data
+  name: data
+  opt: -o nolock
+  path: /data_epik8s/btf/data
+  server: 192.168.197.157
+- mountPath: /nfs/autosave
+  name: autosave
+  opt: -o nolock
+  path: /data_epik8s/btf/autosave
+  server: 192.168.197.157
+- mountPath: /nfs/config
+  name: config
+  opt: -o nolock
+  path: /data_epik8s/btf/config
+  server: 192.168.197.157
+opi: eeips/eei_ps.bob
+template: psEEI

@@ -1,0 +1,95 @@
+asset: https://confluence.infn.it/x/nYD8DQ
+autosave_dir: /nfs/autosave/tml-ch1
+autosync: false
+charturl: https://github.com/infn-epics/ioc-chart.git
+config_dir: /nfs/config/tml-ch1
+data_dir: /nfs/data/tml-ch1
+devgroup: mot
+devices:
+- axid: 10
+  hvel: 30
+  jvel: 30
+  name: GUNFLG01
+  poi:
+  - name: yag
+    value: 688640
+  - name: calibration
+    value: 688640
+  - name: mirror
+    value: 1688320
+  velo: 30
+- axid: 3
+  name: AC1FLG01
+- axid: 4
+  hvel: 40
+  jvel: 40
+  name: AC2FLG01
+  velo: 40
+- axid: 5
+  hvel: 40
+  jvel: 40
+  name: AC3FLG01
+  velo: 40
+- axid: 12
+  hvel: 40
+  jvel: 40
+  name: UTLFLG01
+  velo: 40
+- axid: 13
+  name: UTLFLG02
+- axid: 11
+  hvel: 40
+  jvel: 40
+  name: SBNFLG00
+  velo: 40
+  zones: SBN
+- axid: 14
+  hvel: 40
+  jvel: 40
+  name: SBNFLG01
+  velo: 40
+  zones: SBN
+- axid: 8
+  name: GUNSOLH1
+- axid: 7
+  name: GUNSOLV1
+devtype: tml
+disable: false
+epik8s-tools-version: 0.9.12
+iocname: tml-ch1
+iocprefix: SPARC:MOT:TML
+motor:
+  accl: 100
+  accl_max: 100
+  har: 100
+  hostid: 5
+  hvel: 20
+  jar: 100
+  jvel: 20
+  velo: 20
+  velo_max: 50
+name: tml-ch1
+nfsMounts:
+- mountPath: /nfs/data
+  name: data
+  opt: -o nolock
+  path: /sparcstorage/space2/SparcData
+  server: 192.168.197.157
+- mountPath: /nfs/autosave
+  name: autosave
+  opt: -o nolock
+  path: /data_epik8s/autosave
+  server: 192.168.197.157
+- mountPath: /nfs/config
+  name: config
+  opt: -o nolock
+  path: /data_epik8s/config
+  server: 192.168.197.157
+opi: tml/TML_Main.bob
+serial:
+  baud: 9600
+  ip: localhost
+  port: 4001
+  ptty: /var/tmp/ttyV0
+template: motor
+zones: LINAC

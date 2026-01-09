@@ -1,0 +1,50 @@
+asset: https://confluence.infn.it/x/JIBnLw
+autosave_dir: /nfs/autosave/pollux-ctrl01
+autosync: false
+charturl: https://baltig.infn.it/epics-containers/ioc-chart.git
+config_dir: /nfs/config/pollux-ctrl01
+data_dir: /nfs/data/pollux-ctrl01
+devgroup: mot
+devices:
+- axid: 7
+  dhlm: 25
+  dllm: -25
+  home: 1
+  name: HMOT01
+  start: 10
+  velo: 1
+- axid: 8
+  dhlm: 25
+  dllm: -25
+  home: 1
+  name: VMOT01
+  start: 10
+  velo: 1
+devtype: pollux
+epik8s-tools-version: 0.9.14
+iocname: pollux-ctrl01
+iocprefix: EUAPS:CTRL
+iocroot: FPMMIR
+machine: pluto:pocfewf::fwef-fewfwe--fwwtet
+name: pollux-ctrl01
+nfsMounts:
+- mountPath: /nfs/data
+  name: data
+  opt: -o nolock
+  path: /data_epik8s/euaps/data
+  server: 192.168.197.157
+- mountPath: /nfs/autosave
+  name: autosave
+  opt: -o nolock
+  path: /data_epik8s/euaps/autosave
+  server: 192.168.197.157
+- mountPath: /nfs/config
+  name: config
+  opt: -o nolock
+  path: /data_epik8s/euaps/config
+  server: 192.168.197.157
+opi: asyn/motorx_all.bob
+port: '4001'
+server: 192.168.190.64
+template: motor
+zones: FP

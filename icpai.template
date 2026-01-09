@@ -1,0 +1,53 @@
+
+record(ai, "$(P):$(R):AI$(ID)_RB")
+{
+    field(DESC, "$(DESC=Analog Input $(ID))")
+    field(DTYP, "asynFloat64")
+    field(INP,  "@asyn($(PORT) $(ID) $(TIMEOUT=1000))INT16")
+    
+    field(SCAN, "I/O Intr")
+    field(FLNK, "$(P):$(R):AI$(ID):VOLT_RB")
+}
+record(ai, "$(P):$(R):AI$(ID)_MAX_RB")
+{
+    field(DESC, "$(DESC=Max Analog Input $(ID))")
+    field(DTYP, "asynFloat64")
+    field(INP,  "@asyn($(PORTMAX) $(ID) $(TIMEOUT=1000))INT16")
+    field(SCAN, "I/O Intr")
+    field(FLNK, "$(P):$(R):AI$(ID):VOLT_MAX_RB")
+}
+record(ai, "$(P):$(R):AI$(ID)_MIN_RB")
+{
+    field(DESC, "$(DESC=Min Analog Input $(ID))")
+    field(DTYP, "asynFloat64")
+    field(INP,  "@asyn($(PORTMIN) $(ID) $(TIMEOUT=1000))INT16")
+    field(SCAN, "I/O Intr")
+    field(FLNK, "$(P):$(R):AI$(ID):VOLT_MIN_RB")   
+}
+
+record(calc, "$(P):$(R):AI$(ID):VOLT_RB")
+{
+    field(DESC, "$(DESC=Volt $(ID))")
+    field(INPA, "$(P):$(R):AI$(ID)_RB")
+    field(CALC, "A / 32768. * $(maxscale=10.)")
+    field(PREC, "3")
+    field(EGU, "V")
+}
+record(calc, "$(P):$(R):AI$(ID):VOLT_MAX_RB")
+{
+    field(DESC, "$(DESC=Volt Max $(ID))")
+    field(INPA, "$(P):$(R):AI$(ID)_MAX_RB")
+    field(CALC, "A / 32768. * $(maxscale=10.)")
+    field(PREC, "3")
+    field(EGU, "V")
+}
+record(calc, "$(P):$(R):AI$(ID):VOLT_MIN_RB")
+{
+    field(DESC, "$(DESC=Volt Min $(ID))")
+    field(INPA, "$(P):$(R):AI$(ID)_MIN_RB")
+    field(CALC, "A / 32768. * $(maxscale=10.)")
+    field(PREC, "3")
+    field(EGU, "V")
+}
+
+

@@ -1,0 +1,38 @@
+asset: https://servicedesk.infn.it/secure/ObjectSchema.jspa?id=32&typeId=1444&objectId=129573
+autosave_dir: /nfs/autosave/hv-plasma
+autosync: false
+charturl: https://baltig.infn.it/epics-containers/ioc-chart.git
+config_dir: /nfs/config/hv-plasma
+data_dir: /nfs/data/hv-plasma
+devgroup: diag
+devices:
+- channel: 0
+  devtype: ao
+  name: PLAVOLT01
+- channel: 1
+  devtype: ao
+  name: PLASWT01
+devtype: icp7226
+epik8s-tools-version: 0.9.12
+iocname: hv-plasma
+iocprefix: SPARC:HV
+iocroot: ICP
+name: hv-plasma
+nfsMounts:
+- mountPath: /nfs/data
+  name: data
+  opt: -o nolock
+  path: /sparcstorage/space2/SparcData
+  server: 192.168.197.157
+- mountPath: /nfs/autosave
+  name: autosave
+  opt: -o nolock
+  path: /data_epik8s/autosave
+  server: 192.168.197.157
+- mountPath: /nfs/config
+  name: config
+  opt: -o nolock
+  path: /data_epik8s/config
+  server: 192.168.197.157
+server: ddsparcicphv001.lnf.infn.it
+template: icpdas

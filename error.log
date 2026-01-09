@@ -1,0 +1,2621 @@
+* rendering '/epics/ioc/config/ioc_exec.sh.j2' with YAML file './eeips-config.yaml' into '/epics/ioc/config/ioc_exec.sh'
+* rendered /epics/ioc/config/ioc_exec.sh.j2 -> /epics/ioc/config/ioc_exec.sh using ./eeips-config.yaml
+* rendering '/epics/ioc/config/psEEI.yaml.j2' with YAML file './eeips-config.yaml' into '/epics/ioc/config/psEEI.yaml'
+* rendered /epics/ioc/config/psEEI.yaml.j2 -> /epics/ioc/config/psEEI.yaml using ./eeips-config.yaml
++ cd /epics/ioc
++ CONFIG_DIR=/epics/ioc/config
++ [[ -f /epics/support/configure/RELEASE.shell ]]
++ source /epics/support/configure/RELEASE.shell
+++ export IOCSTATS=/epics/support/iocStats
+++ IOCSTATS=/epics/support/iocStats
+++ export EPICS_DB_INCLUDE_PATH=/epics/support/ADAravis/db:/epics/support/ADCore/db:/epics/support/ADGenICam/db:/epics/support/ADSimDetector/db:/epics/support/OCEMPowerSupply/db:/epics/support/OCEM_E642/db:/epics/support/Tektronix_MSO58LP/db:/epics/support/agilent4uhv/db:/epics/support/agilentXgs600/db:/epics/support/agilentipcmini/db:/epics/support/asyn/db:/epics/support/autosave/db:/epics/support/biltItest/db:/epics/support/busy/db:/epics/support/caenelsPS/db:/epics/support/calc/db:/epics/support/chillerSmcHecr/db:/epics/support/easy-driver-epics/db:/epics/support/ffmpegServer/db:/epics/support/hazemeyer-lnf/db:/epics/support/icpdas/db:/epics/support/iocStats/db:/epics/support/kima-undulator/db:/epics/support/menloLac/db:/epics/support/menloLfc/db:/epics/support/menloSyncro/db:/epics/support/modbus/db:/epics/support/motor/db:/epics/support/motorMicos/db:/epics/support/motorMotorSim/db:/epics/support/motorNewport/db:/epics/support/motorTechnosoft/db:/epics/support/plc-elinp/db:/epics/support/ppt-modulator/db:/epics/support/psmodbusEEI/db:/epics/support/pvxs/db:/epics/support/scandinova-scandicat-mod/db:/epics/support/sigmaPhiStart/db:/epics/support/sscan/db:/epics/support/tpg300_500/db
+++ EPICS_DB_INCLUDE_PATH=/epics/support/ADAravis/db:/epics/support/ADCore/db:/epics/support/ADGenICam/db:/epics/support/ADSimDetector/db:/epics/support/OCEMPowerSupply/db:/epics/support/OCEM_E642/db:/epics/support/Tektronix_MSO58LP/db:/epics/support/agilent4uhv/db:/epics/support/agilentXgs600/db:/epics/support/agilentipcmini/db:/epics/support/asyn/db:/epics/support/autosave/db:/epics/support/biltItest/db:/epics/support/busy/db:/epics/support/caenelsPS/db:/epics/support/calc/db:/epics/support/chillerSmcHecr/db:/epics/support/easy-driver-epics/db:/epics/support/ffmpegServer/db:/epics/support/hazemeyer-lnf/db:/epics/support/icpdas/db:/epics/support/iocStats/db:/epics/support/kima-undulator/db:/epics/support/menloLac/db:/epics/support/menloLfc/db:/epics/support/menloSyncro/db:/epics/support/modbus/db:/epics/support/motor/db:/epics/support/motorMicos/db:/epics/support/motorMotorSim/db:/epics/support/motorNewport/db:/epics/support/motorTechnosoft/db:/epics/support/plc-elinp/db:/epics/support/ppt-modulator/db:/epics/support/psmodbusEEI/db:/epics/support/pvxs/db:/epics/support/scandinova-scandicat-mod/db:/epics/support/sigmaPhiStart/db:/epics/support/sscan/db:/epics/support/tpg300_500/db
+++ export PVLOGGING=/epics/support/pvlogging
+++ PVLOGGING=/epics/support/pvlogging
+++ export AUTOSAVE=/epics/support/autosave
+++ AUTOSAVE=/epics/support/autosave
+++ export ASYN=/epics/support/asyn
+++ ASYN=/epics/support/asyn
+++ export BUSY=/epics/support/busy
+++ BUSY=/epics/support/busy
+++ export STREAMDEVICE=/epics/support/StreamDevice
+++ STREAMDEVICE=/epics/support/StreamDevice
+++ export CALC=/epics/support/calc
+++ CALC=/epics/support/calc
+++ export SSCAN=/epics/support/sscan
+++ SSCAN=/epics/support/sscan
+++ export MOTOR=/epics/support/motor
+++ MOTOR=/epics/support/motor
+++ export MOTORMOTORSIM=/epics/support/motorMotorSim
+++ MOTORMOTORSIM=/epics/support/motorMotorSim
+++ export ADCORE=/epics/support/ADCore
+++ ADCORE=/epics/support/ADCore
+++ export ADGENICAM=/epics/support/ADGenICam
+++ ADGENICAM=/epics/support/ADGenICam
+++ export ADARAVIS=/epics/support/ADAravis
+++ ADARAVIS=/epics/support/ADAravis
+++ export ADSIMDETECTOR=/epics/support/ADSimDetector
+++ ADSIMDETECTOR=/epics/support/ADSimDetector
+++ export MODBUS=/epics/support/modbus
+++ MODBUS=/epics/support/modbus
+++ export MOTORNEWPORT=/epics/support/motorNewport
+++ MOTORNEWPORT=/epics/support/motorNewport
+++ export SNCSEQ=/epics/support/sequencer
+++ SNCSEQ=/epics/support/sequencer
+++ export FFMPEGSERVER=/epics/support/ffmpegServer
+++ FFMPEGSERVER=/epics/support/ffmpegServer
+++ export PVXS=/epics/support/pvxs
+++ PVXS=/epics/support/pvxs
+++ export PCAS=/epics/support/pcas
+++ PCAS=/epics/support/pcas
+++ export EPICS_NDS=/epics/support/epics-nds
+++ EPICS_NDS=/epics/support/epics-nds
+++ export ASYNINTERPOSEMENLO=/epics/support/asynInterposeMenlo
+++ ASYNINTERPOSEMENLO=/epics/support/asynInterposeMenlo
+++ export MENLOSYNCRO=/epics/support/menloSyncro
+++ MENLOSYNCRO=/epics/support/menloSyncro
+++ export MENLOLFC=/epics/support/menloLfc
+++ MENLOLFC=/epics/support/menloLfc
+++ export MENLOLAC=/epics/support/menloLac
+++ MENLOLAC=/epics/support/menloLac
+++ export AGILENTXGS600=/epics/support/agilentXgs600
+++ AGILENTXGS600=/epics/support/agilentXgs600
+++ export BILTITEST=/epics/support/biltItest
+++ BILTITEST=/epics/support/biltItest
+++ export SIGMAPHISTART=/epics/support/sigmaPhiStart
+++ SIGMAPHISTART=/epics/support/sigmaPhiStart
+++ export ICPDAS=/epics/support/icpdas
+++ ICPDAS=/epics/support/icpdas
+++ export EASY_DRIVER_EPICS=/epics/support/easy-driver-epics
+++ EASY_DRIVER_EPICS=/epics/support/easy-driver-epics
+++ export KIMA_UNDULATOR_IOC=/epics/support/kima-undulator
+++ KIMA_UNDULATOR_IOC=/epics/support/kima-undulator
+++ export AGILENTIPCMINI=/epics/support/agilentipcmini
+++ AGILENTIPCMINI=/epics/support/agilentipcmini
+++ export AGILENT4UHV=/epics/support/agilent4uhv
+++ AGILENT4UHV=/epics/support/agilent4uhv
+++ export CHILLERSMCHECR=/epics/support/chillerSmcHecr
+++ CHILLERSMCHECR=/epics/support/chillerSmcHecr
+++ export MOTORTECHNOSOFT=/epics/support/motorTechnosoft
+++ MOTORTECHNOSOFT=/epics/support/motorTechnosoft
+++ export TPG300_500=/epics/support/tpg300_500
+++ TPG300_500=/epics/support/tpg300_500
+++ export TEKTRONIX_MSO58LP=/epics/support/Tektronix_MSO58LP
+++ TEKTRONIX_MSO58LP=/epics/support/Tektronix_MSO58LP
+++ export CAENELSPS=/epics/support/caenelsPS
+++ CAENELSPS=/epics/support/caenelsPS
+++ export OCEMPOWERSUPPLY=/epics/support/OCEMPowerSupply
+++ OCEMPOWERSUPPLY=/epics/support/OCEMPowerSupply
+++ export MOTORMICOS=/epics/support/motorMicos
+++ MOTORMICOS=/epics/support/motorMicos
+++ export CA_GATEWAY=/epics/support/ca-gateway
+++ CA_GATEWAY=/epics/support/ca-gateway
+++ export HAZEMEYER_LNF=/epics/support/hazemeyer-lnf
+++ HAZEMEYER_LNF=/epics/support/hazemeyer-lnf
+++ export PPT_MODULATOR=/epics/support/ppt-modulator
+++ PPT_MODULATOR=/epics/support/ppt-modulator
+++ export SCANDINOVA_RFMOD=/epics/support/scandinova-scandicat-mod
+++ SCANDINOVA_RFMOD=/epics/support/scandinova-scandicat-mod
+++ export OCEM_E642=/epics/support/OCEM_E642
+++ OCEM_E642=/epics/support/OCEM_E642
+++ export PLCELI=/epics/support/plc-elinp
+++ PLCELI=/epics/support/plc-elinp
+++ export PSMODBUSEEI=/epics/support/psmodbusEEI
+++ PSMODBUSEEI=/epics/support/psmodbusEEI
++ override=/epics/ioc/config/start.sh
++ ibek_yamls=(${CONFIG_DIR}/*.yaml)
++ ioc_startup=/epics/ioc/config/st.cmd
++ export RUNTIME_DIR=/epics/runtime
++ RUNTIME_DIR=/epics/runtime
++ mkdir -p /epics/runtime
++ epics_db=/epics/runtime/ioc.db
++ ibek_src=/epics/ioc/config/psEEI.yaml
++ '[' -d /epics/ioc/config ']'
++ echo 'checking config folder /epics/ioc/config'
+checking config folder /epics/ioc/config
++ ls -al /epics/ioc/config
+total 24
+drwxr-xr-x 2 root   root   4096 Dec 16 13:45 .
+drwxrwxrwx 1 ubuntu ubuntu 4096 Dec 16 13:44 ..
+-rwxr-xr-x 1 root   root    156 Dec 16 13:45 ioc_exec.sh
+-rwxr-xr-x 1 root   root    718 Dec 16 13:45 ioc_exec.sh.j2
+-rw-r--r-- 1 root   root   2542 Dec 16 13:45 psEEI.yaml
+-rw-r--r-- 1 root   root   1783 Dec 16 13:39 psEEI.yaml.j2
++ '[' -f /epics/ioc/config/start.sh ']'
++ '[' -f /epics/ioc/config/psEEI.yaml ']'
++ [[ 1 > 1 ]]
++ db_src=/epics/runtime/ioc.subst
++ final_ioc_startup=/epics/runtime/st.cmd
++ readarray entities
+++ yq -o=j -I=0 '.entities[]' /epics/ioc/config/psEEI.yaml
++ (( count = 0  ))
++ (( count < 11  ))
+++ yq '.entities[0].type' /epics/ioc/config/psEEI.yaml
++ instance_type=EEI.ps
++ '[' EEI.ps = ADAravis.aravisCamera ']'
++ (( count++  ))
++ (( count < 11  ))
+++ yq '.entities[1].type' /epics/ioc/config/psEEI.yaml
++ instance_type=EEI.ps
++ '[' EEI.ps = ADAravis.aravisCamera ']'
++ (( count++  ))
++ (( count < 11  ))
+++ yq '.entities[2].type' /epics/ioc/config/psEEI.yaml
++ instance_type=EEI.ps
++ '[' EEI.ps = ADAravis.aravisCamera ']'
++ (( count++  ))
++ (( count < 11  ))
+++ yq '.entities[3].type' /epics/ioc/config/psEEI.yaml
++ instance_type=EEI.ps
++ '[' EEI.ps = ADAravis.aravisCamera ']'
++ (( count++  ))
++ (( count < 11  ))
+++ yq '.entities[4].type' /epics/ioc/config/psEEI.yaml
++ instance_type=EEI.ps
++ '[' EEI.ps = ADAravis.aravisCamera ']'
++ (( count++  ))
++ (( count < 11  ))
+++ yq '.entities[5].type' /epics/ioc/config/psEEI.yaml
++ instance_type=EEI.ps
++ '[' EEI.ps = ADAravis.aravisCamera ']'
++ (( count++  ))
++ (( count < 11  ))
+++ yq '.entities[6].type' /epics/ioc/config/psEEI.yaml
++ instance_type=EEI.ps
++ '[' EEI.ps = ADAravis.aravisCamera ']'
++ (( count++  ))
++ (( count < 11  ))
+++ yq '.entities[7].type' /epics/ioc/config/psEEI.yaml
++ instance_type=EEI.ps
++ '[' EEI.ps = ADAravis.aravisCamera ']'
++ (( count++  ))
++ (( count < 11  ))
+++ yq '.entities[8].type' /epics/ioc/config/psEEI.yaml
++ instance_type=EEI.ps
++ '[' EEI.ps = ADAravis.aravisCamera ']'
++ (( count++  ))
++ (( count < 11  ))
+++ yq '.entities[9].type' /epics/ioc/config/psEEI.yaml
++ instance_type=EEI.ps
++ '[' EEI.ps = ADAravis.aravisCamera ']'
++ (( count++  ))
++ (( count < 11  ))
+++ yq '.entities[10].type' /epics/ioc/config/psEEI.yaml
++ instance_type=epics.PostStartupCommand
++ '[' epics.PostStartupCommand = ADAravis.aravisCamera ']'
++ (( count++  ))
++ (( count < 11  ))
++ defs='/epics/ibek-defs/*.ibek.support.yaml'
++ ibek runtime generate /epics/ioc/config/psEEI.yaml /epics/ibek-defs/ADAravis.ibek.support.yaml /epics/ibek-defs/ADCore.ibek.support.yaml /epics/ibek-defs/ADSimDetector.ibek.support.yaml /epics/ibek-defs/AgilentXgs600.ibek.support.yaml /epics/ibek-defs/Tektronix_MSO58LP.ibek.support.yaml /epics/ibek-defs/agilent4uhv.ibek.support.yaml /epics/ibek-defs/agilentipcmini.ibek.support.yaml /epics/ibek-defs/asyn.ibek.support.yaml /epics/ibek-defs/asynInterposeMenlo.ibek.support.yaml /epics/ibek-defs/autosave.ibek.support.yaml /epics/ibek-defs/biltItest.ibek.support.yaml /epics/ibek-defs/caenelsPS.ibek.support.yaml /epics/ibek-defs/easy-driver-epics.ibek.support.yaml /epics/ibek-defs/epics.ibek.support.yaml /epics/ibek-defs/ffmpegServer.ibek.support.yaml /epics/ibek-defs/hazemeyer.ibek.support.yaml /epics/ibek-defs/icpdas.ibek.support.yaml /epics/ibek-defs/iocStats.ibek.support.yaml /epics/ibek-defs/kima.ibek.support.yaml /epics/ibek-defs/menlo-lac1550.ibek.support.yaml /epics/ibek-defs/menlo-lfc.ibek.support.yaml /epics/ibek-defs/menlo-syncro.ibek.support.yaml /epics/ibek-defs/modbus.ibek.support.yaml /epics/ibek-defs/motor.ibek.support.yaml /epics/ibek-defs/motorMicos.ibek.support.yaml /epics/ibek-defs/motorMotorSim.ibek.support.yaml /epics/ibek-defs/motorNewport.ibek.support.yaml /epics/ibek-defs/ocemE642.ibek.support.yaml /epics/ibek-defs/ocemPS.ibek.support.yaml /epics/ibek-defs/plc-elinp.ibek.support.yaml /epics/ibek-defs/ppt-modulator.ibek.support.yaml /epics/ibek-defs/psEEI.ibek.support.yaml /epics/ibek-defs/pvlogging.ibek.support.yaml /epics/ibek-defs/scandinova-scandicat-mod.ibek.support.yaml /epics/ibek-defs/sigmaPhiStart.ibek.support.yaml /epics/ibek-defs/smc-hecr.ibek.support.yaml /epics/ibek-defs/technosoft.ibek.support.yaml /epics/ibek-defs/tpg300.ibek.support.yaml /epics/ibek-defs/tpg500.ibek.support.yaml
++ ibek runtime generate-autosave
++ [[ -d /epics/support/configure/protocol ]]
++ rm -fr /epics/runtime/protocol
++ cp -r /epics/support/configure/protocol /epics/runtime
++ '[' -f /epics/runtime/ioc.subst ']'
+++ for i in ${SUPPORT}/*/db
+++ echo -n '-I /epics/support/ADAravis/db '
+++ for i in ${SUPPORT}/*/db
+++ echo -n '-I /epics/support/ADCore/db '
+++ for i in ${SUPPORT}/*/db
+++ echo -n '-I /epics/support/ADGenICam/db '
+++ for i in ${SUPPORT}/*/db
+++ echo -n '-I /epics/support/ADSimDetector/db '
+++ for i in ${SUPPORT}/*/db
+++ echo -n '-I /epics/support/OCEMPowerSupply/db '
+++ for i in ${SUPPORT}/*/db
+++ echo -n '-I /epics/support/OCEM_E642/db '
+++ for i in ${SUPPORT}/*/db
+++ echo -n '-I /epics/support/Tektronix_MSO58LP/db '
+++ for i in ${SUPPORT}/*/db
+++ echo -n '-I /epics/support/agilent4uhv/db '
+++ for i in ${SUPPORT}/*/db
+++ echo -n '-I /epics/support/agilentXgs600/db '
+++ for i in ${SUPPORT}/*/db
+++ echo -n '-I /epics/support/agilentipcmini/db '
+++ for i in ${SUPPORT}/*/db
+++ echo -n '-I /epics/support/asyn/db '
+++ for i in ${SUPPORT}/*/db
+++ echo -n '-I /epics/support/autosave/db '
+++ for i in ${SUPPORT}/*/db
+++ echo -n '-I /epics/support/biltItest/db '
+++ for i in ${SUPPORT}/*/db
+++ echo -n '-I /epics/support/busy/db '
+++ for i in ${SUPPORT}/*/db
+++ echo -n '-I /epics/support/caenelsPS/db '
+++ for i in ${SUPPORT}/*/db
+++ echo -n '-I /epics/support/calc/db '
+++ for i in ${SUPPORT}/*/db
+++ echo -n '-I /epics/support/chillerSmcHecr/db '
+++ for i in ${SUPPORT}/*/db
+++ echo -n '-I /epics/support/easy-driver-epics/db '
+++ for i in ${SUPPORT}/*/db
+++ echo -n '-I /epics/support/ffmpegServer/db '
+++ for i in ${SUPPORT}/*/db
+++ echo -n '-I /epics/support/hazemeyer-lnf/db '
+++ for i in ${SUPPORT}/*/db
+++ echo -n '-I /epics/support/icpdas/db '
+++ for i in ${SUPPORT}/*/db
+++ echo -n '-I /epics/support/iocStats/db '
+++ for i in ${SUPPORT}/*/db
+++ echo -n '-I /epics/support/kima-undulator/db '
+++ for i in ${SUPPORT}/*/db
+++ echo -n '-I /epics/support/menloLac/db '
+++ for i in ${SUPPORT}/*/db
+++ echo -n '-I /epics/support/menloLfc/db '
+++ for i in ${SUPPORT}/*/db
+++ echo -n '-I /epics/support/menloSyncro/db '
+++ for i in ${SUPPORT}/*/db
+++ echo -n '-I /epics/support/modbus/db '
+++ for i in ${SUPPORT}/*/db
+++ echo -n '-I /epics/support/motor/db '
+++ for i in ${SUPPORT}/*/db
+++ echo -n '-I /epics/support/motorMicos/db '
+++ for i in ${SUPPORT}/*/db
+++ echo -n '-I /epics/support/motorMotorSim/db '
+++ for i in ${SUPPORT}/*/db
+++ echo -n '-I /epics/support/motorNewport/db '
+++ for i in ${SUPPORT}/*/db
+++ echo -n '-I /epics/support/motorTechnosoft/db '
+++ for i in ${SUPPORT}/*/db
+++ echo -n '-I /epics/support/plc-elinp/db '
+++ for i in ${SUPPORT}/*/db
+++ echo -n '-I /epics/support/ppt-modulator/db '
+++ for i in ${SUPPORT}/*/db
+++ echo -n '-I /epics/support/psmodbusEEI/db '
+++ for i in ${SUPPORT}/*/db
+++ echo -n '-I /epics/support/pvxs/db '
+++ for i in ${SUPPORT}/*/db
+++ echo -n '-I /epics/support/scandinova-scandicat-mod/db '
+++ for i in ${SUPPORT}/*/db
+++ echo -n '-I /epics/support/sigmaPhiStart/db '
+++ for i in ${SUPPORT}/*/db
+++ echo -n '-I /epics/support/sscan/db '
+++ for i in ${SUPPORT}/*/db
+++ echo -n '-I /epics/support/tpg300_500/db '
++ includes='-I /epics/support/ADAravis/db -I /epics/support/ADCore/db -I /epics/support/ADGenICam/db -I /epics/support/ADSimDetector/db -I /epics/support/OCEMPowerSupply/db -I /epics/support/OCEM_E642/db -I /epics/support/Tektronix_MSO58LP/db -I /epics/support/agilent4uhv/db -I /epics/support/agilentXgs600/db -I /epics/support/agilentipcmini/db -I /epics/support/asyn/db -I /epics/support/autosave/db -I /epics/support/biltItest/db -I /epics/support/busy/db -I /epics/support/caenelsPS/db -I /epics/support/calc/db -I /epics/support/chillerSmcHecr/db -I /epics/support/easy-driver-epics/db -I /epics/support/ffmpegServer/db -I /epics/support/hazemeyer-lnf/db -I /epics/support/icpdas/db -I /epics/support/iocStats/db -I /epics/support/kima-undulator/db -I /epics/support/menloLac/db -I /epics/support/menloLfc/db -I /epics/support/menloSyncro/db -I /epics/support/modbus/db -I /epics/support/motor/db -I /epics/support/motorMicos/db -I /epics/support/motorMotorSim/db -I /epics/support/motorNewport/db -I /epics/support/motorTechnosoft/db -I /epics/support/plc-elinp/db -I /epics/support/ppt-modulator/db -I /epics/support/psmodbusEEI/db -I /epics/support/pvxs/db -I /epics/support/scandinova-scandicat-mod/db -I /epics/support/sigmaPhiStart/db -I /epics/support/sscan/db -I /epics/support/tpg300_500/db '
++ bash -c 'msi -o/epics/runtime/ioc.db -I /epics/support/ADAravis/db -I /epics/support/ADCore/db -I /epics/support/ADGenICam/db -I /epics/support/ADSimDetector/db -I /epics/support/OCEMPowerSupply/db -I /epics/support/OCEM_E642/db -I /epics/support/Tektronix_MSO58LP/db -I /epics/support/agilent4uhv/db -I /epics/support/agilentXgs600/db -I /epics/support/agilentipcmini/db -I /epics/support/asyn/db -I /epics/support/autosave/db -I /epics/support/biltItest/db -I /epics/support/busy/db -I /epics/support/caenelsPS/db -I /epics/support/calc/db -I /epics/support/chillerSmcHecr/db -I /epics/support/easy-driver-epics/db -I /epics/support/ffmpegServer/db -I /epics/support/hazemeyer-lnf/db -I /epics/support/icpdas/db -I /epics/support/iocStats/db -I /epics/support/kima-undulator/db -I /epics/support/menloLac/db -I /epics/support/menloLfc/db -I /epics/support/menloSyncro/db -I /epics/support/modbus/db -I /epics/support/motor/db -I /epics/support/motorMicos/db -I /epics/support/motorMotorSim/db -I /epics/support/motorNewport/db -I /epics/support/motorTechnosoft/db -I /epics/support/plc-elinp/db -I /epics/support/ppt-modulator/db -I /epics/support/psmodbusEEI/db -I /epics/support/pvxs/db -I /epics/support/scandinova-scandicat-mod/db -I /epics/support/sigmaPhiStart/db -I /epics/support/sscan/db -I /epics/support/tpg300_500/db  -I/epics/runtime -S/epics/runtime/ioc.subst'
++ [[ -d /epics/opi ]]
++ [[ -n '' ]]
++ [[ linux-x86_64 == \l\i\n\u\x\-\x\8\6\_\6\4 ]]
++ /epics/ioc/bin/linux-x86_64/ioc /epics/runtime/st.cmd
+2025/12/16 13:45:31.084 drvModbusAsyn::doModbusIO port QUATB201_PORT_RD error calling writeRead, error=asynManager::queueLockPort queueRequest failed: port 192.168.191.151_ASYN not connected, nwrite=0/6, nread=0
+2025/12/16 13:45:31.581 drvModbusAsyn::doModbusIO port QUATB202_PORT_RD error calling writeRead, error=asynManager::queueLockPort queueRequest failed: port 192.168.191.152_ASYN not connected, nwrite=0/6, nread=0
+2025/12/16 13:45:32.083 drvModbusAsyn::doModbusIO port QUATB203_PORT_RD error calling writeRead, error=asynManager::queueLockPort queueRequest failed: port 192.168.191.153_ASYN not connected, nwrite=0/6, nread=0
+2025/12/16 13:45:32.586 drvModbusAsyn::doModbusIO port QUATB204_PORT_RD error calling writeRead, error=asynManager::queueLockPort queueRequest failed: port 192.168.191.154_ASYN not connected, nwrite=0/6, nread=0
+[34;1m# EPICS IOC Startup Script generated by https://github.com/epics-containers/ibek[0m
+[1mcd "/epics/ioc"[0m
+[1mdbLoadDatabase dbd/ioc.dbd[0m
+[1mioc_registerRecordDeviceDriver pdbbase[0m
+INFO: PVXS QSRV2 is loaded, permitted, and ENABLED.
+[1mdrvAsynIPPortConfigure("192.168.191.151_ASYN", "192.168.191.151:502", 0, 0, 0)[0m
+[1mmodbusInterposeConfig("192.168.191.151_ASYN", 0, 0, 0)[0m
+[34;1m## EEI PS QUATB201 - Read holding registers (Function Code 3)[0m
+[34;1m## Start at register 40001 (Modbus address 0), read 45 registers[0m
+[1mdrvModbusAsynConfigure("QUATB201_PORT_RD", "192.168.191.151_ASYN", 1, 3, 0, 45, 0, 1000, "EEI")[0m
+[34;1m## EEI PS QUATB201 - Write holding registers (Function Code 16)[0m
+[34;1m## Start at register 40001 (Modbus address 0), write to 45 registers[0m
+[1mdrvModbusAsynConfigure("QUATB201_PORT_WR", "192.168.191.151_ASYN", 1, 16, 0, 45, 0, 0, "EEI")[0m
+[1mdrvAsynIPPortConfigure("192.168.191.152_ASYN", "192.168.191.152:502", 0, 0, 0)[0m
+[1mmodbusInterposeConfig("192.168.191.152_ASYN", 0, 0, 0)[0m
+[34;1m## EEI PS QUATB202 - Read holding registers (Function Code 3)[0m
+[34;1m## Start at register 40001 (Modbus address 0), read 45 registers[0m
+[1mdrvModbusAsynConfigure("QUATB202_PORT_RD", "192.168.191.152_ASYN", 1, 3, 0, 45, 0, 1000, "EEI")[0m
+[34;1m## EEI PS QUATB202 - Write holding registers (Function Code 16)[0m
+[34;1m## Start at register 40001 (Modbus address 0), write to 45 registers[0m
+[1mdrvModbusAsynConfigure("QUATB202_PORT_WR", "192.168.191.152_ASYN", 1, 16, 0, 45, 0, 0, "EEI")[0m
+[1mdrvAsynIPPortConfigure("192.168.191.153_ASYN", "192.168.191.153:502", 0, 0, 0)[0m
+[1mmodbusInterposeConfig("192.168.191.153_ASYN", 0, 0, 0)[0m
+[34;1m## EEI PS QUATB203 - Read holding registers (Function Code 3)[0m
+[34;1m## Start at register 40001 (Modbus address 0), read 45 registers[0m
+[1mdrvModbusAsynConfigure("QUATB203_PORT_RD", "192.168.191.153_ASYN", 1, 3, 0, 45, 0, 1000, "EEI")[0m
+[34;1m## EEI PS QUATB203 - Write holding registers (Function Code 16)[0m
+[34;1m## Start at register 40001 (Modbus address 0), write to 45 registers[0m
+[1mdrvModbusAsynConfigure("QUATB203_PORT_WR", "192.168.191.153_ASYN", 1, 16, 0, 45, 0, 0, "EEI")[0m
+[1mdrvAsynIPPortConfigure("192.168.191.154_ASYN", "192.168.191.154:502", 0, 0, 0)[0m
+[1mmodbusInterposeConfig("192.168.191.154_ASYN", 0, 0, 0)[0m
+[34;1m## EEI PS QUATB204 - Read holding registers (Function Code 3)[0m
+[34;1m## Start at register 40001 (Modbus address 0), read 45 registers[0m
+[1mdrvModbusAsynConfigure("QUATB204_PORT_RD", "192.168.191.154_ASYN", 1, 3, 0, 45, 0, 1000, "EEI")[0m
+[34;1m## EEI PS QUATB204 - Write holding registers (Function Code 16)[0m
+[34;1m## Start at register 40001 (Modbus address 0), write to 45 registers[0m
+[1mdrvModbusAsynConfigure("QUATB204_PORT_WR", "192.168.191.154_ASYN", 1, 16, 0, 45, 0, 0, "EEI")[0m
+[1mdrvAsynIPPortConfigure("192.168.191.155_ASYN", "192.168.191.155:502", 0, 0, 0)[0m
+[1mmodbusInterposeConfig("192.168.191.155_ASYN", 0, 0, 0)[0m
+[34;1m## EEI PS QUATB205 - Read holding registers (Function Code 3)[0m
+[34;1m## Start at register 40001 (Modbus address 0), read 45 registers[0m
+[1mdrvModbusAsynConfigure("QUATB205_PORT_RD", "192.168.191.155_ASYN", 1, 3, 0, 45, 0, 1000, "EEI")[0m
+[34;1m## EEI PS QUATB205 - Write holding registers (Function Code 16)[0m
+[34;1m## Start at register 40001 (Modbus address 0), write to 45 registers[0m
+[1mdrvModbusAsynConfigure("QUATB205_PORT_WR", "192.168.191.155_ASYN", 1, 16, 0, 45, 0, 0, "EEI")[0m
+[1mdrvAsynIPPortConfigure("192.168.191.156_ASYN", "192.168.191.156:502", 0, 0, 0)[0m
+[1mmodbusInterposeConfig("192.168.191.156_ASYN", 0, 0, 0)[0m
+[34;1m## EEI PS QUATB206 - Read holding registers (Function Code 3)[0m
+[34;1m## Start at register 40001 (Modbus address 0), read 45 registers[0m
+[1mdrvModbusAsynConfigure("QUATB206_PORT_RD", "192.168.191.156_ASYN", 1, 3, 0, 45, 0, 1000, "EEI")[0m
+[34;1m## EEI PS QUATB206 - Write holding registers (Function Code 16)[0m
+[34;1m## Start at register 40001 (Modbus address 0), write to 45 re2025/12/16 13:45:33.087 drvModbusAsyn::doModbusIO port QUATB205_PORT_RD error calling writeRead, error=asynManager::queueLockPort queueRequest failed: port 192.168.191.155_ASYN not connected, nwrite=0/6, nread=0
+2025/12/16 13:45:33.588 drvModbusAsyn::doModbusIO port QUATB206_PORT_RD error calling writeRead, error=asynManager::queueLockPort queueRequest failed: port 192.168.191.156_ASYN not connected, nwrite=0/6, nread=0
+2025/12/16 13:45:34.090 drvModbusAsyn::doModbusIO port DHPTB102_PORT_RD error calling writeRead, error=asynManager::queueLockPort queueRequest failed: port 192.168.191.157_ASYN not connected, nwrite=0/6, nread=0
+2025/12/16 13:45:34.592 drvModbusAsyn::doModbusIO port DHSTB201_PORT_RD error calling writeRead, error=asynManager::queueLockPort queueRequest failed: port 192.168.191.158_ASYN not connected, nwrite=0/6, nread=0
+macLib: macro R is undefined (expanding string # PV format: BTF:MAG:EEI:QUATB201:$(R):CURRENT_RB
+)
+[35;1mWARNING[0m: '/epics/runtime/ioc.db' line 908 has undefined macros
+macLib: macro R is undefined (expanding string # PV format: BTF:MAG:EEI:QUATB201:$(R):CURRENT_SP
+)
+[35;1mWARNING[0m: '/epics/runtime/ioc.db' line 912 has undefined macros
+macLib: macro R is undefined (expanding string # PV format: BTF:MAG:EEI:QUATB201:$(R):STATE_RB
+)
+[35;1mWARNING[0m: '/epics/runtime/ioc.db' line 916 has undefined macros
+macLib: macro R is undefined (expanding string # PV format: BTF:MAG:EEI:QUATB201:$(R):STATE_SP
+)
+[35;1mWARNING[0m: '/epics/runtime/ioc.db' line 920 has undefined macros
+macLib: macro R is undefined (expanding string # PV format: BTF:MAG:EEI:QUATB202:$(R):CURRENT_RB
+)
+[35;1mWARNING[0m: '/epics/runtime/ioc.db' line 1837 has undefined macros
+macLib: macro R is undefined (expanding string # PV format: BTF:MAG:EEI:QUATB202:$(R):CURRENT_SP
+)
+[35;1mWARNING[0m: '/epics/runtime/ioc.db' line 1841 has undefined macros
+macLib: macro R is undefined (expanding string # PV format: BTF:MAG:EEI:QUATB202:$(R):STATE_RB
+)
+[35;1mWARNING[0m: '/epics/runtime/ioc.db' line 1845 has undefined macros
+macLib: macro R is undefined (expanding string # PV format: BTF:MAG:EEI:QUATB202:$(R):STATE_SP
+)
+[35;1mWARNING[0m: '/epics/runtime/ioc.db' line 1849 has undefined macros
+macLib: macro R is undefined (expanding string # PV format: BTF:MAG:EEI:QUATB203:$(R):CURRENT_RB
+)
+[35;1mWARNING[0m: '/epics/runtime/ioc.db' line 2766 has undefined macros
+macLib: macro R is undefined (expanding string # PV format: BTF:MAG:EEI:QUATB203:$(R):CURRENT_SP
+)
+[35;1mWARNING[0m: '/epics/runtime/ioc.db' line 2770 has undefined macros
+macLib: macro R is undefined (expanding string # PV format: BTF:MAG:EEI:QUATB203:$(R):STATE_RB
+)
+[35;1mWARNING[0m: '/epics/runtime/ioc.db' line 2774 has undefined macros
+macLib: macro R is undefined (expanding string # PV format: BTF:MAG:EEI:QUATB203:$(R):STATE_SP
+)
+[35;1mWARNING[0m: '/epics/runtime/ioc.db' line 2778 has undefined macros
+macLib: macro R is undefined (expanding string # PV format: BTF:MAG:EEI:QUATB204:$(R):CURRENT_RB
+)
+[35;1mWARNING[0m: '/epics/runtime/ioc.db' line 3695 has undefined macros
+macLib: macro R is undefined (expanding string # PV format: BTF:MAG:EEI:QUATB204:$(R):CURRENT_SP
+)
+[35;1mWARNING[0m: '/epics/runtime/ioc.db' line 3699 has undefined macros
+macLib: macro R is undefined (expanding string # PV format: BTF:MAG:EEI:QUATB204:$(R):STATE_RB
+)
+[35;1mWARNING[0m: '/epics/runtime/ioc.db' line 3703 has undefined macros
+macLib: macro R is undefined (expanding string # PV format: BTF:MAG:EEI:QUATB204:$(R):STATE_SP
+)
+[35;1mWARNING[0m: '/epics/runtime/ioc.db' line 3707 has undefined macros
+macLib: macro R is undefined (expanding string # PV format: BTF:MAG:EEI:QUATB205:$(R):CURRENT_RB
+)
+[35;1mWARNING[0m: '/epics/runtime/ioc.db' line 4624 has undefined macros
+macLib: macro R is undefined (expanding string # PV format: BTF:MAG:EEI:QUATB205:$(R):CURRENT_SP
+)
+[35;1mWARNING[0m: '/epics/runtime/ioc.db' line 4628 has undefined macros
+macLib: macro R is undefined (expanding string # PV format: BTF:MAG:EEI:QUATB205:$(R):STATE_RB
+)
+[35;1mWARNING[0m: '/epics/runtime/ioc.db' line 4632 has undefined macros
+macLib: macro R is undefined (expanding string # PV format: BTF:MAG:EEI:QUATB205:$(R):STATE_SP
+)
+[35;1mWARNING[0m: '/epics/runtime/ioc.db' line 4636 has undefined macros
+macLib: macro R is undefined (expanding string # PV format: BTF:MAG:EEI:QUATB206:$(R):CURRENT_RB
+)
+[35;1mWARNING[0m: '/epics/runtime/ioc.db' line 5553 has undefined macros
+macLib: macro R is undefined (expanding string # PV format: BTF:MAG:EEI:QUATB206:$(R):CURRENT_SP
+)
+[35;1mWARNING[0m: '/epics/runtime/ioc.db' line 5557 has undefined macros
+macLib: macro R is undefined (expanding string # PV format: BTF:MAG:EEI:QUATB206:$(R):STATE_RB
+)
+[35;1mWARNING[0m: '/epics/runtime/ioc.db' line 5561 has undefined macros
+macLib: macro R is undefined (expanding string # PV format: BTF:MAG:EEI:QUATB206:$(R):STATE_SP
+)
+[35;1mWARNING[0m: '/epics/runtime/ioc.db' line 5565 has undefined macros
+macLib: macro R is undefined (expanding string # PV format: BTF:MAG:EEI:DHPTB102:$(R):CURRENT_RB
+)
+[35;1mWARNING[0m: '/epics/runtime/ioc.db' line 6482 has undefined macros
+macLib: macro R is undefined (expanding string # PV format: BTF:MAG:EEI:DHPTB102:$(R):CURRENT_SP
+)
+[35;1mWARNING[0m: '/epics/runtime/ioc.db' line 6486 has undefined macros
+macLib: macro R is undefined (expanding string # PV format: BTF:MAG:EEI:DHPTB102:$(R):STATE_RB
+)
+[35;1mWARNING[0m: '/epics/runtime/ioc.db' line 6490 has undefined macros
+macLib: macro R is undefined (expanding string # PV format: BTF:MAG:EEI:DHPTB102:$(R):STATE_SP
+)
+[35;1mWARNING[0m: '/epics/runtime/ioc.db' line 6494 has undefined macros
+macLib: macro R is undefined (expanding string # PV format: BTF:MAG:EEI:DHSTB201:$(R):CURRENT_RB
+)
+[35;1mWARNING[0m: '/epics/runtime/ioc.db' line 7411 has undefined macros
+macLib: macro R is undefined (expanding string # PV format: BTF:MAG:EEI:DHSTB201:$(R):CURRENT_SP
+)
+[35;1mWARNING[0m: '/epics/runtime/ioc.db' line 7415 has undefined macros
+macLib: macro R is undefined (expanding string # PV format: BTF:MAG:EEI:DHSTB201:$(R):STATE_RB
+)
+[35;1mWARNING[0m: '/epics/runtime/ioc.db' line 7419 has undefined macros
+macLib: macro R is undefined (expanding string # PV format: BTF:MAG:EEI:DHSTB201:$(R):STATE_SP
+)
+[35;1mWARNING[0m: '/epics/runtime/ioc.db' line 7423 has undefined macros
+macLib: macro R is undefined (expanding string # PV format: BTF:MAG:EEI:DHSTB202:$(R):CURRENT_RB
+)
+[35;1mWARNING[0m: '/epics/runtime/ioc.db' line 8340 has undefined macros
+macLib: macro R is undefined (expanding string # PV format: BTF:MAG:EEI:DHSTB202:$(R):CURRENT_SP
+)
+[35;1mWARNING[0m: '/epics/runtime/ioc.db' line 8344 has undefined macros
+macLib: macro R is undefined (expanding string # PV format: BTF:MAG:EEI:DHSTB202:$(R):STATE_RB
+)
+[35;1mWARNING[0m: '/epics/runtime/ioc.db' line 8348 has undefined macros
+macLib: macro R is undefined (expanding string # PV format: BTF:MAG:EEI:DHSTB202:$(R):STATE_SP
+)
+[35;1mWARNING[0m: '/epics/runtime/ioc.db' line 8352 has undefined macros
+macLib: macro R is undefined (expanding string # PV format: BTF:MAG:EEI:DHSTB203:$(R):CURRENT_RB
+)
+[35;1mWARNING[0m: '/epics/runtime/ioc.db' line 9269 has undefined macros
+macLib: macro R is undefined (expanding string # PV format: BTF:MAG:EEI:DHSTB203:$(R):CURRENT_SP
+)
+[35;1mWARNING[0m: '/epics/runtime/ioc.db' line 9273 has undefined macros
+macLib: macro R is undefined (expanding string # PV format: BTF:MAG:EEI:DHSTB203:$(R):STATE_RB
+)
+[35;1mWARNING[0m: '/epics/runtime/ioc.db' line 9277 has undefined macros
+macLib: macro R is undefined (expanding string # PV format: BTF:MAG:EEI:DHSTB203:$(R):STATE_SP
+)
+[35;1mWARNING[0m: '/epics/runtime/ioc.db' line 9281 has undefined macros
+Starting iocInit
+drvStreamInit: Warning! STREAM_PROTOCOL_PATH not set.
+2025/12/16 13:45:35.093 drvModbusAsyn::doModbusIO port DHSTB202_PORT_RD error calling writeRead, error=asynManager::queueLockPort queueRequest failed: port 192.168.191.159_ASYN not connected, nwrite=0/6, nread=0
+iocRun: All initialization complete
+gisters[0m
+[1mdrvModbusAsynConfigure("QUATB206_PORT_WR", "192.168.191.156_ASYN", 1, 16, 0, 45, 0, 0, "EEI")[0m
+[1mdrvAsynIPPortConfigure("192.168.191.157_ASYN", "192.168.191.157:502", 0, 0, 0)[0m
+[1mmodbusInterposeConfig("192.168.191.157_ASYN", 0, 0, 0)[0m
+[34;1m## EEI PS DHPTB102 - Read holding registers (Function Code 3)[0m
+[34;1m## Start at register 40001 (Modbus address 0), read 45 registers[0m
+[1mdrvModbusAsynConfigure("DHPTB102_PORT_RD", "192.168.191.157_ASYN", 1, 3, 0, 45, 0, 1000, "EEI")[0m
+[34;1m## EEI PS DHPTB102 - Write holding registers (Function Code 16)[0m
+[34;1m## Start at register 40001 (Modbus address 0), write to 45 registers[0m
+[1mdrvModbusAsynConfigure("DHPTB102_PORT_WR", "192.168.191.157_ASYN", 1, 16, 0, 45, 0, 0, "EEI")[0m
+[1mdrvAsynIPPortConfigure("192.168.191.158_ASYN", "192.168.191.158:502", 0, 0, 0)[0m
+[1mmodbusInterposeConfig("192.168.191.158_ASYN", 0, 0, 0)[0m
+[34;1m## EEI PS DHSTB201 - Read holding registers (Function Code 3)[0m
+[34;1m## Start at register 40001 (Modbus address 0), read 45 registers[0m
+[1mdrvModbusAsynConfigure("DHSTB201_PORT_RD", "192.168.191.158_ASYN", 1, 3, 0, 45, 0, 1000, "EEI")[0m
+[34;1m## EEI PS DHSTB201 - Write holding registers (Function Code 16)[0m
+[34;1m## Start at register 40001 (Modbus address 0), write to 45 registers[0m
+[1mdrvModbusAsynConfigure("DHSTB201_PORT_WR", "192.168.191.158_ASYN", 1, 16, 0, 45, 0, 0, "EEI")[0m
+[1mdrvAsynIPPortConfigure("192.168.191.159_ASYN", "192.168.191.159:502", 0, 0, 0)[0m
+[1mmodbusInterposeConfig("192.168.191.159_ASYN", 0, 0, 0)[0m
+[34;1m## EEI PS DHSTB202 - Read holding registers (Function Code 3)[0m
+[34;1m## Start at register 40001 (Modbus address 0), read 45 registers[0m
+[1mdrvModbusAsynConfigure("DHSTB202_PORT_RD", "192.168.191.159_ASYN", 1, 3, 0, 45, 0, 1000, "EEI")[0m
+[34;1m## EEI PS DHSTB202 - Write holding registers (Function Code 16)[0m
+[34;1m## Start at register 40001 (Modbus address 0), write to 45 registers[0m
+[1mdrvModbusAsynConfigure("DHSTB202_PORT_WR", "192.168.191.159_ASYN", 1, 16, 0, 45, 0, 0, "EEI")[0m
+[1mdrvAsynIPPortConfigure("192.168.191.160_ASYN", "192.168.191.160:502", 0, 0, 0)[0m
+[1mmodbusInterposeConfig("192.168.191.160_ASYN", 0, 0, 0)[0m
+[34;1m## EEI PS DHSTB203 - Read holding registers (Function Code 3)[0m
+[34;1m## Start at register 40001 (Modbus address 0), read 45 registers[0m
+[1mdrvModbusAsynConfigure("DHSTB203_PORT_RD", "192.168.191.160_ASYN", 1, 3, 0, 45, 0, 1000, "EEI")[0m
+[34;1m## EEI PS DHSTB203 - Write holding registers (Function Code 16)[0m
+[34;1m## Start at register 40001 (Modbus address 0), write to 45 registers[0m
+[1mdrvModbusAsynConfigure("DHSTB203_PORT_WR", "192.168.191.160_ASYN", 1, 16, 0, 45, 0, 0, "EEI")[0m
+[1mdbLoadRecords /epics/runtime/ioc.db[0m
+[1miocInit[0m
+############################################################################
+## EPICS R7.0.9.1-DEV
+## Rev. R7.0.9-178-gf4e1019ebe40fb0bb327-dirty
+## Rev. Date Git: 2025-07-21 10:23:12 -0500
+############################################################################
+[1mdbl("*") > /nfs/config/eeips/pvlist.txt[0m
+[1mdbl[0m
+BTF:MAG:EEI:QUATB201:STAT_WORD1_RB
+BTF:MAG:EEI:QUATB201:STAT_WORD2_RB
+BTF:MAG:EEI:QUATB201:RAMP_RATE_RB
+BTF:MAG:EEI:QUATB201:CURR_RB
+BTF:MAG:EEI:QUATB201:CURR_SCALE_RB
+BTF:MAG:EEI:QUATB201:VOLT_SCALE_RB
+BTF:MAG:EEI:QUATB201:VOLT_RB
+BTF:MAG:EEI:QUATB201:FAULT_WORD1_RB
+BTF:MAG:EEI:QUATB201:FAULT_WORD2_RB
+BTF:MAG:EEI:QUATB201:PLC_FAULT_WORD1_RB
+BTF:MAG:EEI:QUATB201:PLC_FAULT_WORD2_RB
+BTF:MAG:EEI:QUATB201:DCDC_FAULT_WORD1_RB
+BTF:MAG:EEI:QUATB201:DCDC_FAULT_WORD2_RB
+BTF:MAG:EEI:QUATB201:ACDC1_FAULT_WORD1_RB
+BTF:MAG:EEI:QUATB201:ACDC1_FAULT_WORD2_RB
+BTF:MAG:EEI:QUATB201:ACDC2_FAULT_WORD1_RB
+BTF:MAG:EEI:QUATB201:ACDC2_FAULT_WORD2_RB
+BTF:MAG:EEI:QUATB201:DCDC_HEATSINK_TEMP_RB
+BTF:MAG:EEI:QUATB201:ACDC1_VOLT_OUT_RB
+BTF:MAG:EEI:QUATB201:ACDC1_CURR_OUT_RB
+BTF:MAG:EEI:QUATB201:ACDC2_VOLT_OUT_RB
+BTF:MAG:EEI:QUATB201:ACDC2_CURR_OUT_RB
+BTF:MAG:EEI:QUATB202:STAT_WORD1_RB
+BTF:MAG:EEI:QUATB202:STAT_WORD2_RB
+BTF:MAG:EEI:QUATB202:RAMP_RATE_RB
+BTF:MAG:EEI:QUATB202:CURR_RB
+BTF:MAG:EEI:QUATB202:CURR_SCALE_RB
+BTF:MAG:EEI:QUATB202:VOLT_SCALE_RB
+BTF:MAG:EEI:QUATB202:VOLT_RB
+BTF:MAG:EEI:QUATB202:FAULT_WORD1_RB
+BTF:MAG:EEI:QUATB202:FAULT_WORD2_RB
+BTF:MAG:EEI:QUATB202:PLC_FAULT_WORD1_RB
+BTF:MAG:EEI:QUATB202:PLC_FAULT_WORD2_RB
+BTF:MAG:EEI:QUATB202:DCDC_FAULT_WORD1_RB
+BTF:MAG:EEI:QUATB202:DCDC_FAULT_WORD2_RB
+BTF:MAG:EEI:QUATB202:ACDC1_FAULT_WORD1_RB
+BTF:MAG:EEI:QUATB202:ACDC1_FAULT_WORD2_RB
+BTF:MAG:EEI:QUATB202:ACDC2_FAULT_WORD1_RB
+BTF:MAG:EEI:QUATB202:ACDC2_FAULT_WORD2_RB
+BTF:MAG:EEI:QUATB202:DCDC_HEATSINK_TEMP_RB
+BTF:MAG:EEI:QUATB202:ACDC1_VOLT_OUT_RB
+BTF:MAG:EEI:QUATB202:ACDC1_CURR_OUT_RB
+BTF:MAG:EEI:QUATB202:ACDC2_VOLT_OUT_RB
+BTF:MAG:EEI:QUATB202:ACDC2_CURR_OUT_RB
+BTF:MAG:EEI:QUATB203:STAT_WORD1_RB
+BTF:MAG:EEI:QUATB203:STAT_WORD2_RB
+BTF:MAG:EEI:QUATB203:RAMP_RATE_RB
+BTF:MAG:EEI:QUATB203:CURR_RB
+BTF:MAG:EEI:QUATB203:CURR_SCALE_RB
+BTF:MAG:EEI:QUATB203:VOLT_SCALE_RB
+BTF:MAG:EEI:QUATB203:VOLT_RB
+BTF:MAG:EEI:QUATB203:FAULT_WORD1_RB
+BTF:MAG:EEI:QUATB203:FAULT_WORD2_RB
+BTF:MAG:EEI:QUATB203:PLC_FAULT_WORD1_RB
+BTF:MAG:EEI:QUATB203:PLC_FAULT_WORD2_RB
+BTF:MAG:EEI:QUATB203:DCDC_FAULT_WORD1_RB
+BTF:MAG:EEI:QUATB203:DCDC_FAULT_WORD2_RB
+BTF:MAG:EEI:QUATB203:ACDC1_FAULT_WORD1_RB
+BTF:MAG:EEI:QUATB203:ACDC1_FAULT_WORD2_RB
+BTF:MAG:EEI:QUATB203:ACDC2_FAULT_WORD1_RB
+BTF:MAG:EEI:QUATB203:ACDC2_FAULT_WORD2_RB
+BTF:MAG:EEI:QUATB203:DCDC_HEATSINK_TEMP_RB
+BTF:MAG:EEI:QUATB203:ACDC1_VOLT_OUT_RB
+BTF:MAG:EEI:QUATB203:ACDC1_CURR_OUT_RB
+BTF:MAG:EEI:QUATB203:ACDC2_VOLT_OUT_RB
+BTF:MAG:EEI:QUATB203:ACDC2_CURR_OUT_RB
+BTF:MAG:EEI:QUATB204:STAT_WORD1_RB
+BTF:MAG:EEI:QUATB204:STAT_WORD2_RB
+BTF:MAG:EEI:QUATB204:RAMP_RATE_RB
+BTF:MAG:EEI:QUATB204:CURR_RB
+BTF:MAG:EEI:QUATB204:CURR_SCALE_RB
+BTF:MAG:EEI:QUATB204:VOLT_SCALE_RB
+BTF:MAG:EEI:QUATB204:VOLT_RB
+BTF:MAG:EEI:QUATB204:FAULT_WORD1_RB
+BTF:MAG:EEI:QUATB204:FAULT_WORD2_RB
+BTF:MAG:EEI:QUATB204:PLC_FAULT_WORD1_RB
+BTF:MAG:EEI:QUATB204:PLC_FAULT_WORD2_RB
+BTF:MAG:EEI:QUATB204:DCDC_FAULT_WORD1_RB
+BTF:MAG:EEI:QUATB204:DCDC_FAULT_WORD2_RB
+BTF:MAG:EEI:QUATB204:ACDC1_FAULT_WORD1_RB
+BTF:MAG:EEI:QUATB204:ACDC1_FAULT_WORD2_RB
+BTF:MAG:EEI:QUATB204:ACDC2_FAULT_WORD1_RB
+BTF:MAG:EEI:QUATB204:ACDC2_FAULT_WORD2_RB
+BTF:MAG:EEI:QUATB204:DCDC_HEATSINK_TEMP_RB
+BTF:MAG:EEI:QUATB204:ACDC1_VOLT_OUT_RB
+BTF:MAG:EEI:QUATB204:ACDC1_CURR_OUT_RB
+BTF:MAG:EEI:QUATB204:ACDC2_VOLT_OUT_RB
+BTF:MAG:EEI:QUATB204:ACDC2_CURR_OUT_RB
+BTF:MAG:EEI:QUATB205:STAT_WORD1_RB
+BTF:MAG:EEI:QUATB205:STAT_WORD2_RB
+BTF:MAG:EEI:QUATB205:RAMP_RATE_RB
+BTF:MAG:EEI:QUATB205:CURR_RB
+BTF:MAG:EEI:QUATB205:CURR_SCALE_RB
+BTF:MAG:EEI:QUATB205:VOLT_SCALE_RB
+BTF:MAG:EEI:QUATB205:VOLT_RB
+BTF:MAG:EEI:QUATB205:FAULT_WORD1_RB
+BTF:MAG:EEI:QUATB205:FAULT_WORD2_RB
+BTF:MAG:EEI:QUATB205:PLC_FAULT_WORD1_RB
+BTF:MAG:EEI:QUATB205:PLC_FAULT_WORD2_RB
+BTF:MAG:EEI:QUATB205:DCDC_FAULT_WORD1_RB
+BTF:MAG:EEI:QUATB205:DCDC_FAULT_WORD2_RB
+BTF:MAG:EEI:QUATB205:ACDC1_FAULT_WORD1_RB
+BTF:MAG:EEI:QUATB205:ACDC1_FAULT_WORD2_RB
+BTF:MAG:EEI:QUATB205:ACDC2_FAULT_WORD1_RB
+BTF:MAG:EEI:QUATB205:ACDC2_FAULT_WORD2_RB
+BTF:MAG:EEI:QUATB205:DCDC_HEATSINK_TEMP_RB
+BTF:MAG:EEI:QUATB205:ACDC1_VOLT_OUT_RB
+BTF:MAG:EEI:QUATB205:ACDC1_CURR_OUT_RB
+BTF:MAG:EEI:QUATB205:ACDC2_VOLT_OUT_RB
+BTF:MAG:EEI:QUATB205:ACDC2_CURR_OUT_RB
+BTF:MAG:EEI:QUATB206:STAT_WORD1_RB
+BTF:MAG:EEI:QUATB206:STAT_WORD2_RB
+BTF:MAG:EEI:QUATB206:RAMP_RATE_RB
+BTF:MAG:EEI:QUATB206:CURR_RB
+BTF:MAG:EEI:QUATB206:CURR_SCALE_RB
+BTF:MAG:EEI:QUATB206:VOLT_SCALE_RB
+BTF:MAG:EEI:QUATB206:VOLT_RB
+BTF:MAG:EEI:QUATB206:FAULT_WORD1_RB
+BTF:MAG:EEI:QUATB206:FAULT_WORD2_RB
+BTF:MAG:EEI:QUATB206:PLC_FAULT_WORD1_RB
+BTF:MAG:EEI:QUATB206:PLC_FAULT_WORD2_RB
+BTF:MAG:EEI:QUATB206:DCDC_FAULT_WORD1_RB
+BTF:MAG:EEI:QUATB206:DCDC_FAULT_WORD2_RB
+BTF:MAG:EEI:QUATB206:ACDC1_FAULT_WORD1_RB
+BTF:MAG:EEI:QUATB206:ACDC1_FAULT_WORD2_RB
+BTF:MAG:EEI:QUATB206:ACDC2_FAULT_WORD1_RB
+BTF:MAG:EEI:QUATB206:ACDC2_FAULT_WORD2_RB
+BTF:MAG:EEI:QUATB206:DCDC_HEATSINK_TEMP_RB
+BTF:MAG:EEI:QUATB206:ACDC1_VOLT_OUT_RB
+BTF:MAG:EEI:QUATB206:ACDC1_CURR_OUT_RB
+BTF:MAG:EEI:QUATB206:ACDC2_VOLT_OUT_RB
+BTF:MAG:EEI:QUATB206:ACDC2_CURR_OUT_RB
+BTF:MAG:EEI:DHPTB102:STAT_WORD1_RB
+BTF:MAG:EEI:DHPTB102:STAT_WORD2_RB
+BTF:MAG:EEI:DHPTB102:RAMP_RATE_RB
+BTF:MAG:EEI:DHPTB102:CURR_RB
+BTF:MAG:EEI:DHPTB102:CURR_SCALE_RB
+BTF:MAG:EEI:DHPTB102:VOLT_SCALE_RB
+BTF:MAG:EEI:DHPTB102:VOLT_RB
+BTF:MAG:EEI:DHPTB102:FAULT_WORD1_RB
+BTF:MAG:EEI:DHPTB102:FAULT_WORD2_RB
+BTF:MAG:EEI:DHPTB102:PLC_FAULT_WORD1_RB
+BTF:MAG:EEI:DHPTB102:PLC_FAULT_WORD2_RB
+BTF:MAG:EEI:DHPTB102:DCDC_FAULT_WORD1_RB
+BTF:MAG:EEI:DHPTB102:DCDC_FAULT_WORD2_RB
+BTF:MAG:EEI:DHPTB102:ACDC1_FAULT_WORD1_RB
+BTF:MAG:EEI:DHPTB102:ACDC1_FAULT_WORD2_RB
+BTF:MAG:EEI:DHPTB102:ACDC2_FAULT_WORD1_RB
+BTF:MAG:EEI:DHPTB102:ACDC2_FAULT_WORD2_RB
+BTF:MAG:EEI:DHPTB102:DCDC_HEATSINK_TEMP_RB
+BTF:MAG:EEI:DHPTB102:ACDC1_VOLT_OUT_RB
+BTF:MAG:EEI:DHPTB102:ACDC1_CURR_OUT_RB
+BTF:MAG:EEI:DHPTB102:ACDC2_VOLT_OUT_RB
+BTF:MAG:EEI:DHPTB102:ACDC2_CURR_OUT_RB
+BTF:MAG:EEI:DHSTB201:STAT_WORD1_RB
+BTF:MAG:EEI:DHSTB201:STAT_WORD2_RB
+BTF:MAG:EEI:DHSTB201:RAMP_RATE_RB
+BTF:MAG:EEI:DHSTB201:CURR_RB
+BTF:MAG:EEI:DHSTB201:CURR_SCALE_RB
+BTF:MAG:EEI:DHSTB201:VOLT_SCALE_RB
+BTF:MAG:EEI:DHSTB201:VOLT_RB
+BTF:MAG:EEI:DHSTB201:FAULT_WORD1_RB
+BTF:MAG:EEI:DHSTB201:FAULT_WORD2_RB
+BTF:MAG:EEI:DHSTB201:PLC_FAULT_WORD1_RB
+BTF:MAG:EEI:DHSTB201:PLC_FAULT_WORD2_RB
+BTF:MAG:EEI:DHSTB201:DCDC_FAULT_WORD1_RB
+BTF:MAG:EEI:DHSTB201:DCDC_FAULT_WORD2_RB
+BTF:MAG:EEI:DHSTB201:ACDC1_FAULT_WORD1_RB
+BTF:MAG:EEI:DHSTB201:ACDC1_FAULT_WORD2_RB
+BTF:MAG:EEI:DHSTB201:ACDC2_FAULT_WORD1_RB
+BTF:MAG:EEI:DHSTB201:ACDC2_FAULT_WORD2_RB
+BTF:MAG:EEI:DHSTB201:DCDC_HEATSINK_TEMP_RB
+BTF:MAG:EEI:DHSTB201:ACDC1_VOLT_OUT_RB
+BTF:MAG:EEI:DHSTB201:ACDC1_CURR_OUT_RB
+BTF:MAG:EEI:DHSTB201:ACDC2_VOLT_OUT_RB
+BTF:MAG:EEI:DHSTB201:ACDC2_CURR_OUT_RB
+BTF:MAG:EEI:DHSTB202:STAT_WORD1_RB
+BTF:MAG:EEI:DHSTB202:STAT_WORD2_RB
+BTF:MAG:EEI:DHSTB202:RAMP_RATE_RB
+BTF:MAG:EEI:DHSTB202:CURR_RB
+BTF:MAG:EEI:DHSTB202:CURR_SCALE_RB
+BTF:MAG:EEI:DHSTB202:VOLT_SCALE_RB
+BTF:MAG:EEI:DHSTB202:VOLT_RB
+BTF:MAG:EEI:DHSTB202:FAULT_WORD1_RB
+BTF:MAG:EEI:DHSTB202:FAULT_WORD2_RB
+BTF:MAG:EEI:DHSTB202:PLC_FAULT_WORD1_RB
+BTF:MAG:EEI:DHSTB202:PLC_FAULT_WORD2_RB
+BTF:MAG:EEI:DHSTB202:DCDC_FAULT_WORD1_RB
+BTF:MAG:EEI:DHSTB202:DCDC_FAULT_WORD2_RB
+BTF:MAG:EEI:DHSTB202:ACDC1_FAULT_WORD1_RB
+BTF:MAG:EEI:DHSTB202:ACDC1_FAULT_WORD2_RB
+BTF:MAG:EEI:DHSTB202:ACDC2_FAULT_WORD1_RB
+BTF:MAG:EEI:DHSTB202:ACDC2_FAULT_WORD2_RB
+BTF:MAG:EEI:DHSTB202:DCDC_HEATSINK_TEMP_RB
+BTF:MAG:EEI:DHSTB202:ACDC1_VOLT_OUT_RB
+BTF:MAG:EEI:DHSTB202:ACDC1_CURR_OUT_RB
+BTF:MAG:EEI:DHSTB202:ACDC2_VOLT_OUT_RB
+BTF:MAG:EEI:DHSTB202:ACDC2_CURR_OUT_RB
+BTF:MAG:EEI:DHSTB203:STAT_WORD1_RB
+BTF:MAG:EEI:DHSTB203:STAT_WORD2_RB
+BTF:MAG:EEI:DHSTB203:RAMP_RATE_RB
+BTF:MAG:EEI:DHSTB203:CURR_RB
+BTF:MAG:EEI:DHSTB203:CURR_SCALE_RB
+BTF:MAG:EEI:DHSTB203:VOLT_SCALE_RB
+BTF:MAG:EEI:DHSTB203:VOLT_RB
+BTF:MAG:EEI:DHSTB203:FAULT_WORD1_RB
+BTF:MAG:EEI:DHSTB203:FAULT_WORD2_RB
+BTF:MAG:EEI:DHSTB203:PLC_FAULT_WORD1_RB
+BTF:MAG:EEI:DHSTB203:PLC_FAULT_WORD2_RB
+BTF:MAG:EEI:DHSTB203:DCDC_FAULT_WORD1_RB
+BTF:MAG:EEI:DHSTB203:DCDC_FAULT_WORD2_RB
+BTF:MAG:EEI:DHSTB203:ACDC1_FAULT_WORD1_RB
+BTF:MAG:EEI:DHSTB203:ACDC1_FAULT_WORD2_RB
+BTF:MAG:EEI:DHSTB203:ACDC2_FAULT_WORD1_RB
+BTF:MAG:EEI:DHSTB203:ACDC2_FAULT_WORD2_RB
+BTF:MAG:EEI:DHSTB203:DCDC_HEATSINK_TEMP_RB
+BTF:MAG:EEI:DHSTB203:ACDC1_VOLT_OUT_RB
+BTF:MAG:EEI:DHSTB203:ACDC1_CURR_OUT_RB
+BTF:MAG:EEI:DHSTB203:ACDC2_VOLT_OUT_RB
+BTF:MAG:EEI:DHSTB203:ACDC2_CURR_OUT_RB
+BTF:MAG:EEI:QUATB201:CMD_WORD_RAW
+BTF:MAG:EEI:QUATB201:CMD_POLARITY_POS_EXEC
+BTF:MAG:EEI:QUATB201:CMD_POLARITY_NEG_EXEC
+BTF:MAG:EEI:QUATB201:POLARITY_CTRL
+BTF:MAG:EEI:QUATB201:CURR_SET
+BTF:MAG:EEI:QUATB201:RAMP_RATE_SET
+BTF:MAG:EEI:QUATB201:CYCLE_PATTERN_1
+BTF:MAG:EEI:QUATB201:CYCLE_PATTERN_0
+BTF:MAG:EEI:QUATB202:CMD_WORD_RAW
+BTF:MAG:EEI:QUATB202:CMD_POLARITY_POS_EXEC
+BTF:MAG:EEI:QUATB202:CMD_POLARITY_NEG_EXEC
+BTF:MAG:EEI:QUATB202:POLARITY_CTRL
+BTF:MAG:EEI:QUATB202:CURR_SET
+BTF:MAG:EEI:QUATB202:RAMP_RATE_SET
+BTF:MAG:EEI:QUATB202:CYCLE_PATTERN_1
+BTF:MAG:EEI:QUATB202:CYCLE_PATTERN_0
+BTF:MAG:EEI:QUATB203:CMD_WORD_RAW
+BTF:MAG:EEI:QUATB203:CMD_POLARITY_POS_EXEC
+BTF:MAG:EEI:QUATB203:CMD_POLARITY_NEG_EXEC
+BTF:MAG:EEI:QUATB203:POLARITY_CTRL
+BTF:MAG:EEI:QUATB203:CURR_SET
+BTF:MAG:EEI:QUATB203:RAMP_RATE_SET
+BTF:MAG:EEI:QUATB203:CYCLE_PATTERN_1
+BTF:MAG:EEI:QUATB203:CYCLE_PATTERN_0
+BTF:MAG:EEI:QUATB204:CMD_WORD_RAW
+BTF:MAG:EEI:QUATB204:CMD_POLARITY_POS_EXEC
+BTF:MAG:EEI:QUATB204:CMD_POLARITY_NEG_EXEC
+BTF:MAG:EEI:QUATB204:POLARITY_CTRL
+BTF:MAG:EEI:QUATB204:CURR_SET
+BTF:MAG:EEI:QUATB204:RAMP_RATE_SET
+BTF:MAG:EEI:QUATB204:CYCLE_PATTERN_1
+BTF:MAG:EEI:QUATB204:CYCLE_PATTERN_0
+BTF:MAG:EEI:QUATB205:CMD_WORD_RAW
+BTF:MAG:EEI:QUATB205:CMD_POLARITY_POS_EXEC
+BTF:MAG:EEI:QUATB205:CMD_POLARITY_NEG_EXEC
+BTF:MAG:EEI:QUATB205:POLARITY_CTRL
+BTF:MAG:EEI:QUATB205:CURR_SET
+BTF:MAG:EEI:QUATB205:RAMP_RATE_SET
+BTF:MAG:EEI:QUATB205:CYCLE_PATTERN_1
+BTF:MAG:EEI:QUATB205:CYCLE_PATTERN_0
+BTF:MAG:EEI:QUATB206:CMD_WORD_RAW
+BTF:MAG:EEI:QUATB206:CMD_POLARITY_POS_EXEC
+BTF:MAG:EEI:QUATB206:CMD_POLARITY_NEG_EXEC
+BTF:MAG:EEI:QUATB206:POLARITY_CTRL
+BTF:MAG:EEI:QUATB206:CURR_SET
+BTF:MAG:EEI:QUATB206:RAMP_RATE_SET
+BTF:MAG:EEI:QUATB206:CYCLE_PATTERN_1
+BTF:MAG:EEI:QUATB206:CYCLE_PATTERN_0
+BTF:MAG:EEI:DHPTB102:CMD_WORD_RAW
+BTF:MAG:EEI:DHPTB102:CMD_POLARITY_POS_EXEC
+BTF:MAG:EEI:DHPTB102:CMD_POLARITY_NEG_EXEC
+BTF:MAG:EEI:DHPTB102:POLARITY_CTRL
+BTF:MAG:EEI:DHPTB102:CURR_SET
+BTF:MAG:EEI:DHPTB102:RAMP_RATE_SET
+BTF:MAG:EEI:DHPTB102:CYCLE_PATTERN_1
+BTF:MAG:EEI:DHPTB102:CYCLE_PATTERN_0
+BTF:MAG:EEI:DHSTB201:CMD_WORD_RAW
+BTF:MAG:EEI:DHSTB201:CMD_POLARITY_POS_EXEC
+BTF:MAG:EEI:DHSTB201:CMD_POLARITY_NEG_EXEC
+BTF:MAG:EEI:DHSTB201:POLARITY_CTRL
+BTF:MAG:EEI:DHSTB201:CURR_SET
+BTF:MAG:EEI:DHSTB201:RAMP_RATE_SET
+BTF:MAG:EEI:DHSTB201:CYCLE_PATTERN_1
+BTF:MAG:EEI:DHSTB201:CYCLE_PATTERN_0
+BTF:MAG:EEI:DHSTB202:CMD_WORD_RAW
+BTF:MAG:EEI:DHSTB202:CMD_POLARITY_POS_EXEC
+BTF:MAG:EEI:DHSTB202:CMD_POLARITY_NEG_EXEC
+BTF:MAG:EEI:DHSTB202:POLARITY_CTRL
+BTF:MAG:EEI:DHSTB202:CURR_SET
+BTF:MAG:EEI:DHSTB202:RAMP_RATE_SET
+BTF:MAG:EEI:DHSTB202:CYCLE_PATTERN_1
+BTF:MAG:EEI:DHSTB202:CYCLE_PATTERN_0
+BTF:MAG:EEI:DHSTB203:CMD_WORD_RAW
+BTF:MAG:EEI:DHSTB203:CMD_POLARITY_POS_EXEC
+BTF:MAG:EEI:DHSTB203:CMD_POLARITY_NEG_EXEC
+BTF:MAG:EEI:DHSTB203:POLARITY_CTRL
+BTF:MAG:EEI:DHSTB203:CURR_SET
+BTF:MAG:EEI:DHSTB203:RAMP_RATE_SET
+BTF:MAG:EEI:DHSTB203:CYCLE_PATTERN_1
+BTF:MAG:EEI:DHSTB203:CYCLE_PATTERN_0
+BTF:MAG:EEI:QUATB201:CURRENT_SP
+BTF:MAG:EEI:QUATB201:UNIMAG_CURR_VAL
+BTF:MAG:EEI:QUATB202:CURRENT_SP
+BTF:MAG:EEI:QUATB202:UNIMAG_CURR_VAL
+BTF:MAG:EEI:QUATB203:CURRENT_SP
+BTF:MAG:EEI:QUATB203:UNIMAG_CURR_VAL
+BTF:MAG:EEI:QUATB204:CURRENT_SP
+BTF:MAG:EEI:QUATB204:UNIMAG_CURR_VAL
+BTF:MAG:EEI:QUATB205:CURRENT_SP
+BTF:MAG:EEI:QUATB205:UNIMAG_CURR_VAL
+BTF:MAG:EEI:QUATB206:CURRENT_SP
+BTF:MAG:EEI:QUATB206:UNIMAG_CURR_VAL
+BTF:MAG:EEI:DHPTB102:CURRENT_SP
+BTF:MAG:EEI:DHPTB102:UNIMAG_CURR_VAL
+BTF:MAG:EEI:DHSTB201:CURRENT_SP
+BTF:MAG:EEI:DHSTB201:UNIMAG_CURR_VAL
+BTF:MAG:EEI:DHSTB202:CURRENT_SP
+BTF:MAG:EEI:DHSTB202:UNIMAG_CURR_VAL
+BTF:MAG:EEI:DHSTB203:CURRENT_SP
+BTF:MAG:EEI:DHSTB203:UNIMAG_CURR_VAL
+BTF:MAG:EEI:QUATB201:STAT_STANDBY
+BTF:MAG:EEI:QUATB201:STAT_POWER_ON
+BTF:MAG:EEI:QUATB201:STAT_FAULTY
+BTF:MAG:EEI:QUATB201:STAT_REMOTE
+BTF:MAG:EEI:QUATB201:STAT_LOCAL
+BTF:MAG:EEI:QUATB201:STAT_CURR_MODE_TRIG
+BTF:MAG:EEI:QUATB201:STAT_CURR_MODE_SW
+BTF:MAG:EEI:QUATB201:STAT_POLARITY_POS
+BTF:MAG:EEI:QUATB201:STAT_POLARITY_NEG
+BTF:MAG:EEI:QUATB201:STAT_CONTACTORS_OPEN
+BTF:MAG:EEI:QUATB201:FAULT_PLC_DCDC
+BTF:MAG:EEI:QUATB201:FAULT_PLC_DCCT_PS
+BTF:MAG:EEI:QUATB201:FAULT_PLC_MAG_ILK1
+BTF:MAG:EEI:QUATB201:FAULT_PLC_MAG_ILK2
+BTF:MAG:EEI:QUATB201:FAULT_PLC_ACDC1
+BTF:MAG:EEI:QUATB201:FAULT_PLC_ACDC2
+BTF:MAG:EEI:QUATB201:FAULT_PLC_WATER_FLOW
+BTF:MAG:EEI:QUATB201:FAULT_PLC_24V_PS
+BTF:MAG:EEI:QUATB201:FAULT_PLC_FUSES
+BTF:MAG:EEI:QUATB201:FAULT_PLC_DC_LINK_DISCH
+BTF:MAG:EEI:QUATB201:FAULT_PLC_CONTACTOR
+BTF:MAG:EEI:QUATB201:FAULT_PLC_CANBUS_DCDC
+BTF:MAG:EEI:QUATB201:FAULT_PLC_CANBUS_EXP
+BTF:MAG:EEI:QUATB201:FAULT_PLC_CANBUS_ACDC1
+BTF:MAG:EEI:QUATB201:FAULT_PLC_CANBUS_ACDC2
+BTF:MAG:EEI:QUATB201:FAULT_DCDC_OVERCURR
+BTF:MAG:EEI:QUATB201:FAULT_DCDC_THERM_PROT
+BTF:MAG:EEI:QUATB201:FAULT_DCDC_OVERTEMP
+BTF:MAG:EEI:QUATB201:FAULT_DCDC_DCLINK_LOW
+BTF:MAG:EEI:QUATB201:FAULT_DCDC_DCLINK_HIGH
+BTF:MAG:EEI:QUATB201:FAULT_DCDC_GROUND_CURR
+BTF:MAG:EEI:QUATB201:FAULT_ACDC1_OVERCURR
+BTF:MAG:EEI:QUATB201:FAULT_ACDC1_THERM_PROT
+BTF:MAG:EEI:QUATB201:FAULT_ACDC1_WATER_TEMP
+BTF:MAG:EEI:QUATB201:FAULT_ACDC1_AIR_TEMP
+BTF:MAG:EEI:QUATB201:FAULT_ACDC2_OVERCURR
+BTF:MAG:EEI:QUATB201:FAULT_ACDC2_THERM_PROT
+BTF:MAG:EEI:QUATB201:FAULT_ACDC2_WATER_TEMP
+BTF:MAG:EEI:QUATB201:FAULT_ACDC2_AIR_TEMP
+BTF:MAG:EEI:QUATB202:STAT_STANDBY
+BTF:MAG:EEI:QUATB202:STAT_POWER_ON
+BTF:MAG:EEI:QUATB202:STAT_FAULTY
+BTF:MAG:EEI:QUATB202:STAT_REMOTE
+BTF:MAG:EEI:QUATB202:STAT_LOCAL
+BTF:MAG:EEI:QUATB202:STAT_CURR_MODE_TRIG
+BTF:MAG:EEI:QUATB202:STAT_CURR_MODE_SW
+BTF:MAG:EEI:QUATB202:STAT_POLARITY_POS
+BTF:MAG:EEI:QUATB202:STAT_POLARITY_NEG
+BTF:MAG:EEI:QUATB202:STAT_CONTACTORS_OPEN
+BTF:MAG:EEI:QUATB202:FAULT_PLC_DCDC
+BTF:MAG:EEI:QUATB202:FAULT_PLC_DCCT_PS
+BTF:MAG:EEI:QUATB202:FAULT_PLC_MAG_ILK1
+BTF:MAG:EEI:QUATB202:FAULT_PLC_MAG_ILK2
+BTF:MAG:EEI:QUATB202:FAULT_PLC_ACDC1
+BTF:MAG:EEI:QUATB202:FAULT_PLC_ACDC2
+BTF:MAG:EEI:QUATB202:FAULT_PLC_WATER_FLOW
+BTF:MAG:EEI:QUATB202:FAULT_PLC_24V_PS
+BTF:MAG:EEI:QUATB202:FAULT_PLC_FUSES
+BTF:MAG:EEI:QUATB202:FAULT_PLC_DC_LINK_DISCH
+BTF:MAG:EEI:QUATB202:FAULT_PLC_CONTACTOR
+BTF:MAG:EEI:QUATB202:FAULT_PLC_CANBUS_DCDC
+BTF:MAG:EEI:QUATB202:FAULT_PLC_CANBUS_EXP
+BTF:MAG:EEI:QUATB202:FAULT_PLC_CANBUS_ACDC1
+BTF:MAG:EEI:QUATB202:FAULT_PLC_CANBUS_ACDC2
+BTF:MAG:EEI:QUATB202:FAULT_DCDC_OVERCURR
+BTF:MAG:EEI:QUATB202:FAULT_DCDC_THERM_PROT
+BTF:MAG:EEI:QUATB202:FAULT_DCDC_OVERTEMP
+BTF:MAG:EEI:QUATB202:FAULT_DCDC_DCLINK_LOW
+BTF:MAG:EEI:QUATB202:FAULT_DCDC_DCLINK_HIGH
+BTF:MAG:EEI:QUATB202:FAULT_DCDC_GROUND_CURR
+BTF:MAG:EEI:QUATB202:FAULT_ACDC1_OVERCURR
+BTF:MAG:EEI:QUATB202:FAULT_ACDC1_THERM_PROT
+BTF:MAG:EEI:QUATB202:FAULT_ACDC1_WATER_TEMP
+BTF:MAG:EEI:QUATB202:FAULT_ACDC1_AIR_TEMP
+BTF:MAG:EEI:QUATB202:FAULT_ACDC2_OVERCURR
+BTF:MAG:EEI:QUATB202:FAULT_ACDC2_THERM_PROT
+BTF:MAG:EEI:QUATB202:FAULT_ACDC2_WATER_TEMP
+BTF:MAG:EEI:QUATB202:FAULT_ACDC2_AIR_TEMP
+BTF:MAG:EEI:QUATB203:STAT_STANDBY
+BTF:MAG:EEI:QUATB203:STAT_POWER_ON
+BTF:MAG:EEI:QUATB203:STAT_FAULTY
+BTF:MAG:EEI:QUATB203:STAT_REMOTE
+BTF:MAG:EEI:QUATB203:STAT_LOCAL
+BTF:MAG:EEI:QUATB203:STAT_CURR_MODE_TRIG
+BTF:MAG:EEI:QUATB203:STAT_CURR_MODE_SW
+BTF:MAG:EEI:QUATB203:STAT_POLARITY_POS
+BTF:MAG:EEI:QUATB203:STAT_POLARITY_NEG
+BTF:MAG:EEI:QUATB203:STAT_CONTACTORS_OPEN
+BTF:MAG:EEI:QUATB203:FAULT_PLC_DCDC
+BTF:MAG:EEI:QUATB203:FAULT_PLC_DCCT_PS
+BTF:MAG:EEI:QUATB203:FAULT_PLC_MAG_ILK1
+BTF:MAG:EEI:QUATB203:FAULT_PLC_MAG_ILK2
+BTF:MAG:EEI:QUATB203:FAULT_PLC_ACDC1
+BTF:MAG:EEI:QUATB203:FAULT_PLC_ACDC2
+BTF:MAG:EEI:QUATB203:FAULT_PLC_WATER_FLOW
+BTF:MAG:EEI:QUATB203:FAULT_PLC_24V_PS
+BTF:MAG:EEI:QUATB203:FAULT_PLC_FUSES
+BTF:MAG:EEI:QUATB203:FAULT_PLC_DC_LINK_DISCH
+BTF:MAG:EEI:QUATB203:FAULT_PLC_CONTACTOR
+BTF:MAG:EEI:QUATB203:FAULT_PLC_CANBUS_DCDC
+BTF:MAG:EEI:QUATB203:FAULT_PLC_CANBUS_EXP
+BTF:MAG:EEI:QUATB203:FAULT_PLC_CANBUS_ACDC1
+BTF:MAG:EEI:QUATB203:FAULT_PLC_CANBUS_ACDC2
+BTF:MAG:EEI:QUATB203:FAULT_DCDC_OVERCURR
+BTF:MAG:EEI:QUATB203:FAULT_DCDC_THERM_PROT
+BTF:MAG:EEI:QUATB203:FAULT_DCDC_OVERTEMP
+BTF:MAG:EEI:QUATB203:FAULT_DCDC_DCLINK_LOW
+BTF:MAG:EEI:QUATB203:FAULT_DCDC_DCLINK_HIGH
+BTF:MAG:EEI:QUATB203:FAULT_DCDC_GROUND_CURR
+BTF:MAG:EEI:QUATB203:FAULT_ACDC1_OVERCURR
+BTF:MAG:EEI:QUATB203:FAULT_ACDC1_THERM_PROT
+BTF:MAG:EEI:QUATB203:FAULT_ACDC1_WATER_TEMP
+BTF:MAG:EEI:QUATB203:FAULT_ACDC1_AIR_TEMP
+BTF:MAG:EEI:QUATB203:FAULT_ACDC2_OVERCURR
+BTF:MAG:EEI:QUATB203:FAULT_ACDC2_THERM_PROT
+BTF:MAG:EEI:QUATB203:FAULT_ACDC2_WATER_TEMP
+BTF:MAG:EEI:QUATB203:FAULT_ACDC2_AIR_TEMP
+BTF:MAG:EEI:QUATB204:STAT_STANDBY
+BTF:MAG:EEI:QUATB204:STAT_POWER_ON
+BTF:MAG:EEI:QUATB204:STAT_FAULTY
+BTF:MAG:EEI:QUATB204:STAT_REMOTE
+BTF:MAG:EEI:QUATB204:STAT_LOCAL
+BTF:MAG:EEI:QUATB204:STAT_CURR_MODE_TRIG
+BTF:MAG:EEI:QUATB204:STAT_CURR_MODE_SW
+BTF:MAG:EEI:QUATB204:STAT_POLARITY_POS
+BTF:MAG:EEI:QUATB204:STAT_POLARITY_NEG
+BTF:MAG:EEI:QUATB204:STAT_CONTACTORS_OPEN
+BTF:MAG:EEI:QUATB204:FAULT_PLC_DCDC
+BTF:MAG:EEI:QUATB204:FAULT_PLC_DCCT_PS
+BTF:MAG:EEI:QUATB204:FAULT_PLC_MAG_ILK1
+BTF:MAG:EEI:QUATB204:FAULT_PLC_MAG_ILK2
+BTF:MAG:EEI:QUATB204:FAULT_PLC_ACDC1
+BTF:MAG:EEI:QUATB204:FAULT_PLC_ACDC2
+BTF:MAG:EEI:QUATB204:FAULT_PLC_WATER_FLOW
+BTF:MAG:EEI:QUATB204:FAULT_PLC_24V_PS
+BTF:MAG:EEI:QUATB204:FAULT_PLC_FUSES
+BTF:MAG:EEI:QUATB204:FAULT_PLC_DC_LINK_DISCH
+BTF:MAG:EEI:QUATB204:FAULT_PLC_CONTACTOR
+BTF:MAG:EEI:QUATB204:FAULT_PLC_CANBUS_DCDC
+BTF:MAG:EEI:QUATB204:FAULT_PLC_CANBUS_EXP
+BTF:MAG:EEI:QUATB204:FAULT_PLC_CANBUS_ACDC1
+BTF:MAG:EEI:QUATB204:FAULT_PLC_CANBUS_ACDC2
+BTF:MAG:EEI:QUATB204:FAULT_DCDC_OVERCURR
+BTF:MAG:EEI:QUATB204:FAULT_DCDC_THERM_PROT
+BTF:MAG:EEI:QUATB204:FAULT_DCDC_OVERTEMP
+BTF:MAG:EEI:QUATB204:FAULT_DCDC_DCLINK_LOW
+BTF:MAG:EEI:QUATB204:FAULT_DCDC_DCLINK_HIGH
+BTF:MAG:EEI:QUATB204:FAULT_DCDC_GROUND_CURR
+BTF:MAG:EEI:QUATB204:FAULT_ACDC1_OVERCURR
+BTF:MAG:EEI:QUATB204:FAULT_ACDC1_THERM_PROT
+BTF:MAG:EEI:QUATB204:FAULT_ACDC1_WATER_TEMP
+BTF:MAG:EEI:QUATB204:FAULT_ACDC1_AIR_TEMP
+BTF:MAG:EEI:QUATB204:FAULT_ACDC2_OVERCURR
+BTF:MAG:EEI:QUATB204:FAULT_ACDC2_THERM_PROT
+BTF:MAG:EEI:QUATB204:FAULT_ACDC2_WATER_TEMP
+BTF:MAG:EEI:QUATB204:FAULT_ACDC2_AIR_TEMP
+BTF:MAG:EEI:QUATB205:STAT_STANDBY
+BTF:MAG:EEI:QUATB205:STAT_POWER_ON
+BTF:MAG:EEI:QUATB205:STAT_FAULTY
+BTF:MAG:EEI:QUATB205:STAT_REMOTE
+BTF:MAG:EEI:QUATB205:STAT_LOCAL
+BTF:MAG:EEI:QUATB205:STAT_CURR_MODE_TRIG
+BTF:MAG:EEI:QUATB205:STAT_CURR_MODE_SW
+BTF:MAG:EEI:QUATB205:STAT_POLARITY_POS
+BTF:MAG:EEI:QUATB205:STAT_POLARITY_NEG
+BTF:MAG:EEI:QUATB205:STAT_CONTACTORS_OPEN
+BTF:MAG:EEI:QUATB205:FAULT_PLC_DCDC
+BTF:MAG:EEI:QUATB205:FAULT_PLC_DCCT_PS
+BTF:MAG:EEI:QUATB205:FAULT_PLC_MAG_ILK1
+BTF:MAG:EEI:QUATB205:FAULT_PLC_MAG_ILK2
+BTF:MAG:EEI:QUATB205:FAULT_PLC_ACDC1
+BTF:MAG:EEI:QUATB205:FAULT_PLC_ACDC2
+BTF:MAG:EEI:QUATB205:FAULT_PLC_WATER_FLOW
+BTF:MAG:EEI:QUATB205:FAULT_PLC_24V_PS
+BTF:MAG:EEI:QUATB205:FAULT_PLC_FUSES
+BTF:MAG:EEI:QUATB205:FAULT_PLC_DC_LINK_DISCH
+BTF:MAG:EEI:QUATB205:FAULT_PLC_CONTACTOR
+BTF:MAG:EEI:QUATB205:FAULT_PLC_CANBUS_DCDC
+BTF:MAG:EEI:QUATB205:FAULT_PLC_CANBUS_EXP
+BTF:MAG:EEI:QUATB205:FAULT_PLC_CANBUS_ACDC1
+BTF:MAG:EEI:QUATB205:FAULT_PLC_CANBUS_ACDC2
+BTF:MAG:EEI:QUATB205:FAULT_DCDC_OVERCURR
+BTF:MAG:EEI:QUATB205:FAULT_DCDC_THERM_PROT
+BTF:MAG:EEI:QUATB205:FAULT_DCDC_OVERTEMP
+BTF:MAG:EEI:QUATB205:FAULT_DCDC_DCLINK_LOW
+BTF:MAG:EEI:QUATB205:FAULT_DCDC_DCLINK_HIGH
+BTF:MAG:EEI:QUATB205:FAULT_DCDC_GROUND_CURR
+BTF:MAG:EEI:QUATB205:FAULT_ACDC1_OVERCURR
+BTF:MAG:EEI:QUATB205:FAULT_ACDC1_THERM_PROT
+BTF:MAG:EEI:QUATB205:FAULT_ACDC1_WATER_TEMP
+BTF:MAG:EEI:QUATB205:FAULT_ACDC1_AIR_TEMP
+BTF:MAG:EEI:QUATB205:FAULT_ACDC2_OVERCURR
+BTF:MAG:EEI:QUATB205:FAULT_ACDC2_THERM_PROT
+BTF:MAG:EEI:QUATB205:FAULT_ACDC2_WATER_TEMP
+BTF:MAG:EEI:QUATB205:FAULT_ACDC2_AIR_TEMP
+BTF:MAG:EEI:QUATB206:STAT_STANDBY
+BTF:MAG:EEI:QUATB206:STAT_POWER_ON
+BTF:MAG:EEI:QUATB206:STAT_FAULTY
+BTF:MAG:EEI:QUATB206:STAT_REMOTE
+BTF:MAG:EEI:QUATB206:STAT_LOCAL
+BTF:MAG:EEI:QUATB206:STAT_CURR_MODE_TRIG
+BTF:MAG:EEI:QUATB206:STAT_CURR_MODE_SW
+BTF:MAG:EEI:QUATB206:STAT_POLARITY_POS
+BTF:MAG:EEI:QUATB206:STAT_POLARITY_NEG
+BTF:MAG:EEI:QUATB206:STAT_CONTACTORS_OPEN
+BTF:MAG:EEI:QUATB206:FAULT_PLC_DCDC
+BTF:MAG:EEI:QUATB206:FAULT_PLC_DCCT_PS
+BTF:MAG:EEI:QUATB206:FAULT_PLC_MAG_ILK1
+BTF:MAG:EEI:QUATB206:FAULT_PLC_MAG_ILK2
+BTF:MAG:EEI:QUATB206:FAULT_PLC_ACDC1
+BTF:MAG:EEI:QUATB206:FAULT_PLC_ACDC2
+BTF:MAG:EEI:QUATB206:FAULT_PLC_WATER_FLOW
+BTF:MAG:EEI:QUATB206:FAULT_PLC_24V_PS
+BTF:MAG:EEI:QUATB206:FAULT_PLC_FUSES
+BTF:MAG:EEI:QUATB206:FAULT_PLC_DC_LINK_DISCH
+BTF:MAG:EEI:QUATB206:FAULT_PLC_CONTACTOR
+BTF:MAG:EEI:QUATB206:FAULT_PLC_CANBUS_DCDC
+BTF:MAG:EEI:QUATB206:FAULT_PLC_CANBUS_EXP
+BTF:MAG:EEI:QUATB206:FAULT_PLC_CANBUS_ACDC1
+BTF:MAG:EEI:QUATB206:FAULT_PLC_CANBUS_ACDC2
+BTF:MAG:EEI:QUATB206:FAULT_DCDC_OVERCURR
+BTF:MAG:EEI:QUATB206:FAULT_DCDC_THERM_PROT
+BTF:MAG:EEI:QUATB206:FAULT_DCDC_OVERTEMP
+BTF:MAG:EEI:QUATB206:FAULT_DCDC_DCLINK_LOW
+BTF:MAG:EEI:QUATB206:FAULT_DCDC_DCLINK_HIGH
+BTF:MAG:EEI:QUATB206:FAULT_DCDC_GROUND_CURR
+BTF:MAG:EEI:QUATB206:FAULT_ACDC1_OVERCURR
+BTF:MAG:EEI:QUATB206:FAULT_ACDC1_THERM_PROT
+BTF:MAG:EEI:QUATB206:FAULT_ACDC1_WATER_TEMP
+BTF:MAG:EEI:QUATB206:FAULT_ACDC1_AIR_TEMP
+BTF:MAG:EEI:QUATB206:FAULT_ACDC2_OVERCURR
+BTF:MAG:EEI:QUATB206:FAULT_ACDC2_THERM_PROT
+BTF:MAG:EEI:QUATB206:FAULT_ACDC2_WATER_TEMP
+BTF:MAG:EEI:QUATB206:FAULT_ACDC2_AIR_TEMP
+BTF:MAG:EEI:DHPTB102:STAT_STANDBY
+BTF:MAG:EEI:DHPTB102:STAT_POWER_ON
+BTF:MAG:EEI:DHPTB102:STAT_FAULTY
+BTF:MAG:EEI:DHPTB102:STAT_REMOTE
+BTF:MAG:EEI:DHPTB102:STAT_LOCAL
+BTF:MAG:EEI:DHPTB102:STAT_CURR_MODE_TRIG
+BTF:MAG:EEI:DHPTB102:STAT_CURR_MODE_SW
+BTF:MAG:EEI:DHPTB102:STAT_POLARITY_POS
+BTF:MAG:EEI:DHPTB102:STAT_POLARITY_NEG
+BTF:MAG:EEI:DHPTB102:STAT_CONTACTORS_OPEN
+BTF:MAG:EEI:DHPTB102:FAULT_PLC_DCDC
+BTF:MAG:EEI:DHPTB102:FAULT_PLC_DCCT_PS
+BTF:MAG:EEI:DHPTB102:FAULT_PLC_MAG_ILK1
+BTF:MAG:EEI:DHPTB102:FAULT_PLC_MAG_ILK2
+BTF:MAG:EEI:DHPTB102:FAULT_PLC_ACDC1
+BTF:MAG:EEI:DHPTB102:FAULT_PLC_ACDC2
+BTF:MAG:EEI:DHPTB102:FAULT_PLC_WATER_FLOW
+BTF:MAG:EEI:DHPTB102:FAULT_PLC_24V_PS
+BTF:MAG:EEI:DHPTB102:FAULT_PLC_FUSES
+BTF:MAG:EEI:DHPTB102:FAULT_PLC_DC_LINK_DISCH
+BTF:MAG:EEI:DHPTB102:FAULT_PLC_CONTACTOR
+BTF:MAG:EEI:DHPTB102:FAULT_PLC_CANBUS_DCDC
+BTF:MAG:EEI:DHPTB102:FAULT_PLC_CANBUS_EXP
+BTF:MAG:EEI:DHPTB102:FAULT_PLC_CANBUS_ACDC1
+BTF:MAG:EEI:DHPTB102:FAULT_PLC_CANBUS_ACDC2
+BTF:MAG:EEI:DHPTB102:FAULT_DCDC_OVERCURR
+BTF:MAG:EEI:DHPTB102:FAULT_DCDC_THERM_PROT
+BTF:MAG:EEI:DHPTB102:FAULT_DCDC_OVERTEMP
+BTF:MAG:EEI:DHPTB102:FAULT_DCDC_DCLINK_LOW
+BTF:MAG:EEI:DHPTB102:FAULT_DCDC_DCLINK_HIGH
+BTF:MAG:EEI:DHPTB102:FAULT_DCDC_GROUND_CURR
+BTF:MAG:EEI:DHPTB102:FAULT_ACDC1_OVERCURR
+BTF:MAG:EEI:DHPTB102:FAULT_ACDC1_THERM_PROT
+BTF:MAG:EEI:DHPTB102:FAULT_ACDC1_WATER_TEMP
+BTF:MAG:EEI:DHPTB102:FAULT_ACDC1_AIR_TEMP
+BTF:MAG:EEI:DHPTB102:FAULT_ACDC2_OVERCURR
+BTF:MAG:EEI:DHPTB102:FAULT_ACDC2_THERM_PROT
+BTF:MAG:EEI:DHPTB102:FAULT_ACDC2_WATER_TEMP
+BTF:MAG:EEI:DHPTB102:FAULT_ACDC2_AIR_TEMP
+BTF:MAG:EEI:DHSTB201:STAT_STANDBY
+BTF:MAG:EEI:DHSTB201:STAT_POWER_ON
+BTF:MAG:EEI:DHSTB201:STAT_FAULTY
+BTF:MAG:EEI:DHSTB201:STAT_REMOTE
+BTF:MAG:EEI:DHSTB201:STAT_LOCAL
+BTF:MAG:EEI:DHSTB201:STAT_CURR_MODE_TRIG
+BTF:MAG:EEI:DHSTB201:STAT_CURR_MODE_SW
+BTF:MAG:EEI:DHSTB201:STAT_POLARITY_POS
+BTF:MAG:EEI:DHSTB201:STAT_POLARITY_NEG
+BTF:MAG:EEI:DHSTB201:STAT_CONTACTORS_OPEN
+BTF:MAG:EEI:DHSTB201:FAULT_PLC_DCDC
+BTF:MAG:EEI:DHSTB201:FAULT_PLC_DCCT_PS
+BTF:MAG:EEI:DHSTB201:FAULT_PLC_MAG_ILK1
+BTF:MAG:EEI:DHSTB201:FAULT_PLC_MAG_ILK2
+BTF:MAG:EEI:DHSTB201:FAULT_PLC_ACDC1
+BTF:MAG:EEI:DHSTB201:FAULT_PLC_ACDC2
+BTF:MAG:EEI:DHSTB201:FAULT_PLC_WATER_FLOW
+BTF:MAG:EEI:DHSTB201:FAULT_PLC_24V_PS
+BTF:MAG:EEI:DHSTB201:FAULT_PLC_FUSES
+BTF:MAG:EEI:DHSTB201:FAULT_PLC_DC_LINK_DISCH
+BTF:MAG:EEI:DHSTB201:FAULT_PLC_CONTACTOR
+BTF:MAG:EEI:DHSTB201:FAULT_PLC_CANBUS_DCDC
+BTF:MAG:EEI:DHSTB201:FAULT_PLC_CANBUS_EXP
+BTF:MAG:EEI:DHSTB201:FAULT_PLC_CANBUS_ACDC1
+BTF:MAG:EEI:DHSTB201:FAULT_PLC_CANBUS_ACDC2
+BTF:MAG:EEI:DHSTB201:FAULT_DCDC_OVERCURR
+BTF:MAG:EEI:DHSTB201:FAULT_DCDC_THERM_PROT
+BTF:MAG:EEI:DHSTB201:FAULT_DCDC_OVERTEMP
+BTF:MAG:EEI:DHSTB201:FAULT_DCDC_DCLINK_LOW
+BTF:MAG:EEI:DHSTB201:FAULT_DCDC_DCLINK_HIGH
+BTF:MAG:EEI:DHSTB201:FAULT_DCDC_GROUND_CURR
+BTF:MAG:EEI:DHSTB201:FAULT_ACDC1_OVERCURR
+BTF:MAG:EEI:DHSTB201:FAULT_ACDC1_THERM_PROT
+BTF:MAG:EEI:DHSTB201:FAULT_ACDC1_WATER_TEMP
+BTF:MAG:EEI:DHSTB201:FAULT_ACDC1_AIR_TEMP
+BTF:MAG:EEI:DHSTB201:FAULT_ACDC2_OVERCURR
+BTF:MAG:EEI:DHSTB201:FAULT_ACDC2_THERM_PROT
+BTF:MAG:EEI:DHSTB201:FAULT_ACDC2_WATER_TEMP
+BTF:MAG:EEI:DHSTB201:FAULT_ACDC2_AIR_TEMP
+BTF:MAG:EEI:DHSTB202:STAT_STANDBY
+BTF:MAG:EEI:DHSTB202:STAT_POWER_ON
+BTF:MAG:EEI:DHSTB202:STAT_FAULTY
+BTF:MAG:EEI:DHSTB202:STAT_REMOTE
+BTF:MAG:EEI:DHSTB202:STAT_LOCAL
+BTF:MAG:EEI:DHSTB202:STAT_CURR_MODE_TRIG
+BTF:MAG:EEI:DHSTB202:STAT_CURR_MODE_SW
+BTF:MAG:EEI:DHSTB202:STAT_POLARITY_POS
+BTF:MAG:EEI:DHSTB202:STAT_POLARITY_NEG
+BTF:MAG:EEI:DHSTB202:STAT_CONTACTORS_OPEN
+BTF:MAG:EEI:DHSTB202:FAULT_PLC_DCDC
+BTF:MAG:EEI:DHSTB202:FAULT_PLC_DCCT_PS
+BTF:MAG:EEI:DHSTB202:FAULT_PLC_MAG_ILK1
+BTF:MAG:EEI:DHSTB202:FAULT_PLC_MAG_ILK2
+BTF:MAG:EEI:DHSTB202:FAULT_PLC_ACDC1
+BTF:MAG:EEI:DHSTB202:FAULT_PLC_ACDC2
+BTF:MAG:EEI:DHSTB202:FAULT_PLC_WATER_FLOW
+BTF:MAG:EEI:DHSTB202:FAULT_PLC_24V_PS
+BTF:MAG:EEI:DHSTB202:FAULT_PLC_FUSES
+BTF:MAG:EEI:DHSTB202:FAULT_PLC_DC_LINK_DISCH
+BTF:MAG:EEI:DHSTB202:FAULT_PLC_CONTACTOR
+BTF:MAG:EEI:DHSTB202:FAULT_PLC_CANBUS_DCDC
+BTF:MAG:EEI:DHSTB202:FAULT_PLC_CANBUS_EXP
+BTF:MAG:EEI:DHSTB202:FAULT_PLC_CANBUS_ACDC1
+BTF:MAG:EEI:DHSTB202:FAULT_PLC_CANBUS_ACDC2
+BTF:MAG:EEI:DHSTB202:FAULT_DCDC_OVERCURR
+BTF:MAG:EEI:DHSTB202:FAULT_DCDC_THERM_PROT
+BTF:MAG:EEI:DHSTB202:FAULT_DCDC_OVERTEMP
+BTF:MAG:EEI:DHSTB202:FAULT_DCDC_DCLINK_LOW
+BTF:MAG:EEI:DHSTB202:FAULT_DCDC_DCLINK_HIGH
+BTF:MAG:EEI:DHSTB202:FAULT_DCDC_GROUND_CURR
+BTF:MAG:EEI:DHSTB202:FAULT_ACDC1_OVERCURR
+BTF:MAG:EEI:DHSTB202:FAULT_ACDC1_THERM_PROT
+BTF:MAG:EEI:DHSTB202:FAULT_ACDC1_WATER_TEMP
+BTF:MAG:EEI:DHSTB202:FAULT_ACDC1_AIR_TEMP
+BTF:MAG:EEI:DHSTB202:FAULT_ACDC2_OVERCURR
+BTF:MAG:EEI:DHSTB202:FAULT_ACDC2_THERM_PROT
+BTF:MAG:EEI:DHSTB202:FAULT_ACDC2_WATER_TEMP
+BTF:MAG:EEI:DHSTB202:FAULT_ACDC2_AIR_TEMP
+BTF:MAG:EEI:DHSTB203:STAT_STANDBY
+BTF:MAG:EEI:DHSTB203:STAT_POWER_ON
+BTF:MAG:EEI:DHSTB203:STAT_FAULTY
+BTF:MAG:EEI:DHSTB203:STAT_REMOTE
+BTF:MAG:EEI:DHSTB203:STAT_LOCAL
+BTF:MAG:EEI:DHSTB203:STAT_CURR_MODE_TRIG
+BTF:MAG:EEI:DHSTB203:STAT_CURR_MODE_SW
+BTF:MAG:EEI:DHSTB203:STAT_POLARITY_POS
+BTF:MAG:EEI:DHSTB203:STAT_POLARITY_NEG
+BTF:MAG:EEI:DHSTB203:STAT_CONTACTORS_OPEN
+BTF:MAG:EEI:DHSTB203:FAULT_PLC_DCDC
+BTF:MAG:EEI:DHSTB203:FAULT_PLC_DCCT_PS
+BTF:MAG:EEI:DHSTB203:FAULT_PLC_MAG_ILK1
+BTF:MAG:EEI:DHSTB203:FAULT_PLC_MAG_ILK2
+BTF:MAG:EEI:DHSTB203:FAULT_PLC_ACDC1
+BTF:MAG:EEI:DHSTB203:FAULT_PLC_ACDC2
+BTF:MAG:EEI:DHSTB203:FAULT_PLC_WATER_FLOW
+BTF:MAG:EEI:DHSTB203:FAULT_PLC_24V_PS
+BTF:MAG:EEI:DHSTB203:FAULT_PLC_FUSES
+BTF:MAG:EEI:DHSTB203:FAULT_PLC_DC_LINK_DISCH
+BTF:MAG:EEI:DHSTB203:FAULT_PLC_CONTACTOR
+BTF:MAG:EEI:DHSTB203:FAULT_PLC_CANBUS_DCDC
+BTF:MAG:EEI:DHSTB203:FAULT_PLC_CANBUS_EXP
+BTF:MAG:EEI:DHSTB203:FAULT_PLC_CANBUS_ACDC1
+BTF:MAG:EEI:DHSTB203:FAULT_PLC_CANBUS_ACDC2
+BTF:MAG:EEI:DHSTB203:FAULT_DCDC_OVERCURR
+BTF:MAG:EEI:DHSTB203:FAULT_DCDC_THERM_PROT
+BTF:MAG:EEI:DHSTB203:FAULT_DCDC_OVERTEMP
+BTF:MAG:EEI:DHSTB203:FAULT_DCDC_DCLINK_LOW
+BTF:MAG:EEI:DHSTB203:FAULT_DCDC_DCLINK_HIGH
+BTF:MAG:EEI:DHSTB203:FAULT_DCDC_GROUND_CURR
+BTF:MAG:EEI:DHSTB203:FAULT_ACDC1_OVERCURR
+BTF:MAG:EEI:DHSTB203:FAULT_ACDC1_THERM_PROT
+BTF:MAG:EEI:DHSTB203:FAULT_ACDC1_WATER_TEMP
+BTF:MAG:EEI:DHSTB203:FAULT_ACDC1_AIR_TEMP
+BTF:MAG:EEI:DHSTB203:FAULT_ACDC2_OVERCURR
+BTF:MAG:EEI:DHSTB203:FAULT_ACDC2_THERM_PROT
+BTF:MAG:EEI:DHSTB203:FAULT_ACDC2_WATER_TEMP
+BTF:MAG:EEI:DHSTB203:FAULT_ACDC2_AIR_TEMP
+BTF:MAG:EEI:QUATB201:CMD_STANDBY
+BTF:MAG:EEI:QUATB201:CMD_POWER_ON
+BTF:MAG:EEI:QUATB201:CMD_GLOBAL_OFF
+BTF:MAG:EEI:QUATB201:CMD_RESET
+BTF:MAG:EEI:QUATB201:CMD_START_RAMP
+BTF:MAG:EEI:QUATB201:CMD_CURRENT_MODE_TRIG
+BTF:MAG:EEI:QUATB201:CMD_CURRENT_MODE_SW
+BTF:MAG:EEI:QUATB201:CMD_DEVIATION_TOGGLE
+BTF:MAG:EEI:QUATB201:CMD_CONTACTORS_OPEN
+BTF:MAG:EEI:QUATB201:CMD_POLARITY_POS_REQ
+BTF:MAG:EEI:QUATB201:CMD_POLARITY_NEG_REQ
+BTF:MAG:EEI:QUATB202:CMD_STANDBY
+BTF:MAG:EEI:QUATB202:CMD_POWER_ON
+BTF:MAG:EEI:QUATB202:CMD_GLOBAL_OFF
+BTF:MAG:EEI:QUATB202:CMD_RESET
+BTF:MAG:EEI:QUATB202:CMD_START_RAMP
+BTF:MAG:EEI:QUATB202:CMD_CURRENT_MODE_TRIG
+BTF:MAG:EEI:QUATB202:CMD_CURRENT_MODE_SW
+BTF:MAG:EEI:QUATB202:CMD_DEVIATION_TOGGLE
+BTF:MAG:EEI:QUATB202:CMD_CONTACTORS_OPEN
+BTF:MAG:EEI:QUATB202:CMD_POLARITY_POS_REQ
+BTF:MAG:EEI:QUATB202:CMD_POLARITY_NEG_REQ
+BTF:MAG:EEI:QUATB203:CMD_STANDBY
+BTF:MAG:EEI:QUATB203:CMD_POWER_ON
+BTF:MAG:EEI:QUATB203:CMD_GLOBAL_OFF
+BTF:MAG:EEI:QUATB203:CMD_RESET
+BTF:MAG:EEI:QUATB203:CMD_START_RAMP
+BTF:MAG:EEI:QUATB203:CMD_CURRENT_MODE_TRIG
+BTF:MAG:EEI:QUATB203:CMD_CURRENT_MODE_SW
+BTF:MAG:EEI:QUATB203:CMD_DEVIATION_TOGGLE
+BTF:MAG:EEI:QUATB203:CMD_CONTACTORS_OPEN
+BTF:MAG:EEI:QUATB203:CMD_POLARITY_POS_REQ
+BTF:MAG:EEI:QUATB203:CMD_POLARITY_NEG_REQ
+BTF:MAG:EEI:QUATB204:CMD_STANDBY
+BTF:MAG:EEI:QUATB204:CMD_POWER_ON
+BTF:MAG:EEI:QUATB204:CMD_GLOBAL_OFF
+BTF:MAG:EEI:QUATB204:CMD_RESET
+BTF:MAG:EEI:QUATB204:CMD_START_RAMP
+BTF:MAG:EEI:QUATB204:CMD_CURRENT_MODE_TRIG
+BTF:MAG:EEI:QUATB204:CMD_CURRENT_MODE_SW
+BTF:MAG:EEI:QUATB204:CMD_DEVIATION_TOGGLE
+BTF:MAG:EEI:QUATB204:CMD_CONTACTORS_OPEN
+BTF:MAG:EEI:QUATB204:CMD_POLARITY_POS_REQ
+BTF:MAG:EEI:QUATB204:CMD_POLARITY_NEG_REQ
+BTF:MAG:EEI:QUATB205:CMD_STANDBY
+BTF:MAG:EEI:QUATB205:CMD_POWER_ON
+BTF:MAG:EEI:QUATB205:CMD_GLOBAL_OFF
+BTF:MAG:EEI:QUATB205:CMD_RESET
+BTF:MAG:EEI:QUATB205:CMD_START_RAMP
+BTF:MAG:EEI:QUATB205:CMD_CURRENT_MODE_TRIG
+BTF:MAG:EEI:QUATB205:CMD_CURRENT_MODE_SW
+BTF:MAG:EEI:QUATB205:CMD_DEVIATION_TOGGLE
+BTF:MAG:EEI:QUATB205:CMD_CONTACTORS_OPEN
+BTF:MAG:EEI:QUATB205:CMD_POLARITY_POS_REQ
+BTF:MAG:EEI:QUATB205:CMD_POLARITY_NEG_REQ
+BTF:MAG:EEI:QUATB206:CMD_STANDBY
+BTF:MAG:EEI:QUATB206:CMD_POWER_ON
+BTF:MAG:EEI:QUATB206:CMD_GLOBAL_OFF
+BTF:MAG:EEI:QUATB206:CMD_RESET
+BTF:MAG:EEI:QUATB206:CMD_START_RAMP
+BTF:MAG:EEI:QUATB206:CMD_CURRENT_MODE_TRIG
+BTF:MAG:EEI:QUATB206:CMD_CURRENT_MODE_SW
+BTF:MAG:EEI:QUATB206:CMD_DEVIATION_TOGGLE
+BTF:MAG:EEI:QUATB206:CMD_CONTACTORS_OPEN
+BTF:MAG:EEI:QUATB206:CMD_POLARITY_POS_REQ
+BTF:MAG:EEI:QUATB206:CMD_POLARITY_NEG_REQ
+BTF:MAG:EEI:DHPTB102:CMD_STANDBY
+BTF:MAG:EEI:DHPTB102:CMD_POWER_ON
+BTF:MAG:EEI:DHPTB102:CMD_GLOBAL_OFF
+BTF:MAG:EEI:DHPTB102:CMD_RESET
+BTF:MAG:EEI:DHPTB102:CMD_START_RAMP
+BTF:MAG:EEI:DHPTB102:CMD_CURRENT_MODE_TRIG
+BTF:MAG:EEI:DHPTB102:CMD_CURRENT_MODE_SW
+BTF:MAG:EEI:DHPTB102:CMD_DEVIATION_TOGGLE
+BTF:MAG:EEI:DHPTB102:CMD_CONTACTORS_OPEN
+BTF:MAG:EEI:DHPTB102:CMD_POLARITY_POS_REQ
+BTF:MAG:EEI:DHPTB102:CMD_POLARITY_NEG_REQ
+BTF:MAG:EEI:DHSTB201:CMD_STANDBY
+BTF:MAG:EEI:DHSTB201:CMD_POWER_ON
+BTF:MAG:EEI:DHSTB201:CMD_GLOBAL_OFF
+BTF:MAG:EEI:DHSTB201:CMD_RESET
+BTF:MAG:EEI:DHSTB201:CMD_START_RAMP
+BTF:MAG:EEI:DHSTB201:CMD_CURRENT_MODE_TRIG
+BTF:MAG:EEI:DHSTB201:CMD_CURRENT_MODE_SW
+BTF:MAG:EEI:DHSTB201:CMD_DEVIATION_TOGGLE
+BTF:MAG:EEI:DHSTB201:CMD_CONTACTORS_OPEN
+BTF:MAG:EEI:DHSTB201:CMD_POLARITY_POS_REQ
+BTF:MAG:EEI:DHSTB201:CMD_POLARITY_NEG_REQ
+BTF:MAG:EEI:DHSTB202:CMD_STANDBY
+BTF:MAG:EEI:DHSTB202:CMD_POWER_ON
+BTF:MAG:EEI:DHSTB202:CMD_GLOBAL_OFF
+BTF:MAG:EEI:DHSTB202:CMD_RESET
+BTF:MAG:EEI:DHSTB202:CMD_START_RAMP
+BTF:MAG:EEI:DHSTB202:CMD_CURRENT_MODE_TRIG
+BTF:MAG:EEI:DHSTB202:CMD_CURRENT_MODE_SW
+BTF:MAG:EEI:DHSTB202:CMD_DEVIATION_TOGGLE
+BTF:MAG:EEI:DHSTB202:CMD_CONTACTORS_OPEN
+BTF:MAG:EEI:DHSTB202:CMD_POLARITY_POS_REQ
+BTF:MAG:EEI:DHSTB202:CMD_POLARITY_NEG_REQ
+BTF:MAG:EEI:DHSTB203:CMD_STANDBY
+BTF:MAG:EEI:DHSTB203:CMD_POWER_ON
+BTF:MAG:EEI:DHSTB203:CMD_GLOBAL_OFF
+BTF:MAG:EEI:DHSTB203:CMD_RESET
+BTF:MAG:EEI:DHSTB203:CMD_START_RAMP
+BTF:MAG:EEI:DHSTB203:CMD_CURRENT_MODE_TRIG
+BTF:MAG:EEI:DHSTB203:CMD_CURRENT_MODE_SW
+BTF:MAG:EEI:DHSTB203:CMD_DEVIATION_TOGGLE
+BTF:MAG:EEI:DHSTB203:CMD_CONTACTORS_OPEN
+BTF:MAG:EEI:DHSTB203:CMD_POLARITY_POS_REQ
+BTF:MAG:EEI:DHSTB203:CMD_POLARITY_NEG_REQ
+BTF:MAG:EEI:QUATB201:INTERLOCKED
+BTF:MAG:EEI:QUATB202:INTERLOCKED
+BTF:MAG:EEI:QUATB203:INTERLOCKED
+BTF:MAG:EEI:QUATB204:INTERLOCKED
+BTF:MAG:EEI:QUATB205:INTERLOCKED
+BTF:MAG:EEI:QUATB206:INTERLOCKED
+BTF:MAG:EEI:DHPTB102:INTERLOCKED
+BTF:MAG:EEI:DHSTB201:INTERLOCKED
+BTF:MAG:EEI:DHSTB202:INTERLOCKED
+BTF:MAG:EEI:DHSTB203:INTERLOCKED
+BTF:MAG:EEI:QUATB201:UNIMAG_PROCESS
+BTF:MAG:EEI:QUATB201:UNIMAG_ABS_CURR
+BTF:MAG:EEI:QUATB201:UNIMAG_CHECK_POL
+BTF:MAG:EEI:QUATB201:UNIMAG_SET_CURR
+BTF:MAG:EEI:QUATB201:UNIMAG_WAIT_STBY
+BTF:MAG:EEI:QUATB201:UNIMAG_WAIT_PWR
+BTF:MAG:EEI:QUATB201:UNIMAG_SET_POL_POS
+BTF:MAG:EEI:QUATB201:UNIMAG_SET_POL_NEG
+BTF:MAG:EEI:QUATB201:UNIMAG_CONT_SEQ
+BTF:MAG:EEI:QUATB201:CURRENT_RB
+BTF:MAG:EEI:QUATB202:UNIMAG_PROCESS
+BTF:MAG:EEI:QUATB202:UNIMAG_ABS_CURR
+BTF:MAG:EEI:QUATB202:UNIMAG_CHECK_POL
+BTF:MAG:EEI:QUATB202:UNIMAG_SET_CURR
+BTF:MAG:EEI:QUATB202:UNIMAG_WAIT_STBY
+BTF:MAG:EEI:QUATB202:UNIMAG_WAIT_PWR
+BTF:MAG:EEI:QUATB202:UNIMAG_SET_POL_POS
+BTF:MAG:EEI:QUATB202:UNIMAG_SET_POL_NEG
+BTF:MAG:EEI:QUATB202:UNIMAG_CONT_SEQ
+BTF:MAG:EEI:QUATB202:CURRENT_RB
+BTF:MAG:EEI:QUATB203:UNIMAG_PROCESS
+BTF:MAG:EEI:QUATB203:UNIMAG_ABS_CURR
+BTF:MAG:EEI:QUATB203:UNIMAG_CHECK_POL
+BTF:MAG:EEI:QUATB203:UNIMAG_SET_CURR
+BTF:MAG:EEI:QUATB203:UNIMAG_WAIT_STBY
+BTF:MAG:EEI:QUATB203:UNIMAG_WAIT_PWR
+BTF:MAG:EEI:QUATB203:UNIMAG_SET_POL_POS
+BTF:MAG:EEI:QUATB203:UNIMAG_SET_POL_NEG
+BTF:MAG:EEI:QUATB203:UNIMAG_CONT_SEQ
+BTF:MAG:EEI:QUATB203:CURRENT_RB
+BTF:MAG:EEI:QUATB204:UNIMAG_PROCESS
+BTF:MAG:EEI:QUATB204:UNIMAG_ABS_CURR
+BTF:MAG:EEI:QUATB204:UNIMAG_CHECK_POL
+BTF:MAG:EEI:QUATB204:UNIMAG_SET_CURR
+BTF:MAG:EEI:QUATB204:UNIMAG_WAIT_STBY
+BTF:MAG:EEI:QUATB204:UNIMAG_WAIT_PWR
+BTF:MAG:EEI:QUATB204:UNIMAG_SET_POL_POS
+BTF:MAG:EEI:QUATB204:UNIMAG_SET_POL_NEG
+BTF:MAG:EEI:QUATB204:UNIMAG_CONT_SEQ
+BTF:MAG:EEI:QUATB204:CURRENT_RB
+BTF:MAG:EEI:QUATB205:UNIMAG_PROCESS
+BTF:MAG:EEI:QUATB205:UNIMAG_ABS_CURR
+BTF:MAG:EEI:QUATB205:UNIMAG_CHECK_POL
+BTF:MAG:EEI:QUATB205:UNIMAG_SET_CURR
+BTF:MAG:EEI:QUATB205:UNIMAG_WAIT_STBY
+BTF:MAG:EEI:QUATB205:UNIMAG_WAIT_PWR
+BTF:MAG:EEI:QUATB205:UNIMAG_SET_POL_POS
+BTF:MAG:EEI:QUATB205:UNIMAG_SET_POL_NEG
+BTF:MAG:EEI:QUATB205:UNIMAG_CONT_SEQ
+BTF:MAG:EEI:QUATB205:CURRENT_RB
+BTF:MAG:EEI:QUATB206:UNIMAG_PROCESS
+BTF:MAG:EEI:QUATB206:UNIMAG_ABS_CURR
+BTF:MAG:EEI:QUATB206:UNIMAG_CHECK_POL
+BTF:MAG:EEI:QUATB206:UNIMAG_SET_CURR
+BTF:MAG:EEI:QUATB206:UNIMAG_WAIT_STBY
+BTF:MAG:EEI:QUATB206:UNIMAG_WAIT_PWR
+BTF:MAG:EEI:QUATB206:UNIMAG_SET_POL_POS
+BTF:MAG:EEI:QUATB206:UNIMAG_SET_POL_NEG
+BTF:MAG:EEI:QUATB206:UNIMAG_CONT_SEQ
+BTF:MAG:EEI:QUATB206:CURRENT_RB
+BTF:MAG:EEI:DHPTB102:UNIMAG_PROCESS
+BTF:MAG:EEI:DHPTB102:UNIMAG_ABS_CURR
+BTF:MAG:EEI:DHPTB102:UNIMAG_CHECK_POL
+BTF:MAG:EEI:DHPTB102:UNIMAG_SET_CURR
+BTF:MAG:EEI:DHPTB102:UNIMAG_WAIT_STBY
+BTF:MAG:EEI:DHPTB102:UNIMAG_WAIT_PWR
+BTF:MAG:EEI:DHPTB102:UNIMAG_SET_POL_POS
+BTF:MAG:EEI:DHPTB102:UNIMAG_SET_POL_NEG
+BTF:MAG:EEI:DHPTB102:UNIMAG_CONT_SEQ
+BTF:MAG:EEI:DHPTB102:CURRENT_RB
+BTF:MAG:EEI:DHSTB201:UNIMAG_PROCESS
+BTF:MAG:EEI:DHSTB201:UNIMAG_ABS_CURR
+BTF:MAG:EEI:DHSTB201:UNIMAG_CHECK_POL
+BTF:MAG:EEI:DHSTB201:UNIMAG_SET_CURR
+BTF:MAG:EEI:DHSTB201:UNIMAG_WAIT_STBY
+BTF:MAG:EEI:DHSTB201:UNIMAG_WAIT_PWR
+BTF:MAG:EEI:DHSTB201:UNIMAG_SET_POL_POS
+BTF:MAG:EEI:DHSTB201:UNIMAG_SET_POL_NEG
+BTF:MAG:EEI:DHSTB201:UNIMAG_CONT_SEQ
+BTF:MAG:EEI:DHSTB201:CURRENT_RB
+BTF:MAG:EEI:DHSTB202:UNIMAG_PROCESS
+BTF:MAG:EEI:DHSTB202:UNIMAG_ABS_CURR
+BTF:MAG:EEI:DHSTB202:UNIMAG_CHECK_POL
+BTF:MAG:EEI:DHSTB202:UNIMAG_SET_CURR
+BTF:MAG:EEI:DHSTB202:UNIMAG_WAIT_STBY
+BTF:MAG:EEI:DHSTB202:UNIMAG_WAIT_PWR
+BTF:MAG:EEI:DHSTB202:UNIMAG_SET_POL_POS
+BTF:MAG:EEI:DHSTB202:UNIMAG_SET_POL_NEG
+BTF:MAG:EEI:DHSTB202:UNIMAG_CONT_SEQ
+BTF:MAG:EEI:DHSTB202:CURRENT_RB
+BTF:MAG:EEI:DHSTB203:UNIMAG_PROCESS
+BTF:MAG:EEI:DHSTB203:UNIMAG_ABS_CURR
+BTF:MAG:EEI:DHSTB203:UNIMAG_CHECK_POL
+BTF:MAG:EEI:DHSTB203:UNIMAG_SET_CURR
+BTF:MAG:EEI:DHSTB203:UNIMAG_WAIT_STBY
+BTF:MAG:EEI:DHSTB203:UNIMAG_WAIT_PWR
+BTF:MAG:EEI:DHSTB203:UNIMAG_SET_POL_POS
+BTF:MAG:EEI:DHSTB203:UNIMAG_SET_POL_NEG
+BTF:MAG:EEI:DHSTB203:UNIMAG_CONT_SEQ
+BTF:MAG:EEI:DHSTB203:CURRENT_RB
+BTF:MAG:EEI:QUATB201:UNIMAG_WRITE_CURR
+BTF:MAG:EEI:QUATB202:UNIMAG_WRITE_CURR
+BTF:MAG:EEI:QUATB203:UNIMAG_WRITE_CURR
+BTF:MAG:EEI:QUATB204:UNIMAG_WRITE_CURR
+BTF:MAG:EEI:QUATB205:UNIMAG_WRITE_CURR
+BTF:MAG:EEI:QUATB206:UNIMAG_WRITE_CURR
+BTF:MAG:EEI:DHPTB102:UNIMAG_WRITE_CURR
+BTF:MAG:EEI:DHSTB201:UNIMAG_WRITE_CURR
+BTF:MAG:EEI:DHSTB202:UNIMAG_WRITE_CURR
+BTF:MAG:EEI:DHSTB203:UNIMAG_WRITE_CURR
+BTF:MAG:EEI:QUATB201:UNIMAG_REQ_POL
+BTF:MAG:EEI:QUATB202:UNIMAG_REQ_POL
+BTF:MAG:EEI:QUATB203:UNIMAG_REQ_POL
+BTF:MAG:EEI:QUATB204:UNIMAG_REQ_POL
+BTF:MAG:EEI:QUATB205:UNIMAG_REQ_POL
+BTF:MAG:EEI:QUATB206:UNIMAG_REQ_POL
+BTF:MAG:EEI:DHPTB102:UNIMAG_REQ_POL
+BTF:MAG:EEI:DHSTB201:UNIMAG_REQ_POL
+BTF:MAG:EEI:DHSTB202:UNIMAG_REQ_POL
+BTF:MAG:EEI:DHSTB203:UNIMAG_REQ_POL
+BTF:MAG:EEI:QUATB201:CURR_RB_SIGN
+BTF:MAG:EEI:QUATB202:CURR_RB_SIGN
+BTF:MAG:EEI:QUATB203:CURR_RB_SIGN
+BTF:MAG:EEI:QUATB204:CURR_RB_SIGN
+BTF:MAG:EEI:QUATB205:CURR_RB_SIGN
+BTF:MAG:EEI:QUATB206:CURR_RB_SIGN
+BTF:MAG:EEI:DHPTB102:CURR_RB_SIGN
+BTF:MAG:EEI:DHSTB201:CURR_RB_SIGN
+BTF:MAG:EEI:DHSTB202:CURR_RB_SIGN
+BTF:MAG:EEI:DHSTB203:CURR_RB_SIGN
+BTF:MAG:EEI:QUATB201:STATE_RB
+BTF:MAG:EEI:QUATB202:STATE_RB
+BTF:MAG:EEI:QUATB203:STATE_RB
+BTF:MAG:EEI:QUATB204:STATE_RB
+BTF:MAG:EEI:QUATB205:STATE_RB
+BTF:MAG:EEI:QUATB206:STATE_RB
+BTF:MAG:EEI:DHPTB102:STATE_RB
+BTF:MAG:EEI:DHSTB201:STATE_RB
+BTF:MAG:EEI:DHSTB202:STATE_RB
+BTF:MAG:EEI:DHSTB203:STATE_RB
+BTF:MAG:EEI:QUATB201:CURR_SET_SIGN
+BTF:MAG:EEI:QUATB202:CURR_SET_SIGN
+BTF:MAG:EEI:QUATB203:CURR_SET_SIGN
+BTF:MAG:EEI:QUATB204:CURR_SET_SIGN
+BTF:MAG:EEI:QUATB205:CURR_SET_SIGN
+BTF:MAG:EEI:QUATB206:CURR_SET_SIGN
+BTF:MAG:EEI:DHPTB102:CURR_SET_SIGN
+BTF:MAG:EEI:DHSTB201:CURR_SET_SIGN
+BTF:MAG:EEI:DHSTB202:CURR_SET_SIGN
+BTF:MAG:EEI:DHSTB203:CURR_SET_SIGN
+BTF:MAG:EEI:QUATB201:STATE_SP
+BTF:MAG:EEI:QUATB202:STATE_SP
+BTF:MAG:EEI:QUATB203:STATE_SP
+BTF:MAG:EEI:QUATB204:STATE_SP
+BTF:MAG:EEI:QUATB202025/12/16 13:45:35.233 drvModbusAsyn::doModbusIO port QUATB201_PORT_WR error calling writeRead, error=asynManager::queueLockPort queueRequest failed: port 192.168.191.151_ASYN not connected, nwrite=0/6, nread=0
+2025/12/16 13:45:35.233 BTF:MAG:EEI:QUATB201:CMD_STANDBY devAsynUInt32Digital::processCallbackOutput process write error 
+2025/12/16 13:45:35.233 drvModbusAsyn::doModbusIO port QUATB202_PORT_WR error calling writeRead, error=asynManager::queueLockPort queueRequest failed: port 192.168.191.152_ASYN not connected, nwrite=0/6, nread=0
+2025/12/16 13:45:35.233 BTF:MAG:EEI:QUATB202:CMD_STANDBY devAsynUInt32Digital::processCallbackOutput process write error 
+2025/12/16 13:45:35.234 drvModbusAsyn::doModbusIO port QUATB203_PORT_WR error calling writeRead, error=asynManager::queueLockPort queueRequest failed: port 192.168.191.153_ASYN not connected, nwrite=0/6, nread=0
+2025/12/16 13:45:35.234 drvModbusAsyn::doModbusIO port QUATB204_PORT_WR error calling writeRead, error=asynManager::queueLockPort queueRequest failed: port 192.168.191.154_ASYN not connected, nwrite=0/6, nread=0
+2025/12/16 13:45:35.234 BTF:MAG:EEI:QUATB203:CMD_STANDBY devAsynUInt32Digital::processCallbackOutput process write error 
+2025/12/16 13:45:35.234 BTF:MAG:EEI:QUATB204:CMD_STANDBY devAsynUInt32Digital::processCallbackOutput process write error 
+2025/12/16 13:45:35.234 drvModbusAsyn::doModbusIO port DHPTB102_PORT_WR error calling writeRead, error=asynManager::queueLockPort queueRequest failed: port 192.168.191.157_ASYN not connected, nwrite=0/6, nread=0
+2025/12/16 13:45:35.234 BTF:MAG:EEI:DHPTB102:CMD_STANDBY devAsynUInt32Digital::processCallbackOutput process write error 
+2025/12/16 13:45:35.234 drvModbusAsyn::doModbusIO port DHSTB201_PORT_WR error calling writeRead, error=asynManager::queueLockPort queueRequest failed: port 192.168.191.158_ASYN not connected, nwrite=0/6, nread=0
+2025/12/16 13:45:35.234 drvModbusAsyn::doModbusIO port QUATB205_PORT_WR error calling writeRead, error=asynManager::queueLockPort queueRequest failed: port 192.168.191.155_ASYN not connected, nwrite=0/6, nread=0
+2025/12/16 13:45:35.234 drvModbusAsyn::doModbusIO port DHSTB202_PORT_WR error calling writeRead, error=asynManager::queueLockPort queueRequest failed: port 192.168.191.159_ASYN not connected, nwrite=0/6, nread=0
+2025/12/16 13:45:35.234 BTF:MAG:EEI:DHSTB201:CMD_STANDBY devAsynUInt32Digital::processCallbackOutput process write error 
+2025/12/16 13:45:35.234 BTF:MAG:EEI:QUATB205:CMD_STANDBY devAsynUInt32Digital::processCallbackOutput process write error 
+2025/12/16 13:45:35.234 drvModbusAsyn::doModbusIO port QUATB206_PORT_WR error calling writeRead, error=asynManager::queueLockPort queueRequest failed: port 192.168.191.156_ASYN not connected, nwrite=0/6, nread=0
+2025/12/16 13:45:35.234 drvModbusAsyn::doModbusIO port DHSTB203_PORT_WR error calling writeRead, error=asynManager::queueLockPort queueRequest failed: port 192.168.191.160_ASYN not connected, nwrite=0/6, nread=0
+2025/12/16 13:45:35.234 BTF:MAG:EEI:DHSTB202:CMD_STANDBY devAsynUInt32Digital::processCallbackOutput process write error 
+2025/12/16 13:45:35.234 BTF:MAG:EEI:QUATB206:CMD_STANDBY devAsynUInt32Digital::processCallbackOutput process write error 
+2025/12/16 13:45:35.235 BTF:MAG:EEI:DHSTB203:CMD_STANDBY devAsynUInt32Digital::processCallbackOutput process write error 
+5:STATE_SP
+BTF:MAG:EEI:QUATB206:STATE_SP
+BTF:MAG:EEI:DHPTB102:STATE_SP
+BTF:MAG:EEI:DHSTB201:STATE_SP
+BTF:MAG:EEI:DHSTB202:STATE_SP
+BTF:MAG:EEI:DHSTB203:STATE_SP
+BTF:MAG:EEI:QUATB201:POLARITY_SEQ_POS
+BTF:MAG:EEI:QUATB201:POLARITY_SEQ_NEG
+BTF:MAG:EEI:QUATB202:POLARITY_SEQ_POS
+BTF:MAG:EEI:QUATB202:POLARITY_SEQ_NEG
+BTF:MAG:EEI:QUATB203:POLARITY_SEQ_POS
+BTF:MAG:EEI:QUATB203:POLARITY_SEQ_NEG
+BTF:MAG:EEI:QUATB204:POLARITY_SEQ_POS
+BTF:MAG:EEI:QUATB204:POLARITY_SEQ_NEG
+BTF:MAG:EEI:QUATB205:POLARITY_SEQ_POS
+BTF:MAG:EEI:QUATB205:POLARITY_SEQ_NEG
+BTF:MAG:EEI:QUATB206:POLARITY_SEQ_POS
+BTF:MAG:EEI:QUATB206:POLARITY_SEQ_NEG
+BTF:MAG:EEI:DHPTB102:POLARITY_SEQ_POS
+BTF:MAG:EEI:DHPTB102:POLARITY_SEQ_NEG
+BTF:MAG:EEI:DHSTB201:POLARITY_SEQ_POS
+BTF:MAG:EEI:DHSTB201:POLARITY_SEQ_NEG
+BTF:MAG:EEI:DHSTB202:POLARITY_SEQ_POS
+BTF:MAG:EEI:DHSTB202:POLARITY_SEQ_NEG
+BTF:MAG:EEI:DHSTB203:POLARITY_SEQ_POS
+BTF:MAG:EEI:DHSTB203:POLARITY_SEQ_NEG
+BTF:MAG:EEI:QUATB201:UNIMAG_SEQ
+BTF:MAG:EEI:QUATB201:UNIMAG_DIRECT_SET
+BTF:MAG:EEI:QUATB201:STATE_PROCESS
+BTF:MAG:EEI:QUATB202:UNIMAG_SEQ
+BTF:MAG:EEI:QUATB202:UNIMAG_DIRECT_SET
+BTF:MAG:EEI:QUATB202:STATE_PROCESS
+BTF:MAG:EEI:QUATB203:UNIMAG_SEQ
+BTF:MAG:EEI:QUATB203:UNIMAG_DIRECT_SET
+BTF:MAG:EEI:QUATB203:STATE_PROCESS
+BTF:MAG:EEI:QUATB204:UNIMAG_SEQ
+BTF:MAG:EEI:QUATB204:UNIMAG_DIRECT_SET
+BTF:MAG:EEI:QUATB204:STATE_PROCESS
+BTF:MAG:EEI:QUATB205:UNIMAG_SEQ
+BTF:MAG:EEI:QUATB205:UNIMAG_DIRECT_SET
+BTF:MAG:EEI:QUATB205:STATE_PROCESS
+BTF:MAG:EEI:QUATB206:UNIMAG_SEQ
+BTF:MAG:EEI:QUATB206:UNIMAG_DIRECT_SET
+BTF:MAG:EEI:QUATB206:STATE_PROCESS
+BTF:MAG:EEI:DHPTB102:UNIMAG_SEQ
+BTF:MAG:EEI:DHPTB102:UNIMAG_DIRECT_SET
+BTF:MAG:EEI:DHPTB102:STATE_PROCESS
+BTF:MAG:EEI:DHSTB201:UNIMAG_SEQ
+BTF:MAG:EEI:DHSTB201:UNIMAG_DIRECT_SET
+BTF:MAG:EEI:DHSTB201:STATE_PROCESS
+BTF:MAG:EEI:DHSTB202:UNIMAG_SEQ
+BTF:MAG:EEI:DHSTB202:UNIMAG_DIRECT_SET
+BTF:MAG:EEI:DHSTB202:STATE_PROCESS
+BTF:MAG:EEI:DHSTB203:UNIMAG_SEQ
+BTF:MAG:EEI:DHSTB203:UNIMAG_DIRECT_SET
+BTF:MAG:EEI:DHSTB203:STATE_PROCESS
+[?2004h[32;1mepics> [0m2025/12/16 13:45:35.597 drvModbusAsyn::doModbusIO port DHSTB203_PORT_RD error calling writeRead, error=asynManager::queueLockPort queueRequest failed: port 192.168.191.160_ASYN not connected, nwrite=0/6, nread=0
+2025/12/16 13:47:59.587 192.168.191.151_ASYN -1 autoConnect could not connect: Can't connect to 192.168.191.151:502: Connection refused
+2025/12/16 13:48:00.083 192.168.191.152_ASYN -1 autoConnect could not connect: Can't connect to 192.168.191.152:502: Connection refused
+2025/12/16 13:48:00.587 192.168.191.153_ASYN -1 autoConnect could not connect: Can't connect to 192.168.191.153:502: Connection refused
+2025/12/16 13:48:01.092 192.168.191.154_ASYN -1 autoConnect could not connect: Can't connect to 192.168.191.154:502: Connection refused
+2025/12/16 13:48:01.592 192.168.191.155_ASYN -1 autoConnect could not connect: Can't connect to 192.168.191.155:502: Connection refused
+2025/12/16 13:48:02.091 192.168.191.156_ASYN -1 autoConnect could not connect: Can't connect to 192.168.191.156:502: Connection refused
+2025/12/16 13:48:02.596 192.168.191.157_ASYN -1 autoConnect could not connect: Can't connect to 192.168.191.157:502: Connection refused
+2025/12/16 13:48:03.092 192.168.191.158_ASYN -1 autoConnect could not connect: Can't connect to 192.168.191.158:502: Connection refused
+2025/12/16 13:48:03.598 192.168.191.159_ASYN -1 autoConnect could not connect: Can't connect to 192.168.191.159:502: Connection refused
+2025/12/16 13:48:04.098 192.168.191.160_ASYN -1 autoConnect could not connect: Can't connect to 192.168.191.160:502: Connection refused
+
+[?2004l[?2004h[32;1mepics> [0m
+[?2004l[?2004h[32;1mepics> [0mdbl
+[?2004lBTF:MAG:EEI:QUATB201:STAT_WORD1_RB
+BTF:MAG:EEI:QUATB201:STAT_WORD2_RB
+BTF:MAG:EEI:QUATB201:RAMP_RATE_RB
+BTF:MAG:EEI:QUATB201:CURR_RB
+BTF:MAG:EEI:QUATB201:CURR_SCALE_RB
+BTF:MAG:EEI:QUATB201:VOLT_SCALE_RB
+BTF:MAG:EEI:QUATB201:VOLT_RB
+BTF:MAG:EEI:QUATB201:FAULT_WORD1_RB
+BTF:MAG:EEI:QUATB201:FAULT_WORD2_RB
+BTF:MAG:EEI:QUATB201:PLC_FAULT_WORD1_RB
+BTF:MAG:EEI:QUATB201:PLC_FAULT_WORD2_RB
+BTF:MAG:EEI:QUATB201:DCDC_FAULT_WORD1_RB
+BTF:MAG:EEI:QUATB201:DCDC_FAULT_WORD2_RB
+BTF:MAG:EEI:QUATB201:ACDC1_FAULT_WORD1_RB
+BTF:MAG:EEI:QUATB201:ACDC1_FAULT_WORD2_RB
+BTF:MAG:EEI:QUATB201:ACDC2_FAULT_WORD1_RB
+BTF:MAG:EEI:QUATB201:ACDC2_FAULT_WORD2_RB
+BTF:MAG:EEI:QUATB201:DCDC_HEATSINK_TEMP_RB
+BTF:MAG:EEI:QUATB201:ACDC1_VOLT_OUT_RB
+BTF:MAG:EEI:QUATB201:ACDC1_CURR_OUT_RB
+BTF:MAG:EEI:QUATB201:ACDC2_VOLT_OUT_RB
+BTF:MAG:EEI:QUATB201:ACDC2_CURR_OUT_RB
+BTF:MAG:EEI:QUATB202:STAT_WORD1_RB
+BTF:MAG:EEI:QUATB202:STAT_WORD2_RB
+BTF:MAG:EEI:QUATB202:RAMP_RATE_RB
+BTF:MAG:EEI:QUATB202:CURR_RB
+BTF:MAG:EEI:QUATB202:CURR_SCALE_RB
+BTF:MAG:EEI:QUATB202:VOLT_SCALE_RB
+BTF:MAG:EEI:QUATB202:VOLT_RB
+BTF:MAG:EEI:QUATB202:FAULT_WORD1_RB
+BTF:MAG:EEI:QUATB202:FAULT_WORD2_RB
+BTF:MAG:EEI:QUATB202:PLC_FAULT_WORD1_RB
+BTF:MAG:EEI:QUATB202:PLC_FAULT_WORD2_RB
+BTF:MAG:EEI:QUATB202:DCDC_FAULT_WORD1_RB
+BTF:MAG:EEI:QUATB202:DCDC_FAULT_WORD2_RB
+BTF:MAG:EEI:QUATB202:ACDC1_FAULT_WORD1_RB
+BTF:MAG:EEI:QUATB202:ACDC1_FAULT_WORD2_RB
+BTF:MAG:EEI:QUATB202:ACDC2_FAULT_WORD1_RB
+BTF:MAG:EEI:QUATB202:ACDC2_FAULT_WORD2_RB
+BTF:MAG:EEI:QUATB202:DCDC_HEATSINK_TEMP_RB
+BTF:MAG:EEI:QUATB202:ACDC1_VOLT_OUT_RB
+BTF:MAG:EEI:QUATB202:ACDC1_CURR_OUT_RB
+BTF:MAG:EEI:QUATB202:ACDC2_VOLT_OUT_RB
+BTF:MAG:EEI:QUATB202:ACDC2_CURR_OUT_RB
+BTF:MAG:EEI:QUATB203:STAT_WORD1_RB
+BTF:MAG:EEI:QUATB203:STAT_WORD2_RB
+BTF:MAG:EEI:QUATB203:RAMP_RATE_RB
+BTF:MAG:EEI:QUATB203:CURR_RB
+BTF:MAG:EEI:QUATB203:CURR_SCALE_RB
+BTF:MAG:EEI:QUATB203:VOLT_SCALE_RB
+BTF:MAG:EEI:QUATB203:VOLT_RB
+BTF:MAG:EEI:QUATB203:FAULT_WORD1_RB
+BTF:MAG:EEI:QUATB203:FAULT_WORD2_RB
+BTF:MAG:EEI:QUATB203:PLC_FAULT_WORD1_RB
+BTF:MAG:EEI:QUATB203:PLC_FAULT_WORD2_RB
+BTF:MAG:EEI:QUATB203:DCDC_FAULT_WORD1_RB
+BTF:MAG:EEI:QUATB203:DCDC_FAULT_WORD2_RB
+BTF:MAG:EEI:QUATB203:ACDC1_FAULT_WORD1_RB
+BTF:MAG:EEI:QUATB203:ACDC1_FAULT_WORD2_RB
+BTF:MAG:EEI:QUATB203:ACDC2_FAULT_WORD1_RB
+BTF:MAG:EEI:QUATB203:ACDC2_FAULT_WORD2_RB
+BTF:MAG:EEI:QUATB203:DCDC_HEATSINK_TEMP_RB
+BTF:MAG:EEI:QUATB203:ACDC1_VOLT_OUT_RB
+BTF:MAG:EEI:QUATB203:ACDC1_CURR_OUT_RB
+BTF:MAG:EEI:QUATB203:ACDC2_VOLT_OUT_RB
+BTF:MAG:EEI:QUATB203:ACDC2_CURR_OUT_RB
+BTF:MAG:EEI:QUATB204:STAT_WORD1_RB
+BTF:MAG:EEI:QUATB204:STAT_WORD2_RB
+BTF:MAG:EEI:QUATB204:RAMP_RATE_RB
+BTF:MAG:EEI:QUATB204:CURR_RB
+BTF:MAG:EEI:QUATB204:CURR_SCALE_RB
+BTF:MAG:EEI:QUATB204:VOLT_SCALE_RB
+BTF:MAG:EEI:QUATB204:VOLT_RB
+BTF:MAG:EEI:QUATB204:FAULT_WORD1_RB
+BTF:MAG:EEI:QUATB204:FAULT_WORD2_RB
+BTF:MAG:EEI:QUATB204:PLC_FAULT_WORD1_RB
+BTF:MAG:EEI:QUATB204:PLC_FAULT_WORD2_RB
+BTF:MAG:EEI:QUATB204:DCDC_FAULT_WORD1_RB
+BTF:MAG:EEI:QUATB204:DCDC_FAULT_WORD2_RB
+BTF:MAG:EEI:QUATB204:ACDC1_FAULT_WORD1_RB
+BTF:MAG:EEI:QUATB204:ACDC1_FAULT_WORD2_RB
+BTF:MAG:EEI:QUATB204:ACDC2_FAULT_WORD1_RB
+BTF:MAG:EEI:QUATB204:ACDC2_FAULT_WORD2_RB
+BTF:MAG:EEI:QUATB204:DCDC_HEATSINK_TEMP_RB
+BTF:MAG:EEI:QUATB204:ACDC1_VOLT_OUT_RB
+BTF:MAG:EEI:QUATB204:ACDC1_CURR_OUT_RB
+BTF:MAG:EEI:QUATB204:ACDC2_VOLT_OUT_RB
+BTF:MAG:EEI:QUATB204:ACDC2_CURR_OUT_RB
+BTF:MAG:EEI:QUATB205:STAT_WORD1_RB
+BTF:MAG:EEI:QUATB205:STAT_WORD2_RB
+BTF:MAG:EEI:QUATB205:RAMP_RATE_RB
+BTF:MAG:EEI:QUATB205:CURR_RB
+BTF:MAG:EEI:QUATB205:CURR_SCALE_RB
+BTF:MAG:EEI:QUATB205:VOLT_SCALE_RB
+BTF:MAG:EEI:QUATB205:VOLT_RB
+BTF:MAG:EEI:QUATB205:FAULT_WORD1_RB
+BTF:MAG:EEI:QUATB205:FAULT_WORD2_RB
+BTF:MAG:EEI:QUATB205:PLC_FAULT_WORD1_RB
+BTF:MAG:EEI:QUATB205:PLC_FAULT_WORD2_RB
+BTF:MAG:EEI:QUATB205:DCDC_FAULT_WORD1_RB
+BTF:MAG:EEI:QUATB205:DCDC_FAULT_WORD2_RB
+BTF:MAG:EEI:QUATB205:ACDC1_FAULT_WORD1_RB
+BTF:MAG:EEI:QUATB205:ACDC1_FAULT_WORD2_RB
+BTF:MAG:EEI:QUATB205:ACDC2_FAULT_WORD1_RB
+BTF:MAG:EEI:QUATB205:ACDC2_FAULT_WORD2_RB
+BTF:MAG:EEI:QUATB205:DCDC_HEATSINK_TEMP_RB
+BTF:MAG:EEI:QUATB205:ACDC1_VOLT_OUT_RB
+BTF:MAG:EEI:QUATB205:ACDC1_CURR_OUT_RB
+BTF:MAG:EEI:QUATB205:ACDC2_VOLT_OUT_RB
+BTF:MAG:EEI:QUATB205:ACDC2_CURR_OUT_RB
+BTF:MAG:EEI:QUATB206:STAT_WORD1_RB
+BTF:MAG:EEI:QUATB206:STAT_WORD2_RB
+BTF:MAG:EEI:QUATB206:RAMP_RATE_RB
+BTF:MAG:EEI:QUATB206:CURR_RB
+BTF:MAG:EEI:QUATB206:CURR_SCALE_RB
+BTF:MAG:EEI:QUATB206:VOLT_SCALE_RB
+BTF:MAG:EEI:QUATB206:VOLT_RB
+BTF:MAG:EEI:QUATB206:FAULT_WORD1_RB
+BTF:MAG:EEI:QUATB206:FAULT_WORD2_RB
+BTF:MAG:EEI:QUATB206:PLC_FAULT_WORD1_RB
+BTF:MAG:EEI:QUATB206:PLC_FAULT_WORD2_RB
+BTF:MAG:EEI:QUATB206:DCDC_FAULT_WORD1_RB
+BTF:MAG:EEI:QUATB206:DCDC_FAULT_WORD2_RB
+BTF:MAG:EEI:QUATB206:ACDC1_FAULT_WORD1_RB
+BTF:MAG:EEI:QUATB206:ACDC1_FAULT_WORD2_RB
+BTF:MAG:EEI:QUATB206:ACDC2_FAULT_WORD1_RB
+BTF:MAG:EEI:QUATB206:ACDC2_FAULT_WORD2_RB
+BTF:MAG:EEI:QUATB206:DCDC_HEATSINK_TEMP_RB
+BTF:MAG:EEI:QUATB206:ACDC1_VOLT_OUT_RB
+BTF:MAG:EEI:QUATB206:ACDC1_CURR_OUT_RB
+BTF:MAG:EEI:QUATB206:ACDC2_VOLT_OUT_RB
+BTF:MAG:EEI:QUATB206:ACDC2_CURR_OUT_RB
+BTF:MAG:EEI:DHPTB102:STAT_WORD1_RB
+BTF:MAG:EEI:DHPTB102:STAT_WORD2_RB
+BTF:MAG:EEI:DHPTB102:RAMP_RATE_RB
+BTF:MAG:EEI:DHPTB102:CURR_RB
+BTF:MAG:EEI:DHPTB102:CURR_SCALE_RB
+BTF:MAG:EEI:DHPTB102:VOLT_SCALE_RB
+BTF:MAG:EEI:DHPTB102:VOLT_RB
+BTF:MAG:EEI:DHPTB102:FAULT_WORD1_RB
+BTF:MAG:EEI:DHPTB102:FAULT_WORD2_RB
+BTF:MAG:EEI:DHPTB102:PLC_FAULT_WORD1_RB
+BTF:MAG:EEI:DHPTB102:PLC_FAULT_WORD2_RB
+BTF:MAG:EEI:DHPTB102:DCDC_FAULT_WORD1_RB
+BTF:MAG:EEI:DHPTB102:DCDC_FAULT_WORD2_RB
+BTF:MAG:EEI:DHPTB102:ACDC1_FAULT_WORD1_RB
+BTF:MAG:EEI:DHPTB102:ACDC1_FAULT_WORD2_RB
+BTF:MAG:EEI:DHPTB102:ACDC2_FAULT_WORD1_RB
+BTF:MAG:EEI:DHPTB102:ACDC2_FAULT_WORD2_RB
+BTF:MAG:EEI:DHPTB102:DCDC_HEATSINK_TEMP_RB
+BTF:MAG:EEI:DHPTB102:ACDC1_VOLT_OUT_RB
+BTF:MAG:EEI:DHPTB102:ACDC1_CURR_OUT_RB
+BTF:MAG:EEI:DHPTB102:ACDC2_VOLT_OUT_RB
+BTF:MAG:EEI:DHPTB102:ACDC2_CURR_OUT_RB
+BTF:MAG:EEI:DHSTB201:STAT_WORD1_RB
+BTF:MAG:EEI:DHSTB201:STAT_WORD2_RB
+BTF:MAG:EEI:DHSTB201:RAMP_RATE_RB
+BTF:MAG:EEI:DHSTB201:CURR_RB
+BTF:MAG:EEI:DHSTB201:CURR_SCALE_RB
+BTF:MAG:EEI:DHSTB201:VOLT_SCALE_RB
+BTF:MAG:EEI:DHSTB201:VOLT_RB
+BTF:MAG:EEI:DHSTB201:FAULT_WORD1_RB
+BTF:MAG:EEI:DHSTB201:FAULT_WORD2_RB
+BTF:MAG:EEI:DHSTB201:PLC_FAULT_WORD1_RB
+BTF:MAG:EEI:DHSTB201:PLC_FAULT_WORD2_RB
+BTF:MAG:EEI:DHSTB201:DCDC_FAULT_WORD1_RB
+BTF:MAG:EEI:DHSTB201:DCDC_FAULT_WORD2_RB
+BTF:MAG:EEI:DHSTB201:ACDC1_FAULT_WORD1_RB
+BTF:MAG:EEI:DHSTB201:ACDC1_FAULT_WORD2_RB
+BTF:MAG:EEI:DHSTB201:ACDC2_FAULT_WORD1_RB
+BTF:MAG:EEI:DHSTB201:ACDC2_FAULT_WORD2_RB
+BTF:MAG:EEI:DHSTB201:DCDC_HEATSINK_TEMP_RB
+BTF:MAG:EEI:DHSTB201:ACDC1_VOLT_OUT_RB
+BTF:MAG:EEI:DHSTB201:ACDC1_CURR_OUT_RB
+BTF:MAG:EEI:DHSTB201:ACDC2_VOLT_OUT_RB
+BTF:MAG:EEI:DHSTB201:ACDC2_CURR_OUT_RB
+BTF:MAG:EEI:DHSTB202:STAT_WORD1_RB
+BTF:MAG:EEI:DHSTB202:STAT_WORD2_RB
+BTF:MAG:EEI:DHSTB202:RAMP_RATE_RB
+BTF:MAG:EEI:DHSTB202:CURR_RB
+BTF:MAG:EEI:DHSTB202:CURR_SCALE_RB
+BTF:MAG:EEI:DHSTB202:VOLT_SCALE_RB
+BTF:MAG:EEI:DHSTB202:VOLT_RB
+BTF:MAG:EEI:DHSTB202:FAULT_WORD1_RB
+BTF:MAG:EEI:DHSTB202:FAULT_WORD2_RB
+BTF:MAG:EEI:DHSTB202:PLC_FAULT_WORD1_RB
+BTF:MAG:EEI:DHSTB202:PLC_FAULT_WORD2_RB
+BTF:MAG:EEI:DHSTB202:DCDC_FAULT_WORD1_RB
+BTF:MAG:EEI:DHSTB202:DCDC_FAULT_WORD2_RB
+BTF:MAG:EEI:DHSTB202:ACDC1_FAULT_WORD1_RB
+BTF:MAG:EEI:DHSTB202:ACDC1_FAULT_WORD2_RB
+BTF:MAG:EEI:DHSTB202:ACDC2_FAULT_WORD1_RB
+BTF:MAG:EEI:DHSTB202:ACDC2_FAULT_WORD2_RB
+BTF:MAG:EEI:DHSTB202:DCDC_HEATSINK_TEMP_RB
+BTF:MAG:EEI:DHSTB202:ACDC1_VOLT_OUT_RB
+BTF:MAG:EEI:DHSTB202:ACDC1_CURR_OUT_RB
+BTF:MAG:EEI:DHSTB202:ACDC2_VOLT_OUT_RB
+BTF:MAG:EEI:DHSTB202:ACDC2_CURR_OUT_RB
+BTF:MAG:EEI:DHSTB203:STAT_WORD1_RB
+BTF:MAG:EEI:DHSTB203:STAT_WORD2_RB
+BTF:MAG:EEI:DHSTB203:RAMP_RATE_RB
+BTF:MAG:EEI:DHSTB203:CURR_RB
+BTF:MAG:EEI:DHSTB203:CURR_SCALE_RB
+BTF:MAG:EEI:DHSTB203:VOLT_SCALE_RB
+BTF:MAG:EEI:DHSTB203:VOLT_RB
+BTF:MAG:EEI:DHSTB203:FAULT_WORD1_RB
+BTF:MAG:EEI:DHSTB203:FAULT_WORD2_RB
+BTF:MAG:EEI:DHSTB203:PLC_FAULT_WORD1_RB
+BTF:MAG:EEI:DHSTB203:PLC_FAULT_WORD2_RB
+BTF:MAG:EEI:DHSTB203:DCDC_FAULT_WORD1_RB
+BTF:MAG:EEI:DHSTB203:DCDC_FAULT_WORD2_RB
+BTF:MAG:EEI:DHSTB203:ACDC1_FAULT_WORD1_RB
+BTF:MAG:EEI:DHSTB203:ACDC1_FAULT_WORD2_RB
+BTF:MAG:EEI:DHSTB203:ACDC2_FAULT_WORD1_RB
+BTF:MAG:EEI:DHSTB203:ACDC2_FAULT_WORD2_RB
+BTF:MAG:EEI:DHSTB203:DCDC_HEATSINK_TEMP_RB
+BTF:MAG:EEI:DHSTB203:ACDC1_VOLT_OUT_RB
+BTF:MAG:EEI:DHSTB203:ACDC1_CURR_OUT_RB
+BTF:MAG:EEI:DHSTB203:ACDC2_VOLT_OUT_RB
+BTF:MAG:EEI:DHSTB203:ACDC2_CURR_OUT_RB
+BTF:MAG:EEI:QUATB201:CMD_WORD_RAW
+BTF:MAG:EEI:QUATB201:CMD_POLARITY_POS_EXEC
+BTF:MAG:EEI:QUATB201:CMD_POLARITY_NEG_EXEC
+BTF:MAG:EEI:QUATB201:POLARITY_CTRL
+BTF:MAG:EEI:QUATB201:CURR_SET
+BTF:MAG:EEI:QUATB201:RAMP_RATE_SET
+BTF:MAG:EEI:QUATB201:CYCLE_PATTERN_1
+BTF:MAG:EEI:QUATB201:CYCLE_PATTERN_0
+BTF:MAG:EEI:QUATB202:CMD_WORD_RAW
+BTF:MAG:EEI:QUATB202:CMD_POLARITY_POS_EXEC
+BTF:MAG:EEI:QUATB202:CMD_POLARITY_NEG_EXEC
+BTF:MAG:EEI:QUATB202:POLARITY_CTRL
+BTF:MAG:EEI:QUATB202:CURR_SET
+BTF:MAG:EEI:QUATB202:RAMP_RATE_SET
+BTF:MAG:EEI:QUATB202:CYCLE_PATTERN_1
+BTF:MAG:EEI:QUATB202:CYCLE_PATTERN_0
+BTF:MAG:EEI:QUATB203:CMD_WORD_RAW
+BTF:MAG:EEI:QUATB203:CMD_POLARITY_POS_EXEC
+BTF:MAG:EEI:QUATB203:CMD_POLARITY_NEG_EXEC
+BTF:MAG:EEI:QUATB203:POLARITY_CTRL
+BTF:MAG:EEI:QUATB203:CURR_SET
+BTF:MAG:EEI:QUATB203:RAMP_RATE_SET
+BTF:MAG:EEI:QUATB203:CYCLE_PATTERN_1
+BTF:MAG:EEI:QUATB203:CYCLE_PATTERN_0
+BTF:MAG:EEI:QUATB204:CMD_WORD_RAW
+BTF:MAG:EEI:QUATB204:CMD_POLARITY_POS_EXEC
+BTF:MAG:EEI:QUATB204:CMD_POLARITY_NEG_EXEC
+BTF:MAG:EEI:QUATB204:POLARITY_CTRL
+BTF:MAG:EEI:QUATB204:CURR_SET
+BTF:MAG:EEI:QUATB204:RAMP_RATE_SET
+BTF:MAG:EEI:QUATB204:CYCLE_PATTERN_1
+BTF:MAG:EEI:QUATB204:CYCLE_PATTERN_0
+BTF:MAG:EEI:QUATB205:CMD_WORD_RAW
+BTF:MAG:EEI:QUATB205:CMD_POLARITY_POS_EXEC
+BTF:MAG:EEI:QUATB205:CMD_POLARITY_NEG_EXEC
+BTF:MAG:EEI:QUATB205:POLARITY_CTRL
+BTF:MAG:EEI:QUATB205:CURR_SET
+BTF:MAG:EEI:QUATB205:RAMP_RATE_SET
+BTF:MAG:EEI:QUATB205:CYCLE_PATTERN_1
+BTF:MAG:EEI:QUATB205:CYCLE_PATTERN_0
+BTF:MAG:EEI:QUATB206:CMD_WORD_RAW
+BTF:MAG:EEI:QUATB206:CMD_POLARITY_POS_EXEC
+BTF:MAG:EEI:QUATB206:CMD_POLARITY_NEG_EXEC
+BTF:MAG:EEI:QUATB206:POLARITY_CTRL
+BTF:MAG:EEI:QUATB206:CURR_SET
+BTF:MAG:EEI:QUATB206:RAMP_RATE_SET
+BTF:MAG:EEI:QUATB206:CYCLE_PATTERN_1
+BTF:MAG:EEI:QUATB206:CYCLE_PATTERN_0
+BTF:MAG:EEI:DHPTB102:CMD_WORD_RAW
+BTF:MAG:EEI:DHPTB102:CMD_POLARITY_POS_EXEC
+BTF:MAG:EEI:DHPTB102:CMD_POLARITY_NEG_EXEC
+BTF:MAG:EEI:DHPTB102:POLARITY_CTRL
+BTF:MAG:EEI:DHPTB102:CURR_SET
+BTF:MAG:EEI:DHPTB102:RAMP_RATE_SET
+BTF:MAG:EEI:DHPTB102:CYCLE_PATTERN_1
+BTF:MAG:EEI:DHPTB102:CYCLE_PATTERN_0
+BTF:MAG:EEI:DHSTB201:CMD_WORD_RAW
+BTF:MAG:EEI:DHSTB201:CMD_POLARITY_POS_EXEC
+BTF:MAG:EEI:DHSTB201:CMD_POLARITY_NEG_EXEC
+BTF:MAG:EEI:DHSTB201:POLARITY_CTRL
+BTF:MAG:EEI:DHSTB201:CURR_SET
+BTF:MAG:EEI:DHSTB201:RAMP_RATE_SET
+BTF:MAG:EEI:DHSTB201:CYCLE_PATTERN_1
+BTF:MAG:EEI:DHSTB201:CYCLE_PATTERN_0
+BTF:MAG:EEI:DHSTB202:CMD_WORD_RAW
+BTF:MAG:EEI:DHSTB202:CMD_POLARITY_POS_EXEC
+BTF:MAG:EEI:DHSTB202:CMD_POLARITY_NEG_EXEC
+BTF:MAG:EEI:DHSTB202:POLARITY_CTRL
+BTF:MAG:EEI:DHSTB202:CURR_SET
+BTF:MAG:EEI:DHSTB202:RAMP_RATE_SET
+BTF:MAG:EEI:DHSTB202:CYCLE_PATTERN_1
+BTF:MAG:EEI:DHSTB202:CYCLE_PATTERN_0
+BTF:MAG:EEI:DHSTB203:CMD_WORD_RAW
+BTF:MAG:EEI:DHSTB203:CMD_POLARITY_POS_EXEC
+BTF:MAG:EEI:DHSTB203:CMD_POLARITY_NEG_EXEC
+BTF:MAG:EEI:DHSTB203:POLARITY_CTRL
+BTF:MAG:EEI:DHSTB203:CURR_SET
+BTF:MAG:EEI:DHSTB203:RAMP_RATE_SET
+BTF:MAG:EEI:DHSTB203:CYCLE_PATTERN_1
+BTF:MAG:EEI:DHSTB203:CYCLE_PATTERN_0
+BTF:MAG:EEI:QUATB201:CURRENT_SP
+BTF:MAG:EEI:QUATB201:UNIMAG_CURR_VAL
+BTF:MAG:EEI:QUATB202:CURRENT_SP
+BTF:MAG:EEI:QUATB202:UNIMAG_CURR_VAL
+BTF:MAG:EEI:QUATB203:CURRENT_SP
+BTF:MAG:EEI:QUATB203:UNIMAG_CURR_VAL
+BTF:MAG:EEI:QUATB204:CURRENT_SP
+BTF:MAG:EEI:QUATB204:UNIMAG_CURR_VAL
+BTF:MAG:EEI:QUATB205:CURRENT_SP
+BTF:MAG:EEI:QUATB205:UNIMAG_CURR_VAL
+BTF:MAG:EEI:QUATB206:CURRENT_SP
+BTF:MAG:EEI:QUATB206:UNIMAG_CURR_VAL
+BTF:MAG:EEI:DHPTB102:CURRENT_SP
+BTF:MAG:EEI:DHPTB102:UNIMAG_CURR_VAL
+BTF:MAG:EEI:DHSTB201:CURRENT_SP
+BTF:MAG:EEI:DHSTB201:UNIMAG_CURR_VAL
+BTF:MAG:EEI:DHSTB202:CURRENT_SP
+BTF:MAG:EEI:DHSTB202:UNIMAG_CURR_VAL
+BTF:MAG:EEI:DHSTB203:CURRENT_SP
+BTF:MAG:EEI:DHSTB203:UNIMAG_CURR_VAL
+BTF:MAG:EEI:QUATB201:STAT_STANDBY
+BTF:MAG:EEI:QUATB201:STAT_POWER_ON
+BTF:MAG:EEI:QUATB201:STAT_FAULTY
+BTF:MAG:EEI:QUATB201:STAT_REMOTE
+BTF:MAG:EEI:QUATB201:STAT_LOCAL
+BTF:MAG:EEI:QUATB201:STAT_CURR_MODE_TRIG
+BTF:MAG:EEI:QUATB201:STAT_CURR_MODE_SW
+BTF:MAG:EEI:QUATB201:STAT_POLARITY_POS
+BTF:MAG:EEI:QUATB201:STAT_POLARITY_NEG
+BTF:MAG:EEI:QUATB201:STAT_CONTACTORS_OPEN
+BTF:MAG:EEI:QUATB201:FAULT_PLC_DCDC
+BTF:MAG:EEI:QUATB201:FAULT_PLC_DCCT_PS
+BTF:MAG:EEI:QUATB201:FAULT_PLC_MAG_ILK1
+BTF:MAG:EEI:QUATB201:FAULT_PLC_MAG_ILK2
+BTF:MAG:EEI:QUATB201:FAULT_PLC_ACDC1
+BTF:MAG:EEI:QUATB201:FAULT_PLC_ACDC2
+BTF:MAG:EEI:QUATB201:FAULT_PLC_WATER_FLOW
+BTF:MAG:EEI:QUATB201:FAULT_PLC_24V_PS
+BTF:MAG:EEI:QUATB201:FAULT_PLC_FUSES
+BTF:MAG:EEI:QUATB201:FAULT_PLC_DC_LINK_DISCH
+BTF:MAG:EEI:QUATB201:FAULT_PLC_CONTACTOR
+BTF:MAG:EEI:QUATB201:FAULT_PLC_CANBUS_DCDC
+BTF:MAG:EEI:QUATB201:FAULT_PLC_CANBUS_EXP
+BTF:MAG:EEI:QUATB201:FAULT_PLC_CANBUS_ACDC1
+BTF:MAG:EEI:QUATB201:FAULT_PLC_CANBUS_ACDC2
+BTF:MAG:EEI:QUATB201:FAULT_DCDC_OVERCURR
+BTF:MAG:EEI:QUATB201:FAULT_DCDC_THERM_PROT
+BTF:MAG:EEI:QUATB201:FAULT_DCDC_OVERTEMP
+BTF:MAG:EEI:QUATB201:FAULT_DCDC_DCLINK_LOW
+BTF:MAG:EEI:QUATB201:FAULT_DCDC_DCLINK_HIGH
+BTF:MAG:EEI:QUATB201:FAULT_DCDC_GROUND_CURR
+BTF:MAG:EEI:QUATB201:FAULT_ACDC1_OVERCURR
+BTF:MAG:EEI:QUATB201:FAULT_ACDC1_THERM_PROT
+BTF:MAG:EEI:QUATB201:FAULT_ACDC1_WATER_TEMP
+BTF:MAG:EEI:QUATB201:FAULT_ACDC1_AIR_TEMP
+BTF:MAG:EEI:QUATB201:FAULT_ACDC2_OVERCURR
+BTF:MAG:EEI:QUATB201:FAULT_ACDC2_THERM_PROT
+BTF:MAG:EEI:QUATB201:FAULT_ACDC2_WATER_TEMP
+BTF:MAG:EEI:QUATB201:FAULT_ACDC2_AIR_TEMP
+BTF:MAG:EEI:QUATB202:STAT_STANDBY
+BTF:MAG:EEI:QUATB202:STAT_POWER_ON
+BTF:MAG:EEI:QUATB202:STAT_FAULTY
+BTF:MAG:EEI:QUATB202:STAT_REMOTE
+BTF:MAG:EEI:QUATB202:STAT_LOCAL
+BTF:MAG:EEI:QUATB202:STAT_CURR_MODE_TRIG
+BTF:MAG:EEI:QUATB202:STAT_CURR_MODE_SW
+BTF:MAG:EEI:QUATB202:STAT_POLARITY_POS
+BTF:MAG:EEI:QUATB202:STAT_POLARITY_NEG
+BTF:MAG:EEI:QUATB202:STAT_CONTACTORS_OPEN
+BTF:MAG:EEI:QUATB202:FAULT_PLC_DCDC
+BTF:MAG:EEI:QUATB202:FAULT_PLC_DCCT_PS
+BTF:MAG:EEI:QUATB202:FAULT_PLC_MAG_ILK1
+BTF:MAG:EEI:QUATB202:FAULT_PLC_MAG_ILK2
+BTF:MAG:EEI:QUATB202:FAULT_PLC_ACDC1
+BTF:MAG:EEI:QUATB202:FAULT_PLC_ACDC2
+BTF:MAG:EEI:QUATB202:FAULT_PLC_WATER_FLOW
+BTF:MAG:EEI:QUATB202:FAULT_PLC_24V_PS
+BTF:MAG:EEI:QUATB202:FAULT_PLC_FUSES
+BTF:MAG:EEI:QUATB202:FAULT_PLC_DC_LINK_DISCH
+BTF:MAG:EEI:QUATB202:FAULT_PLC_CONTACTOR
+BTF:MAG:EEI:QUATB202:FAULT_PLC_CANBUS_DCDC
+BTF:MAG:EEI:QUATB202:FAULT_PLC_CANBUS_EXP
+BTF:MAG:EEI:QUATB202:FAULT_PLC_CANBUS_ACDC1
+BTF:MAG:EEI:QUATB202:FAULT_PLC_CANBUS_ACDC2
+BTF:MAG:EEI:QUATB202:FAULT_DCDC_OVERCURR
+BTF:MAG:EEI:QUATB202:FAULT_DCDC_THERM_PROT
+BTF:MAG:EEI:QUATB202:FAULT_DCDC_OVERTEMP
+BTF:MAG:EEI:QUATB202:FAULT_DCDC_DCLINK_LOW
+BTF:MAG:EEI:QUATB202:FAULT_DCDC_DCLINK_HIGH
+BTF:MAG:EEI:QUATB202:FAULT_DCDC_GROUND_CURR
+BTF:MAG:EEI:QUATB202:FAULT_ACDC1_OVERCURR
+BTF:MAG:EEI:QUATB202:FAULT_ACDC1_THERM_PROT
+BTF:MAG:EEI:QUATB202:FAULT_ACDC1_WATER_TEMP
+BTF:MAG:EEI:QUATB202:FAULT_ACDC1_AIR_TEMP
+BTF:MAG:EEI:QUATB202:FAULT_ACDC2_OVERCURR
+BTF:MAG:EEI:QUATB202:FAULT_ACDC2_THERM_PROT
+BTF:MAG:EEI:QUATB202:FAULT_ACDC2_WATER_TEMP
+BTF:MAG:EEI:QUATB202:FAULT_ACDC2_AIR_TEMP
+BTF:MAG:EEI:QUATB203:STAT_STANDBY
+BTF:MAG:EEI:QUATB203:STAT_POWER_ON
+BTF:MAG:EEI:QUATB203:STAT_FAULTY
+BTF:MAG:EEI:QUATB203:STAT_REMOTE
+BTF:MAG:EEI:QUATB203:STAT_LOCAL
+BTF:MAG:EEI:QUATB203:STAT_CURR_MODE_TRIG
+BTF:MAG:EEI:QUATB203:STAT_CURR_MODE_SW
+BTF:MAG:EEI:QUATB203:STAT_POLARITY_POS
+BTF:MAG:EEI:QUATB203:STAT_POLARITY_NEG
+BTF:MAG:EEI:QUATB203:STAT_CONTACTORS_OPEN
+BTF:MAG:EEI:QUATB203:FAULT_PLC_DCDC
+BTF:MAG:EEI:QUATB203:FAULT_PLC_DCCT_PS
+BTF:MAG:EEI:QUATB203:FAULT_PLC_MAG_ILK1
+BTF:MAG:EEI:QUATB203:FAULT_PLC_MAG_ILK2
+BTF:MAG:EEI:QUATB203:FAULT_PLC_ACDC1
+BTF:MAG:EEI:QUATB203:FAULT_PLC_ACDC2
+BTF:MAG:EEI:QUATB203:FAULT_PLC_WATER_FLOW
+BTF:MAG:EEI:QUATB203:FAULT_PLC_24V_PS
+BTF:MAG:EEI:QUATB203:FAULT_PLC_FUSES
+BTF:MAG:EEI:QUATB203:FAULT_PLC_DC_LINK_DISCH
+BTF:MAG:EEI:QUATB203:FAULT_PLC_CONTACTOR
+BTF:MAG:EEI:QUATB203:FAULT_PLC_CANBUS_DCDC
+BTF:MAG:EEI:QUATB203:FAULT_PLC_CANBUS_EXP
+BTF:MAG:EEI:QUATB203:FAULT_PLC_CANBUS_ACDC1
+BTF:MAG:EEI:QUATB203:FAULT_PLC_CANBUS_ACDC2
+BTF:MAG:EEI:QUATB203:FAULT_DCDC_OVERCURR
+BTF:MAG:EEI:QUATB203:FAULT_DCDC_THERM_PROT
+BTF:MAG:EEI:QUATB203:FAULT_DCDC_OVERTEMP
+BTF:MAG:EEI:QUATB203:FAULT_DCDC_DCLINK_LOW
+BTF:MAG:EEI:QUATB203:FAULT_DCDC_DCLINK_HIGH
+BTF:MAG:EEI:QUATB203:FAULT_DCDC_GROUND_CURR
+BTF:MAG:EEI:QUATB203:FAULT_ACDC1_OVERCURR
+BTF:MAG:EEI:QUATB203:FAULT_ACDC1_THERM_PROT
+BTF:MAG:EEI:QUATB203:FAULT_ACDC1_WATER_TEMP
+BTF:MAG:EEI:QUATB203:FAULT_ACDC1_AIR_TEMP
+BTF:MAG:EEI:QUATB203:FAULT_ACDC2_OVERCURR
+BTF:MAG:EEI:QUATB203:FAULT_ACDC2_THERM_PROT
+BTF:MAG:EEI:QUATB203:FAULT_ACDC2_WATER_TEMP
+BTF:MAG:EEI:QUATB203:FAULT_ACDC2_AIR_TEMP
+BTF:MAG:EEI:QUATB204:STAT_STANDBY
+BTF:MAG:EEI:QUATB204:STAT_POWER_ON
+BTF:MAG:EEI:QUATB204:STAT_FAULTY
+BTF:MAG:EEI:QUATB204:STAT_REMOTE
+BTF:MAG:EEI:QUATB204:STAT_LOCAL
+BTF:MAG:EEI:QUATB204:STAT_CURR_MODE_TRIG
+BTF:MAG:EEI:QUATB204:STAT_CURR_MODE_SW
+BTF:MAG:EEI:QUATB204:STAT_POLARITY_POS
+BTF:MAG:EEI:QUATB204:STAT_POLARITY_NEG
+BTF:MAG:EEI:QUATB204:STAT_CONTACTORS_OPEN
+BTF:MAG:EEI:QUATB204:FAULT_PLC_DCDC
+BTF:MAG:EEI:QUATB204:FAULT_PLC_DCCT_PS
+BTF:MAG:EEI:QUATB204:FAULT_PLC_MAG_ILK1
+BTF:MAG:EEI:QUATB204:FAULT_PLC_MAG_ILK2
+BTF:MAG:EEI:QUATB204:FAULT_PLC_ACDC1
+BTF:MAG:EEI:QUATB204:FAULT_PLC_ACDC2
+BTF:MAG:EEI:QUATB204:FAULT_PLC_WATER_FLOW
+BTF:MAG:EEI:QUATB204:FAULT_PLC_24V_PS
+BTF:MAG:EEI:QUATB204:FAULT_PLC_FUSES
+BTF:MAG:EEI:QUATB204:FAULT_PLC_DC_LINK_DISCH
+BTF:MAG:EEI:QUATB204:FAULT_PLC_CONTACTOR
+BTF:MAG:EEI:QUATB204:FAULT_PLC_CANBUS_DCDC
+BTF:MAG:EEI:QUATB204:FAULT_PLC_CANBUS_EXP
+BTF:MAG:EEI:QUATB204:FAULT_PLC_CANBUS_ACDC1
+BTF:MAG:EEI:QUATB204:FAULT_PLC_CANBUS_ACDC2
+BTF:MAG:EEI:QUATB204:FAULT_DCDC_OVERCURR
+BTF:MAG:EEI:QUATB204:FAULT_DCDC_THERM_PROT
+BTF:MAG:EEI:QUATB204:FAULT_DCDC_OVERTEMP
+BTF:MAG:EEI:QUATB204:FAULT_DCDC_DCLINK_LOW
+BTF:MAG:EEI:QUATB204:FAULT_DCDC_DCLINK_HIGH
+BTF:MAG:EEI:QUATB204:FAULT_DCDC_GROUND_CURR
+BTF:MAG:EEI:QUATB204:FAULT_ACDC1_OVERCURR
+BTF:MAG:EEI:QUATB204:FAULT_ACDC1_THERM_PROT
+BTF:MAG:EEI:QUATB204:FAULT_ACDC1_WATER_TEMP
+BTF:MAG:EEI:QUATB204:FAULT_ACDC1_AIR_TEMP
+BTF:MAG:EEI:QUATB204:FAULT_ACDC2_OVERCURR
+BTF:MAG:EEI:QUATB204:FAULT_ACDC2_THERM_PROT
+BTF:MAG:EEI:QUATB204:FAULT_ACDC2_WATER_TEMP
+BTF:MAG:EEI:QUATB204:FAULT_ACDC2_AIR_TEMP
+BTF:MAG:EEI:QUATB205:STAT_STANDBY
+BTF:MAG:EEI:QUATB205:STAT_POWER_ON
+BTF:MAG:EEI:QUATB205:STAT_FAULTY
+BTF:MAG:EEI:QUATB205:STAT_REMOTE
+BTF:MAG:EEI:QUATB205:STAT_LOCAL
+BTF:MAG:EEI:QUATB205:STAT_CURR_MODE_TRIG
+BTF:MAG:EEI:QUATB205:STAT_CURR_MODE_SW
+BTF:MAG:EEI:QUATB205:STAT_POLARITY_POS
+BTF:MAG:EEI:QUATB205:STAT_POLARITY_NEG
+BTF:MAG:EEI:QUATB205:STAT_CONTACTORS_OPEN
+BTF:MAG:EEI:QUATB205:FAULT_PLC_DCDC
+BTF:MAG:EEI:QUATB205:FAULT_PLC_DCCT_PS
+BTF:MAG:EEI:QUATB205:FAULT_PLC_MAG_ILK1
+BTF:MAG:EEI:QUATB205:FAULT_PLC_MAG_ILK2
+BTF:MAG:EEI:QUATB205:FAULT_PLC_ACDC1
+BTF:MAG:EEI:QUATB205:FAULT_PLC_ACDC2
+BTF:MAG:EEI:QUATB205:FAULT_PLC_WATER_FLOW
+BTF:MAG:EEI:QUATB205:FAULT_PLC_24V_PS
+BTF:MAG:EEI:QUATB205:FAULT_PLC_FUSES
+BTF:MAG:EEI:QUATB205:FAULT_PLC_DC_LINK_DISCH
+BTF:MAG:EEI:QUATB205:FAULT_PLC_CONTACTOR
+BTF:MAG:EEI:QUATB205:FAULT_PLC_CANBUS_DCDC
+BTF:MAG:EEI:QUATB205:FAULT_PLC_CANBUS_EXP
+BTF:MAG:EEI:QUATB205:FAULT_PLC_CANBUS_ACDC1
+BTF:MAG:EEI:QUATB205:FAULT_PLC_CANBUS_ACDC2
+BTF:MAG:EEI:QUATB205:FAULT_DCDC_OVERCURR
+BTF:MAG:EEI:QUATB205:FAULT_DCDC_THERM_PROT
+BTF:MAG:EEI:QUATB205:FAULT_DCDC_OVERTEMP
+BTF:MAG:EEI:QUATB205:FAULT_DCDC_DCLINK_LOW
+BTF:MAG:EEI:QUATB205:FAULT_DCDC_DCLINK_HIGH
+BTF:MAG:EEI:QUATB205:FAULT_DCDC_GROUND_CURR
+BTF:MAG:EEI:QUATB205:FAULT_ACDC1_OVERCURR
+BTF:MAG:EEI:QUATB205:FAULT_ACDC1_THERM_PROT
+BTF:MAG:EEI:QUATB205:FAULT_ACDC1_WATER_TEMP
+BTF:MAG:EEI:QUATB205:FAULT_ACDC1_AIR_TEMP
+BTF:MAG:EEI:QUATB205:FAULT_ACDC2_OVERCURR
+BTF:MAG:EEI:QUATB205:FAULT_ACDC2_THERM_PROT
+BTF:MAG:EEI:QUATB205:FAULT_ACDC2_WATER_TEMP
+BTF:MAG:EEI:QUATB205:FAULT_ACDC2_AIR_TEMP
+BTF:MAG:EEI:QUATB206:STAT_STANDBY
+BTF:MAG:EEI:QUATB206:STAT_POWER_ON
+BTF:MAG:EEI:QUATB206:STAT_FAULTY
+BTF:MAG:EEI:QUATB206:STAT_REMOTE
+BTF:MAG:EEI:QUATB206:STAT_LOCAL
+BTF:MAG:EEI:QUATB206:STAT_CURR_MODE_TRIG
+BTF:MAG:EEI:QUATB206:STAT_CURR_MODE_SW
+BTF:MAG:EEI:QUATB206:STAT_POLARITY_POS
+BTF:MAG:EEI:QUATB206:STAT_POLARITY_NEG
+BTF:MAG:EEI:QUATB206:STAT_CONTACTORS_OPEN
+BTF:MAG:EEI:QUATB206:FAULT_PLC_DCDC
+BTF:MAG:EEI:QUATB206:FAULT_PLC_DCCT_PS
+BTF:MAG:EEI:QUATB206:FAULT_PLC_MAG_ILK1
+BTF:MAG:EEI:QUATB206:FAULT_PLC_MAG_ILK2
+BTF:MAG:EEI:QUATB206:FAULT_PLC_ACDC1
+BTF:MAG:EEI:QUATB206:FAULT_PLC_ACDC2
+BTF:MAG:EEI:QUATB206:FAULT_PLC_WATER_FLOW
+BTF:MAG:EEI:QUATB206:FAULT_PLC_24V_PS
+BTF:MAG:EEI:QUATB206:FAULT_PLC_FUSES
+BTF:MAG:EEI:QUATB206:FAULT_PLC_DC_LINK_DISCH
+BTF:MAG:EEI:QUATB206:FAULT_PLC_CONTACTOR
+BTF:MAG:EEI:QUATB206:FAULT_PLC_CANBUS_DCDC
+BTF:MAG:EEI:QUATB206:FAULT_PLC_CANBUS_EXP
+BTF:MAG:EEI:QUATB206:FAULT_PLC_CANBUS_ACDC1
+BTF:MAG:EEI:QUATB206:FAULT_PLC_CANBUS_ACDC2
+BTF:MAG:EEI:QUATB206:FAULT_DCDC_OVERCURR
+BTF:MAG:EEI:QUATB206:FAULT_DCDC_THERM_PROT
+BTF:MAG:EEI:QUATB206:FAULT_DCDC_OVERTEMP
+BTF:MAG:EEI:QUATB206:FAULT_DCDC_DCLINK_LOW
+BTF:MAG:EEI:QUATB206:FAULT_DCDC_DCLINK_HIGH
+BTF:MAG:EEI:QUATB206:FAULT_DCDC_GROUND_CURR
+BTF:MAG:EEI:QUATB206:FAULT_ACDC1_OVERCURR
+BTF:MAG:EEI:QUATB206:FAULT_ACDC1_THERM_PROT
+BTF:MAG:EEI:QUATB206:FAULT_ACDC1_WATER_TEMP
+BTF:MAG:EEI:QUATB206:FAULT_ACDC1_AIR_TEMP
+BTF:MAG:EEI:QUATB206:FAULT_ACDC2_OVERCURR
+BTF:MAG:EEI:QUATB206:FAULT_ACDC2_THERM_PROT
+BTF:MAG:EEI:QUATB206:FAULT_ACDC2_WATER_TEMP
+BTF:MAG:EEI:QUATB206:FAULT_ACDC2_AIR_TEMP
+BTF:MAG:EEI:DHPTB102:STAT_STANDBY
+BTF:MAG:EEI:DHPTB102:STAT_POWER_ON
+BTF:MAG:EEI:DHPTB102:STAT_FAULTY
+BTF:MAG:EEI:DHPTB102:STAT_REMOTE
+BTF:MAG:EEI:DHPTB102:STAT_LOCAL
+BTF:MAG:EEI:DHPTB102:STAT_CURR_MODE_TRIG
+BTF:MAG:EEI:DHPTB102:STAT_CURR_MODE_SW
+BTF:MAG:EEI:DHPTB102:STAT_POLARITY_POS
+BTF:MAG:EEI:DHPTB102:STAT_POLARITY_NEG
+BTF:MAG:EEI:DHPTB102:STAT_CONTACTORS_OPEN
+BTF:MAG:EEI:DHPTB102:FAULT_PLC_DCDC
+BTF:MAG:EEI:DHPTB102:FAULT_PLC_DCCT_PS
+BTF:MAG:EEI:DHPTB102:FAULT_PLC_MAG_ILK1
+BTF:MAG:EEI:DHPTB102:FAULT_PLC_MAG_ILK2
+BTF:MAG:EEI:DHPTB102:FAULT_PLC_ACDC1
+BTF:MAG:EEI:DHPTB102:FAULT_PLC_ACDC2
+BTF:MAG:EEI:DHPTB102:FAULT_PLC_WATER_FLOW
+BTF:MAG:EEI:DHPTB102:FAULT_PLC_24V_PS
+BTF:MAG:EEI:DHPTB102:FAULT_PLC_FUSES
+BTF:MAG:EEI:DHPTB102:FAULT_PLC_DC_LINK_DISCH
+BTF:MAG:EEI:DHPTB102:FAULT_PLC_CONTACTOR
+BTF:MAG:EEI:DHPTB102:FAULT_PLC_CANBUS_DCDC
+BTF:MAG:EEI:DHPTB102:FAULT_PLC_CANBUS_EXP
+BTF:MAG:EEI:DHPTB102:FAULT_PLC_CANBUS_ACDC1
+BTF:MAG:EEI:DHPTB102:FAULT_PLC_CANBUS_ACDC2
+BTF:MAG:EEI:DHPTB102:FAULT_DCDC_OVERCURR
+BTF:MAG:EEI:DHPTB102:FAULT_DCDC_THERM_PROT
+BTF:MAG:EEI:DHPTB102:FAULT_DCDC_OVERTEMP
+BTF:MAG:EEI:DHPTB102:FAULT_DCDC_DCLINK_LOW
+BTF:MAG:EEI:DHPTB102:FAULT_DCDC_DCLINK_HIGH
+BTF:MAG:EEI:DHPTB102:FAULT_DCDC_GROUND_CURR
+BTF:MAG:EEI:DHPTB102:FAULT_ACDC1_OVERCURR
+BTF:MAG:EEI:DHPTB102:FAULT_ACDC1_THERM_PROT
+BTF:MAG:EEI:DHPTB102:FAULT_ACDC1_WATER_TEMP
+BTF:MAG:EEI:DHPTB102:FAULT_ACDC1_AIR_TEMP
+BTF:MAG:EEI:DHPTB102:FAULT_ACDC2_OVERCURR
+BTF:MAG:EEI:DHPTB102:FAULT_ACDC2_THERM_PROT
+BTF:MAG:EEI:DHPTB102:FAULT_ACDC2_WATER_TEMP
+BTF:MAG:EEI:DHPTB102:FAULT_ACDC2_AIR_TEMP
+BTF:MAG:EEI:DHSTB201:STAT_STANDBY
+BTF:MAG:EEI:DHSTB201:STAT_POWER_ON
+BTF:MAG:EEI:DHSTB201:STAT_FAULTY
+BTF:MAG:EEI:DHSTB201:STAT_REMOTE
+BTF:MAG:EEI:DHSTB201:STAT_LOCAL
+BTF:MAG:EEI:DHSTB201:STAT_CURR_MODE_TRIG
+BTF:MAG:EEI:DHSTB201:STAT_CURR_MODE_SW
+BTF:MAG:EEI:DHSTB201:STAT_POLARITY_POS
+BTF:MAG:EEI:DHSTB201:STAT_POLARITY_NEG
+BTF:MAG:EEI:DHSTB201:STAT_CONTACTORS_OPEN
+BTF:MAG:EEI:DHSTB201:FAULT_PLC_DCDC
+BTF:MAG:EEI:DHSTB201:FAULT_PLC_DCCT_PS
+BTF:MAG:EEI:DHSTB201:FAULT_PLC_MAG_ILK1
+BTF:MAG:EEI:DHSTB201:FAULT_PLC_MAG_ILK2
+BTF:MAG:EEI:DHSTB201:FAULT_PLC_ACDC1
+BTF:MAG:EEI:DHSTB201:FAULT_PLC_ACDC2
+BTF:MAG:EEI:DHSTB201:FAULT_PLC_WATER_FLOW
+BTF:MAG:EEI:DHSTB201:FAULT_PLC_24V_PS
+BTF:MAG:EEI:DHSTB201:FAULT_PLC_FUSES
+BTF:MAG:EEI:DHSTB201:FAULT_PLC_DC_LINK_DISCH
+BTF:MAG:EEI:DHSTB201:FAULT_PLC_CONTACTOR
+BTF:MAG:EEI:DHSTB201:FAULT_PLC_CANBUS_DCDC
+BTF:MAG:EEI:DHSTB201:FAULT_PLC_CANBUS_EXP
+BTF:MAG:EEI:DHSTB201:FAULT_PLC_CANBUS_ACDC1
+BTF:MAG:EEI:DHSTB201:FAULT_PLC_CANBUS_ACDC2
+BTF:MAG:EEI:DHSTB201:FAULT_DCDC_OVERCURR
+BTF:MAG:EEI:DHSTB201:FAULT_DCDC_THERM_PROT
+BTF:MAG:EEI:DHSTB201:FAULT_DCDC_OVERTEMP
+BTF:MAG:EEI:DHSTB201:FAULT_DCDC_DCLINK_LOW
+BTF:MAG:EEI:DHSTB201:FAULT_DCDC_DCLINK_HIGH
+BTF:MAG:EEI:DHSTB201:FAULT_DCDC_GROUND_CURR
+BTF:MAG:EEI:DHSTB201:FAULT_ACDC1_OVERCURR
+BTF:MAG:EEI:DHSTB201:FAULT_ACDC1_THERM_PROT
+BTF:MAG:EEI:DHSTB201:FAULT_ACDC1_WATER_TEMP
+BTF:MAG:EEI:DHSTB201:FAULT_ACDC1_AIR_TEMP
+BTF:MAG:EEI:DHSTB201:FAULT_ACDC2_OVERCURR
+BTF:MAG:EEI:DHSTB201:FAULT_ACDC2_THERM_PROT
+BTF:MAG:EEI:DHSTB201:FAULT_ACDC2_WATER_TEMP
+BTF:MAG:EEI:DHSTB201:FAULT_ACDC2_AIR_TEMP
+BTF:MAG:EEI:DHSTB202:STAT_STANDBY
+BTF:MAG:EEI:DHSTB202:STAT_POWER_ON
+BTF:MAG:EEI:DHSTB202:STAT_FAULTY
+BTF:MAG:EEI:DHSTB202:STAT_REMOTE
+BTF:MAG:EEI:DHSTB202:STAT_LOCAL
+BTF:MAG:EEI:DHSTB202:STAT_CURR_MODE_TRIG
+BTF:MAG:EEI:DHSTB202:STAT_CURR_MODE_SW
+BTF:MAG:EEI:DHSTB202:STAT_POLARITY_POS
+BTF:MAG:EEI:DHSTB202:STAT_POLARITY_NEG
+BTF:MAG:EEI:DHSTB202:STAT_CONTACTORS_OPEN
+BTF:MAG:EEI:DHSTB202:FAULT_PLC_DCDC
+BTF:MAG:EEI:DHSTB202:FAULT_PLC_DCCT_PS
+BTF:MAG:EEI:DHSTB202:FAULT_PLC_MAG_ILK1
+BTF:MAG:EEI:DHSTB202:FAULT_PLC_MAG_ILK2
+BTF:MAG:EEI:DHSTB202:FAULT_PLC_ACDC1
+BTF:MAG:EEI:DHSTB202:FAULT_PLC_ACDC2
+BTF:MAG:EEI:DHSTB202:FAULT_PLC_WATER_FLOW
+BTF:MAG:EEI:DHSTB202:FAULT_PLC_24V_PS
+BTF:MAG:EEI:DHSTB202:FAULT_PLC_FUSES
+BTF:MAG:EEI:DHSTB202:FAULT_PLC_DC_LINK_DISCH
+BTF:MAG:EEI:DHSTB202:FAULT_PLC_CONTACTOR
+BTF:MAG:EEI:DHSTB202:FAULT_PLC_CANBUS_DCDC
+BTF:MAG:EEI:DHSTB202:FAULT_PLC_CANBUS_EXP
+BTF:MAG:EEI:DHSTB202:FAULT_PLC_CANBUS_ACDC1
+BTF:MAG:EEI:DHSTB202:FAULT_PLC_CANBUS_ACDC2
+BTF:MAG:EEI:DHSTB202:FAULT_DCDC_OVERCURR
+BTF:MAG:EEI:DHSTB202:FAULT_DCDC_THERM_PROT
+BTF:MAG:EEI:DHSTB202:FAULT_DCDC_OVERTEMP
+BTF:MAG:EEI:DHSTB202:FAULT_DCDC_DCLINK_LOW
+BTF:MAG:EEI:DHSTB202:FAULT_DCDC_DCLINK_HIGH
+BTF:MAG:EEI:DHSTB202:FAULT_DCDC_GROUND_CURR
+BTF:MAG:EEI:DHSTB202:FAULT_ACDC1_OVERCURR
+BTF:MAG:EEI:DHSTB202:FAULT_ACDC1_THERM_PROT
+BTF:MAG:EEI:DHSTB202:FAULT_ACDC1_WATER_TEMP
+BTF:MAG:EEI:DHSTB202:FAULT_ACDC1_AIR_TEMP
+BTF:MAG:EEI:DHSTB202:FAULT_ACDC2_OVERCURR
+BTF:MAG:EEI:DHSTB202:FAULT_ACDC2_THERM_PROT
+BTF:MAG:EEI:DHSTB202:FAULT_ACDC2_WATER_TEMP
+BTF:MAG:EEI:DHSTB202:FAULT_ACDC2_AIR_TEMP
+BTF:MAG:EEI:DHSTB203:STAT_STANDBY
+BTF:MAG:EEI:DHSTB203:STAT_POWER_ON
+BTF:MAG:EEI:DHSTB203:STAT_FAULTY
+BTF:MAG:EEI:DHSTB203:STAT_REMOTE
+BTF:MAG:EEI:DHSTB203:STAT_LOCAL
+BTF:MAG:EEI:DHSTB203:STAT_CURR_MODE_TRIG
+BTF:MAG:EEI:DHSTB203:STAT_CURR_MODE_SW
+BTF:MAG:EEI:DHSTB203:STAT_POLARITY_POS
+BTF:MAG:EEI:DHSTB203:STAT_POLARITY_NEG
+BTF:MAG:EEI:DHSTB203:STAT_CONTACTORS_OPEN
+BTF:MAG:EEI:DHSTB203:FAULT_PLC_DCDC
+BTF:MAG:EEI:DHSTB203:FAULT_PLC_DCCT_PS
+BTF:MAG:EEI:DHSTB203:FAULT_PLC_MAG_ILK1
+BTF:MAG:EEI:DHSTB203:FAULT_PLC_MAG_ILK2
+BTF:MAG:EEI:DHSTB203:FAULT_PLC_ACDC1
+BTF:MAG:EEI:DHSTB203:FAULT_PLC_ACDC2
+BTF:MAG:EEI:DHSTB203:FAULT_PLC_WATER_FLOW
+BTF:MAG:EEI:DHSTB203:FAULT_PLC_24V_PS
+BTF:MAG:EEI:DHSTB203:FAULT_PLC_FUSES
+BTF:MAG:EEI:DHSTB203:FAULT_PLC_DC_LINK_DISCH
+BTF:MAG:EEI:DHSTB203:FAULT_PLC_CONTACTOR
+BTF:MAG:EEI:DHSTB203:FAULT_PLC_CANBUS_DCDC
+BTF:MAG:EEI:DHSTB203:FAULT_PLC_CANBUS_EXP
+BTF:MAG:EEI:DHSTB203:FAULT_PLC_CANBUS_ACDC1
+BTF:MAG:EEI:DHSTB203:FAULT_PLC_CANBUS_ACDC2
+BTF:MAG:EEI:DHSTB203:FAULT_DCDC_OVERCURR
+BTF:MAG:EEI:DHSTB203:FAULT_DCDC_THERM_PROT
+BTF:MAG:EEI:DHSTB203:FAULT_DCDC_OVERTEMP
+BTF:MAG:EEI:DHSTB203:FAULT_DCDC_DCLINK_LOW
+BTF:MAG:EEI:DHSTB203:FAULT_DCDC_DCLINK_HIGH
+BTF:MAG:EEI:DHSTB203:FAULT_DCDC_GROUND_CURR
+BTF:MAG:EEI:DHSTB203:FAULT_ACDC1_OVERCURR
+BTF:MAG:EEI:DHSTB203:FAULT_ACDC1_THERM_PROT
+BTF:MAG:EEI:DHSTB203:FAULT_ACDC1_WATER_TEMP
+BTF:MAG:EEI:DHSTB203:FAULT_ACDC1_AIR_TEMP
+BTF:MAG:EEI:DHSTB203:FAULT_ACDC2_OVERCURR
+BTF:MAG:EEI:DHSTB203:FAULT_ACDC2_THERM_PROT
+BTF:MAG:EEI:DHSTB203:FAULT_ACDC2_WATER_TEMP
+BTF:MAG:EEI:DHSTB203:FAULT_ACDC2_AIR_TEMP
+BTF:MAG:EEI:QUATB201:CMD_STANDBY
+BTF:MAG:EEI:QUATB201:CMD_POWER_ON
+BTF:MAG:EEI:QUATB201:CMD_GLOBAL_OFF
+BTF:MAG:EEI:QUATB201:CMD_RESET
+BTF:MAG:EEI:QUATB201:CMD_START_RAMP
+BTF:MAG:EEI:QUATB201:CMD_CURRENT_MODE_TRIG
+BTF:MAG:EEI:QUATB201:CMD_CURRENT_MODE_SW
+BTF:MAG:EEI:QUATB201:CMD_DEVIATION_TOGGLE
+BTF:MAG:EEI:QUATB201:CMD_CONTACTORS_OPEN
+BTF:MAG:EEI:QUATB201:CMD_POLARITY_POS_REQ
+BTF:MAG:EEI:QUATB201:CMD_POLARITY_NEG_REQ
+BTF:MAG:EEI:QUATB202:CMD_STANDBY
+BTF:MAG:EEI:QUATB202:CMD_POWER_ON
+BTF:MAG:EEI:QUATB202:CMD_GLOBAL_OFF
+BTF:MAG:EEI:QUATB202:CMD_RESET
+BTF:MAG:EEI:QUATB202:CMD_START_RAMP
+BTF:MAG:EEI:QUATB202:CMD_CURRENT_MODE_TRIG
+BTF:MAG:EEI:QUATB202:CMD_CURRENT_MODE_SW
+BTF:MAG:EEI:QUATB202:CMD_DEVIATION_TOGGLE
+BTF:MAG:EEI:QUATB202:CMD_CONTACTORS_OPEN
+BTF:MAG:EEI:QUATB202:CMD_POLARITY_POS_REQ
+BTF:MAG:EEI:QUATB202:CMD_POLARITY_NEG_REQ
+BTF:MAG:EEI:QUATB203:CMD_STANDBY
+BTF:MAG:EEI:QUATB203:CMD_POWER_ON
+BTF:MAG:EEI:QUATB203:CMD_GLOBAL_OFF
+BTF:MAG:EEI:QUATB203:CMD_RESET
+BTF:MAG:EEI:QUATB203:CMD_START_RAMP
+BTF:MAG:EEI:QUATB203:CMD_CURRENT_MODE_TRIG
+BTF:MAG:EEI:QUATB203:CMD_CURRENT_MODE_SW
+BTF:MAG:EEI:QUATB203:CMD_DEVIATION_TOGGLE
+BTF:MAG:EEI:QUATB203:CMD_CONTACTORS_OPEN
+BTF:MAG:EEI:QUATB203:CMD_POLARITY_POS_REQ
+BTF:MAG:EEI:QUATB203:CMD_POLARITY_NEG_REQ
+BTF:MAG:EEI:QUATB204:CMD_STANDBY
+BTF:MAG:EEI:QUATB204:CMD_POWER_ON
+BTF:MAG:EEI:QUATB204:CMD_GLOBAL_OFF
+BTF:MAG:EEI:QUATB204:CMD_RESET
+BTF:MAG:EEI:QUATB204:CMD_START_RAMP
+BTF:MAG:EEI:QUATB204:CMD_CURRENT_MODE_TRIG
+BTF:MAG:EEI:QUATB204:CMD_CURRENT_MODE_SW
+BTF:MAG:EEI:QUATB204:CMD_DEVIATION_TOGGLE
+BTF:MAG:EEI:QUATB204:CMD_CONTACTORS_OPEN
+BTF:MAG:EEI:QUATB204:CMD_POLARITY_POS_REQ
+BTF:MAG:EEI:QUATB204:CMD_POLARITY_NEG_REQ
+BTF:MAG:EEI:QUATB205:CMD_STANDBY
+BTF:MAG:EEI:QUATB205:CMD_POWER_ON
+BTF:MAG:EEI:QUATB205:CMD_GLOBAL_OFF
+BTF:MAG:EEI:QUATB205:CMD_RESET
+BTF:MAG:EEI:QUATB205:CMD_START_RAMP
+BTF:MAG:EEI:QUATB205:CMD_CURRENT_MODE_TRIG
+BTF:MAG:EEI:QUATB205:CMD_CURRENT_MODE_SW
+BTF:MAG:EEI:QUATB205:CMD_DEVIATION_TOGGLE
+BTF:MAG:EEI:QUATB205:CMD_CONTACTORS_OPEN
+BTF:MAG:EEI:QUATB205:CMD_POLARITY_POS_REQ
+BTF:MAG:EEI:QUATB205:CMD_POLARITY_NEG_REQ
+BTF:MAG:EEI:QUATB206:CMD_STANDBY
+BTF:MAG:EEI:QUATB206:CMD_POWER_ON
+BTF:MAG:EEI:QUATB206:CMD_GLOBAL_OFF
+BTF:MAG:EEI:QUATB206:CMD_RESET
+BTF:MAG:EEI:QUATB206:CMD_START_RAMP
+BTF:MAG:EEI:QUATB206:CMD_CURRENT_MODE_TRIG
+BTF:MAG:EEI:QUATB206:CMD_CURRENT_MODE_SW
+BTF:MAG:EEI:QUATB206:CMD_DEVIATION_TOGGLE
+BTF:MAG:EEI:QUATB206:CMD_CONTACTORS_OPEN
+BTF:MAG:EEI:QUATB206:CMD_POLARITY_POS_REQ
+BTF:MAG:EEI:QUATB206:CMD_POLARITY_NEG_REQ
+BTF:MAG:EEI:DHPTB102:CMD_STANDBY
+BTF:MAG:EEI:DHPTB102:CMD_POWER_ON
+BTF:MAG:EEI:DHPTB102:CMD_GLOBAL_OFF
+BTF:MAG:EEI:DHPTB102:CMD_RESET
+BTF:MAG:EEI:DHPTB102:CMD_START_RAMP
+BTF:MAG:EEI:DHPTB102:CMD_CURRENT_MODE_TRIG
+BTF:MAG:EEI:DHPTB102:CMD_CURRENT_MODE_SW
+BTF:MAG:EEI:DHPTB102:CMD_DEVIATION_TOGGLE
+BTF:MAG:EEI:DHPTB102:CMD_CONTACTORS_OPEN
+BTF:MAG:EEI:DHPTB102:CMD_POLARITY_POS_REQ
+BTF:MAG:EEI:DHPTB102:CMD_POLARITY_NEG_REQ
+BTF:MAG:EEI:DHSTB201:CMD_STANDBY
+BTF:MAG:EEI:DHSTB201:CMD_POWER_ON
+BTF:MAG:EEI:DHSTB201:CMD_GLOBAL_OFF
+BTF:MAG:EEI:DHSTB201:CMD_RESET
+BTF:MAG:EEI:DHSTB201:CMD_START_RAMP
+BTF:MAG:EEI:DHSTB201:CMD_CURRENT_MODE_TRIG
+BTF:MAG:EEI:DHSTB201:CMD_CURRENT_MODE_SW
+BTF:MAG:EEI:DHSTB201:CMD_DEVIATION_TOGGLE
+BTF:MAG:EEI:DHSTB201:CMD_CONTACTORS_OPEN
+BTF:MAG:EEI:DHSTB201:CMD_POLARITY_POS_REQ
+BTF:MAG:EEI:DHSTB201:CMD_POLARITY_NEG_REQ
+BTF:MAG:EEI:DHSTB202:CMD_STANDBY
+BTF:MAG:EEI:DHSTB202:CMD_POWER_ON
+BTF:MAG:EEI:DHSTB202:CMD_GLOBAL_OFF
+BTF:MAG:EEI:DHSTB202:CMD_RESET
+BTF:MAG:EEI:DHSTB202:CMD_START_RAMP
+BTF:MAG:EEI:DHSTB202:CMD_CURRENT_MODE_TRIG
+BTF:MAG:EEI:DHSTB202:CMD_CURRENT_MODE_SW
+BTF:MAG:EEI:DHSTB202:CMD_DEVIATION_TOGGLE
+BTF:MAG:EEI:DHSTB202:CMD_CONTACTORS_OPEN
+BTF:MAG:EEI:DHSTB202:CMD_POLARITY_POS_REQ
+BTF:MAG:EEI:DHSTB202:CMD_POLARITY_NEG_REQ
+BTF:MAG:EEI:DHSTB203:CMD_STANDBY
+BTF:MAG:EEI:DHSTB203:CMD_POWER_ON
+BTF:MAG:EEI:DHSTB203:CMD_GLOBAL_OFF
+BTF:MAG:EEI:DHSTB203:CMD_RESET
+BTF:MAG:EEI:DHSTB203:CMD_START_RAMP
+BTF:MAG:EEI:DHSTB203:CMD_CURRENT_MODE_TRIG
+BTF:MAG:EEI:DHSTB203:CMD_CURRENT_MODE_SW
+BTF:MAG:EEI:DHSTB203:CMD_DEVIATION_TOGGLE
+BTF:MAG:EEI:DHSTB203:CMD_CONTACTORS_OPEN
+BTF:MAG:EEI:DHSTB203:CMD_POLARITY_POS_REQ
+BTF:MAG:EEI:DHSTB203:CMD_POLARITY_NEG_REQ
+BTF:MAG:EEI:QUATB201:INTERLOCKED
+BTF:MAG:EEI:QUATB202:INTERLOCKED
+BTF:MAG:EEI:QUATB203:INTERLOCKED
+BTF:MAG:EEI:QUATB204:INTERLOCKED
+BTF:MAG:EEI:QUATB205:INTERLOCKED
+BTF:MAG:EEI:QUATB206:INTERLOCKED
+BTF:MAG:EEI:DHPTB102:INTERLOCKED
+BTF:MAG:EEI:DHSTB201:INTERLOCKED
+BTF:MAG:EEI:DHSTB202:INTERLOCKED
+BTF:MAG:EEI:DHSTB203:INTERLOCKED
+BTF:MAG:EEI:QUATB201:UNIMAG_PROCESS
+BTF:MAG:EEI:QUATB201:UNIMAG_ABS_CURR
+BTF:MAG:EEI:QUATB201:UNIMAG_CHECK_POL
+BTF:MAG:EEI:QUATB201:UNIMAG_SET_CURR
+BTF:MAG:EEI:QUATB201:UNIMAG_WAIT_STBY
+BTF:MAG:EEI:QUATB201:UNIMAG_WAIT_PWR
+BTF:MAG:EEI:QUATB201:UNIMAG_SET_POL_POS
+BTF:MAG:EEI:QUATB201:UNIMAG_SET_POL_NEG
+BTF:MAG:EEI:QUATB201:UNIMAG_CONT_SEQ
+BTF:MAG:EEI:QUATB201:CURRENT_RB
+BTF:MAG:EEI:QUATB202:UNIMAG_PROCESS
+BTF:MAG:EEI:QUATB202:UNIMAG_ABS_CURR
+BTF:MAG:EEI:QUATB202:UNIMAG_CHECK_POL
+BTF:MAG:EEI:QUATB202:UNIMAG_SET_CURR
+BTF:MAG:EEI:QUATB202:UNIMAG_WAIT_STBY
+BTF:MAG:EEI:QUATB202:UNIMAG_WAIT_PWR
+BTF:MAG:EEI:QUATB202:UNIMAG_SET_POL_POS
+BTF:MAG:EEI:QUATB202:UNIMAG_SET_POL_NEG
+BTF:MAG:EEI:QUATB202:UNIMAG_CONT_SEQ
+BTF:MAG:EEI:QUATB202:CURRENT_RB
+BTF:MAG:EEI:QUATB203:UNIMAG_PROCESS
+BTF:MAG:EEI:QUATB203:UNIMAG_ABS_CURR
+BTF:MAG:EEI:QUATB203:UNIMAG_CHECK_POL
+BTF:MAG:EEI:QUATB203:UNIMAG_SET_CURR
+BTF:MAG:EEI:QUATB203:UNIMAG_WAIT_STBY
+BTF:MAG:EEI:QUATB203:UNIMAG_WAIT_PWR
+BTF:MAG:EEI:QUATB203:UNIMAG_SET_POL_POS
+BTF:MAG:EEI:QUATB203:UNIMAG_SET_POL_NEG
+BTF:MAG:EEI:QUATB203:UNIMAG_CONT_SEQ
+BTF:MAG:EEI:QUATB203:CURRENT_RB
+BTF:MAG:EEI:QUATB204:UNIMAG_PROCESS
+BTF:MAG:EEI:QUATB204:UNIMAG_ABS_CURR
+BTF:MAG:EEI:QUATB204:UNIMAG_CHECK_POL
+BTF:MAG:EEI:QUATB204:UNIMAG_SET_CURR
+BTF:MAG:EEI:QUATB204:UNIMAG_WAIT_STBY
+BTF:MAG:EEI:QUATB204:UNIMAG_WAIT_PWR
+BTF:MAG:EEI:QUATB204:UNIMAG_SET_POL_POS
+BTF:MAG:EEI:QUATB204:UNIMAG_SET_POL_NEG
+BTF:MAG:EEI:QUATB204:UNIMAG_CONT_SEQ
+BTF:MAG:EEI:QUATB204:CURRENT_RB
+BTF:MAG:EEI:QUATB205:UNIMAG_PROCESS
+BTF:MAG:EEI:QUATB205:UNIMAG_ABS_CURR
+BTF:MAG:EEI:QUATB205:UNIMAG_CHECK_POL
+BTF:MAG:EEI:QUATB205:UNIMAG_SET_CURR
+BTF:MAG:EEI:QUATB205:UNIMAG_WAIT_STBY
+BTF:MAG:EEI:QUATB205:UNIMAG_WAIT_PWR
+BTF:MAG:EEI:QUATB205:UNIMAG_SET_POL_POS
+BTF:MAG:EEI:QUATB205:UNIMAG_SET_POL_NEG
+BTF:MAG:EEI:QUATB205:UNIMAG_CONT_SEQ
+BTF:MAG:EEI:QUATB205:CURRENT_RB
+BTF:MAG:EEI:QUATB206:UNIMAG_PROCESS
+BTF:MAG:EEI:QUATB206:UNIMAG_ABS_CURR
+BTF:MAG:EEI:QUATB206:UNIMAG_CHECK_POL
+BTF:MAG:EEI:QUATB206:UNIMAG_SET_CURR
+BTF:MAG:EEI:QUATB206:UNIMAG_WAIT_STBY
+BTF:MAG:EEI:QUATB206:UNIMAG_WAIT_PWR
+BTF:MAG:EEI:QUATB206:UNIMAG_SET_POL_POS
+BTF:MAG:EEI:QUATB206:UNIMAG_SET_POL_NEG
+BTF:MAG:EEI:QUATB206:UNIMAG_CONT_SEQ
+BTF:MAG:EEI:QUATB206:CURRENT_RB
+BTF:MAG:EEI:DHPTB102:UNIMAG_PROCESS
+BTF:MAG:EEI:DHPTB102:UNIMAG_ABS_CURR
+BTF:MAG:EEI:DHPTB102:UNIMAG_CHECK_POL
+BTF:MAG:EEI:DHPTB102:UNIMAG_SET_CURR
+BTF:MAG:EEI:DHPTB102:UNIMAG_WAIT_STBY
+BTF:MAG:EEI:DHPTB102:UNIMAG_WAIT_PWR
+BTF:MAG:EEI:DHPTB102:UNIMAG_SET_POL_POS
+BTF:MAG:EEI:DHPTB102:UNIMAG_SET_POL_NEG
+BTF:MAG:EEI:DHPTB102:UNIMAG_CONT_SEQ
+BTF:MAG:EEI:DHPTB102:CURRENT_RB
+BTF:MAG:EEI:DHSTB201:UNIMAG_PROCESS
+BTF:MAG:EEI:DHSTB201:UNIMAG_ABS_CURR
+BTF:MAG:EEI:DHSTB201:UNIMAG_CHECK_POL
+BTF:MAG:EEI:DHSTB201:UNIMAG_SET_CURR
+BTF:MAG:EEI:DHSTB201:UNIMAG_WAIT_STBY
+BTF:MAG:EEI:DHSTB201:UNIMAG_WAIT_PWR
+BTF:MAG:EEI:DHSTB201:UNIMAG_SET_POL_POS
+BTF:MAG:EEI:DHSTB201:UNIMAG_SET_POL_NEG
+BTF:MAG:EEI:DHSTB201:UNIMAG_CONT_SEQ
+BTF:MAG:EEI:DHSTB201:CURRENT_RB
+BTF:MAG:EEI:DHSTB202:UNIMAG_PROCESS
+BTF:MAG:EEI:DHSTB202:UNIMAG_ABS_CURR
+BTF:MAG:EEI:DHSTB202:UNIMAG_CHECK_POL
+BTF:MAG:EEI:DHSTB202:UNIMAG_SET_CURR
+BTF:MAG:EEI:DHSTB202:UNIMAG_WAIT_STBY
+BTF:MAG:EEI:DHSTB202:UNIMAG_WAIT_PWR
+BTF:MAG:EEI:DHSTB202:UNIMAG_SET_POL_POS
+BTF:MAG:EEI:DHSTB202:UNIMAG_SET_POL_NEG
+BTF:MAG:EEI:DHSTB202:UNIMAG_CONT_SEQ
+BTF:MAG:EEI:DHSTB202:CURRENT_RB
+BTF:MAG:EEI:DHSTB203:UNIMAG_PROCESS
+BTF:MAG:EEI:DHSTB203:UNIMAG_ABS_CURR
+BTF:MAG:EEI:DHSTB203:UNIMAG_CHECK_POL
+BTF:MAG:EEI:DHSTB203:UNIMAG_SET_CURR
+BTF:MAG:EEI:DHSTB203:UNIMAG_WAIT_STBY
+BTF:MAG:EEI:DHSTB203:UNIMAG_WAIT_PWR
+BTF:MAG:EEI:DHSTB203:UNIMAG_SET_POL_POS
+BTF:MAG:EEI:DHSTB203:UNIMAG_SET_POL_NEG
+BTF:MAG:EEI:DHSTB203:UNIMAG_CONT_SEQ
+BTF:MAG:EEI:DHSTB203:CURRENT_RB
+BTF:MAG:EEI:QUATB201:UNIMAG_WRITE_CURR
+BTF:MAG:EEI:QUATB202:UNIMAG_WRITE_CURR
+BTF:MAG:EEI:QUATB203:UNIMAG_WRITE_CURR
+BTF:MAG:EEI:QUATB204:UNIMAG_WRITE_CURR
+BTF:MAG:EEI:QUATB205:UNIMAG_WRITE_CURR
+BTF:MAG:EEI:QUATB206:UNIMAG_WRITE_CURR
+BTF:MAG:EEI:DHPTB102:UNIMAG_WRITE_CURR
+BTF:MAG:EEI:DHSTB201:UNIMAG_WRITE_CURR
+BTF:MAG:EEI:DHSTB202:UNIMAG_WRITE_CURR
+BTF:MAG:EEI:DHSTB203:UNIMAG_WRITE_CURR
+BTF:MAG:EEI:QUATB201:UNIMAG_REQ_POL
+BTF:MAG:EEI:QUATB202:UNIMAG_REQ_POL
+BTF:MAG:EEI:QUATB203:UNIMAG_REQ_POL
+BTF:MAG:EEI:QUATB204:UNIMAG_REQ_POL
+BTF:MAG:EEI:QUATB205:UNIMAG_REQ_POL
+BTF:MAG:EEI:QUATB206:UNIMAG_REQ_POL
+BTF:MAG:EEI:DHPTB102:UNIMAG_REQ_POL
+BTF:MAG:EEI:DHSTB201:UNIMAG_REQ_POL
+BTF:MAG:EEI:DHSTB202:UNIMAG_REQ_POL
+BTF:MAG:EEI:DHSTB203:UNIMAG_REQ_POL
+BTF:MAG:EEI:QUATB201:CURR_RB_SIGN
+BTF:MAG:EEI:QUATB202:CURR_RB_SIGN
+BTF:MAG:EEI:QUATB203:CURR_RB_SIGN
+BTF:MAG:EEI:QUATB204:CURR_RB_SIGN
+BTF:MAG:EEI:QUATB205:CURR_RB_SIGN
+BTF:MAG:EEI:QUATB206:CURR_RB_SIGN
+BTF:MAG:EEI:DHPTB102:CURR_RB_SIGN
+BTF:MAG:EEI:DHSTB201:CURR_RB_SIGN
+BTF:MAG:EEI:DHSTB202:CURR_RB_SIGN
+BTF:MAG:EEI:DHSTB203:CURR_RB_SIGN
+BTF:MAG:EEI:QUATB201:STATE_RB
+BTF:MAG:EEI:QUATB202:STATE_RB
+BTF:MAG:EEI:QUATB203:STATE_RB
+BTF:MAG:EEI:QUATB204:STATE_RB
+BTF:MAG:EEI:QUATB205:STATE_RB
+BTF:MAG:EEI:QUATB206:STATE_RB
+BTF:MAG:EEI:DHPTB102:STATE_RB
+BTF:MAG:EEI:DHSTB201:STATE_RB
+BTF:MAG:EEI:DHSTB202:STATE_RB
+BTF:MAG:EEI:DHSTB203:STATE_RB
+BTF:MAG:EEI:QUATB201:CURR_SET_SIGN
+BTF:MAG:EEI:QUATB202:CURR_SET_SIGN
+BTF:MAG:EEI:QUATB203:CURR_SET_SIGN
+BTF:MAG:EEI:QUATB204:CURR_SET_SIGN
+BTF:MAG:EEI:QUATB205:CURR_SET_SIGN
+BTF:MAG:EEI:QUATB206:CURR_SET_SIGN
+BTF:MAG:EEI:DHPTB102:CURR_SET_SIGN
+BTF:MAG:EEI:DHSTB201:CURR_SET_SIGN
+BTF:MAG:EEI:DHSTB202:CURR_SET_SIGN
+BTF:MAG:EEI:DHSTB203:CURR_SET_SIGN
+BTF:MAG:EEI:QUATB201:STATE_SP
+BTF:MAG:EEI:QUATB202:STATE_SP
+BTF:MAG:EEI:QUATB203:STATE_SP
+BTF:MAG:EEI:QUATB204:STATE_SP
+BTF:MAG:EEI:QUATB205:STATE_SP
+BTF:MAG:EEI:QUATB206:STATE_SP
+BTF:MAG:EEI:DHPTB102:STATE_SP
+BTF:MAG:EEI:DHSTB201:STATE_SP
+BTF:MAG:EEI:DHSTB202:STATE_SP
+BTF:MAG:EEI:DHSTB203:STATE_SP
+BTF:MAG:EEI:QUATB201:POLARITY_SEQ_POS
+BTF:MAG:EEI:QUATB201:POLARITY_SEQ_NEG
+BTF:MAG:EEI:QUATB202:POLARITY_SEQ_POS
+BTF:MAG:EEI:QUATB202:POLARITY_SEQ_NEG
+BTF:MAG:EEI:QUATB203:POLARITY_SEQ_POS
+BTF:MAG:EEI:QUATB203:POLARITY_SEQ_NEG
+BTF:MAG:EEI:QUATB204:POLARITY_SEQ_POS
+BTF:MAG:EEI:QUATB204:POLARITY_SEQ_NEG
+BTF:MAG:EEI:QUATB205:POLARITY_SEQ_POS
+BTF:MAG:EEI:QUATB205:POLARITY_SEQ_NEG
+BTF:MAG:EEI:QUATB206:POLARITY_SEQ_POS
+BTF:MAG:EEI:QUATB206:POLARITY_SEQ_NEG
+BTF:MAG:EEI:DHPTB102:POLARITY_SEQ_POS
+BTF:MAG:EEI:DHPTB102:POLARITY_SEQ_NEG
+BTF:MAG:EEI:DHSTB201:POLARITY_SEQ_POS
+BTF:MAG:EEI:DHSTB201:POLARITY_SEQ_NEG
+BTF:MAG:EEI:DHSTB202:POLARITY_SEQ_POS
+BTF:MAG:EEI:DHSTB202:POLARITY_SEQ_NEG
+BTF:MAG:EEI:DHSTB203:POLARITY_SEQ_POS
+BTF:MAG:EEI:DHSTB203:POLARITY_SEQ_NEG
+BTF:MAG:EEI:QUATB201:UNIMAG_SEQ
+BTF:MAG:EEI:QUATB201:UNIMAG_DIRECT_SET
+BTF:MAG:EEI:QUATB201:STATE_PROCESS
+BTF:MAG:EEI:QUATB202:UNIMAG_SEQ
+BTF:MAG:EEI:QUATB202:UNIMAG_DIRECT_SET
+BTF:MAG:EEI:QUATB202:STATE_PROCESS
+BTF:MAG:EEI:QUATB203:UNIMAG_SEQ
+BTF:MAG:EEI:QUATB203:UNIMAG_DIRECT_SET
+BTF:MAG:EEI:QUATB203:STATE_PROCESS
+BTF:MAG:EEI:QUATB204:UNIMAG_SEQ
+BTF:MAG:EEI:QUATB204:UNIMAG_DIRECT_SET
+BTF:MAG:EEI:QUATB204:STATE_PROCESS
+BTF:MAG:EEI:QUATB205:UNIMAG_SEQ
+BTF:MAG:EEI:QUATB205:UNIMAG_DIRECT_SET
+BTF:MAG:EEI:QUATB205:STATE_PROCESS
+BTF:MAG:EEI:QUATB206:UNIMAG_SEQ
+BTF:MAG:EEI:QUATB206:UNIMAG_DIRECT_SET
+BTF:MAG:EEI:QUATB206:STATE_PROCESS
+BTF:MAG:EEI:DHPTB102:UNIMAG_SEQ
+BTF:MAG:EEI:DHPTB102:UNIMAG_DIRECT_SET
+BTF:MAG:EEI:DHPTB102:STATE_PROCESS
+BTF:MAG:EEI:DHSTB201:UNIMAG_SEQ
+BTF:MAG:EEI:DHSTB201:UNIMAG_DIRECT_SET
+BTF:MAG:EEI:DHSTB201:STATE_PROCESS
+BTF:MAG:EEI:DHSTB202:UNIMAG_SEQ
+BTF:MAG:EEI:DHSTB202:UNIMAG_DIRECT_SET
+BTF:MAG:EEI:DHSTB202:STATE_PROCESS
+BTF:MAG:EEI:DHSTB203:UNIMAG_SEQ
+BTF:MAG:EEI:DHSTB203:UNIMAG_DIRECT_SET
+BTF:MAG:EEI:DHSTB203:STATE_PROCESS
+[?2004h[32;1mepics> [0m

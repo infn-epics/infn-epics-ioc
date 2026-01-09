@@ -1,0 +1,150 @@
+ioc_name: tml-ch1
+description: Motor template tml
+shared:
+  - &motor
+    type: motorTML.motorAxis
+    controller: tml_001
+    NSTEPS: 200
+    NMICROSTEPS: 256
+    VELO: 20 
+    VELO_MAX: 50
+    VELO_MIN: 0.1
+    ACCL: 100
+    ACCL_MAX: 100
+    ACCL_MIN: 0.01
+    HAR: 100
+    HVEL: 20
+    JAR: 100
+    JVEL: 20
+    EGU: rpm 
+    SLSP: 0.8
+    ENABLED: 1
+    TIMEOUT: 0
+
+entities:
+  - type: motorTML.CreateController
+    controllerName: "tml_001"
+    P: "SPARC:MOT:TML"
+    TTY: /var/tmp/ttyV0
+    hostid: 5
+  - <<: *motor
+    axid: 10
+    name: GUNFLG01
+    VELO: 30
+    VELO_MAX: 50
+    ACCL: 100
+    ACCL_MAX: 100
+    HAR: 100
+    HVEL: 30
+    JAR: 100
+    JVEL: 30
+  - <<: *motor
+    axid: 3
+    name: AC1FLG01
+    VELO: 20
+    VELO_MAX: 50
+    ACCL: 100
+    ACCL_MAX: 100
+    HAR: 100
+    HVEL: 20
+    JAR: 100
+    JVEL: 20
+  - <<: *motor
+    axid: 4
+    name: AC2FLG01
+    VELO: 40
+    VELO_MAX: 50
+    ACCL: 100
+    ACCL_MAX: 100
+    HAR: 100
+    HVEL: 40
+    JAR: 100
+    JVEL: 40
+  - <<: *motor
+    axid: 5
+    name: AC3FLG01
+    VELO: 40
+    VELO_MAX: 50
+    ACCL: 100
+    ACCL_MAX: 100
+    HAR: 100
+    HVEL: 40
+    JAR: 100
+    JVEL: 40
+  - <<: *motor
+    axid: 12
+    name: UTLFLG01
+    VELO: 40
+    VELO_MAX: 50
+    ACCL: 100
+    ACCL_MAX: 100
+    HAR: 100
+    HVEL: 40
+    JAR: 100
+    JVEL: 40
+  - <<: *motor
+    axid: 13
+    name: UTLFLG02
+    VELO: 20
+    VELO_MAX: 50
+    ACCL: 100
+    ACCL_MAX: 100
+    HAR: 100
+    HVEL: 20
+    JAR: 100
+    JVEL: 20
+  - <<: *motor
+    axid: 11
+    name: SBNFLG00
+    VELO: 40
+    VELO_MAX: 50
+    ACCL: 100
+    ACCL_MAX: 100
+    HAR: 100
+    HVEL: 40
+    JAR: 100
+    JVEL: 40
+  - <<: *motor
+    axid: 14
+    name: SBNFLG01
+    VELO: 40
+    VELO_MAX: 50
+    ACCL: 100
+    ACCL_MAX: 100
+    HAR: 100
+    HVEL: 40
+    JAR: 100
+    JVEL: 40
+  - <<: *motor
+    axid: 
+    name: GUNSOLH1
+    VELO: 20
+    VELO_MAX: 50
+    ACCL: 100
+    ACCL_MAX: 100
+    HAR: 100
+    HVEL: 20
+    JAR: 100
+    JVEL: 20
+  - <<: *motor
+    axid: 7
+    name: GUNSOLV1
+    VELO: 20
+    VELO_MAX: 50
+    ACCL: 100
+    ACCL_MAX: 100
+    HAR: 100
+    HVEL: 20
+    JAR: 100
+    JVEL: 20
+
+
+- type: epics.StartupCommand
+    command: |
+      dbLoadRecords("config/poi.db","")
+
+
+  - type: epics.PostStartupCommand 
+    command: |
+      dbl("*") > /nfs/config/tml-ch1/pvlist.txt           ## dumps PV NAMES
+      dbl

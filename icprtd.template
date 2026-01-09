@@ -1,0 +1,147 @@
+record(ai, "$(P):$(R):RTD$(ID):TEMP_RB")
+{
+    field(DTYP, "asynInt32")
+    field(DESC, "$(DESC=RTD $(ID) RB)")
+    field(INP, "@asynMask($(PORT) $(ID) 16)INT16")
+    field(HOPR, "$(HOPR=100)")
+    field(HIHI, "$(HIHI=100)")
+    field(HIGH, "$(HIGH=90)")
+    field(LOW, "$(LOW=20)")
+    field(LOLO, "$(LOLO=0)")
+    field(PREC, "$(PREC=3)")
+    field(LINR, "NO CONVERSION")
+    field(ASLO, "$(ASLO=0.00305185)")
+    field(AOFF, "$(AOFF=0)")
+    field(SCAN, "$(SCAN=I/O Intr)")
+    field(EGU, "$(EGU=degC)")
+}
+
+record(longout, "$(P):$(R):RTD$(ID):SENSOR_TYPE_RAW_SP") {
+    field(DESC, "PT100 $(ID) raw type id SP")
+    field(DTYP, "asynInt32")     # or your driver
+    field(OUT, "@asynMask($(PORTTYPE) $(ID) 16)INT16")
+    field(FLNK, "$(P):$(R):RTD$(ID):SENSOR_TYPE_RAW_RB")
+}
+record(longin, "$(P):$(R):RTD$(ID):SENSOR_TYPE_RAW_RB") {
+    field(DESC, "PT100 $(ID) raw type id RB")
+    field(DTYP, "asynInt32")
+    field(INP, "@asynMask($(PORTTYPE) $(ID) 16)UINT16")
+    field(SCAN, "10 second")
+    field(FLNK, "$(P):$(R):RTD$(ID):PT100_SENSOR_TYPE")
+
+}
+
+record(mbbi, "$(P):$(R):RTD$(ID):PT100_SENSOR_TYPE") {
+    field(DESC, "PT100 $(ID) type")
+    field(INP,  "$(P):$(R):RTD$(ID):SENSOR_TYPE_RAW_RB CP")
+    field(ZRVL, "32")
+    field(ZRST, "-100-100C")
+    field(ONVL, "33")
+    field(ONST, "0~100C")
+    field(TWVL, "34")
+    field(TWST, "0-200C")
+    field(THVL, "35")
+    field(THST, "0-600C")
+    field(FRVL, "36")
+    field(FRST, "-100-100C")
+    field(FVVL, "37")
+    field(FVST, "0-100C")
+    field(SXVL, "38")
+    field(SXST, "0-200C")
+    field(SVVL, "39")
+    field(SVST, "0-600C")
+    field(FLNK, "$(P):$(R):RTD$(ID):sensor_pt100_map")
+
+}
+record(calcout, "$(P):$(R):RTD$(ID):sensor_pt100_map") {
+    field(CALC, "A==0x27?0.01831:A==0x20?0.003051:A==0x22?0.006103:0.003051")
+    field(INPA, "$(P):$(R):RTD$(ID):SENSOR_TYPE_RAW_RB CP")
+    field(OUT, "$(P):$(R):RTD$(ID):CONV_FACTOR_SP")
+    field(FLNK, "$(P):$(R):RTD$(ID):CONV_FACTOR_SP")
+}
+
+# record(calcout, "$(P):$(R):SENSOR_TYPE_MAP2") {
+#     field(CALC, "A==0x28?'Ni120,-80~100C':\
+# A==0x29?'Ni120,0~100C':\
+# A==0x2A?'Pt1000,-200~600C':\
+# A==0x2B?'Cu100,-20~150C':\
+# A==0x2C?'Cu100,0~200C':\
+# A==0x2D?'Cu1000,-20~150C':\
+# A==0x2E?'-200~200C':\
+# A==0x2F?'-200~200C':\
+# A==0x80?'-200~600C':\
+# A==0x81?'-200~600C':\
+# A==0x82?'Cu50,-50~150C':\
+# A==0x83?'Ni100,-60~180C':'unknown'")
+#     field(INPA, "$(P):$(R):SENSOR_TYPE_RBV CP")
+#     field(OUT, "$(P):$(R):SENSOR_TYPE_STR")
+# }
+record(ai, "$(P):$(R):RTD$(ID):TEMP_MAX_RB")
+{
+    field(DTYP, "asynInt32")
+    field(DESC, "$(DESC=RLY $(ID) MAX RB)")
+    field(INP, "@asynMask($(PORTMAX) $(ID) 16)INT16")
+    field(HOPR, "$(HOPR=100)")
+    field(HIHI, "$(HIHI=100)")
+    field(HIGH, "$(HIGH=90)")
+    field(LOW, "$(LOW=20)")
+    field(LOLO, "$(LOLO=0)")
+    field(PREC, "$(PREC=3)")
+    field(LINR, "NO CONVERSION")
+    field(ASLO, "$(ASLO=0.02319)")
+    field(AOFF, "$(AOFF=0)")
+    field(SCAN, "$(SCAN=I/O Intr)")
+    field(EGU, "$(EGU=degC)")
+}
+record(ai, "$(P):$(R):RTD$(ID):TEMP_MIN_RB")
+{
+    field(DTYP, "asynInt32")
+    field(DESC, "$(DESC=RLY $(ID) MIN RB)")
+    field(INP, "@asynMask($(PORTMIN) $(ID) 16)INT16")
+    field(HOPR, "$(HOPR=100)")
+    field(HIHI, "$(HIHI=100)")
+    field(HIGH, "$(HIGH=90)")
+    field(LOW, "$(LOW=20)")
+    field(LOLO, "$(LOLO=0)")
+    field(PREC, "$(PREC=3)")
+    field(LINR, "NO CONVERSION")
+    field(ASLO, "$(ASLO=0.02319)")
+    field(AOFF, "$(AOFF=0)")
+    field(SCAN, "$(SCAN=I/O Intr)")
+    field(EGU, "$(EGU=degC)")
+}
+
+# Record to hold the conversion factor
+record(ao, "$(P):$(R):RTD$(ID):CONV_FACTOR_SP") {
+    field(DESC, "Conversion factor for RTD $(ID)")
+    field(VAL, "$(ASLO=0.00305185)")
+    field(PREC, "8")
+    field(FLNK, "$(P):$(R):RTD$(ID):set_aslo")
+}
+
+# Update ASLO field of TEMP_RB when CONV_FACTOR changes
+record(calcout, "$(P):$(R):RTD$(ID):set_aslo") {
+    field(DESC, "Set ASLO from CONV_FACTOR")
+    field(INPA, "$(P):$(R):RTD$(ID):CONV_FACTOR_SP CP")
+    field(CALC, "A")
+    field(OUT, "$(P):$(R):RTD$(ID):TEMP_RB.ASLO PP")
+    field(FLNK, "$(P):$(R):RTD$(ID):set_aslo_max")
+
+}
+
+# Optionally, repeat for TEMP_MAX_RB and TEMP_MIN_RB
+record(calcout, "$(P):$(R):RTD$(ID):set_aslo_max") {
+    field(DESC, "Set ASLO for TEMP_MAX_RB")
+    field(INPA, "$(P):$(R):RTD$(ID):CONV_FACTOR_SP CP")
+    field(CALC, "A")
+    field(OUT, "$(P):$(R):RTD$(ID):TEMP_MAX_RB.ASLO PP")
+    field(FLNK, "$(P):$(R):RTD$(ID):set_aslo_min")
+
+}
+record(calcout, "$(P):$(R):RTD$(ID):set_aslo_min") {
+    field(DESC, "Set ASLO for TEMP_MIN_RB")
+    field(INPA, "$(P):$(R):RTD$(ID):CONV_FACTOR_SP CP")
+    field(CALC, "A")
+    field(OUT, "$(P):$(R):RTD$(ID):TEMP_MIN_RB.ASLO PP")
+}
+

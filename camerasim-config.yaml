@@ -1,0 +1,67 @@
+asset: https://servicedesk.infn.it/secure/ObjectSchema.jspa?id=44&typeId=2748&objectId=126655
+autosave_dir: /nfs/autosave/camerasim
+autosync: true
+charturl: https://github.com/infn-epics/ioc-chart.git
+config_dir: /nfs/config/camerasim
+data_dir: /nfs/data/camerasim
+devgroup: cam
+devices:
+- iocinit:
+  - name: AcquirePeriod
+    value: '1'
+  - name: Gain
+    value: '255'
+  - name: SimMode
+    value: Peaks
+  - name: PeakStartX
+    value: '250'
+  - name: PeakStartY
+    value: '200'
+  - name: PeakWidthX
+    value: '70'
+  - name: PeakWidthY
+    value: '50'
+  - name: PeakVariation
+    value: '10'
+  name: SIM01
+devtype: camerasim
+enable_ingress: true
+epik8s-tools-version: 0.9.12
+iocinit:
+- name: AcquirePeriod
+  value: '1'
+- name: FrameRate
+  value: '1'
+- name: FrameRateEnable
+  value: 'Yes'
+iocname: camerasim
+iocprefix: SPARC:CAM
+name: camerasim
+nfsMounts:
+- mountPath: /nfs/data
+  name: data
+  opt: -o nolock
+  path: /sparcstorage/space2/SparcData
+  server: 192.168.197.157
+- mountPath: /nfs/autosave
+  name: autosave
+  opt: -o nolock
+  path: /data_epik8s/autosave
+  server: 192.168.197.157
+- mountPath: /nfs/config
+  name: config
+  opt: -o nolock
+  path: /data_epik8s/config
+  server: 192.168.197.157
+overlay_enable: true
+proc_enable: true
+pva: true
+roi_enable: true
+service:
+  http:
+    enable: true
+    port: 8082
+stats_enable: true
+stream_enable: true
+template: adcamera
+tiff_enable: true

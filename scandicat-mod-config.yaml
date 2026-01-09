@@ -1,0 +1,35 @@
+asset: https://confluence.infn.it/display/LDCG/PPT-MOD-001
+autosave_dir: /nfs/autosave/scandicat-mod
+charturl: https://github.com/infn-epics/ioc-chart.git
+config_dir: /nfs/config/scandicat-mod
+data_dir: /nfs/data/scandicat-mod
+devgroup: modulator
+devices:
+- name: MOD01
+  server: pwelimod001.int.eli-np.ro
+- name: MOD02
+  server: pwelimod002.int.eli-np.ro
+- name: MOD03
+  server: pwelimod003.int.eli-np.ro
+devtype: ppt
+epik8s-tools-version: 0.9.14
+iocname: scandicat-mod
+iocprefix: LEL:MOD:SCAT
+name: scandicat-mod
+nfsMounts:
+- mountPath: /nfs/data
+  name: data
+  opt: -o nolock
+  path: /epik8s_data/data
+  server: 10.16.4.100
+- mountPath: /nfs/autosave
+  name: autosave
+  opt: -o nolock
+  path: /epik8s_data/autosave
+  server: 10.16.4.100
+- mountPath: /nfs/config
+  name: config
+  opt: -o nolock
+  path: /epik8s_data/config
+  server: 10.16.4.100
+template: scandinova-scandicat-mod

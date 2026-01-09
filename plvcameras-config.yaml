@@ -1,0 +1,65 @@
+asset: https://confluence.infn.it/x/nYD8DQ
+autosave_dir: /nfs/autosave/plvcameras
+charturl: https://github.com/infn-epics/ioc-chart.git
+config_dir: /nfs/config/plvcameras
+data_dir: /nfs/data/plvcameras
+devgroup: cam
+devices:
+- devtype: Basler-a2A2600-20gmBAS
+  id: 192.168.110.43
+  iocinit:
+  - name: TriggerSource
+    value: Line2
+  - name: PixelFormat
+    value: Mono12
+  - name: pxcal
+    value: 1.81
+  name: PLV02
+- devtype: Basler-scA640-70gm
+  id: 192.168.110.32
+  iocinit:
+  - name: pxcal
+    value: 7.4
+  name: PLV01
+devtype: camera
+epik8s-tools-version: 0.9.12
+iocinit:
+- name: PixelFormat
+  value: Mono16
+- name: TriggerMode
+  value: 'On'
+- name: TriggerSource
+  value: Line1
+- name: FrameRateEnable
+  value: '0'
+- name: ImageMode
+  value: Continuous
+iocname: plvcameras
+iocprefix: SPARC:CAM
+name: plvcameras
+networks:
+- annotation: sparc-cams
+  name: control
+nfsMounts:
+- mountPath: /nfs/data
+  name: data
+  opt: -o nolock
+  path: /sparcstorage/space2/SparcData
+  server: 192.168.197.157
+- mountPath: /nfs/autosave
+  name: autosave
+  opt: -o nolock
+  path: /data_epik8s/autosave
+  server: 192.168.197.157
+- mountPath: /nfs/config
+  name: config
+  opt: -o nolock
+  path: /data_epik8s/config
+  server: 192.168.197.157
+overlay_enable: false
+proc_enable: false
+pva: true
+roi_enable: false
+stats_enable: false
+template: adcamera
+tiff_enable: true

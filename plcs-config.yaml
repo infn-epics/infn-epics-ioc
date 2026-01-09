@@ -1,0 +1,35 @@
+asset: ''
+autosave_dir: /nfs/autosave/plcs
+autosync: false
+charturl: https://baltig.infn.it/epics-containers/ioc-chart.git
+config_dir: /nfs/config/plcs
+data_dir: /nfs/data/plcs
+devgroup: saf
+devices:
+- devtype: magnets
+  ip: 10.16.4.171
+  name: MAG
+- devtype: vac
+  ip: 10.16.4.170
+  name: VAC
+epik8s-tools-version: 0.9.14
+iocname: plcs
+iocprefix: LEL:PLC
+name: plcs
+nfsMounts:
+- mountPath: /nfs/data
+  name: data
+  opt: -o nolock
+  path: /epik8s_data/data
+  server: plelinpsto001.int.eli-np.ro
+- mountPath: /nfs/autosave
+  name: autosave
+  opt: -o nolock
+  path: /epik8s_data/autosave
+  server: plelinpsto001.int.eli-np.ro
+- mountPath: /nfs/config
+  name: config
+  opt: -o nolock
+  path: /epik8s_data/config
+  server: plelinpsto001.int.eli-np.ro
+template: plceli

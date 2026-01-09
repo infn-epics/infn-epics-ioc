@@ -1,0 +1,12 @@
+
+record(bo, "$(P):$(R):DO$(ID)_SP")
+{
+    field(DESC, "$(DESC=DO$(ID) Set point)")
+    field(DTYP, "asynUInt32Digital")
+    field(OUT,  "@asynMask($(PORT) $(ID) 1)")
+    field(ONAM, "ON")
+    field(ZNAM, "OFF")
+    field(SCAN, "Passive")
+}
+
+

@@ -1,0 +1,42 @@
+asset: https://confluence.infn.it/x/example-eei
+autosave_dir: /nfs/autosave/psmodbusEEI
+autosync: false
+charturl: https://baltig.infn.it/epics-containers/ioc-chart.git
+config_dir: /nfs/config/psmodbusEEI
+data_dir: /nfs/data/psmodbusEEI
+devgroup: ps
+devices:
+- ip: 192.168.190.153
+  max_curr: 330000
+  name: PS01
+  slave_id: 1
+  timeout: 1000
+  rpoll: 1000
+  wpoll: 0
+devtype: psEEI
+epik8s-tools-version: 0.9.12
+iocname: psmodbusEEI
+iocprefix: EEI:PS
+name: psmodbusEEI
+networks:
+- annotation: control-network
+  name: control
+nfsMounts:
+- mountPath: /nfs/data
+  name: data
+  opt: -o nolock
+  path: /data_storage/data
+  server: 192.168.197.157
+- mountPath: /nfs/autosave
+  name: autosave
+  opt: -o nolock
+  path: /data_epik8s/autosave
+  server: 192.168.197.157
+- mountPath: /nfs/config
+  name: config
+  opt: -o nolock
+  path: /data_epik8s/config
+  server: 192.168.197.157
+opi: eei_ps
+port: 502
+template: psEEI

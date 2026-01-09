@@ -1,0 +1,31 @@
+record(ai, "$(P):$(R):OSversion_raw") {
+    field(DESC, "Raw 16-bit Version Value")
+    field(DTYP, "asynInt32")
+
+    field(INP,  "@asynMask($(PORT) 0 16)")  
+    field(PREC, "0")
+    field(PINI, "YES")
+    field(SCAN, "I/O Intr")
+
+}
+record(ai, "$(P):$(R):FWversion_raw") {
+    field(DESC, "Raw 16-bit Version Value")
+    field(DTYP, "asynInt32")
+
+    field(INP,  "@asynMask($(PORT) 1 16)")  
+    field(PREC, "0")
+    field(PINI, "YES")
+    field(SCAN, "I/O Intr")
+
+}
+record(ai, "$(P):$(R):IOversion_raw") {
+    field(DESC, "Raw 16-bit Version Value")
+    field(DTYP, "asynInt32")
+
+    field(INP,  "@asynMask($(PORT) 2 16)")  
+    field(PREC, "0")
+    field(PINI, "YES")
+    field(SCAN, "I/O Intr")
+
+}
+

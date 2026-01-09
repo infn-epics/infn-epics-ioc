@@ -1,0 +1,108 @@
+record(ai, "SPARC:SHT:ICP:OSversion_raw") {
+    field(DESC, "Raw 16-bit Version Value")
+    field(DTYP, "asynInt32")
+
+    field(INP,  "@asynMask(ICP-ddcgicp12di6do002.lnf.infn.it_INFO 0 16)")  
+    field(PREC, "0")
+    field(PINI, "YES")
+    field(SCAN, "I/O Intr")
+
+}
+record(ai, "SPARC:SHT:ICP:FWversion_raw") {
+    field(DESC, "Raw 16-bit Version Value")
+    field(DTYP, "asynInt32")
+
+    field(INP,  "@asynMask(ICP-ddcgicp12di6do002.lnf.infn.it_INFO 1 16)")  
+    field(PREC, "0")
+    field(PINI, "YES")
+    field(SCAN, "I/O Intr")
+
+}
+record(ai, "SPARC:SHT:ICP:IOversion_raw") {
+    field(DESC, "Raw 16-bit Version Value")
+    field(DTYP, "asynInt32")
+
+    field(INP,  "@asynMask(ICP-ddcgicp12di6do002.lnf.infn.it_INFO 2 16)")  
+    field(PREC, "0")
+    field(PINI, "YES")
+    field(SCAN, "I/O Intr")
+
+}
+
+
+record(bo, "SPARC:SHT:ICP:DO0_SP")
+{
+    field(DESC, "Digital Ouput")
+    field(DTYP, "asynUInt32Digital")
+    field(OUT,  "@asynMask(ICP-ddcgicp12di6do002.lnf.infn.it_DO 0 1)")
+    field(ONAM, "ON")
+    field(ZNAM, "OFF")
+    field(SCAN, "Passive")
+}
+
+
+
+record(bo, "SPARC:SHT:ICP:DO1_SP")
+{
+    field(DESC, "Digital Ouput")
+    field(DTYP, "asynUInt32Digital")
+    field(OUT,  "@asynMask(ICP-ddcgicp12di6do002.lnf.infn.it_DO 1 1)")
+    field(ONAM, "ON")
+    field(ZNAM, "OFF")
+    field(SCAN, "Passive")
+}
+
+
+record("*", "SPARC:SHT:ICP:DO0_SP") {
+    alias("SPARC:SHT:ICP:CATLAS01:DO_SP")
+}
+record("*", "SPARC:SHT:ICP:DO1_SP") {
+    alias("SPARC:SHT:ICP:EOSLAS01:DO_SP")
+}
+record("*", "SPARC:SHT:ICP:DI0_RB") {
+    alias("SPARC:SHT:ICP:RCATLAS01:DI_RB")
+}
+record("*", "SPARC:SHT:ICP:DI0_CNT_RB") {
+    alias("SPARC:SHT:ICP:RCATLAS01:DI_CNT_RB")
+}
+record("*", "SPARC:SHT:ICP:DI1_RB") {
+    alias("SPARC:SHT:ICP:REOSLAS01:DI_RB")
+}
+record("*", "SPARC:SHT:ICP:DI1_CNT_RB") {
+    alias("SPARC:SHT:ICP:REOSLAS01:DI_CNT_RB")
+}
+
+record(bi, "SPARC:SHT:ICP:DI0_RB")
+{
+    field(DESC, "Digital Input")
+    field(DTYP, "asynUInt32Digital")
+    field(INP,  "@asynMask(ICP-ddcgicp12di6do002.lnf.infn.it_DI 0 1)")
+    field(ONAM, "ON")
+    field(ZNAM, "OFF")
+    field(SCAN, "I/O Intr")
+}
+
+record(ai, "SPARC:SHT:ICP:DI0_CNT_RB")
+{
+    field(DESC, "Digital Input")
+    field(DTYP, "asynInt32")
+    field(INP,  "@asyn(ICP-ddcgicp12di6do002.lnf.infn.it_DICNT 0 1000)INT32_LE")
+    field(SCAN, "I/O Intr")
+}
+record(bi, "SPARC:SHT:ICP:DI1_RB")
+{
+    field(DESC, "mega redback")
+    field(DTYP, "asynUInt32Digital")
+    field(INP,  "@asynMask(ICP-ddcgicp12di6do002.lnf.infn.it_DI 1 1)")
+    field(ONAM, "ON")
+    field(ZNAM, "OFF")
+    field(SCAN, "I/O Intr")
+}
+
+record(ai, "SPARC:SHT:ICP:DI1_CNT_RB")
+{
+    field(DESC, "mega redback")
+    field(DTYP, "asynInt32")
+    field(INP,  "@asyn(ICP-ddcgicp12di6do002.lnf.infn.it_DICNT 2 1000)INT32_LE")
+    field(SCAN, "I/O Intr")
+}
