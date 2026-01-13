@@ -113,6 +113,9 @@ RUN ansible.sh psEEI
 COPY ibek-support-infn/maccaferriPS maccaferriPS
 RUN ansible.sh maccaferriPS
 
+COPY ibek-support-infn/danfysik danfysik
+RUN ansible.sh danfysik
+
 # COPY ibek-support-infn/hazemeyer-lnf hazemeyer
 # RUN ansible.sh hazemeyer
 
