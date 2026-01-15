@@ -575,7 +575,7 @@ epicsConfiguration:
           - name: "PeakVariation"
             value: "10"
 
-    - name: "ocem-e642"
+    - name: "ocem-MEA-e642"
       asset: "https://confluence.infn.it/x/nYD8DQ"
       charturl: 'https://github.com/infn-epics/ioc-chart.git'
       iocprefix: "BTF:MAG:OCEME642"
@@ -600,7 +600,37 @@ epicsConfiguration:
           id: 11
           imax: 280
           vmax: 40
-    - name: "ocem-e642-SER15001bis"
+
+    - name: "danfysik-SSER15003"
+      charturl: 'https://github.com/infn-epics/ioc-chart.git'
+      iocprefix: "BTF:MAG:DANFYSIK"
+      autosync: false ## restart automatically on changes
+      devtype: sys8x00
+      devgroup: mag
+      opi: "danfysik/danfysik_sys8x00.bob"
+      template: "danfysik"
+      zones: TM
+      iocparam:
+        - name: "server"
+          value: "192.168.192.40"
+        - name: "port"
+          value: 4005
+      devices:
+        - name: QUATM002
+          id: 10
+          imax: 100
+          vmax: 25
+        - name: QUATM003
+          id: 11
+          imax: 100
+          vmax: 25
+        # - name: DHRTB101
+        #   id: 29
+        #   imax: 100
+        #   vmax: 25
+        
+
+    - name: "ocem-e642-dvl647-SER15001"
       asset: "https://confluence.infn.it/spaces/TESTBEAM/pages/323780659/SoftIOC+DEVIL+Wrapper"
       charturl: 'https://github.com/infn-epics/ioc-chart.git'
       iocprefix: "BTF:MAG:OCEME642"
@@ -614,7 +644,7 @@ epicsConfiguration:
         - name: "server"
           value: "192.168.192.40"
         - name: "port"
-          value: 4013
+          value: 4014
       devices:
         - name: QUATB102
           id: 0
@@ -634,7 +664,7 @@ epicsConfiguration:
           vmax: 25
           
 
-    - name: "ocem-e642-SER18004"
+    - name: "ocem-e642-dvl628-SER18004"
       asset: "https://confluence.infn.it/spaces/TESTBEAM/pages/323780659/SoftIOC+DEVIL+Wrapper"
       charturl: 'https://github.com/infn-epics/ioc-chart.git'
       iocprefix: "BTF:MAG:OCEME642"
@@ -685,7 +715,7 @@ epicsConfiguration:
           vmax: 100
     
 
-    - name: "ocem-e642-SER23020"
+    - name: "ocem-e642-dvl672-23020"
       asset: "https://confluence.infn.it/spaces/TESTBEAM/pages/323780659/SoftIOC+DEVIL+Wrapper"
       charturl: 'https://github.com/infn-epics/ioc-chart.git'
       iocprefix: "BTF:MAG:OCEME642"
@@ -707,7 +737,7 @@ epicsConfiguration:
           vmax: 70
     
           
-    - name: "ocem-e642-SER15004"
+    - name: "ocem-e642-dvl650-SER15004"
       asset: "https://confluence.infn.it/spaces/TESTBEAM/pages/323780659/SoftIOC+DEVIL+Wrapper"
       charturl: 'https://github.com/infn-epics/ioc-chart.git'
       iocprefix: "BTF:MAG:OCEME642"
@@ -727,6 +757,10 @@ epicsConfiguration:
           id: 9
           imax: 100
           vmax: 25
+        - name: QUATT007
+          id: 10
+          imax: 100
+          vmax: 25
   
      
 
@@ -743,51 +777,61 @@ epicsConfiguration:
       devices:
         - name: "QUATB201"
           ip: 192.168.190.151
+          port: 502
           max_curr: 100
           zones:
             - TB
         - name: "QUATB202"
           ip: 192.168.190.152 
+          port: 502
           max_curr: 100
           zones:
             - TB
         - name: "QUATB203"
           ip: 192.168.190.153
+          port: 502
           max_curr: 100
           zones:
             - TB
         - name: "QUATB204"
           ip: 192.168.190.154 
+          port: 502
           max_curr: 100
           zones:
             - TB
         - name: "QUATB205"
           ip: 192.168.190.155 
+          port: 502
           max_curr: 100
           zones:
             - TB
         - name: "QUATB206"
           ip: 192.168.190.156
+          port: 502
           max_curr: 100
           zones:
             - TB
         - name: "DHPTB102"
           ip: 192.168.190.157 
+          port: 502
           max_curr: 100
           zones:
             - TB
         - name: "DHSTB201"
           ip: 192.168.190.158 
+          port: 502
           max_curr: 100
           zones:
             - TB
         - name: "DHSTB202"
           ip: 192.168.190.159
+          port: 502
           max_curr: 100
           zones:
             - TB
         - name: "DHSTB203"
           ip: 192.168.190.160
+          port: 502
           max_curr: 100
           zones:
             - TB
@@ -808,12 +852,16 @@ epicsConfiguration:
         - name: "UFSLL578"
           ip: 192.168.190.106
           rangeI: 10
+          port: 10001
         - name: "UFSLL346"
           ip: 192.168.190.107
           rangeI: 10
+          port: 10001
+
         - name: "UFSLL012"
           ip: 192.168.190.108
           rangeI: 10
+          port: 10001
 
     - name: "easy-linac"
       asset: "https://confluence.infn.it/x/nYD8DQ"
@@ -828,59 +876,72 @@ epicsConfiguration:
       devices:
         - name: "CHHLL023"
           ip: 190.168.190.190
+          port: 10001
           range: 10
           
         - name: "CHHLL024"
           ip: 190.168.190.191
           range: 10
+          port: 10001
           
         - name: "CVVLL001"
           ip: 190.168.190.192
           range: 10
+          port: 10001
           
         - name: "CHHLL001"
           ip: 190.168.190.193
           range: 10
+          port: 10001
           
         - name: "CVVLL002"
           ip: 190.168.190.194
           range: 10
+          port: 10001
           
         - name: "CHHLL002"
           ip: 190.168.190.195
           range: 10
+          port: 10001
           
         - name: "CVVLL003"
           ip: 190.168.190.196
           range: 10
+          port: 10001
           
         - name: "CHHLL003"
           ip: 190.168.190.197
           range: 10
+          port: 10001
           
         - name: "CVVLL004"
           ip: 190.168.190.198
           range: 10
-          
+          port: 10001
+
         - name: "CHHLL004"
           ip: 190.168.190.199
           range: 10
+          port: 10001
           
         - name: "CVVLL005"
           ip: 190.168.190.200
           range: 10
+          port: 10001
           
         - name: "CHHLL005"
           ip:  190.168.190.201
           range: 10
+          port: 10001
 
         - name: "CVVLL006"
           ip: 190.168.190.202
           range: 10
-          
+          port: 10001
         - name: "CHHLL006"
           ip: 190.168.190.203
           range: 10
+          port: 10001
           
 
     - name: "easydriver"
@@ -895,72 +956,86 @@ epicsConfiguration:
       devices:
         - name: "CHHTM001"
           ip: 192.168.191.230
+          port: 10001
           range: 10
           zones: 
             - TM
         - name: "CVVTM001"
           ip: 192.168.191.231
+          port: 10001
           range: 10
           zones: 
             - TM
         - name: "CHHTM002"
           ip: 192.168.191.232
+          port: 10001
           range: 10
           zones: 
             - TM
         - name: "CVVTM002"
           ip: 192.168.191.233
+          port: 10001
           range: 10
           zones: 
             - TM
         - name: "CHHTM003"
           ip: 192.168.191.234
+          port: 10001
           range: 10
           zones: 
             - TM
         - name: "CVVTM003"
           ip: 192.168.191.235
+          port: 10001
           range: 10
           zones: 
             - TM
         - name: "CHHTB001"
           ip: 192.168.191.236
+          port: 10001
           range: 10
           zones:
             - TB1
         - name: "CVVTB001"
           ip: 192.168.191.237
+          port: 10001
           range: 10
           zones:
             - TB1
         - name: "CHHTB002"
           ip: 192.168.191.238
+          port: 10001
           range: 10
           zones:
             - TB1
         - name: "CVVTB002"
           ip: 192.168.191.239
+          port: 10001
           range: 10
           zones:
             - TB1
         - name: "CHHTB101"
           ip: 192.168.191.240
+          port: 10001
           range: 10
           zones:
             - TB1
         - name: "CVVTB101"
           ip:  192.168.191.241
+          port: 10001
           range: 10
           zones:
             - TB1
 
         - name: "CHHTB201"
           ip: 192.168.191.177
+          port: 10001
           range: 10
           zones:
             - TB2
         - name: "CVVTB201"
           ip: 192.168.191.178
+          port: 10001
           range: 10
           zones:
             - TB2
