@@ -66,6 +66,8 @@ epicsConfiguration:
     archiver:
       asset: "Epics PV Archiver"
       charturl: 'https://baltig.infn.it/epics-containers/epics-archiver-chart.git'
+      desc: "EPICS Archiver Appliance for EUAPS"
+      path: "/mgmt/ui/index.html"
       replicaCount: 1
       serviceAccount:
         create: false
@@ -178,7 +180,7 @@ epicsConfiguration:
           url: https://baltig.infn.it/lnf-da-control/sparc-epics-opi.git
           path: .
       pvws:
-        host: sparc-pws.apps.okd-datest.lnf.infn.it
+        host: euaps-pws.k8sda.lnf.infn.it
         port: 80
     
 
@@ -224,38 +226,287 @@ epicsConfiguration:
     
   iocs:
 
-    - name: "pollux-ctrl01"
-      asset: "https://confluence.infn.it/x/JIBnLw"
+    - name: "pollux-chain-fp-01"
+      asset: "" # TODO add when available
       charturl: 'https://baltig.infn.it/epics-containers/ioc-chart.git'
       template: "motor"
       autosync: false ## restart automatically on changes
       devtype: pollux
       devgroup: mot
-      opi: "asyn/motorx_all.bob"
-      iocprefix: "EUAPS:CTRL"
-      iocroot: "FPMMIR"
-      machine: "pluto:pocfewf::fwef-fewfwe--fwwtet"
+      opi: "asyn/motorx.bob" # TODO update when available
+      iocprefix: "EUAPS:CTRL" # TODO check
+      iocroot: "FPRCK1:W:CTR"
       zones: "FP"
       iocparam:
         - name: "server"
-          value: "192.168.190.64"
+          value: 192.168.190.64
         - name: "port"
           value: "4001"
       devices:
-          - name: "HMOT01"
+          - name: "MOT:001"
+            axid: 1
+            dllm: 0
+            dhlm: 12
+            home: 1
+            start: 10
+            velo: 1
+          - name: "MOT:002"
+            axid: 2
+            dllm: 0
+            dhlm: 12
+            home: 1
+            start: 10
+            velo: 1
+          - name: "MOT:003"
+            axid: 3
+            dllm: 0
+            dhlm: 12
+            home: 1
+            start: 10
+            velo: 1
+          - name: "MOT:004"
+            axid: 4
+            dllm: 0
+            dhlm: 12
+            home: 1
+            start: 10
+            velo: 1
+          - name: "MOT:005"
+            axid: 5
+            dllm: 0
+            dhlm: 12
+            home: 1
+            start: 10
+            velo: 1
+          - name: "MOT:006"
+            axid: 6
+            dllm: 0
+            dhlm: 12
+            home: 1
+            start: 10
+            velo: 1
+
+    - name: "pollux-chain-fp-02"
+      asset: "" # TODO add when available
+      charturl: 'https://baltig.infn.it/epics-containers/ioc-chart.git'
+      template: "motor"
+      autosync: false ## restart automatically on changes
+      devtype: pollux
+      devgroup: mot
+      opi: "asyn/motorx.bob" # TODO update when available
+      iocprefix: "EUAPS:CTRL" # TODO check
+      iocroot: "FPRCK1:W:CTR"
+      zones: "FP"
+      iocparam:
+        - name: "server"
+          value: 192.168.190.64
+        - name: "port"
+          value: "4001"
+      devices:
+          - name: "MOT:007"
             axid: 7
-            dllm: -25
-            dhlm: 25
+            dllm: 0
+            dhlm: 12
             home: 1
             start: 10
             velo: 1
-          - name: "VMOT01"
+          - name: "MOT:008"
             axid: 8
-            dllm: -25
-            dhlm: 25
+            dllm: 0
+            dhlm: 12
             home: 1
             start: 10
             velo: 1
+          - name: "MOT:009"
+            axid: 9
+            dllm: 0
+            dhlm: 12
+            home: 1
+            start: 10
+            velo: 1
+          - name: "MOT:010"
+            axid: 10
+            dllm: 0
+            dhlm: 12
+            home: 1
+            start: 10
+            velo: 1      
+
+    - name: "pollux-chain-fi-01"
+      asset: "" # TODO add when available
+      charturl: 'https://baltig.infn.it/epics-containers/ioc-chart.git'
+      template: "motor"
+      autosync: false ## restart automatically on changes
+      devtype: pollux
+      devgroup: mot
+      opi: "asyn/motorx.bob" # TODO update when available
+      iocprefix: "EUAPS:CTRL" # TODO check
+      iocroot: "FIRCK2:W:CTR"
+      zones: "FI"
+      iocparam:
+        - name: "server"
+          value: 192.168.190... # TODO add when available and check port
+        - name: "port"
+          value: "4001"
+      devices:
+          - name: "MOT:001"
+            axid: 1
+            dllm: 0
+            dhlm: 500
+            home: 1
+            start: 10
+            velo: 1
+          - name: "MOT:002"
+            axid: 2
+            dllm: 0
+            dhlm: 1000
+            home: 1
+            start: 10
+            velo: 1
+          - name: "MOT:003"
+            axid: 3
+            dllm: 0
+            dhlm: 24
+            home: 1
+            start: 10
+            velo: 1
+          - name: "MOT:004"
+            axid: 4
+            dllm: 0
+            dhlm: 24
+            home: 1
+            start: 10
+            velo: 1
+          - name: "MOT:005"
+            axid: 5
+            dllm: 0
+            dhlm: 24
+            home: 1
+            start: 10
+            velo: 1
+          - name: "MOT:006"
+            axid: 6
+            dllm: 0
+            dhlm: 24
+            home: 1
+            start: 10
+            velo: 1
+          - name: "MOT:007"
+            axid: 7
+            dllm: 0
+            dhlm: 24
+            home: 1
+            start: 10
+            velo: 1
+          - name: "MOT:008"
+            axid: 8
+            dllm: 0
+            dhlm: 24
+            home: 1
+            start: 10
+            velo: 1          
+
+    - name: "pollux-chain-fi-02"
+      asset: "" # TODO add when available
+      charturl: 'https://baltig.infn.it/epics-containers/ioc-chart.git'
+      template: "motor"
+      autosync: false ## restart automatically on changes
+      devtype: pollux
+      devgroup: mot
+      opi: "asyn/motorx.bob" # TODO update when available
+      iocprefix: "EUAPS:CTRL" # TODO check
+      iocroot: "FIRCK2:W:CTR"
+      zones: "FI"
+      iocparam:
+        - name: "server"
+          value: 192.168.190... # TODO add when available and check port
+        - name: "port"
+          value: "4001"
+      devices:
+          - name: "MOT:009"
+            axid: 1
+            dllm: 0
+            dhlm: 24
+            home: 1
+            start: 10
+            velo: 1
+          - name: "MOT:010"
+            axid: 2
+            dllm: 0
+            dhlm: 24
+            home: 1
+            start: 10
+            velo: 1
+          - name: "MOT:011"
+            axid: 3
+            dllm: 0
+            dhlm: 24
+            home: 1
+            start: 10
+            velo: 1
+          - name: "MOT:012"
+            axid: 4
+            dllm: 0
+            dhlm: 24
+            home: 1
+            start: 10
+            velo: 1
+          - name: "MOT:013"
+            axid: 5
+            dllm: 0
+            dhlm: 24
+            home: 1
+            start: 10
+            velo: 1
+          - name: "MOT:014"
+            axid: 6
+            dllm: 0.151111
+            dhlm: 24
+            home: 1
+            start: 10
+            velo: 1
+
+# # pollux test config
+#     - name: "pollux-ctrl01"
+#       asset: "https://confluence.infn.it/x/JIBnLw"
+#       charturl: 'https://baltig.infn.it/epics-containers/ioc-chart.git'
+#       template: "motor"
+#       autosync: false ## restart automatically on changes
+#       devtype: pollux
+#       devgroup: mot
+#       opi: "asyn/motorx.bob"
+#       iocprefix: "EUAPS:CTRL"
+#       iocroot: "FPMMIR"
+#       machine: "pluto:pocfewf::fwef-fewfwe--fwwtet"
+#       zones: "FP"
+#       iocparam:
+#         - name: "server"
+#           value: "scflameprmoxa001.lnf.infn.it"
+#         - name: "port"
+#           value: "4001"
+#       devices:
+#           - name: "HMOT01"
+#             axid: 7
+#             dllm: -25
+#             dhlm: 25
+#             home: 1
+#             start: 10
+#             velo: 1
+#             poi:
+#             - name: "YAG"
+#               value: 5
+#             - name: "calibration"
+#               value: 10
+#             - name: "mirror"
+#               value: 12
+              
+#           - name: "VMOT01"
+#             axid: 8
+#             dllm: -25
+#             dhlm: 25
+#             home: 1
+#             start: 10
+#             velo: 1
     
     - name: "camerasim"
       asset: "https://servicedesk.infn.it/secure/ObjectSchema.jspa?id=44&typeId=2748&objectId=126655"
