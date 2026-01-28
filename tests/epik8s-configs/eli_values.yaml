@@ -450,7 +450,7 @@ epicsConfiguration:
       charturl: 'https://github.com/infn-epics/ioc-chart.git'     
       devtype: camerasim
       devgroup: cam
-      template: "adcamera"
+      template: "adcamera2"
       pva: true
       enable_ingress: true
       service:   
@@ -509,7 +509,7 @@ epicsConfiguration:
       image: ghcr.io/infn-epics/infn-epics-ioc-runtime
       devtype: camera
       devgroup: cam
-      template:  "adcamera"
+      template:  "adcamera2"
       pva: true
       networks:
         - name: "gigevision-client"
@@ -519,7 +519,7 @@ epicsConfiguration:
       
       iocparam:
         - name: "overlay_enable"
-          value: false
+          value: true
         - name: "stats_enable"
           value: true
         - name: "proc_enable"
@@ -527,7 +527,7 @@ epicsConfiguration:
         - name: "tiff_enable"
           value: true
         - name: "roi_enable"
-          value: false
+          value: true
       devices:
         - name: "SCN01:CAM01"
           id: "10.16.4.21" # Basler-a2A1920-51gmBAS-40458493
@@ -545,7 +545,7 @@ epicsConfiguration:
       image: ghcr.io/infn-epics/infn-epics-ioc-runtime
       devtype: camera
       devgroup: cam
-      template:  "adcamera"
+      template:  "adcamera2"
       pva: true
       networks:
         - name: "gigevision-client"
@@ -585,7 +585,7 @@ epicsConfiguration:
       devtype: camera
       devgroup: cam
       
-      template:  "adcamera"
+      template:  "adcamera2"
       pva: true
       networks:
         - name: "gigevision-client"
@@ -625,7 +625,7 @@ epicsConfiguration:
       devtype: camera
       devgroup: cam
       
-      template:  "adcamera"
+      template:  "adcamera2"
       pva: true
       networks:
         - name: "gigevision-client"
@@ -664,7 +664,7 @@ epicsConfiguration:
       devtype: camera
       devgroup: cam
       
-      template:  "adcamera"
+      template:  "adcamera2"
       pva: true
       networks:
         - name: "gigevision-client"
@@ -702,7 +702,7 @@ epicsConfiguration:
       image: ghcr.io/infn-epics/infn-epics-ioc-runtime
       devtype: camera
       devgroup: cam
-      template:  "adcamera"
+      template:  "adcamera2"
       pva: true
       networks:
         - name: "gigevision-client"
@@ -836,7 +836,7 @@ epicsConfiguration:
       devtype: evr230
       template: "mrf-pci-230"
       devgroup: timing
-      host: "10.16.4.62" ## plelievr002
+      host: "plelievrkey001.int.eli-np.ro" # 10.16.4.62 ROOF
       workdir: "/opt/codac-4.1/apps/elinp-gp04-ioc17/epik8s-rf-delay"
       exec: "start.sh"
       iocbin: "../bin/linux-x86_64/elinp-gp04-ioc17"
@@ -862,7 +862,7 @@ epicsConfiguration:
         opt: "-o credentials=/etc/smbcredentials"
         type: "cifs"
       devices:
-          - name: "EVR-LLRF"
+          - name: "EVR-RFD" ## RFD
             bus: 9
             slot: 10
             func: 0
@@ -920,7 +920,7 @@ epicsConfiguration:
                 value: "62.08"
               - name: "Ena-Sel"
                 value: "Enabled"
-          - name: "EVR-RFD"
+          - name: "EVR-RFM" ## RFM
             bus: 9
             slot: 12
             func: 0
@@ -978,7 +978,7 @@ epicsConfiguration:
                 value: "62.08"
               - name: "Ena-Sel"
                 value: "Enabled"
-          - name: "EVR-RFM"
+          - name: "EVR-RFD" ##
             bus: 9
             slot: 14
             func: 0
