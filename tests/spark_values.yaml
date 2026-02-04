@@ -1254,7 +1254,7 @@ epicsConfiguration:
       charturl: 'https://github.com/infn-epics/ioc-chart.git'
       iocprefix: "SPARC:DIAG:TEK-TEST"
       template: "tektronix"
-      devtype: mso58lp
+      devtype: mso58lp-asyn
       devgroup: diag
       autosync: true ## restart automatically on changes      
       pva: true
@@ -1278,7 +1278,7 @@ epicsConfiguration:
       charturl: 'https://github.com/infn-epics/ioc-chart.git'
       iocprefix: "SPARC:DIAG:TEK-BCM"
       template: "tektronix"
-      devtype: mso58lp
+      devtype: mso58lp-asyn
       devgroup: diag
       autosync: true ## restart automatically on changes      
       pva: true
