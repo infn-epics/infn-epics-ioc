@@ -23,8 +23,7 @@ RUN uv pip install --upgrade -r requirements.txt
 WORKDIR ${SOURCE_FOLDER}/ibek-support-infn
 # COPY ibek-support-infn/_global/ _global
 
-COPY ibek-support-infn/epics-nds/ epics-nds/
-RUN ansible.sh epics-nds
+
 
 COPY ibek-support-infn/asynInterposeMenlo/ asynInterposeMenlo/
 RUN ansible.sh asynInterposeMenlo
