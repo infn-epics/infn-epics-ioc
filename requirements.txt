@@ -3,5 +3,4 @@ jnjrender
 epik8s-tools
 stdio-socket==1.2.0
 p4p
-# to install direct from github during development in a branch
 # git+https://github.com/epics-containers/ibek.git@fix-extract-assets
