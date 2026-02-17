@@ -118,6 +118,9 @@ RUN ansible.sh danfysik
 COPY ibek-support-infn/polyscience polyscience
 RUN ansible.sh polyscience
 
+COPY ibek-support-infn/mps mps
+RUN ansible.sh mps
+
 # COPY ibek-support-infn/hazemeyer-lnf hazemeyer
 # RUN ansible.sh hazemeyer
 
