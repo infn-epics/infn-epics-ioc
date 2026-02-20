@@ -87,9 +87,6 @@ RUN ansible.sh pvxs
 COPY ibek-support/pcas pcas
 RUN ansible.sh pcas
 
-COPY ibek-support-infn/epics-nds epics-nds
-RUN ansible.sh epics-nds
-
 # get the ioc source and build it
 COPY ioc/ ${SOURCE_FOLDER}/ioc
 RUN ansible.sh ioc
