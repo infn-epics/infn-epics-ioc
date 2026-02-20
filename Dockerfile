@@ -57,8 +57,8 @@ RUN apt-get update && \
     ansible.sh psEEI && \
     ansible.sh maccaferriPS && \
     ansible.sh danfysik && \
-    ansible.sh polyscience && \
-    ansible.sh mps
+    ansible.sh polyscience 
+    # && ansible.sh mps
 
 #     ansible.sh technosoft-asyn && 
 
