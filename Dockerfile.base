@@ -90,6 +90,10 @@ RUN ansible.sh pcas
 COPY ibek-support-infn/epics-nds/ epics-nds/
 RUN ansible.sh epics-nds
 
+COPY ibek-support-infn/technosoft/ technosoft/
+RUN ansible.sh technosoft
+
+
 # get the ioc source and build it
 COPY ioc/ ${SOURCE_FOLDER}/ioc
 RUN ansible.sh ioc
