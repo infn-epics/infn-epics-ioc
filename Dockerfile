@@ -21,107 +21,46 @@ RUN uv pip install --upgrade -r requirements.txt
 ##RUN uv pip install --upgrade epik8s-tools
 
 WORKDIR ${SOURCE_FOLDER}/ibek-support-infn
-# COPY ibek-support-infn/_global/ _global
+# Single COPY to keep layer depth under Docker's 127-layer hard limit.
+COPY ibek-support-infn/ ./
 
 
+# Install all support modules in a single layer
+# apt-get update first to avoid stale 404s from the base image cache
+RUN apt-get update && \
+    ansible.sh epics-nds && \
+    ansible.sh technosoft && \
+    ansible.sh asynInterposeMenlo && \
+    ansible.sh menloSyncro && \
+    ansible.sh menloLfc && \
+    ansible.sh menloLac && \
+    ansible.sh AgilentXgs600 && \
+    ansible.sh biltItest && \
+    ansible.sh sigmaPhiStart && \
+    ansible.sh icpdas && \
+    ansible.sh easy-driver-epics && \
+    ansible.sh kima-undulator && \
+    ansible.sh agilentipcmini && \
+    ansible.sh agilent4uhv && \
+    ansible.sh smc && \
+    ansible.sh tpg300_500 && \
+    ansible.sh Tektronix_MSO58LP && \
+    ansible.sh caenelsPS && \
+    ansible.sh ocemPS && \
+    ansible.sh motorMicos && \
+    ansible.sh cagateway && \
+    ansible.sh hazemeyer && \
+    ansible.sh ppt-modulator && \
+    ansible.sh scandinova-scandicat-mod && \
+    ansible.sh ocemE642 && \
+    ansible.sh plc-elinp && \
+    ansible.sh psEEI && \
+    ansible.sh maccaferriPS && \
+    ansible.sh danfysik && \
+    ansible.sh polyscience && \
+    ansible.sh mps
 
-COPY ibek-support-infn/asynInterposeMenlo/ asynInterposeMenlo/
-RUN ansible.sh asynInterposeMenlo
-
-COPY ibek-support-infn/menloSyncro/ menloSyncro/
-RUN ansible.sh menloSyncro
-
-
-COPY ibek-support-infn/menloLfc/ menloLfc/
-RUN ansible.sh menloLfc
-
-COPY ibek-support-infn/menloLac menloLac
-RUN ansible.sh menloLac
-
-COPY ibek-support-infn/AgilentXgs600 AgilentXgs600
-RUN ansible.sh AgilentXgs600
-
-#COPY ibek-support-infn/screen-epics-ioc screen-epics-ioc/
-# RUN ansible.sh screen-epics-ioc
-
-COPY ibek-support-infn/biltItest biltItest/
-RUN ansible.sh biltItest
-
-COPY ibek-support-infn/sigmaPhiStart sigmaPhiStart/
-RUN ansible.sh sigmaPhiStart
-
-COPY ibek-support-infn/icpdas icpdas
-RUN ansible.sh icpdas
-
-COPY ibek-support-infn/easy-driver-epics easy-driver-epics
-RUN ansible.sh easy-driver-epics
-
-COPY ibek-support-infn/kima-undulator kima-undulator
-RUN ansible.sh kima-undulator
-
-COPY ibek-support-infn/agilentipcmini agilentipcmini
-RUN ansible.sh agilentipcmini
-
-COPY ibek-support-infn/agilent4uhv agilent4uhv
-RUN ansible.sh agilent4uhv
-
-
-COPY ibek-support-infn/smc smc
-RUN ansible.sh smc
-
-COPY ibek-support-infn/tpg300_500 tpg300_500
-RUN ansible.sh tpg300_500
-
-COPY ibek-support-infn/Tektronix_MSO58LP/ Tektronix_MSO58LP/
-RUN ansible.sh Tektronix_MSO58LP
-
-COPY ibek-support-infn/caenelsPS caenelsPS/
-RUN ansible.sh caenelsPS
-
-COPY ibek-support-infn/ocemPS ocemPS/
-RUN ansible.sh ocemPS
-
-COPY ibek-support-infn/motorMicos motorMicos/
-RUN ansible.sh motorMicos
-
-COPY ibek-support-infn/cagateway cagateway
-RUN ansible.sh cagateway
-
-COPY ibek-support-infn/hazemeyer hazemeyer
-RUN ansible.sh hazemeyer
-
-COPY ibek-support-infn/ppt-modulator ppt-modulator
-RUN ansible.sh ppt-modulator
-
-COPY ibek-support-infn/scandinova-scandicat-mod scandinova-scandicat-mod
-RUN ansible.sh scandinova-scandicat-mod
-
-COPY ibek-support-infn/ocemE642 ocemE642
-RUN ansible.sh ocemE642
-
-COPY ibek-support-infn/plc-elinp plc-elinp
-RUN ansible.sh plc-elinp
-##
-COPY ibek-support-infn/psEEI psEEI
-RUN ansible.sh psEEI
-
-COPY ibek-support-infn/maccaferriPS maccaferriPS
-RUN ansible.sh maccaferriPS
-
-COPY ibek-support-infn/danfysik danfysik
-RUN ansible.sh danfysik
-
-COPY ibek-support-infn/polyscience polyscience
-RUN ansible.sh polyscience
-
-COPY ibek-support-infn/thorlabsApt thorlabsApt
-RUN ansible.sh thorlabsApt
-
-COPY ibek-support-infn/mps mps
-RUN ansible.sh mps
-
-# COPY ibek-support-infn/hazemeyer-lnf hazemeyer
-# RUN ansible.sh hazemeyer
+#     ansible.sh technosoft-asyn && 
 
 COPY ioc/ ${SOURCE_FOLDER}/ioc
 RUN ansible.sh ioc
@@ -145,7 +84,7 @@ ENV TAGVERSION=${TAGVERSION}
 
 # get the products from the build stage and reduce to runtime assets only
 # RUN ibek ioc extract-runtime-assets /assets ${SOURCE_FOLDER}/ibek*
-RUN ibek ioc extract-runtime-assets /assets /python /epics/support/ibek-templates /epics/support/templates /epics/support/motorTechnosoft
+RUN ibek ioc extract-runtime-assets /assets /python /epics/support/ibek-templates /epics/support/templates /epics/support/motorTechnosoft /epics/support/technosoft-asyn
 # RUN ibek ioc extract-runtime-assets /assets
 
 RUN date --utc +%Y-%m-%dT%H:%M:%SZ > /assets/BUILD_INFO.txt && echo "TAG ${TAGVERSION}" >> /assets/BUILD_INFO.txt
@@ -159,8 +98,8 @@ COPY --from=runtime_prep /assets /
 # install runtime system dependencies, collected from install.sh scripts
 RUN ibek support apt-install curl
 RUN ibek support apt-install-runtime-packages
-RUN curl -o /usr/bin/yq -L https://github.com/mikefarah/yq/releases/download/v4.44.2/yq_linux_amd64 && chmod +x /usr/bin/yq
-
-RUN cp /epics/support/motorTechnosoft/lib/linux-x86_64/*.so /usr/lib/x86_64-linux-gnu/
+RUN curl -o /usr/bin/yq -L https://github.com/mikefarah/yq/releases/download/v4.44.2/yq_linux_amd64 && chmod +x /usr/bin/yq && \
+    cp /epics/support/motorTechnosoft/lib/linux-x86_64/*.so /usr/lib/x86_64-linux-gnu/ && \
+    ( cp /epics/support/technosoft-asyn/tml_lib/lib/*.so /usr/lib/x86_64-linux-gnu/ 2>/dev/null || true )
 RUN chown 1000.1000 -R /epics
 CMD ["/bin/bash", "-c", "${IOC}/start.sh"]
