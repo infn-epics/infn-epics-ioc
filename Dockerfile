@@ -57,8 +57,11 @@ RUN apt-get update && \
     ansible.sh danfysik && \
     ansible.sh polyscience && \
     ansible.sh mps
+    
+## under test
 
-#     ansible.sh technosoft-asyn && 
+## RUN ansible.sh mps && \
+##    ansible.sh technosoft-asyn 
 
 COPY ioc/ ${SOURCE_FOLDER}/ioc
 RUN ansible.sh ioc
