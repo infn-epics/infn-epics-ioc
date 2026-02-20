@@ -117,6 +117,12 @@ RUN ansible.sh polyscience
 COPY ibek-support-infn/thorlabsApt thorlabsApt
 RUN ansible.sh thorlabsApt
 
+COPY ibek-support-infn/mps mps
+RUN ansible.sh mps
+
+# COPY ibek-support-infn/hazemeyer-lnf hazemeyer
+# RUN ansible.sh hazemeyer
+
 COPY ioc/ ${SOURCE_FOLDER}/ioc
 RUN ansible.sh ioc
 
