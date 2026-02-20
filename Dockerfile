@@ -69,10 +69,6 @@ RUN ansible.sh agilent4uhv
 COPY ibek-support-infn/smc smc
 RUN ansible.sh smc
 
-COPY ibek-support-infn/technosoft/ technosoft/
-RUN ansible.sh technosoft
-
-
 COPY ibek-support-infn/tpg300_500 tpg300_500
 RUN ansible.sh tpg300_500
 
@@ -117,6 +113,9 @@ RUN ansible.sh danfysik
 
 COPY ibek-support-infn/polyscience polyscience
 RUN ansible.sh polyscience
+
+COPY ibek-support-infn/thorlabsApt thorlabsApt
+RUN ansible.sh thorlabsApt
 
 COPY ibek-support-infn/mps mps
 RUN ansible.sh mps
