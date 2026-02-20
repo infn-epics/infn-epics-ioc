@@ -23,12 +23,10 @@ RUN uv pip install --upgrade -r requirements.txt
 WORKDIR ${SOURCE_FOLDER}/ibek-support-infn
 # Single COPY to keep layer depth under Docker's 127-layer hard limit.
 COPY ibek-support-infn/ ./
-COPY ibek-support/ ./
 
 # Install all support modules in a single layer
 # apt-get update first to avoid stale 404s from the base image cache
 RUN apt-get update && \
-    ansible.sh epics-nds && \
     ansible.sh technosoft && \
     ansible.sh asynInterposeMenlo && \
     ansible.sh menloSyncro && \
