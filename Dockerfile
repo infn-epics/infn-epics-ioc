@@ -114,8 +114,8 @@ RUN ansible.sh danfysik
 COPY ibek-support-infn/polyscience polyscience
 RUN ansible.sh polyscience
 
-COPY ibek-support-infn/thorlabsApt thorlabsApt
-RUN ansible.sh thorlabsApt
+# COPY ibek-support-infn/thorlabsApt thorlabsApt
+# RUN ansible.sh thorlabsApt
 
 COPY ibek-support-infn/mps mps
 RUN ansible.sh mps
