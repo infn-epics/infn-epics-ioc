@@ -91,6 +91,30 @@ RUN ansible.sh pcas
 COPY ioc/ ${SOURCE_FOLDER}/ioc
 RUN ansible.sh ioc
 
+WORKDIR ${SOURCE_FOLDER}/ibek-support-infn
+# Single COPY to keep layer depth under Docker's 127-layer hard limit.
+COPY ibek-support-infn/ ./
+
+RUN ansible.sh AgilentXgs600 && \
+    ansible.sh biltItest && \
+    ansible.sh sigmaPhiStart && \
+    ansible.sh icpdas && \
+    ansible.sh easy-driver-epics && \
+    ansible.sh agilentipcmini && \
+    ansible.sh agilent4uhv && \
+    ansible.sh smc && \
+    ansible.sh tpg300_500 && \
+    ansible.sh Tektronix_MSO58LP && \
+    ansible.sh caenelsPS && \
+    ansible.sh motorMicos && \
+    ansible.sh cagateway && \
+    ansible.sh hazemeyer && \
+    ansible.sh ppt-modulator && \
+    ansible.sh scandinova-scandicat-mod && \
+    ansible.sh polyscience && \
+    ansible.sh plc-elinp 
+
+
 EXPOSE 5064 5065
 
 

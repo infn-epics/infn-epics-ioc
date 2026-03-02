@@ -28,32 +28,30 @@ COPY ibek-support-infn/ ./
 # apt-get update first to avoid stale 404s from the base image cache
 RUN apt-get update && \
     ansible.sh epics-nds && \
-    ansible.sh technosoft && \
-    ansible.sh asynInterposeMenlo && \
-    ansible.sh AgilentXgs600 && \
-    ansible.sh biltItest && \
-    ansible.sh sigmaPhiStart && \
-    ansible.sh icpdas && \
-    ansible.sh easy-driver-epics && \
-    ansible.sh kima-undulator && \
-    ansible.sh agilentipcmini && \
-    ansible.sh agilent4uhv && \
-    ansible.sh smc && \
-    ansible.sh tpg300_500 && \
-    ansible.sh Tektronix_MSO58LP && \
-    ansible.sh caenelsPS && \
-    ansible.sh motorMicos && \
-    ansible.sh cagateway && \
-    ansible.sh hazemeyer && \
-    ansible.sh ppt-modulator && \
-    ansible.sh scandinova-scandicat-mod && \
-    ansible.sh polyscience && \
-    ansible.sh plc-elinp 
+    ansible.sh technosoft
+#     ansible.sh AgilentXgs600 && \
+#     ansible.sh biltItest && \
+#     ansible.sh sigmaPhiStart && \
+#     ansible.sh icpdas && \
+#     ansible.sh easy-driver-epics && \
+#     ansible.sh kima-undulator && \
+#     ansible.sh agilentipcmini && \
+#     ansible.sh agilent4uhv && \
+#     ansible.sh smc && \
+#     ansible.sh tpg300_500 && \
+#     ansible.sh Tektronix_MSO58LP && \
+#     ansible.sh caenelsPS && \
+#     ansible.sh motorMicos && \
+#     ansible.sh cagateway && \
+#     ansible.sh hazemeyer && \
+#     ansible.sh ppt-modulator && \
+#     ansible.sh scandinova-scandicat-mod && \
+#     ansible.sh polyscience && \
+#     ansible.sh plc-elinp 
 
-RUN ansible.sh ocemPS && \
-    ansible.sh menloSyncro && \
-    ansible.sh menloLfc && \
-    ansible.sh menloLac && \
+RUN ansible.sh kima-undulator && \
+    ansible.sh ocemPS && \
+    ansible.sh menlo && \
     ansible.sh psEEI && \
     ansible.sh maccaferriPS && \
     ansible.sh ocemE642 && \
