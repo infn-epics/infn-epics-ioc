@@ -211,18 +211,21 @@ epicsConfiguration:
     
 
     olog: 
+      name: "olog"
       loglevel: DEBUG
-      charturl: https://baltig.infn.it/epics-containers/phoebus-services-chart.git
-      
+      charturl: https://github.com/infn-epics/phoebus-services-chart.git
+      ingress:
+        enabled: true
+        className: nginx
+        annotations:
+          nginx.ingress.kubernetes.io/proxy-body-size: "50m"
       phoebusservice: "olog"
-      auto_security: true
       enable_ingress: true
-      secure: true
       mongodb: "sparc-ologAttachments"
-      serviceAccountName: ""
-      autosync: false ## restart automatically on changes
+      disable: false ##      
+      targetRevision: "main"
       service:
-        loglevel: "INFO"
+        loglevel: "DEBUG"
       cors:
         origins: "https://sparc-webolog.k8sda.lnf.infn.it"
       user: epics
@@ -239,7 +242,6 @@ epicsConfiguration:
         url: "ldap://ds.infn.it"
         base:
           dn: "ou=People,dc=infn,dc=it"
-      usegateway: true
 
     docs:
       name: "docs"
@@ -262,15 +264,12 @@ epicsConfiguration:
     webolog:
       name: "webolog"
       image:
-        repository: "ghcr.io/infn-epics/phoebus-olog-web-client"
+        repository: "ghcr.io/infn-epics/phoebus-olog-web-client-node-server"
         tag: "latest"
         pullPolicy: "Always"
       charturl: https://baltig.infn.it/epics-containers/generic-application-chart.git
       enable_ingress: true
       disable: false ##
-      secure: true
-      service:
-        port: 3000
       env:
         - name: VITE_APP_LEVEL_VALUES
           value: "[\"Urgent\",\"Suggestion\",\"Info\",\"Request\",\"Problem\"]"
@@ -279,33 +278,56 @@ epicsConfiguration:
         - name: VITE_APP_BASE_URL
           value: "https://sparc-olog.k8sda.lnf.infn.it/Olog"
         - name: VITE_REACT_APP_USE_KEYCLOAK
-          value: "true"
-        # - name: VITE_AUTH_CLIENT_ID
-        #   value: camunda
-        # - name: VITE_AUTH_ENDPOINT
-        #   value: "https://idp-test.app.infn.it/auth/realms/aai/protocol/openid-connect/auth"
-        # - name: VITE_AUTH_ENDPOINT_LOGOUT
-        #   value: "https://idp-test.app.infn.it/auth/realms/aai/protocol/openid-connect/logout"
-        # - name: VITE_AUTH_ENDPOINT_TOKEN
-        #   value: "https://idp-test.app.infn.it/auth/realms/aai/protocol/openid-connect/token"
-        # - name: VITE_AUTH_ENDPOINT_REDIRECT_URI
-        #   value: "http://btf-webolog.apps.okd-datest.lnf.infn.it:3000/"
-        # - name: VITE_AUTH_SCOPE
-        #   value: openid
+          value: true
+        - name: VITE_AUTH_CLIENT_ID
+          value: camunda
+        - name: VITE_AUTH_ENDPOINT
+          value: "https://idp-test.app.infn.it/auth/realms/aai/protocol/openid-connect/auth"
+        - name: VITE_AUTH_ENDPOINT_LOGOUT
+          value: "https://idp-test.app.infn.it/auth/realms/aai/protocol/openid-connect/logout"
+        - name: VITE_AUTH_ENDPOINT_TOKEN
+          value: "https://idp-test.app.infn.it/auth/realms/aai/protocol/openid-connect/token"
+        - name: VITE_AUTH_ENDPOINT_REDIRECT_URI
+          value: "https://sparc-webolog.k8sda.lnf.infn.it"
+        - name: VITE_AUTH_SCOPE
+          value: openid
+
       exec: |
-        echo "VITE_APP_BASE_URL=$(VITE_APP_BASE_URL)" > .env
-        echo "VITE_APP_LOGBOOK_NAME=INFN SPARC Logbook" >> .env
-        echo "VITE_AUTH_CLIENT_ID=camunda" >> .env
-        echo "VITE_AUTH_ENDPOINT=https://idp-test.app.infn.it/auth/realms/aai/protocol/openid-connect/auth" >> .env
-        echo "VITE_AUTH_ENDPOINT_LOGOUT=https://idp-test.app.infn.it/auth/realms/aai/protocol/openid-connect/logout" >> .env
-        echo "VITE_AUTH_ENDPOINT_TOKEN=https://idp-test.app.infn.it/auth/realms/aai/protocol/openid-connect/token" >> .env
-        echo "VITE_AUTH_ENDPOINT_REDIRECT_URI=https://sparc-webolog.k8sda.lnf.infn.it" >> .env
-        echo "VITE_AUTH_SCOPE=openid" >> .env
-        echo "VITE_APP_OAUTH2_ENABLED=true" >> .env
-        cat .env
+        rm -rf .package-lock.json .env .env.production .env.local node_modules env* build
+        echo "=== Creating .env.production file ==="
+        cat > .env.production <<'ENVEOF'
+        VITE_APP_BASE_URL=https://sparc-olog.k8sda.lnf.infn.it/Olog
+        VITE_APP_LOGBOOK_NAME=INFN SPARC Logbook
+        VITE_APP_AUTH_CLIENT_ID=camunda
+        VITE_APP_AUTH_ENDPOINT=https://idp-test.app.infn.it/auth/realms/aai/protocol/openid-connect/auth
+        VITE_APP_AUTH_ENDPOINT_LOGOUT=https://idp-test.app.infn.it/auth/realms/aai/protocol/openid-connect/logout
+        VITE_APP_AUTH_ENDPOINT_TOKEN=https://idp-test.app.infn.it/auth/realms/aai/protocol/openid-connect/token
+        VITE_APP_AUTH_ENDPOINT_REDIRECT_URI=https://sparc-webolog.k8sda.lnf.infn.it
+        VITE_APP_AUTH_SCOPE=openid
+        VITE_APP_OAUTH2_ENABLED=true
+        VITE_APP_LEVEL_VALUES=["Urgent","Suggestion","Info","Request","Problem"]
+        VITE_APP_DEFAULT_LEVEL=Info
+        VITE_APP_WEBSOCKET_BASE_URL=wss://sparc-olog.k8sda.lnf.infn.it/Olog/web-socket
+        ENVEOF
+        echo "=== .env.production contents ==="
+        cat .env.production
         npm ci
-        npm run build --force
+        npm run build
+        echo "=== Verifying build (should NOT find localhost:3000) ==="
+        grep -r "localhost:3000" build/ && echo "ERROR: localhost:3000 still in build!" || echo "OK: No localhost:3000 found"
+        grep -r "sparc-webolog" build/ | head -3
         serve -l 3000 -s build
+
+      securityContext:
+            runAsUser: 1000
+            runAsGroup: 1000
+      service:
+        ports:
+          - name: webolog
+            port: 80
+            targetport: 3000
+            targetname: webolog
+            protocol: TCP
     
      
     saveandrestore: 
@@ -632,39 +654,39 @@ epicsConfiguration:
         - name: "GUNSIP01"
           prefix: "SPARC:VAC:GUNVPC:"
           suffix: ":PRES_RB"
-          tsh: "1E-8"
+          tsh: "3E-7"
         - name: "GUNSIP02"
           prefix: "SPARC:VAC:GUNVPC:"
           suffix: ":PRES_RB"
-          tsh: "1E-7"
+          tsh: "3E-7"
         - name: "GUNVGA01"
           prefix: "SPARC:VAC:GUNVGC:"
           suffix: ":PRES_RB"
-          tsh: "1E-8"
-        - name: "KLY1SIP1"
+          tsh: "2E-7"
+        - name: "KLYSIP1"
           prefix: "SPARC:VAC:KLY12VPC:"
           suffix: ":PRES_RB"
-          tsh: "1E-8"
+          tsh: "2E-7"
         - name: "W1DSIP01"
           prefix: "SPARC:VAC:KLY1VPC:"
           suffix: ":PRES_RB"
-          tsh: "1E-8"
+          tsh: "2E-7"
         - name: "W1GSIP01"
           prefix: "SPARC:VAC:KLY1VPC:"
           suffix: ":PRES_RB"
-          tsh: "1E-8"
+          tsh: "2E-7"
         - name: "W1KSIP01"
           prefix: "SPARC:VAC:KLY12VPC:"
           suffix: ":PRES_RB"
-          tsh: "1E-8"
+          tsh: "2E-7"
         - name: "W1KSIP02"
           prefix: "SPARC:VAC:KLY12VPC:"
           suffix: ":PRES_RB"
-          tsh: "1E-8"
+          tsh: "2E-7"
         - name: "W1KSIP03"
           prefix: "SPARC:VAC:KLY1VPC:"
           suffix: ":PRES_RB"
-          tsh: "1E-8"
+          tsh: "2E-7"
       iocparam:
         - name: "llrf_prefix"
           value: "SPARC:LLRF1"
@@ -673,9 +695,17 @@ epicsConfiguration:
         - name: "init_intlk_hyst"
           value: "0.95"
         - name: "init_raise_wait"
-          value: "5"
+          value: "1"
         - name: "init_raise_step"
           value: "50"
+        - name: "init_source_sel"
+          value: "0"
+        - name: "init_mask_percent"
+          value: "20"
+        - name: "init_offset_curs_us"
+          value: "2.664"
+        - name: "init_duration_curs_us"
+          value: "0.04"
       devtype: softioc
       devgroup: rf
       start: "start.sh"
@@ -734,9 +764,17 @@ epicsConfiguration:
         - name: "init_intlk_hyst"
           value: "0.95"
         - name: "init_raise_wait"
-          value: "5"
+          value: "1"
         - name: "init_raise_step"
           value: "50"
+        - name: "init_source_sel"
+          value: "0"
+        - name: "init_mask_percent"
+          value: "20"
+        - name: "init_offset_curs_us"
+          value: "2.664"
+        - name: "init_duration_curs_us"
+          value: "0.04"
       devtype: softioc
       devgroup: rf
       start: "start.sh"
@@ -807,9 +845,17 @@ epicsConfiguration:
         - name: "init_intlk_hyst"
           value: "0.95"
         - name: "init_raise_wait"
-          value: "5"
+          value: "1"
         - name: "init_raise_step"
           value: "50"
+        - name: "init_source_sel"
+          value: "0"
+        - name: "init_mask_percent"
+          value: "20"
+        - name: "init_offset_curs_us"
+          value: "2.664"
+        - name: "init_duration_curs_us"
+          value: "0.04"
       devtype: softioc
       devgroup: rf
       start: "start.sh"
@@ -1064,260 +1110,260 @@ epicsConfiguration:
         - name: "ENV:ENV_ADCSP_THRESHOLD_SP"
           value: "500"
 
-#    - name: "utlbpm01"
-#      pva: false
-#      asset: "https://confluence.infn.it/x/doKBBg"
-#      charturl: 'https://github.com/infn-epics/ioc-chart.git'
-#      template: "libera-sppp"
-#      devtype: bpm
-#      devgroup: diag
-#      iocprefix: "UTLBPM01"
-#      host: "bdsparcutlbpm001.lnf.infn.it"
-#      ssh_options: "-o KexAlgorithms=diffie-hellman-group1-sha1 -o HostKeyAlgorithms=ssh-rsa -o PubkeyAcceptedKeyTypes=+ssh-rsa"
-#      scpoptions: "-O"
-#      workdir: "/opt/sparc-template-sppp"
-#      exec: "start.sh"
-#      autosync: true ## restart automatically on changes
-#      initcmd: "mount -o remount,rw /"
-#      iocinit:
-#        - name: "ENV:ENV_KX_SP"
-#          value: "10000000"
-#        - name: "ENV:ENV_KY_SP"
-#          value: "10000000"
-#        - name: "ENV:ENV_KA_SP"
-#          value: "10000000"
-#        - name: "ENV:ENV_KB_SP"
-#          value: "10000000"
-#        - name: "ENV:ENV_KC_SP"
-#          value: "10000000"
-#        - name: "ENV:ENV_KD_SP"
-#          value: "10000000"
-#        - name: "ENV:ENV_SUM_SP"
-#          value: "10000000"
-#        - name: "ENV:ENV_ADCSP_THRESHOLD_SP"
-#          value: "500"
-#
-#    - name: "plxbpm01"
-#      pva: false
-#      asset: "https://confluence.infn.it/x/doKBBg"
-#      charturl: 'https://github.com/infn-epics/ioc-chart.git'
-#      template: "libera-sppp"
-#      devtype: bpm
-#      devgroup: diag
-#      iocprefix: "PLXBPM01"
-#      host: "bdsparcplxbpm001.lnf.infn.it"
-#      ssh_options: "-o KexAlgorithms=diffie-hellman-group1-sha1 -o HostKeyAlgorithms=ssh-rsa -o PubkeyAcceptedKeyTypes=+ssh-rsa"
-#      scpoptions: "-O"
-#      workdir: "/opt/sparc-template-sppp"
-#      exec: "start.sh"
-#      autosync: true ## restart automatically on changes
-#      initcmd: "mount -o remount,rw /"
-#      iocinit:
-#        - name: "ENV:ENV_KX_SP"
-#          value: "10000000"
-#        - name: "ENV:ENV_KY_SP"
-#          value: "10000000"
-#        - name: "ENV:ENV_KA_SP"
-#          value: "10000000"
-#        - name: "ENV:ENV_KB_SP"
-#          value: "10000000"
-#        - name: "ENV:ENV_KC_SP"
-#          value: "10000000"
-#        - name: "ENV:ENV_KD_SP"
-#          value: "10000000"
-#        - name: "ENV:ENV_SUM_SP"
-#          value: "10000000"
-#        - name: "ENV:ENV_ADCSP_THRESHOLD_SP"
-#          value: "500"
-#
-#    - name: "cplxbpm02"
-#      pva: false
-#      asset: "https://confluence.infn.it/x/doKBBg"
-#      charturl: 'https://github.com/infn-epics/ioc-chart.git'
-#      template: "libera-sppp"
-#      iocprefix: "PLXBPM02"
-#      devtype: bpm
-#      devgroup: diag
-#      host: "bdsparcplxbpm002.lnf.infn.it"
-#      ssh_options: "-o KexAlgorithms=diffie-hellman-group1-sha1 -o HostKeyAlgorithms=ssh-rsa -o PubkeyAcceptedKeyTypes=+ssh-rsa"
-#      scpoptions: "-O"
-#      workdir: "/opt/sparc-template-sppp"
-#      exec: "start.sh"
-#      autosync: true ## restart automatically on changes
-#      initcmd: "mount -o remount,rw /"
-#      iocinit:
-#        - name: "ENV:ENV_KX_SP"
-#          value: "10000000"
-#        - name: "ENV:ENV_KY_SP"
-#          value: "10000000"
-#        - name: "ENV:ENV_KA_SP"
-#          value: "10000000"
-#        - name: "ENV:ENV_KB_SP"
-#          value: "10000000"
-#        - name: "ENV:ENV_KC_SP"
-#          value: "10000000"
-#        - name: "ENV:ENV_KD_SP"
-#          value: "10000000"
-#        - name: "ENV:ENV_SUM_SP"
-#          value: "10000000"
-#        - name: "ENV:ENV_ADCSP_THRESHOLD_SP"
-#          value: "500"
-#
-#    - name: "plxbpm03"
-#      pva: false
-#      asset: "https://confluence.infn.it/x/doKBBg"
-#      charturl: 'https://github.com/infn-epics/ioc-chart.git'
-#      template: "libera-sppp"
-#      iocprefix: "PLXBPM03"
-#      devtype: bpm
-#      devgroup: diag
-#      host: "bdsparcplxbpm003.lnf.infn.it"
-#      ssh_options: "-o KexAlgorithms=diffie-hellman-group1-sha1 -o HostKeyAlgorithms=ssh-rsa -o PubkeyAcceptedKeyTypes=+ssh-rsa"
-#      scpoptions: "-O"
-#      workdir: "/opt/sparc-template-sppp"
-#      exec: "start.sh"
-#      autosync: true ## restart automatically on changes
-#      initcmd: "mount -o remount,rw /"
-#      iocinit:
-#        - name: "ENV:ENV_KX_SP"
-#          value: "10000000"
-#        - name: "ENV:ENV_KY_SP"
-#          value: "10000000"
-#        - name: "ENV:ENV_KA_SP"
-#          value: "10000000"
-#        - name: "ENV:ENV_KB_SP"
-#          value: "10000000"
-#        - name: "ENV:ENV_KC_SP"
-#          value: "10000000"
-#        - name: "ENV:ENV_KD_SP"
-#          value: "10000000"
-#        - name: "ENV:ENV_SUM_SP"
-#          value: "10000000"
-#        - name: "ENV:ENV_ADCSP_THRESHOLD_SP"
-#          value: "500"
-#
-#    - name: "plxbpm04"
-#      pva: false
-#      asset: "https://confluence.infn.it/x/doKBBg"
-#      charturl: 'https://github.com/infn-epics/ioc-chart.git'
-#      template: "libera-sppp"
-#      iocprefix: "PLXBPM04"
-#      devtype: bpm
-#      devgroup: diag
-#      host: "bdsparcplxbpm004.lnf.infn.it"
-#      ssh_options: "-o KexAlgorithms=diffie-hellman-group1-sha1 -o HostKeyAlgorithms=ssh-rsa -o PubkeyAcceptedKeyTypes=+ssh-rsa"
-#      scpoptions: "-O"
-#      workdir: "/opt/sparc-template-sppp"
-#      exec: "start.sh"
-#      autosync: true ## restart automatically on changes
-#      initcmd: "mount -o remount,rw /"
-#      iocinit:
-#        - name: "ENV:ENV_KX_SP"
-#          value: "10000000"
-#        - name: "ENV:ENV_KY_SP"
-#          value: "10000000"
-#        - name: "ENV:ENV_KA_SP"
-#          value: "10000000"
-#        - name: "ENV:ENV_KB_SP"
-#          value: "10000000"
-#        - name: "ENV:ENV_KC_SP"
-#          value: "10000000"
-#        - name: "ENV:ENV_KD_SP"
-#          value: "10000000"
-#        - name: "ENV:ENV_SUM_SP"
-#          value: "10000000"
-#        - name: "ENV:ENV_ADCSP_THRESHOLD_SP"
-#          value: "500"
-#
-#    - name: "plxbpm05"
-#      pva: false
-#      asset: "https://confluence.infn.it/x/doKBBg"
-#      charturl: 'https://github.com/infn-epics/ioc-chart.git'
-#      template: "libera-sppp"
-#      iocprefix: "PLXBPM05"
-#      devtype: bpm
-#      devgroup: diag
-#      host: "bdsparcplxbpm005.lnf.infn.it"
-#      ssh_options: "-o KexAlgorithms=diffie-hellman-group1-sha1 -o HostKeyAlgorithms=ssh-rsa -o PubkeyAcceptedKeyTypes=+ssh-rsa"
-#      scpoptions: "-O"
-#      workdir: "/opt/sparc-template-sppp"
-#      exec: "start.sh"
-#      autosync: true ## restart automatically on changes
-#      initcmd: "mount -o remount,rw /"
-#      iocinit:
-#        - name: "ENV:ENV_KX_SP"
-#          value: "10000000"
-#        - name: "ENV:ENV_KY_SP"
-#          value: "10000000"
-#        - name: "ENV:ENV_KA_SP"
-#          value: "10000000"
-#        - name: "ENV:ENV_KB_SP"
-#          value: "10000000"
-#        - name: "ENV:ENV_KC_SP"
-#          value: "10000000"
-#        - name: "ENV:ENV_KD_SP"
-#          value: "10000000"
-#        - name: "ENV:ENV_SUM_SP"
-#          value: "10000000"
-#        - name: "ENV:ENV_ADCSP_THRESHOLD_SP"
-#          value: "500"
-#
-#    - name: "plxbpm06"
-#      pva: false
-#      asset: "https://confluence.infn.it/x/doKBBg"
-#      charturl: 'https://github.com/infn-epics/ioc-chart.git'
-#      template: "libera-sppp"
-#      iocprefix: "PLXBPM06"
-#      devtype: bpm
-#      devgroup: diag
-#      host: "bdsparcplxbpm006.lnf.infn.it"
-#      ssh_options: "-o KexAlgorithms=diffie-hellman-group1-sha1 -o HostKeyAlgorithms=ssh-rsa -o PubkeyAcceptedKeyTypes=+ssh-rsa"
-#      scpoptions: "-O"
-#      workdir: "/opt/sparc-template-sppp"
-#      exec: "start.sh"
-#      autosync: true ## restart automatically on changes
-#      initcmd: "mount -o remount,rw /"
-#      iocinit:
-#        - name: "ENV:ENV_KX_SP"
-#          value: "10000000"
-#        - name: "ENV:ENV_KY_SP"
-#          value: "10000000"
-#        - name: "ENV:ENV_KA_SP"
-#          value: "10000000"
-#        - name: "ENV:ENV_KB_SP"
-#          value: "10000000"
-#        - name: "ENV:ENV_KC_SP"
-#          value: "10000000"
-#        - name: "ENV:ENV_KD_SP"
-#          value: "10000000"
-#        - name: "ENV:ENV_SUM_SP"
-#          value: "10000000"
-#        - name: "ENV:ENV_ADCSP_THRESHOLD_SP"
-#          value: "500" 
-#
-#    - name: "plxbpm07"
-#      asset: "https://confluence.infn.it/x/doKBBg"
-#      charturl: 'https://github.com/infn-epics/ioc-chart.git' 
-#      template: "libera-spe"
-#      devtype: bpm
-#      devgroup: diag
-#      iocprefix: "PLXSPE"
-#      pva: false
-#      devices:
-#        - name: "PLXBPM07"
-#          channel: 3
-#        - name: "PLXBPM08"
-#          channel: 4
-#        - name: "PLXBPM09"
-#          channel: 5
-#        - name: "PLXBPM10"
-#          channel: 6  
-#      host: "bdsparcplxbpm007.lnf.infn.it"
-#      ssh_options: "-o PubkeyAcceptedKeyTypes=+ssh-rsa"
-#      workdir: "/opt/sparc-template-sppp"
-#      scpoptions: "-O"
-#      exec: "start.sh"
-#      autosync: true ## restart automatically on changes
+    - name: "utlbpm01"
+      pva: false
+      asset: "https://confluence.infn.it/x/doKBBg"
+      charturl: 'https://github.com/infn-epics/ioc-chart.git'
+      template: "libera-sppp"
+      devtype: bpm
+      devgroup: diag
+      iocprefix: "UTLBPM01"
+      host: "bdsparcutlbpm001.lnf.infn.it"
+      ssh_options: "-o KexAlgorithms=diffie-hellman-group1-sha1 -o HostKeyAlgorithms=ssh-rsa -o PubkeyAcceptedKeyTypes=+ssh-rsa"
+      scpoptions: "-O"
+      workdir: "/opt/sparc-template-sppp"
+      exec: "start.sh"
+      autosync: true ## restart automatically on changes
+      initcmd: "mount -o remount,rw /"
+      iocinit:
+        - name: "ENV:ENV_KX_SP"
+          value: "10000000"
+        - name: "ENV:ENV_KY_SP"
+          value: "10000000"
+        - name: "ENV:ENV_KA_SP"
+          value: "10000000"
+        - name: "ENV:ENV_KB_SP"
+          value: "10000000"
+        - name: "ENV:ENV_KC_SP"
+          value: "10000000"
+        - name: "ENV:ENV_KD_SP"
+          value: "10000000"
+        - name: "ENV:ENV_SUM_SP"
+          value: "10000000"
+        - name: "ENV:ENV_ADCSP_THRESHOLD_SP"
+          value: "500"
+
+    - name: "plxbpm01"
+      pva: false
+      asset: "https://confluence.infn.it/x/doKBBg"
+      charturl: 'https://github.com/infn-epics/ioc-chart.git'
+      template: "libera-sppp"
+      devtype: bpm
+      devgroup: diag
+      iocprefix: "PLXBPM01"
+      host: "bdsparcplxbpm001.lnf.infn.it"
+      ssh_options: "-o KexAlgorithms=diffie-hellman-group1-sha1 -o HostKeyAlgorithms=ssh-rsa -o PubkeyAcceptedKeyTypes=+ssh-rsa"
+      scpoptions: "-O"
+      workdir: "/opt/sparc-template-sppp"
+      exec: "start.sh"
+      autosync: true ## restart automatically on changes
+      initcmd: "mount -o remount,rw /"
+      iocinit:
+        - name: "ENV:ENV_KX_SP"
+          value: "10000000"
+        - name: "ENV:ENV_KY_SP"
+          value: "10000000"
+        - name: "ENV:ENV_KA_SP"
+          value: "10000000"
+        - name: "ENV:ENV_KB_SP"
+          value: "10000000"
+        - name: "ENV:ENV_KC_SP"
+          value: "10000000"
+        - name: "ENV:ENV_KD_SP"
+          value: "10000000"
+        - name: "ENV:ENV_SUM_SP"
+          value: "10000000"
+        - name: "ENV:ENV_ADCSP_THRESHOLD_SP"
+          value: "500"
+
+    - name: "cplxbpm02"
+      pva: false
+      asset: "https://confluence.infn.it/x/doKBBg"
+      charturl: 'https://github.com/infn-epics/ioc-chart.git'
+      template: "libera-sppp"
+      iocprefix: "PLXBPM02"
+      devtype: bpm
+      devgroup: diag
+      host: "bdsparcplxbpm002.lnf.infn.it"
+      ssh_options: "-o KexAlgorithms=diffie-hellman-group1-sha1 -o HostKeyAlgorithms=ssh-rsa -o PubkeyAcceptedKeyTypes=+ssh-rsa"
+      scpoptions: "-O"
+      workdir: "/opt/sparc-template-sppp"
+      exec: "start.sh"
+      autosync: true ## restart automatically on changes
+      initcmd: "mount -o remount,rw /"
+      iocinit:
+        - name: "ENV:ENV_KX_SP"
+          value: "10000000"
+        - name: "ENV:ENV_KY_SP"
+          value: "10000000"
+        - name: "ENV:ENV_KA_SP"
+          value: "10000000"
+        - name: "ENV:ENV_KB_SP"
+          value: "10000000"
+        - name: "ENV:ENV_KC_SP"
+          value: "10000000"
+        - name: "ENV:ENV_KD_SP"
+          value: "10000000"
+        - name: "ENV:ENV_SUM_SP"
+          value: "10000000"
+        - name: "ENV:ENV_ADCSP_THRESHOLD_SP"
+          value: "500"
+
+    - name: "bpmsbn04"
+      pva: false
+      asset: "https://confluence.infn.it/x/doKBBg"
+      charturl: 'https://github.com/infn-epics/ioc-chart.git'
+      template: "libera-sppp"
+      iocprefix: "SBNBPM04"
+      devtype: bpm
+      devgroup: diag
+      host: "bdsparcplxbpm003.lnf.infn.it"
+      ssh_options: "-o KexAlgorithms=diffie-hellman-group1-sha1 -o HostKeyAlgorithms=ssh-rsa -o PubkeyAcceptedKeyTypes=+ssh-rsa"
+      scpoptions: "-O"
+      workdir: "/opt/sparc-template-sppp"
+      exec: "start.sh"
+      autosync: true ## restart automatically on changes
+      initcmd: "mount -o remount,rw /"
+      iocinit:
+        - name: "ENV:ENV_KX_SP"
+          value: "10000000"
+        - name: "ENV:ENV_KY_SP"
+          value: "10000000"
+        - name: "ENV:ENV_KA_SP"
+          value: "10000000"
+        - name: "ENV:ENV_KB_SP"
+          value: "10000000"
+        - name: "ENV:ENV_KC_SP"
+          value: "10000000"
+        - name: "ENV:ENV_KD_SP"
+          value: "10000000"
+        - name: "ENV:ENV_SUM_SP"
+          value: "10000000"
+        - name: "ENV:ENV_ADCSP_THRESHOLD_SP"
+          value: "500"
+
+    - name: "plxbpm04"
+      pva: false
+      asset: "https://confluence.infn.it/x/doKBBg"
+      charturl: 'https://github.com/infn-epics/ioc-chart.git'
+      template: "libera-sppp"
+      iocprefix: "PLXBPM04"
+      devtype: bpm
+      devgroup: diag
+      host: "bdsparcplxbpm004.lnf.infn.it"
+      ssh_options: "-o KexAlgorithms=diffie-hellman-group1-sha1 -o HostKeyAlgorithms=ssh-rsa -o PubkeyAcceptedKeyTypes=+ssh-rsa"
+      scpoptions: "-O"
+      workdir: "/opt/sparc-template-sppp"
+      exec: "start.sh"
+      autosync: true ## restart automatically on changes
+      initcmd: "mount -o remount,rw /"
+      iocinit:
+        - name: "ENV:ENV_KX_SP"
+          value: "10000000"
+        - name: "ENV:ENV_KY_SP"
+          value: "10000000"
+        - name: "ENV:ENV_KA_SP"
+          value: "10000000"
+        - name: "ENV:ENV_KB_SP"
+          value: "10000000"
+        - name: "ENV:ENV_KC_SP"
+          value: "10000000"
+        - name: "ENV:ENV_KD_SP"
+          value: "10000000"
+        - name: "ENV:ENV_SUM_SP"
+          value: "10000000"
+        - name: "ENV:ENV_ADCSP_THRESHOLD_SP"
+          value: "500"
+
+    - name: "plxbpm05"
+      pva: false
+      asset: "https://confluence.infn.it/x/doKBBg"
+      charturl: 'https://github.com/infn-epics/ioc-chart.git'
+      template: "libera-sppp"
+      iocprefix: "PLXBPM05"
+      devtype: bpm
+      devgroup: diag
+      host: "bdsparcplxbpm005.lnf.infn.it"
+      ssh_options: "-o KexAlgorithms=diffie-hellman-group1-sha1 -o HostKeyAlgorithms=ssh-rsa -o PubkeyAcceptedKeyTypes=+ssh-rsa"
+      scpoptions: "-O"
+      workdir: "/opt/sparc-template-sppp"
+      exec: "start.sh"
+      autosync: true ## restart automatically on changes
+      initcmd: "mount -o remount,rw /"
+      iocinit:
+        - name: "ENV:ENV_KX_SP"
+          value: "10000000"
+        - name: "ENV:ENV_KY_SP"
+          value: "10000000"
+        - name: "ENV:ENV_KA_SP"
+          value: "10000000"
+        - name: "ENV:ENV_KB_SP"
+          value: "10000000"
+        - name: "ENV:ENV_KC_SP"
+          value: "10000000"
+        - name: "ENV:ENV_KD_SP"
+          value: "10000000"
+        - name: "ENV:ENV_SUM_SP"
+          value: "10000000"
+        - name: "ENV:ENV_ADCSP_THRESHOLD_SP"
+          value: "500"
+
+    - name: "plxbpm06"
+      pva: false
+      asset: "https://confluence.infn.it/x/doKBBg"
+      charturl: 'https://github.com/infn-epics/ioc-chart.git'
+      template: "libera-sppp"
+      iocprefix: "PLXBPM06"
+      devtype: bpm
+      devgroup: diag
+      host: "bdsparcplxbpm006.lnf.infn.it"
+      ssh_options: "-o KexAlgorithms=diffie-hellman-group1-sha1 -o HostKeyAlgorithms=ssh-rsa -o PubkeyAcceptedKeyTypes=+ssh-rsa"
+      scpoptions: "-O"
+      workdir: "/opt/sparc-template-sppp"
+      exec: "start.sh"
+      autosync: true ## restart automatically on changes
+      initcmd: "mount -o remount,rw /"
+      iocinit:
+        - name: "ENV:ENV_KX_SP"
+          value: "10000000"
+        - name: "ENV:ENV_KY_SP"
+          value: "10000000"
+        - name: "ENV:ENV_KA_SP"
+          value: "10000000"
+        - name: "ENV:ENV_KB_SP"
+          value: "10000000"
+        - name: "ENV:ENV_KC_SP"
+          value: "10000000"
+        - name: "ENV:ENV_KD_SP"
+          value: "10000000"
+        - name: "ENV:ENV_SUM_SP"
+          value: "10000000"
+        - name: "ENV:ENV_ADCSP_THRESHOLD_SP"
+          value: "500" 
+
+      #   - name: "plxbpm07"
+      #      asset: "https://confluence.infn.it/x/doKBBg"
+      #      charturl: 'https://github.com/infn-epics/ioc-chart.git' 
+      #      template: "libera-spe"
+      #      devtype: bpm
+      #      devgroup: diag
+      #      iocprefix: "PLXSPE"
+      #      pva: false
+      #      devices:
+      #        - name: "PLXBPM07"
+      #          channel: 3
+      #        - name: "PLXBPM08"
+      #          channel: 4
+      #        - name: "PLXBPM09"
+      #          channel: 5
+      #        - name: "PLXBPM10"
+      #          channel: 6  
+      #      host: "bdsparcplxbpm007.lnf.infn.it"
+      #      ssh_options: "-o PubkeyAcceptedKeyTypes=+ssh-rsa"
+      #      workdir: "/opt/sparc-template-sppp"
+      #      scpoptions: "-O"
+      #      exec: "start.sh"
+      #      autosync: true ## restart automatically on changes
 
     - name: "sparctemp00"
       asset: "https://confluence.infn.it/display/LDCG/ICP-23-0032"
@@ -1418,6 +1464,7 @@ epicsConfiguration:
       devgroup: diag
       autosync: false ## restart automatically on changes      
       pva: true
+      start_sample: 3000
       iocparam:
         - name: "server"
           value: ddsparctekmso001.lnf.infn.it
@@ -1436,23 +1483,75 @@ epicsConfiguration:
         - name: "PLALAS01"
           channel: 4
           devtype: channel
+        - name: "CH5"
+          channel: 5
+          devtype: channel
+        - name: "CH6"
+          channel: 6
+          devtype: channel
         - name: "TEST"
           channel: 7
           devtype: channel
+        - name: "CH8"
+          channel: 8
+          devtype: channel
       day_accumulators:
-        - pvname: "BEAMBPM01:INTEGRAL"
+        - pvname: "CH1:Charge"
           daypv: "BEAMBPM01:CHARGE_DAY"
           egu: "pC"
-          prec: "3"
-          desc: "BEAMBPM01 daily charge integral"
-          pvenable: "SPARC:LLRF1:app:rf_ctrl"
-        - pvname: "TEST:INTEGRAL"
+          prec: "6"
+          scan: "1 second"
+          desc: "Daily charge accumulator BEAMBPM01"
+        - pvname: "CH2:Charge"
+          daypv: "EOSPHD01:CHARGE_DAY"
+          egu: "pC"
+          prec: "6"
+          scan: "1 second"
+          desc: "Daily charge accumulator EOSPHD01"
+        - pvname: "CH3:Charge"
+          daypv: "PLADIS01:CHARGE_DAY"
+          egu: "pC"
+          prec: "6"
+          scan: "1 second"
+          desc: "Daily charge accumulator PLADIS01"
+        - pvname: "CH4:Charge"
+          daypv: "PLALAS01:CHARGE_DAY"
+          egu: "pC"
+          prec: "6"
+          scan: "1 second"
+          desc: "Daily charge accumulator PLALAS01"
+        - pvname: "CH5:Charge"
+          daypv: "CH5:CHARGE_DAY"
+          egu: "pC"
+          prec: "6"
+          scan: "1 second"
+          desc: "Daily charge accumulator CH5"
+        - pvname: "CH6:Charge"
+          daypv: "CH6:CHARGE_DAY"
+          egu: "pC"
+          prec: "6"
+          scan: "1 second"
+          desc: "Daily charge accumulator CH6"
+          enablepv: "SPARC:LLRF1:app:rf_ctrl" 
+
+        - pvname: "CH7:Charge"
           daypv: "TEST:CHARGE_DAY"
           egu: "pC"
-          prec: "3"
-          desc: "TEST daily charge integral"
-          pvenable: "SPARC:LLRF1:app:rf_ctrl"
-        
+          prec: "6"
+          scan: "1 second"
+          desc: "Daily charge accumulator TEST"
+          factor: 1
+          offset: 0
+#          enablepv: "SPARC:LLRF1:app:rf_ctrl" 
+
+        - pvname: "CH8:Charge"
+          daypv: "CH8:CHARGE_DAY"
+          egu: "pC"
+          prec: "6"
+          scan: "1 second"
+          desc: "Daily charge accumulator CH8"
+          enablepv: "SPARC:LLRF1:app:rf_ctrl" 
+
         
         
 
@@ -1463,17 +1562,16 @@ epicsConfiguration:
 
       iocprefix: "SPARC:DIAG:TEK-BCM"
       template: "tektronix"
-      devtype: mso58lp
+      devtype: mso58lp-asyn
       devgroup: diag
       autosync: true ## restart automatically on changes      
       pva: true
+      start_sample: 6200
       iocparam:
         - name: "server"
           value: 192.168.197.195
         - name: "port"
           value: 4000
-        - name: "samples"
-          value: 6200 
       devices:
         - name: "AC1BCM01"
           channel: 1
@@ -1514,52 +1612,173 @@ epicsConfiguration:
           coeff: 1
           devtype: measurement
       day_accumulators:
-        - pvname: "AC1BCM01:INTEGRAL"
-          daypv: "AC1BCM01:INTEGRAL_DAY"
+        - pvname: "AC1BCM01:Charge"
+          daypv: "AC1BCM01:CHARGE_DAY"
           egu: "pC"
-          prec: "3"
-          desc: "AC1BCM01 daily charge integral"
-          pvenable: "SPARC:LLRF1:app:rf_ctrl"
-        - pvname: "AC2BCM01:INTEGRAL"
-          daypv: "AC2BCM01:INTEGRAL_DAY"
+          prec: "6"
+          scan: "1 second"
+          desc: "Daily charge accumulator AC1BCM01"
+          enablepv: "SPARC:LLRF1:app:rf_ctrl"
+        - pvname: "AC2BCM01:Charge"
+          daypv: "AC2BCM01:CHARGE_DAY"
           egu: "pC"
-          prec: "3"
-          desc: "AC2BCM01 daily charge integral"
-          pvenable: "SPARC:LLRF1:app:rf_ctrl"
-        - pvname: "PTLBCM01:INTEGRAL"
-          daypv: "PTLBCM01:INTEGRAL_DAY"
+          prec: "6"
+          scan: "1 second"
+          desc: "Daily charge accumulator AC2BCM01"
+          enablepv: "SPARC:LLRF1:app:rf_ctrl"
+        - pvname: "PTLBCM01:Charge"
+          daypv: "PTLBCM01:CHARGE_DAY"
           egu: "pC"
-          prec: "3"
-          desc: "PTLBCM01 daily charge integral"
-          pvenable: "SPARC:LLRF1:app:rf_ctrl"
-        - pvname: "UNDBCM01:INTEGRAL"
-          daypv: "UNDBCM01:INTEGRAL_DAY"
+          prec: "6"
+          scan: "1 second"
+          desc: "Daily charge accumulator PTLBCM01"
+          enablepv: "SPARC:LLRF1:app:rf_ctrl"
+        - pvname: "UNDBCM01:Charge"
+          daypv: "UNDBCM01:CHARGE_DAY"
           egu: "pC"
-          prec: "3"
-          desc: "UNDBCM01 daily charge integral"
-          pvenable: "SPARC:LLRF1:app:rf_ctrl"
-        - pvname: "SBNBCM01:INTEGRAL"
-          daypv: "SBNBCM01:INTEGRAL_DAY"
+          prec: "6"
+          scan: "1 second"
+          desc: "Daily charge accumulator UNDBCM01"
+          enablepv: "SPARC:LLRF1:app:rf_ctrl"
+        - pvname: "SBNBCM01:Charge"
+          daypv: "SBNBCM01:CHARGE_DAY"
           egu: "pC"
-          prec: "3"
-          desc: "SBNBCM01 daily charge integral"
-          pvenable: "SPARC:LLRF1:app:rf_ctrl"
-        - pvname: "SBNBCM02:INTEGRAL"
-          daypv: "SBNBCM02:INTEGRAL_DAY"
+          prec: "6"
+          scan: "1 second"
+          desc: "Daily charge accumulator SBNBCM01"
+          enablepv: "SPARC:LLRF1:app:rf_ctrl"
+        - pvname: "SBNBCM02:Charge"
+          daypv: "SBNBCM02:CHARGE_DAY"
           egu: "pC"
-          prec: "3"
-          desc: "SBNBCM02 daily charge integral"
-          pvenable: "SPARC:LLRF1:app:rf_ctrl"
-        - pvname: "SBNBCM03:INTEGRAL"
+          prec: "6"
+          scan: "1 second"
+          desc: "Daily charge accumulator SBNBCM02"
+          enablepv: "SPARC:LLRF1:app:rf_ctrl"
+        - pvname: "SBNBCM03:Charge"
           daypv: "SBNBCM03:CHARGE_DAY"
           egu: "pC"
-          prec: "3"
-          desc: "SBNBCM03 daily charge integral"
-        - pvname: "LRSDIODE:INTEGRAL"
+          prec: "6"
+          scan: "1 second"
+          desc: "Daily charge accumulator SBNBCM03"
+        - pvname: "LRSDIODE:Charge"
           daypv: "LRSDIODE:CHARGE_DAY"
           egu: "pC"
-          prec: "3"
-          desc: "LRSDIODE daily charge integral"
+          prec: "6"
+          scan: "1 second"
+          desc: "Daily charge accumulator LRSDIODE"
+
+
+    # - name: "tektronix-bcm"
+    #   asset: "https://servicedesk.infn.it/secure/ObjectSchema.jspa?id=32&typeId=1444&objectId=138748"
+    #   charturl: 'https://github.com/infn-epics/ioc-chart.git'
+    #   image: ghcr.io/infn-epics/infn-epics-ioc-runtime:latest
+
+    #   iocprefix: "SPARC:DIAG:TEK-BCM"
+    #   template: "tektronix"
+    #   devtype: mso58lp-asyn
+    #   devgroup: diag
+    #   autosync: true ## restart automatically on changes      
+    #   pva: true
+    #   start_sample: 6200
+    #   iocparam:
+    #     - name: "server"
+    #       value: 192.168.197.195
+    #     - name: "port"
+    #       value: 4000
+    #   devices:
+    #     - name: "AC1BCM01"
+    #       channel: 1
+    #       coeff: -210000000000
+    #       devtype: measurement
+    #       enablepv: "SPARC:LLRF1:app:rf_ctrl" 
+    #     - name: "AC2BCM01"
+    #       channel: 2
+    #       coeff: -429120000000
+    #       devtype: measurement
+    #       enablepv: "SPARC:LLRF1:app:rf_ctrl" 
+    #     - name: "PTLBCM01"
+    #       channel: 3
+    #       devtype: measurement
+    #       coeff: -429120000000
+    #       enablepv: "SPARC:LLRF1:app:rf_ctrl"
+    #     - name: "UNDBCM01"
+    #       channel: 4
+    #       coeff: -1
+    #       devtype: measurement
+    #       enablepv: "SPARC:LLRF1:app:rf_ctrl"
+    #     - name: "SBNBCM01"
+    #       channel: 5
+    #       coeff: -214560000000
+    #       devtype: measurement
+    #       enablepv: "SPARC:LLRF1:app:rf_ctrl"
+    #     - name: "SBNBCM02"
+    #       channel: 6
+    #       coeff: -214560000000
+    #       devtype: measurement
+    #       enablepv: "SPARC:LLRF1:app:rf_ctrl"
+    #     - name: "SBNBCM03"
+    #       channel: 7
+    #       coeff: -1
+    #       devtype: measurement
+    #     - name: "LRSDIODE"
+    #       channel: 8
+    #       coeff: 1
+    #       devtype: measurement
+    #   day_accumulators:
+    #     - pvname: "CH1:Charge"
+    #       daypv: "AC1BCM01:CHARGE_DAY"
+    #       egu: "pC"
+    #       prec: "6"
+    #       scan: "1 second"
+    #       desc: "Daily charge accumulator AC1BCM01"
+    #       enablepv: "SPARC:LLRF1:app:rf_ctrl"
+    #     - pvname: "CH2:Charge"
+    #       daypv: "AC2BCM01:CHARGE_DAY"
+    #       egu: "pC"
+    #       prec: "6"
+    #       scan: "1 second"
+    #       desc: "Daily charge accumulator AC2BCM01"
+    #       enablepv: "SPARC:LLRF1:app:rf_ctrl"
+    #     - pvname: "CH3:Charge"
+    #       daypv: "PTLBCM01:CHARGE_DAY"
+    #       egu: "pC"
+    #       prec: "6"
+    #       scan: "1 second"
+    #       desc: "Daily charge accumulator PTLBCM01"
+    #       enablepv: "SPARC:LLRF1:app:rf_ctrl"
+    #     - pvname: "CH4:Charge"
+    #       daypv: "UNDBCM01:CHARGE_DAY"
+    #       egu: "pC"
+    #       prec: "6"
+    #       scan: "1 second"
+    #       desc: "Daily charge accumulator UNDBCM01"
+    #       enablepv: "SPARC:LLRF1:app:rf_ctrl"
+    #     - pvname: "CH5:Charge"
+    #       daypv: "SBNBCM01:CHARGE_DAY"
+    #       egu: "pC"
+    #       prec: "6"
+    #       scan: "1 second"
+    #       desc: "Daily charge accumulator SBNBCM01"
+    #       enablepv: "SPARC:LLRF1:app:rf_ctrl"
+    #     - pvname: "CH6:Charge"
+    #       daypv: "SBNBCM02:CHARGE_DAY"
+    #       egu: "pC"
+    #       prec: "6"
+    #       scan: "1 second"
+    #       desc: "Daily charge accumulator SBNBCM02"
+    #       enablepv: "SPARC:LLRF1:app:rf_ctrl"
+    #     - pvname: "CH7:Charge"
+    #       daypv: "SBNBCM03:CHARGE_DAY"
+    #       egu: "pC"
+    #       prec: "6"
+    #       scan: "1 second"
+    #       desc: "Daily charge accumulator SBNBCM03"
+    #     - pvname: "CH8:Charge"
+    #       daypv: "LRSDIODE:CHARGE_DAY"
+    #       egu: "pC"
+    #       prec: "6"
+    #       scan: "1 second"
+    #       desc: "Daily charge accumulator LRSDIODE"
 
     - name: "hv-plasma" 
       asset: "https://servicedesk.infn.it/secure/ObjectSchema.jspa?id=32&typeId=1444&objectId=129573"
@@ -2646,20 +2865,22 @@ epicsConfiguration:
 
     - name: "tml-ch1"
       asset: "https://confluence.infn.it/x/nYD8DQ"
-      devtype: tml
+      devtype: technosoft-asyn
       devgroup: mot
       charturl: 'https://github.com/infn-epics/ioc-chart.git'
       template: "motor"
       zones: LINAC
       iocprefix: "SPARC:MOT:TML"
-      serial:
-        ip: scsparcmoxa001.lnf.infn.it
-        port: 4001
-        ptty: /var/tmp/ttyV0
-        baud: 9600
+      iocparam:
+        - name: "server"
+          value: "scsparcmoxa001.lnf.infn.it"
+        - name: "port"  
+          value: "4001"
       autosync: false ## restart automatically on changes
       disable: false
-      opi: "tml/TML_Main.bob"
+      # opi: "tml/TML_Main.bob"
+      opi: "motor-asyn/Motor_Main.bob"
+
       motor:
         hostid: 5
         velo_max: 50
@@ -3583,6 +3804,54 @@ epicsConfiguration:
             - name: "pxcal"
               value: 16.67
 
+    - name: "felcameras"
+      asset: "https://confluence.infn.it/x/nYD8DQ"
+      charturl: 'https://github.com/infn-epics/ioc-chart.git'
+      image: ghcr.io/infn-epics/infn-epics-ioc-runtime:v26.1.30b1
+      pva: true
+      devtype: camera
+      devgroup: cam
+      iocprefix: "SPARC:CAM"
+      autosync: true ## restart automatically on changes
+      template: "adcamera"
+      service:   
+        http:
+          enable: true
+          port: 8082
+      stream_enable: true
+      networks:
+        - name: "control"
+          annotation: "sparc-br-cams"
+      iocinit: ## for all cameras
+        - name: "PixelFormat"
+          value: "Mono16"
+        - name: "TriggerMode"
+          value: "On"
+        - name: "TriggerSource"
+          value: "Line1"
+        - name: "FrameRateEnable"
+          value: "0"
+        - name: "ImageMode"
+          value: "Continuous"
+      iocparam:
+        - name: "overlay_enable"
+          value: false
+        - name: "stats_enable"
+          value: false
+        - name: "proc_enable"
+          value: false
+        - name: "tiff_enable"
+          value: true
+        - name: "roi_enable"
+          value: false
+      devices:
+        - name: "FEL01"
+          id: 192.168.110.56 # Basler-scA640-70gm-23665711
+          devtype: Basler-scA640-70gm
+          iocinit:
+            - name: "pxcal"
+              value: 1.0
+
     - name: "haz-ser-ch1"
       asset: "https://confluence.infn.it/x/nYD8DQ"
       charturl: 'https://github.com/infn-epics/ioc-chart.git'
@@ -3915,8 +4184,10 @@ epicsConfiguration:
       devices:
         - name: "SBNDPL01"
           ip: 192.168.0.152
-          imax: 280
+          imax: 120
           vmax: 16
+          correction: 1
+          correctionset: 2.42
         - name: "PTLDPL01"
           ip: 192.168.0.158
           imax: 280
@@ -4222,7 +4493,7 @@ backend:
     pubcertsecret: elasticsearch-es-http-certs-public #secret containing the public cert
     authorization:
       username: elastic
-      password: GJkrSqzVRka9PC7b2N2cHmBM
+      password: vXeP7kos0mlcHFZaKBzcB5NL
 
   kafka:
     host: eph-kafka-kafka-brokers

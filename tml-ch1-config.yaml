@@ -11,51 +11,94 @@ devices:
   jvel: 30
   name: GUNFLG01
   poi:
-  - name: yag
+  - name: YAG
     value: 688640
   - name: calibration
     value: 688640
   - name: mirror
     value: 1688320
   velo: 30
+  zones: ADVANCED
+- axid: 7
+  name: GUNSOLV1
+  zones: ADVANCED
+- axid: 8
+  name: GUNSOLH1
+  zones: ADVANCED
 - axid: 3
   name: AC1FLG01
+  poi:
+  - default: true
+    name: YAG
+    value: 670000
+  - name: calibration
+    value: 550000
 - axid: 4
   hvel: 40
   jvel: 40
   name: AC2FLG01
+  poi:
+  - name: YAG
+    value: 3337720
+  - name: calibration
+    value: 2800000
+  - name: mirror
+    value: 1100000
   velo: 40
 - axid: 5
   hvel: 40
   jvel: 40
   name: AC3FLG01
+  poi:
+  - name: YAG
+    value: 2275560
+  - name: calibration
+    value: 1575560
   velo: 40
 - axid: 12
   hvel: 40
   jvel: 40
   name: UTLFLG01
+  poi:
+  - name: YAG
+    value: 3000000
+  - name: calibration
+    value: 2500000
   velo: 40
 - axid: 13
   name: UTLFLG02
+  poi:
+  - name: YAG
+    value: 1190000
+  - name: calibration
+    value: 992160
+  - name: OTR
+    value: 410000
 - axid: 11
   hvel: 40
   jvel: 40
   name: SBNFLG00
+  poi:
+  - name: YAG
+    value: 3100000
+  - name: calibration
+    value: 3100000
   velo: 40
-  zones: SBN
+  zones: SABINA
 - axid: 14
   hvel: 40
   jvel: 40
   name: SBNFLG01
+  poi:
+  - name: YAG
+    value: 2825310
+  - name: calibration
+    value: 2264680
   velo: 40
-  zones: SBN
-- axid: 8
-  name: GUNSOLH1
-- axid: 7
-  name: GUNSOLV1
-devtype: tml
+  zones: SABINA
+devtype: technosoft-asyn
 disable: false
-epik8s-tools-version: 0.9.12
+epik8s-tools-version: 0.9.15
 iocname: tml-ch1
 iocprefix: SPARC:MOT:TML
 motor:
@@ -85,11 +128,8 @@ nfsMounts:
   opt: -o nolock
   path: /data_epik8s/config
   server: 192.168.197.157
-opi: tml/TML_Main.bob
-serial:
-  baud: 9600
-  ip: localhost
-  port: 4001
-  ptty: /var/tmp/ttyV0
+opi: motor-asyn/Motor_Main.bob
+port: '4001'
+server: scsparcmoxa001.lnf.infn.it
 template: motor
 zones: LINAC
