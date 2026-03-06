@@ -104,6 +104,8 @@ epicsConfiguration:
           size: 50Gi
           claim: ""
           accessMode: ReadWriteOnce
+          storageClassName: "nfs20t"
+
       mysql:
             host: mysql
             dbname: arcappl
