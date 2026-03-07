@@ -2865,6 +2865,50 @@ epicsConfiguration:
             start: 10
             velo: 1
 
+    - name: "tml-test"
+      asset: "https://confluence.infn.it/x/nYD8DQ"
+      devtype: technosoft-asyn
+      devgroup: mot
+      charturl: 'https://github.com/infn-epics/ioc-chart.git'
+      template: "motor"
+      zones: LINAC
+      iocprefix: "TEST:MOT:TML"
+      iocparam:
+        - name: "server"
+          value: "192.168.190.55"
+        - name: "port"  
+          value: "4001"
+      autosync: false ## restart automatically on changes
+      disable: false
+      # opi: "tml/TML_Main.bob"
+      opi: "motor-asyn/Motor_Main.bob"
+
+      motor:
+        hostid: 15
+        velo_max: 50
+        accl_max: 100
+        jar: 100
+        har: 100
+        accl: 100
+        velo: 20
+        jvel: 20
+        hvel: 20
+      devices:
+          - name: TESTFLG
+            axid: 15
+            velo: 30
+            jvel: 30
+            hvel: 30
+            zones: ADVANCED
+            poi:
+            - name: "YAG"
+              value: 688640
+            - name: "calibration"
+              value: 688640
+            - name: "mirror"
+              value: 1688320
+          
+
     - name: "tml-ch1"
       asset: "https://confluence.infn.it/x/nYD8DQ"
       devtype: technosoft-asyn
