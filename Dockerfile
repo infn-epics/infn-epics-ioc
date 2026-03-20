@@ -56,6 +56,7 @@ RUN ansible.sh kima-undulator && \
     ansible.sh maccaferriPS && \
     ansible.sh ocemE642 && \
     ansible.sh danfysik && \
+    ansible.sh TTI && \
     ansible.sh mps
     
 ## under test
