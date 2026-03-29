@@ -57,7 +57,8 @@ RUN ansible.sh kima-undulator && \
     ansible.sh ocemE642 && \
     ansible.sh danfysik && \
     ansible.sh TTI && \
-    ansible.sh mps
+    ansible.sh mps && \
+    ansible.sh motorPIGCS2 
     
 ## under test
 
