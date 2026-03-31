@@ -53,12 +53,12 @@ RUN ansible.sh kima-undulator && \
     ansible.sh ocemPS && \
     ansible.sh menlo && \
     ansible.sh psEEI && \
-    ansible.sh maccaferriPS && \
-    ansible.sh ocemE642 && \
-    ansible.sh danfysik && \
     ansible.sh TTI && \
     ansible.sh mps && \
-    ansible.sh motorPIGCS2 
+    ansible.sh motorPIGCS2 && \
+    ansible.sh tpg300_500
+
+
     
 ## under test
 
