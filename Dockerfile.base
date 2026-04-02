@@ -23,8 +23,8 @@ WORKDIR ${SOURCE_FOLDER}/ibek-support
 COPY ibek-support-dls/_ansible _ansible
 ENV PATH=$PATH:${SOURCE_FOLDER}/ibek-support/_ansible
 
-# COPY ibek-support-dls/iocStats/ iocStats
-# RUN ansible.sh iocStats
+COPY ibek-support-dls/iocStats/ iocStats
+RUN ansible.sh iocStats
 
 COPY ibek-support-dls/pvlogging/ pvlogging/
 RUN ansible.sh pvlogging
