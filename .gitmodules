@@ -10,3 +10,6 @@
 [submodule "ibek-support"]
 	path = ibek-support
 	url = https://github.com/epics-containers/ibek-support.git
+[submodule "ibek-support-dls"]
+	path = ibek-support-dls
+	url = ../ibek-support-dls
