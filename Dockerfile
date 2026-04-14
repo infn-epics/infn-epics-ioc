@@ -56,7 +56,8 @@ RUN ansible.sh kima-undulator && \
     ansible.sh TTI && \
     ansible.sh mps && \
     ansible.sh motorPIGCS2 && \
-    ansible.sh tpg300_500
+    ansible.sh tpg300_500 && \
+    ansible.sh midivac
 
 
     
