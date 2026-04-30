@@ -57,7 +57,10 @@ RUN ansible.sh kima-undulator && \
     ansible.sh mps && \
     ansible.sh motorPIGCS2 && \
     ansible.sh tpg300_500 && \
-    ansible.sh midivac
+    ansible.sh midivac && \
+    ansible.sh agilent-twistorr-305 && \
+    ansible.sh Danfysik_HallProbes
+
 
 
     
