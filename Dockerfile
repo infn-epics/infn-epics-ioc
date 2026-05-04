@@ -26,9 +26,9 @@ COPY ibek-support-infn/ ./
 
 # Install all support modules in a single layer
 # apt-get update first to avoid stale 404s from the base image cache
-RUN apt-get update && \
-    ansible.sh epics-nds && \
-    ansible.sh technosoft
+# RUN apt-get update && \
+#    ansible.sh epics-nds && \
+#    ansible.sh technosoft
 #     ansible.sh AgilentXgs600 && \
 #     ansible.sh biltItest && \
 #     ansible.sh sigmaPhiStart && \
