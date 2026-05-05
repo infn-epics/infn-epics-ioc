@@ -83,8 +83,8 @@ RUN apt-get update && apt-get install -y openssh-server lshw nvidia-utils-550 su
     sed -i 's/#PasswordAuthentication yes/PasswordAuthentication yes/' /etc/ssh/sshd_config && \
     sed -i 's/#PermitRootLogin.*/PermitRootLogin yes/' /etc/ssh/sshd_config && \
     curl -o /usr/bin/yq -L https://github.com/mikefarah/yq/releases/download/v4.44.2/yq_linux_amd64 && chmod +x /usr/bin/yq && \
-    ibek support apt-install iputils-ping iproute2 telnet && \
-    ibek support add-runtime-packages iputils-ping iproute2 telnet ca-certificates openssh-client curl
+    ibek support apt-install iputils-ping iproute2 telnet socat && \
+    ibek support add-runtime-packages iputils-ping socat iproute2 telnet ca-certificates openssh-client curl
 EXPOSE 22
 CMD ["/usr/sbin/sshd", "-D"]
 
