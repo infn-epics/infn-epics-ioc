@@ -95,7 +95,8 @@ ENV TAGVERSION=${TAGVERSION}
 
 # get the products from the build stage and reduce to runtime assets only
 # RUN ibek ioc extract-runtime-assets /assets ${SOURCE_FOLDER}/ibek*
-RUN ibek ioc extract-runtime-assets /assets /python /epics/support/ibek-templates /epics/support/templates /epics/support/motorTechnosoft /epics/support/technosoft-asyn /epics/support/turbo-bergoz-bcm
+# RUN ibek ioc extract-runtime-assets /assets /python /epics/support/ibek-templates /epics/support/templates /epics/support/motorTechnosoft /epics/support/technosoft-asyn /epics/support/turbo-bergoz-bcm
+RUN ibek ioc extract-runtime-assets /assets /python /epics/support/ibek-templates /epics/support/templates /epics/support/turbo-bergoz-bcm
 # RUN ibek ioc extract-runtime-assets /assets
 
 RUN date --utc +%Y-%m-%dT%H:%M:%SZ > /assets/BUILD_INFO.txt && echo "TAG ${TAGVERSION}" >> /assets/BUILD_INFO.txt
@@ -109,8 +110,10 @@ COPY --from=runtime_prep /assets /
 # install runtime system dependencies, collected from install.sh scripts
 RUN ibek support apt-install curl
 RUN ibek support apt-install-runtime-packages
-RUN curl -o /usr/bin/yq -L https://github.com/mikefarah/yq/releases/download/v4.44.2/yq_linux_amd64 && chmod +x /usr/bin/yq && \
-    cp /epics/support/motorTechnosoft/lib/linux-x86_64/*.so /usr/lib/x86_64-linux-gnu/ && \
-    ( cp /epics/support/technosoft-asyn/tml_lib/lib/*.so /usr/lib/x86_64-linux-gnu/ 2>/dev/null || true )
+# RUN curl -o /usr/bin/yq -L https://github.com/mikefarah/yq/releases/download/v4.44.2/yq_linux_amd64 && chmod +x /usr/bin/yq && \
+#    cp /epics/support/motorTechnosoft/lib/linux-x86_64/*.so /usr/lib/x86_64-linux-gnu/ && \
+#    ( cp /epics/support/technosoft-asyn/tml_lib/lib/*.so /usr/lib/x86_64-linux-gnu/ 2>/dev/null || true )
+RUN curl -o /usr/bin/yq -L https://github.com/mikefarah/yq/releases/download/v4.44.2/yq_linux_amd64 && chmod +x /usr/bin/yq
+
 RUN chown 1000.1000 -R /epics
 CMD ["/bin/bash", "-c", "${IOC}/start.sh"]
