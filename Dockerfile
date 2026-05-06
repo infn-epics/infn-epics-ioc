@@ -68,10 +68,6 @@ RUN ansible.sh kima-undulator && \
     
 ## under test
 
-RUN ansible.sh technosoft-tml-motor
-RUN ansible.sh thorlabsApt
-RUN ansible.sh bergozBcm
-
 
 COPY ioc/ ${SOURCE_FOLDER}/ioc
 RUN ansible.sh ioc
