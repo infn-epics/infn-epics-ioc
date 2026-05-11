@@ -21,6 +21,58 @@ copier update -a --trust .
 
 This repository includes a developer container configuration for Visual Studio Code. This allows you to run the Generic IOC locally and debug it. See https://epics-containers.github.io/main/tutorials/dev_container.html.
 
+## Development Image
+
+A dedicated SSH-enabled development image is defined in `Dockerfile.devel`. It extends the published `-base` image and is intended for remote development sessions where you connect over SSH instead of using a local devcontainer runtime.
+
+### Build
+
+Build it locally with:
+
+```bash
+# Key-based auth only (default, most secure)
+docker build -f Dockerfile.devel -t infn-epics-ioc:devel .
+
+# With password auth baked in at build time
+docker build --build-arg SSH_PASSWORD=mypassword -f Dockerfile.devel -t infn-epics-ioc:devel .
+```
+
+### Run & Connect
+
+**With public key auth (default, recommended):**
+
+```bash
+docker run --rm -it -p 2222:22 \
+  -e SSH_AUTHORIZED_KEYS="$(cat ~/.ssh/id_ed25519.pub)" \
+  infn-epics-ioc:devel
+
+ssh -p 2222 ubuntu@localhost
+```
+
+**With password auth at runtime:**
+
+```bash
+docker run --rm -it -p 2222:22 \
+  -e SSH_PASSWORD=mypassword \
+  infn-epics-ioc:devel
+
+ssh -p 2222 ubuntu@localhost  # then enter password
+```
+
+**With both key and password auth:**
+
+```bash
+docker run --rm -it -p 2222:22 \
+  -e SSH_AUTHORIZED_KEYS="$(cat ~/.ssh/id_ed25519.pub)" \
+  -e SSH_PASSWORD=mypassword \
+  infn-epics-ioc:devel
+
+# Can use either key or password to connect
+ssh -p 2222 ubuntu@localhost
+```
+
+The container automatically detects and reuses the existing UID 1000 user from the base image (typically `ubuntu`) and supports passwordless sudo.
+
 ## Channel Access
 
 The vscode developer container auto forwards the channel access ports on the loopback interface. If you have channel access clients running on the host machine, you can connect to the IOC by setting the `EPICS_CA_NAME_SERVERS` environment variable as follows:

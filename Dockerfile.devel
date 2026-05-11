@@ -1,0 +1,64 @@
+ARG IMAGE_EXT
+ARG REGISTRY=ghcr.io/infn-epics
+ARG BASE_IMAGE=${REGISTRY}/infn-epics-ioc-base${IMAGE_EXT}:latest
+
+FROM ${BASE_IMAGE}
+
+ARG DEV_USER=vscode
+ARG DEV_UID=1000
+ARG DEV_GID=1000
+ARG SSH_PASSWORD=""
+
+ENV DEV_USER=${DEV_USER}
+ENV DEV_UID=${DEV_UID}
+ENV DEV_GID=${DEV_GID}
+
+RUN apt-get update && \
+    DEBIAN_FRONTEND=noninteractive apt-get install -y --no-install-recommends \
+        openssh-server \
+        sudo \
+        curl \
+        git \
+        lshw \
+        procps \
+        less \
+        iproute2 \
+        iputils-ping \
+        net-tools \
+        telnet \
+        socat \
+        ca-certificates && \
+    rm -rf /var/lib/apt/lists/* && \
+    if id -u ${DEV_USER} >/dev/null 2>&1; then \
+        target_user=${DEV_USER}; \
+    elif getent passwd ${DEV_UID} >/dev/null 2>&1; then \
+        target_user=$(getent passwd ${DEV_UID} | cut -d: -f1); \
+    else \
+        if ! getent group ${DEV_GID} >/dev/null 2>&1; then groupadd --gid ${DEV_GID} ${DEV_USER}; fi; \
+        useradd --uid ${DEV_UID} --gid ${DEV_GID} -m -s /bin/bash ${DEV_USER}; \
+        target_user=${DEV_USER}; \
+    fi && \
+    target_gid=$(id -g ${target_user}) && \
+    target_home=$(getent passwd ${target_user} | cut -d: -f6) && \
+    usermod -aG sudo ${target_user} && \
+    echo "${target_user} ALL=(ALL) NOPASSWD:ALL" > /etc/sudoers.d/${target_user} && \
+    chmod 440 /etc/sudoers.d/${target_user} && \
+    mkdir -p /var/run/sshd ${target_home}/.ssh && \
+    chown -R ${target_user}:${target_gid} ${target_home}/.ssh && \
+    chmod 700 ${target_home}/.ssh && \
+    printf '%s\n' ${target_user} > /etc/default/devel-user && \
+    if [ -n "${SSH_PASSWORD}" ]; then \
+        echo "${target_user}:${SSH_PASSWORD}" | chpasswd && \
+        sed -i 's/^#\?PasswordAuthentication .*/PasswordAuthentication yes/' /etc/ssh/sshd_config; \
+    else \
+        sed -i 's/^#\?PasswordAuthentication .*/PasswordAuthentication no/' /etc/ssh/sshd_config; \
+    fi && \
+    sed -i 's/^#\?PubkeyAuthentication .*/PubkeyAuthentication yes/' /etc/ssh/sshd_config && \
+    sed -i 's/^#\?PermitRootLogin .*/PermitRootLogin no/' /etc/ssh/sshd_config
+
+COPY docker/devel-entrypoint.sh /usr/local/bin/devel-entrypoint.sh
+RUN chmod 755 /usr/local/bin/devel-entrypoint.sh
+
+EXPOSE 22
+
+ENTRYPOINT ["/usr/local/bin/devel-entrypoint.sh"]
