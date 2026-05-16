@@ -51,17 +51,14 @@ COPY ibek-support-infn/ ./
 
 RUN ansible.sh kima-undulator && \
     ansible.sh ocemPS && \
-    ansible.sh menlo && \
-    ansible.sh psEEI && \
-    ansible.sh TTI && \
     ansible.sh mps && \
     ansible.sh motorPIGCS2 && \
     ansible.sh tpg300_500 && \
     ansible.sh midivac && \
     ansible.sh agilent-twistorr-305 && \
-    ansible.sh Danfysik_HallProbes && \
-    ansible.sh scandinova-mod-k400 && \
-    ansible.sh pfeiffer-hiscroll6
+    ansible.sh pfeiffer-hiscroll6 && \
+    ansible.sh bergozBcm
+
 
 
 

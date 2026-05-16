@@ -117,8 +117,11 @@ RUN ansible.sh AgilentXgs600 && \
     ansible.sh plc-elinp && \
     ansible.sh technosoft-tml-motor && \
     ansible.sh thorlabsApt && \
-    ansible.sh bergozBcm
-
+    ansible.sh Danfysik_HallProbes && \
+    ansible.sh scandinova-mod-k400 && \
+    ansible.sh menlo && \
+    ansible.sh psEEI && \
+    ansible.sh TTI 
 
 
 EXPOSE 5064 5065
