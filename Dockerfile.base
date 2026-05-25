@@ -106,7 +106,6 @@ RUN ansible.sh AgilentXgs600 && \
     ansible.sh agilentipcmini && \
     ansible.sh agilent4uhv && \
     ansible.sh smc && \
-    ansible.sh Tektronix_MSO58LP && \
     ansible.sh caenelsPS && \
     ansible.sh motorMicos && \
     ansible.sh cagateway && \
@@ -120,6 +119,7 @@ RUN ansible.sh AgilentXgs600 && \
     ansible.sh Danfysik_HallProbes && \
     ansible.sh scandinova-mod-k400 && \
     ansible.sh menlo && \
+    ansible.sh kima-undulator && \
     ansible.sh psEEI && \
     ansible.sh TTI 
 

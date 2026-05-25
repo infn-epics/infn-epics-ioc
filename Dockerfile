@@ -49,15 +49,15 @@ COPY ibek-support-infn/ ./
 #     ansible.sh polyscience && \
 #     ansible.sh plc-elinp 
 
-RUN ansible.sh kima-undulator && \
-    ansible.sh ocemPS && \
+RUN ansible.sh ocemPS && \
     ansible.sh mps && \
     ansible.sh motorPIGCS2 && \
     ansible.sh tpg300_500 && \
     ansible.sh midivac && \
     ansible.sh agilent-twistorr-305 && \
     ansible.sh pfeiffer-hiscroll6 && \
-    ansible.sh bergozBcm
+    ansible.sh bergozBcm && \
+    ansible.sh Tektronix_MSO58LP
 
 
 
