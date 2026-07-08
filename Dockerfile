@@ -56,7 +56,10 @@ RUN ansible.sh ocemPS && \
     ansible.sh pfeiffer-hiscroll6 && \
     ansible.sh Tektronix_MSO58LP && \
     ansible.sh psEEI && \
-    ansible.sh TTI 
+    ansible.sh TTI && \
+    ansible.sh maccaferriPS && \
+    ansible.sh ocemE642 && \
+    ansible.sh danfysik
 
 
 

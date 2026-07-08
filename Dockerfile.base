@@ -99,9 +99,6 @@ RUN ansible.sh AgilentXgs600 && \
     ansible.sh biltItest && \
     ansible.sh sigmaPhiStart && \
     ansible.sh icpdas && \
-    ansible.sh maccaferriPS && \
-    ansible.sh ocemE642 && \
-    ansible.sh danfysik && \
     ansible.sh easy-driver-epics && \
     ansible.sh agilentipcmini && \
     ansible.sh agilent4uhv && \
