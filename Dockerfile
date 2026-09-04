@@ -59,7 +59,8 @@ RUN ansible.sh ocemPS && \
     ansible.sh TTI && \
     ansible.sh maccaferriPS && \
     ansible.sh ocemE642 && \
-    ansible.sh danfysik
+    ansible.sh danfysik && \
+    ansible.sh PTUControl
 
 
 
