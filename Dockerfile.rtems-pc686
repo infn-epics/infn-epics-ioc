@@ -32,7 +32,8 @@ ENV PATH=$PATH:${SOURCE_FOLDER}/ibek-support/_ansible
 RUN sed -i '/^PVXS *=/d' /epics/support/configure/RELEASE
 
 # common modules (DLS ibek-support, already used for RTEMS IOCs at DLS)
-COPY ibek-support-dls/iocStats/ iocStats/
+# INFN copy of the DLS entry: its RTEMS patch also covers pc686
+COPY ibek-support-infn/iocStats/ iocStats/
 RUN ansible.sh iocStats
 
 COPY ibek-support-dls/autosave/ autosave/
