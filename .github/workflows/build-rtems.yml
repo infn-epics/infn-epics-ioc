@@ -6,6 +6,8 @@ name: Build RTEMS-pc686 IOC image (ghcr.io/infn-epics/infn-epics-ioc-rtems-pc686
 
 on:
   push:
+    branches:
+      - '**'
     paths:
       - Dockerfile.rtems-pc686
       - ibek-support-infn
