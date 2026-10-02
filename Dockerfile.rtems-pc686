@@ -1,0 +1,84 @@
+# RTEMS-pc686 Generic IOC for x86 VME boards (e.g. VMIC/Abaco VMIVME-7750)
+#
+# The IOC is cross compiled for RTEMS-pc686: the container does not run it,
+# at start-up rtems-proxy places ioc.boot and the ibek generated runtime
+# files on the board's TFTP/NFS server and boots the board (see ioc/start.sh).
+#
+# build: docker build -f Dockerfile.rtems-pc686 --target runtime .
+
+ARG BASE=7.0.10inf3
+ARG REGISTRY=ghcr.io/infn-epics
+ARG DEVELOPER=${REGISTRY}/epics-base-rtems-pc686-developer:${BASE}
+ARG RUNTIME=${REGISTRY}/epics-base-rtems-pc686-runtime:${BASE}
+
+##### build stage ##############################################################
+FROM ${DEVELOPER} AS developer
+ARG TAGVERSION=latest
+ENV TAGVERSION=${TAGVERSION}
+
+ENV SOURCE_FOLDER=/epics/generic-source
+RUN ln -s ${SOURCE_FOLDER}/ioc ${IOC}
+
+COPY requirements.txt requirements.txt
+RUN uv pip install --upgrade -r requirements.txt
+
+WORKDIR ${SOURCE_FOLDER}/ibek-support
+
+COPY ibek-support-dls/_ansible _ansible
+ENV PATH=$PATH:${SOURCE_FOLDER}/ibek-support/_ansible
+
+# common modules (DLS ibek-support, already used for RTEMS IOCs at DLS)
+COPY ibek-support-dls/iocStats/ iocStats/
+RUN ansible.sh iocStats
+
+COPY ibek-support-dls/autosave/ autosave/
+RUN ansible.sh autosave
+
+COPY ibek-support-dls/asyn/ asyn/
+RUN ansible.sh -v R4-44-2 asyn
+
+COPY ibek-support-dls/busy/ busy/
+RUN ansible.sh -v R1-7-3 busy
+
+COPY ibek-support-dls/calc/ calc/
+RUN ansible.sh calc
+
+COPY ibek-support-dls/sequencer/ sequencer/
+RUN ansible.sh sequencer
+
+# VME modules (INFN ibek-support)
+COPY ibek-support-infn/scaler/ scaler/
+RUN ansible.sh scaler
+
+COPY ibek-support-infn/mca/ mca/
+RUN ansible.sh mca
+
+COPY ibek-support-infn/vme/ vme/
+RUN ansible.sh vme
+
+COPY ibek-support-infn/CaenV965/ CaenV965/
+RUN ansible.sh CaenV965
+
+# the IOC: built for RTEMS-pc686 only (bin/RTEMS-pc686/ioc.boot)
+COPY ioc/ ${SOURCE_FOLDER}/ioc
+RUN ansible.sh ioc
+
+COPY ibek-templates/templates /epics/support/templates/ibek-templates
+
+##### runtime preparation stage ################################################
+FROM developer AS runtime_prep
+
+RUN ibek ioc extract-runtime-assets /assets /python /epics/support/templates
+RUN date --utc +%Y-%m-%dT%H:%M:%SZ > /assets/BUILD_INFO.txt && \
+    echo "TAG ${TAGVERSION}" >> /assets/BUILD_INFO.txt
+
+##### runtime stage ############################################################
+FROM ${RUNTIME} AS runtime
+ARG TAGVERSION=latest
+ENV TAGVERSION=${TAGVERSION}
+
+COPY --from=runtime_prep /assets /
+RUN ibek support apt-install-runtime-packages
+
+RUN chown 1000.1000 -R /epics
+CMD ["/bin/bash", "-c", "${IOC}/start.sh"]
