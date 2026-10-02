@@ -27,6 +27,10 @@ WORKDIR ${SOURCE_FOLDER}/ibek-support
 COPY ibek-support-dls/_ansible _ansible
 ENV PATH=$PATH:${SOURCE_FOLDER}/ibek-support/_ansible
 
+# TODO remove with epics-base 7.0.10inf5 (make_pvxs.sh does it): pvxs is host
+# only on RTEMS, support modules must not include its CONFIG_PVXS_MODULE
+RUN sed -i '/^PVXS *=/d' /epics/support/configure/RELEASE
+
 # common modules (DLS ibek-support, already used for RTEMS IOCs at DLS)
 COPY ibek-support-dls/iocStats/ iocStats/
 RUN ansible.sh iocStats
