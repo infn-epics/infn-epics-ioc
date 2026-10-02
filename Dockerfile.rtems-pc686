@@ -6,7 +6,7 @@
 #
 # build: docker build -f Dockerfile.rtems-pc686 --target runtime .
 
-ARG BASE=7.0.10inf3
+ARG BASE=7.0.10inf4
 ARG REGISTRY=ghcr.io/infn-epics
 ARG DEVELOPER=${REGISTRY}/epics-base-rtems-pc686-developer:${BASE}
 ARG RUNTIME=${REGISTRY}/epics-base-rtems-pc686-runtime:${BASE}
