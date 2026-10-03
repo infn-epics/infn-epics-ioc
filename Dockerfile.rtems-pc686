@@ -65,6 +65,9 @@ COPY ibek-support-infn/CaenV965/ CaenV965/
 RUN ansible.sh CaenV965
 
 # the IOC: built for RTEMS-pc686 only (bin/RTEMS-pc686/ioc.boot)
+# TODO remove with epics-base 7.0.10inf5 (venv seeded): the ioc role
+# pip-installs rtems-proxy with ansible's pip module, which needs pip
+RUN uv pip install --python /venv/bin/python pip
 COPY ioc/ ${SOURCE_FOLDER}/ioc
 RUN ansible.sh ioc
 
