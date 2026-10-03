@@ -64,9 +64,12 @@ RUN ansible.sh CaenV965
 COPY ioc/ ${SOURCE_FOLDER}/ioc
 RUN ansible.sh ioc
 
-# rtems-proxy with the iPXE boot mode (the ioc role installs the PyPI one)
-ARG RTEMS_PROXY=git+https://github.com/infn-epics/rtems-proxy@297f5432328e68e7f6bf97e6eb02b3d1f78707ef
-RUN uv pip install --python /venv/bin/python "rtems-proxy @ ${RTEMS_PROXY}"
+# rtems-proxy with the iPXE boot mode (the ioc role installs the PyPI one),
+# from the source archive: a git install also clones its test submodules
+ARG RTEMS_PROXY=297f5432328e68e7f6bf97e6eb02b3d1f78707ef
+RUN SETUPTOOLS_SCM_PRETEND_VERSION=3.0.1+infn.ipxe uv pip install \
+    --python /venv/bin/python \
+    "rtems-proxy @ https://github.com/infn-epics/rtems-proxy/archive/${RTEMS_PROXY}.tar.gz"
 
 COPY ibek-templates/templates /epics/support/templates/ibek-templates
 
