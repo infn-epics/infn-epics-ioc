@@ -6,7 +6,7 @@
 #
 # build: docker build -f Dockerfile.rtems-pc686 --target runtime .
 
-ARG BASE=7.0.10inf4
+ARG BASE=7.0.10inf5
 ARG REGISTRY=ghcr.io/infn-epics
 ARG DEVELOPER=${REGISTRY}/epics-base-rtems-pc686-developer:${BASE}
 ARG RUNTIME=${REGISTRY}/epics-base-rtems-pc686-runtime:${BASE}
@@ -26,10 +26,6 @@ WORKDIR ${SOURCE_FOLDER}/ibek-support
 
 COPY ibek-support-dls/_ansible _ansible
 ENV PATH=$PATH:${SOURCE_FOLDER}/ibek-support/_ansible
-
-# TODO remove with epics-base 7.0.10inf5 (make_pvxs.sh does it): pvxs is host
-# only on RTEMS, support modules must not include its CONFIG_PVXS_MODULE
-RUN sed -i '/^PVXS *=/d' /epics/support/configure/RELEASE
 
 # common modules (DLS ibek-support, already used for RTEMS IOCs at DLS)
 # INFN copy of the DLS entry: its RTEMS patch also covers pc686
@@ -65,11 +61,12 @@ COPY ibek-support-infn/CaenV965/ CaenV965/
 RUN ansible.sh CaenV965
 
 # the IOC: built for RTEMS-pc686 only (bin/RTEMS-pc686/ioc.boot)
-# TODO remove with epics-base 7.0.10inf5 (venv seeded): the ioc role
-# pip-installs rtems-proxy with ansible's pip module, which needs pip
-RUN uv pip install --python /venv/bin/python pip
 COPY ioc/ ${SOURCE_FOLDER}/ioc
 RUN ansible.sh ioc
+
+# rtems-proxy with the iPXE boot mode (the ioc role installs the PyPI one)
+ARG RTEMS_PROXY=git+https://github.com/infn-epics/rtems-proxy@297f5432328e68e7f6bf97e6eb02b3d1f78707ef
+RUN uv pip install --python /venv/bin/python "rtems-proxy @ ${RTEMS_PROXY}"
 
 COPY ibek-templates/templates /epics/support/templates/ibek-templates
 
@@ -87,6 +84,9 @@ ENV TAGVERSION=${TAGVERSION}
 
 COPY --from=runtime_prep /assets /
 RUN ibek support apt-install-runtime-packages
+# rtems-proxy copies the IOC files to the board's TFTP/NFS folders
+RUN apt-get update -y && apt-get install -y --no-install-recommends rsync && \
+    rm -rf /var/lib/apt/lists/*
 
 RUN chown 1000.1000 -R /epics
 CMD ["/bin/bash", "-c", "${IOC}/start.sh"]

@@ -215,6 +215,6 @@ else
         # - copy binaries to the IOC's shared folder
         # - remotely launch the IOC
         # - can also remotely configure the boot parameters
-        rtems-proxy start
+        rtems-proxy start --ibek-runtime
     fi
 fi
