@@ -288,7 +288,9 @@ jobs:
           echo "${{ steps.meta-runtime.outputs.tags }}" | head -n 1 | awk '{ print "runtime_tag="$1 }' >> "$GITHUB_OUTPUT"
 
       - name: Push runtime image
-        if: ${{ github.event_name == 'push' && github.ref_type == 'tag' }}
+        # only release tags (v*) publish runtime/:latest; other tags (rtems-*)
+        # have their own images and must not overwrite :latest
+        if: ${{ github.event_name == 'push' && startsWith(github.ref, 'refs/tags/v') }}
         uses: docker/build-push-action@v5
         with:
           context: .
@@ -304,7 +306,7 @@ jobs:
   release:
     # Release on tag push - publish ioc schema
     needs: [build]
-    if: ${{ github.event_name == 'push' && github.ref_type == 'tag' }}
+    if: ${{ github.event_name == 'push' && startsWith(github.ref, 'refs/tags/v') }}
     runs-on: ubuntu-latest
 
     # this job runs in the native runtime container we just made
