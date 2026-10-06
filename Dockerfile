@@ -62,7 +62,8 @@ RUN ansible.sh ocemPS && \
     ansible.sh danfysik && \
     ansible.sh PTUControl && \
     ansible.sh thorlabsApt && \
-    ansible.sh SIS3153
+    ansible.sh SIS3153 && \
+    ansible.sh srsDG535
 
 
   
