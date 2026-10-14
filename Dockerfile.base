@@ -107,6 +107,7 @@ RUN ansible.sh AgilentXgs600 && \
     ansible.sh motorMicos && \
     ansible.sh cagateway && \
     ansible.sh hazemeyer && \
+    ansible.sh hazemeyer-citbus && \
     ansible.sh ppt-modulator && \
     ansible.sh scandinova-scandicat-mod && \
     ansible.sh polyscience && \
