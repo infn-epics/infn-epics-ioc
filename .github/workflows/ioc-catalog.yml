@@ -1,0 +1,84 @@
+name: Publish the IOC catalogue for ARGUS
+
+# The catalogue ARGUS's IOC engineer answers from (infn-argus/argus-knowledge-hub, docs/ioc-engineer.md):
+# every support module of this image with its git source, entity models, what the Dockerfiles compile in,
+# the ibek-templates and their fixtures, and the beamlines' IOC entries. Built from this commit and its
+# submodules, so it describes the image this tag publishes.
+#
+# On a v* tag it is attached to the release as ioc-catalog.json.gz; point ARGUS at
+#   ARGUS_IOC_CATALOG=https://github.com/infn-epics/infn-epics-ioc/releases/latest/download/ioc-catalog.json.gz
+# On any other push it is only kept as a workflow artifact.
+#
+# Repository variables (optional):
+#   IOC_CATALOG_BEAMLINES  space-separated beamline repositories (git URL[@ref]); default: the ELI-NP beamline
+#   ARGUS_REF              the argus-knowledge-hub ref whose builder to use; default main
+
+on:
+  push:
+    branches: [main]
+    tags: ["v*"]
+  workflow_dispatch:
+    inputs:
+      argus_ref:
+        description: "argus-knowledge-hub ref to build with"
+        required: false
+        default: ""
+
+permissions:
+  contents: write
+
+jobs:
+  catalog:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          submodules: recursive
+
+      - name: Get the ARGUS catalogue builder
+        uses: actions/checkout@v4
+        with:
+          repository: infn-argus/argus-knowledge-hub
+          ref: ${{ inputs.argus_ref || vars.ARGUS_REF || 'main' }}
+          path: .argus
+          sparse-checkout: |
+            backend/app/__init__.py
+            backend/app/ioc_engineer
+          sparse-checkout-cone-mode: false
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.11"
+
+      - name: Build the catalogue
+        env:
+          BEAMLINES: ${{ vars.IOC_CATALOG_BEAMLINES || 'https://github.com/infn-epics/epik8s-eli.git' }}
+        run: |
+          pip install -q pyyaml==6.0.2
+          args=()
+          for b in $BEAMLINES; do args+=(--beamline "$b"); done
+          cd .argus/backend
+          python -m app.ioc_engineer build --repo "$GITHUB_WORKSPACE" \
+            --sources "$RUNNER_TEMP/sources" "${args[@]}" \
+            --out "$GITHUB_WORKSPACE/ioc-catalog.json.gz" | tee "$RUNNER_TEMP/summary.json"
+          {
+            echo '### IOC catalogue'
+            echo '```json'
+            cat "$RUNNER_TEMP/summary.json"
+            echo '```'
+          } >> "$GITHUB_STEP_SUMMARY"
+
+      - uses: actions/upload-artifact@v4
+        with:
+          name: ioc-catalog
+          path: ioc-catalog.json.gz
+
+      - name: Attach it to the release
+        if: startsWith(github.ref, 'refs/tags/v')
+        env:
+          GH_TOKEN: ${{ github.token }}
+          TAG: ${{ github.ref_name }}
+        run: |
+          # build.yml's release job publishes the same release later; whichever runs first creates it.
+          gh release view "$TAG" >/dev/null 2>&1 || gh release create "$TAG" --generate-notes --verify-tag || true
+          gh release upload "$TAG" ioc-catalog.json.gz --clobber
