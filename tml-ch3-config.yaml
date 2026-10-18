@@ -12,7 +12,7 @@ devices:
   name: RFDPHS01
 - axid: 3
   name: W2BPHS01
-devtype: tml
+devtype: technosoft-asyn
 disable: false
 epik8s-tools-version: 0.9.12
 iocname: tml-ch3
@@ -44,7 +44,7 @@ nfsMounts:
   opt: -o nolock
   path: /data_epik8s/config
   server: 192.168.197.157
-opi: tml/TML_Main.bob
+opi: motor-asyn/Motor_Main.bob
 serial:
   baud: 9600
   ip: localhost
