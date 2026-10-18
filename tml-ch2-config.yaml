@@ -44,7 +44,7 @@ devices:
   jvel: 10
   name: CMBTRH01
   velo: 10
-devtype: tml
+devtype: technosoft-asyn
 disable: false
 epik8s-tools-version: 0.9.12
 image: ghcr.io/infn-epics/infn-epics-ioc-runtime
@@ -77,7 +77,7 @@ nfsMounts:
   opt: -o nolock
   path: /data_epik8s/config
   server: 192.168.197.157
-opi: tml/TML_Main.bob
+opi: motor-asyn/Motor_Main.bob
 serial:
   baud: 9600
   ip: localhost
