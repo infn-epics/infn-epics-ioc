@@ -492,3 +492,26 @@ have `autosync: false`).
 **Reproduce the render offline.** Take the IOC block from `values.yaml` and add
 `iocname:` (normally injected by the chart). Then run `jnjrender templates/
 <file> --auto --output <dir>` from `ibek-templates` (§4.5).
+
+## 10. The IOC catalogue for ARGUS
+
+`.github/workflows/ioc-catalog.yml` reads this repository and its submodules into one JSON catalogue,
+`ioc-catalog.json.gz`. The catalogue holds:
+
+- every support module, with its git source (`organization` + `module`) and whether a Dockerfile compiles it;
+- the entity models and their parameters;
+- the ibek-templates and their fixtures;
+- the IOC entries of the beamlines named in the repository variable `IOC_CATALOG_BEAMLINES`.
+
+On a `v*` tag the workflow attaches the catalogue to the release. ARGUS's IOC engineer
+(`infn-argus/argus-knowledge-hub`, `docs/ioc-engineer.md`) answers from it when `ARGUS_IOC_CATALOG` points at
+`https://github.com/infn-epics/infn-epics-ioc/releases/latest/download/ioc-catalog.json.gz`.
+
+Through the ARGUS assistant, or any MCP client, a person can:
+
+- find the driver for a device;
+- render a beamline entry as the pod does, and check it as `ibek runtime generate` will;
+- check every IOC of a beamline before bumping the image;
+- draft the files a new driver needs.
+
+The catalogue describes the image of the commit it was built from.
