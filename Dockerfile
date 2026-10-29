@@ -62,6 +62,7 @@ RUN ansible.sh ocemPS && \
     ansible.sh danfysik && \
     ansible.sh PTUControl && \
     ansible.sh thorlabsApt && \
+    ansible.sh standa-motor && \
     ansible.sh SIS3153 && \
     ansible.sh srsDG535 && \
     ansible.sh hazemeyer-citbus
