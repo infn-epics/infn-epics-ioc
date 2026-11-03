@@ -65,7 +65,9 @@ RUN ansible.sh ocemPS && \
     ansible.sh standa-motor && \
     ansible.sh SIS3153 && \
     ansible.sh srsDG535 && \
-    ansible.sh hazemeyer-citbus
+    ansible.sh hazemeyer-citbus && \
+    ansible.sh granville307
+
 
 
 
