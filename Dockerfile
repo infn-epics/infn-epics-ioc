@@ -66,7 +66,8 @@ RUN ansible.sh ocemPS && \
     ansible.sh SIS3153 && \
     ansible.sh srsDG535 && \
     ansible.sh hazemeyer-citbus && \
-    ansible.sh granville307
+    ansible.sh granville307 && \
+    ansible.sh keysight34465A 
 
 
 
