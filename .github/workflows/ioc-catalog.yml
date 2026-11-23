@@ -11,6 +11,8 @@ name: Publish the IOC catalogue for ARGUS
 #
 # Repository variables (optional):
 #   IOC_CATALOG_BEAMLINES  space-separated beamline repositories (git URL[@ref]); default: the ELI-NP beamline
+#   IOC_CATALOG_PYIOCS     space-separated Python IOC repositories (git URL[@ref]) whose pyioc.yaml is
+#                          indexed (docs/architecture.md section 11); default: thorlabscct
 #   ARGUS_REF              the argus-knowledge-hub ref whose builder to use; default main
 
 on:
@@ -53,11 +55,19 @@ jobs:
       - name: Build the catalogue
         env:
           BEAMLINES: ${{ vars.IOC_CATALOG_BEAMLINES || 'https://github.com/infn-epics/epik8s-eli.git' }}
+          PYIOCS: ${{ vars.IOC_CATALOG_PYIOCS || 'https://github.com/infn-epics/thorlabscct.git' }}
         run: |
-          pip install -q pyyaml==6.0.2
+          pip install -q pyyaml==6.0.2 \
+            "epik8s-pyioc @ https://github.com/infn-epics/epik8s-pyioc/archive/refs/tags/v0.2.0.tar.gz"
           args=()
           for b in $BEAMLINES; do args+=(--beamline "$b"); done
           cd .argus/backend
+          # Python IOCs: only with a builder that knows --pyioc (argus-knowledge-hub with epik8s-pyioc support)
+          if python -m app.ioc_engineer build --help | grep -q -- --pyioc; then
+            for r in $PYIOCS; do args+=(--pyioc "$r"); done
+          else
+            echo "::notice::this argus-knowledge-hub builder does not index Python IOCs yet"
+          fi
           python -m app.ioc_engineer build --repo "$GITHUB_WORKSPACE" \
             --sources "$RUNNER_TEMP/sources" "${args[@]}" \
             --out "$GITHUB_WORKSPACE/ioc-catalog.json.gz" | tee "$RUNNER_TEMP/summary.json"

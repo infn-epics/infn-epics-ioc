@@ -388,7 +388,9 @@ by ibek-templates: `motor`, `adcamera`, `agilent-vac`, `pfeiffer-tpg`,
 `midivac`, `scandinova-mod-k400`, `bergoz-bcm`, and others. The remaining IOCs
 use template-less configs in `config/iocs/` (e.g. `mrf` with `st.cmd.j2`, and
 Python soft IOCs such as `klyloop`, `lasersynch`, and `collector` pulled in as
-git submodules), or `host:` IOCs (`STEMlab125`, `libera-*`).
+git submodules), `host:` IOCs (`STEMlab125`, `libera-*`), or containerized
+Python IOCs with their own image, such as `thorlabscct` for the `cct01`
+spectrometer (section 11).
 
 `iocDefaults` sets per-family defaults, including image pins. For example,
 `adcamera` sets `image: ghcr.io/infn-epics/infn-epics-ioc-runtime:v26.1.30b1`
@@ -501,7 +503,8 @@ have `autosync: false`).
 - every support module, with its git source (`organization` + `module`) and whether a Dockerfile compiles it;
 - the entity models and their parameters;
 - the ibek-templates and their fixtures;
-- the IOC entries of the beamlines named in the repository variable `IOC_CATALOG_BEAMLINES`.
+- the IOC entries of the beamlines named in the repository variable `IOC_CATALOG_BEAMLINES`;
+- the Python IOCs (their `pyioc.yaml`, section 11) of the repositories named in `IOC_CATALOG_PYIOCS`.
 
 On a `v*` tag the workflow attaches the catalogue to the release. ARGUS's IOC engineer
 (`infn-argus/argus-knowledge-hub`, `docs/ioc-engineer.md`) answers from it when `ARGUS_IOC_CATALOG` points at
@@ -512,6 +515,84 @@ Through the ARGUS assistant, or any MCP client, a person can:
 - find the driver for a device;
 - render a beamline entry as the pod does, and check it as `ibek runtime generate` will;
 - check every IOC of a beamline before bumping the image;
-- draft the files a new driver needs.
+- draft the files a new driver needs;
+- find, check and generate Python IOCs (section 11).
 
 The catalogue describes the image of the commit it was built from.
+
+## 11. Python IOCs (epik8s-pyioc)
+
+Not every IOC belongs in this image. A device driven by a vendor library for Python or
+.NET, or by a protocol simpler to write in Python than as a StreamDevice driver, runs as a
+**containerized Python IOC**: a caproto IOC in its own image, configured from the same
+beamline `values.yaml`. The [epik8s-pyioc](https://github.com/infn-epics/epik8s-pyioc)
+library makes these IOCs uniform. It plays the role ibek plays here:
+
+| ibek (this image) | epik8s-pyioc |
+|---|---|
+| `<module>.ibek.support.yaml`: the entity models | `pyioc.yaml` inside the IOC's package: the parameters an IOC entry may set |
+| `template:` rendered by jnjrender into an ibek IOC | no template: `pyioc-run` validates the entry against `pyioc.yaml` |
+| `ibek runtime generate` refuses a bad IOC at pod start | `pyioc-run` refuses a bad entry at pod start, with every problem listed |
+| ibek-templates fixtures | each IOC's `example.yaml` and its Channel Access tests |
+
+### 11.1 How a Python IOC is deployed
+
+A Python IOC entry differs from an ibek one in three places. They all go in its
+`iocDefaults` block, which `pyioc defaults` prints:
+
+```yaml
+iocDefaults:
+  thorlabscct:
+    devtype: thorlabscct                       # defaults keyed by devtype, never template
+    image: ghcr.io/infn-epics/thorlabscct:0.2.4
+    start: pyioc-run                           # ioc-chart's start branch (section 5)
+    pva: false                                 # caproto serves Channel Access only
+    opi: thorlabscct-opi/thorlabscct.bob       # screen in epik8s-opi
+epicsConfiguration:
+  iocs:
+    cct01:
+      devtype: thorlabscct
+      iocprefix: SPARC:DIAG
+      server: ddsparcthorcs001.lnf.infn.it
+      devices:
+        - name: CCT01                          # PVs SPARC:DIAG:CCT01:*
+```
+
+- **No `template:`.** With one, ioc-chart takes the jnjrender branch, which a Python image
+  does not have.
+- The pod finds the entry in `/tmp/iocconfig.yaml`, as for every IOC. `pyioc-run` picks the
+  IOC whose `pyioc.yaml` declares the entry's `devtype`, validates the entry, and starts it.
+  The beamline repository needs no `config/iocs/<dir>`. ioc-chart has handled an empty
+  config directory since `dfe4b80`.
+- **Declare devices as a list,** even a single one. The screen tools pass `P` = `iocprefix`
+  and `R` = the device name, and the launcher lists only IOCs with `devices`.
+- **Vendor libraries that may not be redistributed** stay out of public images. The IOC
+  reads them from a path parameter pointing at the NFS `config` share (thorlabscct:
+  `sdk_path: /nfs/config/vendor/thorlabs-cct-sdk`).
+- **Registry.** Public `ghcr.io` images are pulled through the cluster proxy on port 443.
+  Registries on other ports (`baltig.infn.it:4567`) may not be reachable from the nodes.
+
+### 11.2 A new Python IOC
+
+```sh
+pip install "epik8s-pyioc @ https://github.com/infn-epics/epik8s-pyioc/archive/refs/tags/v0.2.0.tar.gz"
+pyioc init tpg366 --from tpg366.yaml   # a short description: transport, PVs, parameters
+cd tpg366 && pip install -e '.[test]' && pytest
+```
+
+The generated project holds the spec, the caproto IOC (polling, reconnection, enum and
+array handling that Phoebus accepts), a simulator, a TCP or device driver to complete, CA
+tests, the Dockerfile and a CI that publishes to `ghcr.io` on `v*` tags. Before deploying,
+`pyioc validate --spec <pyioc.yaml> deploy/values.yaml` checks every entry of the beamline.
+The library's documentation has the full specification, the runtime contract and the
+pitfalls found in deployed IOCs.
+
+### 11.3 In the ARGUS catalogue
+
+The catalogue (section 10) also reads the `pyioc.yaml` of the repositories in the variable
+`IOC_CATALOG_PYIOCS` (default: `thorlabscct`). The IOC engineer then:
+
+- finds Python IOCs with `ioc_search` and shows one with `ioc_get_pyioc`;
+- checks Python IOC entries in `ioc_render` and `ioc_check_beamline` instead of skipping them;
+- generates a new IOC project with `ioc_scaffold_pyioc`;
+- answers from the epik8s-pyioc documentation through `ioc_guide`.
