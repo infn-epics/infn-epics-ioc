@@ -535,6 +535,22 @@ library makes these IOCs uniform. It plays the role ibek plays here:
 | `ibek runtime generate` refuses a bad IOC at pod start | `pyioc-run` refuses a bad entry at pod start, with every problem listed |
 | ibek-templates fixtures | each IOC's `example.yaml` and its Channel Access tests |
 
+### 11.0 Which kind of IOC
+
+epik8s runs three kinds of IOC. Pick by what the IOC does:
+
+| The IOC... | Kind | Deployed as |
+|---|---|---|
+| drives hardware that has an EPICS driver (asyn, StreamDevice, modbus, areaDetector, motor) | an ibek template in this image (sections 3 to 5) | an entry under `epicsConfiguration.iocs` with `template:` |
+| drives hardware best reached from Python: a vendor library for Python or .NET, a protocol simpler to write in Python | an epik8s-pyioc IOC in its own image (this section) | an entry under `epicsConfiguration.iocs` with `devtype` and `start: pyioc-run`, no template |
+| adds logic over PVs that already exist: interlocks, sequences, monitoring, derived values | an iocmng soft IOC ([epik8s-softioc-mng](https://github.com/infn-epics/epik8s-softioc-mng), image `ghcr.io/infn-epics/epik8s-softioc-mng`) | an entry under `softiocs:` (with `softiocDefaults`), and a `config.yaml` of inputs, rules and outputs in the beamline repository's `config/iocs/<name>/` |
+
+An epik8s-pyioc IOC owns a device. An iocmng task owns no device: it reads other IOCs' PVs
+("wired inputs"), evaluates rules, and writes PVs of other IOCs (actuators). Its rules are
+declarative (`DeclarativeTask`), so most tasks need no Python and are reviewed as
+configuration. SPARC's `softinterlock` (the LLRF/klystron chain) and `check-motor-movement`
+are iocmng tasks.
+
 ### 11.1 How a Python IOC is deployed
 
 A Python IOC entry differs from an ibek one in three places. They all go in its
@@ -575,7 +591,7 @@ epicsConfiguration:
 ### 11.2 A new Python IOC
 
 ```sh
-pip install "epik8s-pyioc @ https://github.com/infn-epics/epik8s-pyioc/archive/refs/tags/v0.2.0.tar.gz"
+pip install "epik8s-pyioc @ https://github.com/infn-epics/epik8s-pyioc/archive/refs/tags/v0.2.1.tar.gz"
 pyioc init tpg366 --from tpg366.yaml   # a short description: transport, PVs, parameters
 cd tpg366 && pip install -e '.[test]' && pytest
 ```

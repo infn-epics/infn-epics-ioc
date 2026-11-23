@@ -58,7 +58,7 @@ jobs:
           PYIOCS: ${{ vars.IOC_CATALOG_PYIOCS || 'https://github.com/infn-epics/thorlabscct.git' }}
         run: |
           pip install -q pyyaml==6.0.2 \
-            "epik8s-pyioc @ https://github.com/infn-epics/epik8s-pyioc/archive/refs/tags/v0.2.0.tar.gz"
+            "epik8s-pyioc @ https://github.com/infn-epics/epik8s-pyioc/archive/refs/tags/v0.2.1.tar.gz"
           args=()
           for b in $BEAMLINES; do args+=(--beamline "$b"); done
           cd .argus/backend
