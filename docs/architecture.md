@@ -505,6 +505,8 @@ have `autosync: false`).
 - the ibek-templates and their fixtures;
 - the IOC entries of the beamlines named in the repository variable `IOC_CATALOG_BEAMLINES`;
 - the Python IOCs (their `pyioc.yaml`, section 11) of the repositories named in `IOC_CATALOG_PYIOCS`.
+- the beamlines' iocmng soft IOCs (`softiocs:` and each task's `config.yaml`), checked against
+  epik8s-softioc-mng (`IOC_CATALOG_IOCMNG`).
 
 On a `v*` tag the workflow attaches the catalogue to the release. ARGUS's IOC engineer
 (`infn-argus/argus-knowledge-hub`, `docs/ioc-engineer.md`) answers from it when `ARGUS_IOC_CATALOG` points at
@@ -517,6 +519,8 @@ Through the ARGUS assistant, or any MCP client, a person can:
 - check every IOC of a beamline before bumping the image;
 - draft the files a new driver needs;
 - find, check and generate Python IOCs (section 11).
+- see what an iocmng soft IOC reads and writes, find every rule that can write a PV, and check
+  the soft IOCs' configs.
 
 The catalogue describes the image of the commit it was built from.
 
